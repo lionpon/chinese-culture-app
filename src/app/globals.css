@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --accent: #9B4A3A;
+  --accent-light: #B86653;
+  --accent-muted: #F5EDE9;
+  --gold: #C4A35A;
+  --gold-muted: #F7F2E7;
+  --jade: #5B7B6B;
+  --paper: #FAF7F2;
+  --paper-dark: #F0EBE3;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--paper);
+  background-image:
+    /* Subtle paper texture */
+    radial-gradient(ellipse at 20% 50%, rgba(196, 163, 90, 0.04) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(155, 74, 58, 0.03) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(91, 123, 107, 0.03) 0%, transparent 50%),
+    /* Faint repeating pattern */
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(155, 74, 58, 0.015) 2px,
+      rgba(155, 74, 58, 0.015) 4px
+    );
+}
+
+/* Decorative subtle background pattern */
+.bg-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 0L60 30L30 60L0 30Z' fill='none' stroke='rgba(155,74,58,0.06)' stroke-width='0.5'/%3E%3C/svg%3E");
+  background-size: 60px 60px;
+}
+
+/* Card styling */
+.card-classic {
+  background: #FFFFFF;
+  border: 1px solid rgba(155, 74, 58, 0.12);
+  border-radius: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.03);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.card-classic:hover {
+  border-color: rgba(155, 74, 58, 0.25);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+/* Button styling */
+.btn-primary {
+  background: linear-gradient(135deg, #9B4A3A, #7D3B2E);
+  color: #FFFFFF;
+  border-radius: 0.75rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(155, 74, 58, 0.2);
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, #A85544, #8B4233);
+  box-shadow: 0 4px 16px rgba(155, 74, 58, 0.3);
+  transform: translateY(-1px);
+}
+.btn-primary:active {
+  transform: translateY(0);
+}
+.btn-primary:disabled {
+  opacity: 0.5;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Accent text */
+.text-accent { color: var(--accent); }
+.text-gold { color: var(--gold); }
+.text-jade { color: var(--jade); }
+
+/* Background accent */
+.bg-accent-muted { background-color: var(--accent-muted); }
+.bg-gold-muted { background-color: var(--gold-muted); }
+
+/* Border accent */
+.border-accent { border-color: rgba(155, 74, 58, 0.15); }
+
+/* Divider ornament */
+.ornament-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--accent);
+  opacity: 0.3;
+}
+.ornament-divider::before,
+.ornament-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(155, 74, 58, 0.3), transparent);
+}
+
+/* Prose-style content for legal pages */
+.prose h1 { font-size: 1.5rem; font-weight: 700; margin-top: 2rem; margin-bottom: 0.5rem; }
+.prose h2 { font-size: 1.1rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.5rem; color: #444; }
+.prose p { margin-bottom: 0.75rem; line-height: 1.7; color: #555; }
+.prose ul { list-style: disc; padding-left: 1.25rem; margin-bottom: 0.75rem; }
+.prose li { margin-bottom: 0.25rem; color: #555; line-height: 1.6; }
+.prose strong { color: #333; }

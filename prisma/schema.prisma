@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Purchase {
+  id        String   @id @default(cuid())
+  checkoutId String  @unique
+  type      String
+  input     String   @db.Text
+  result    String?  @db.Text
+  status    String   @default("pending")
+  createdAt DateTime @default(now())
+}
+
+model Visit {
+  id        String   @id @default(cuid())
+  page      String
+  country   String   @default("Unknown")
+  referrer  String   @default("")
+  createdAt DateTime @default(now())
+}
+
+model DailyReport {
+  id              String   @id @default(cuid())
+  date            String   @unique
+  visits          Int      @default(0)
+  uniqueCountries Int      @default(0)
+  revenue         Float    @default(0)
+  details         String   @default("{}") @db.Text
+  createdAt       DateTime @default(now())
+}
