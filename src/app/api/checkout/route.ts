@@ -22,7 +22,8 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    const url = buildPayPalCheckoutUrl(purchase.id, type);
+    const host = req.headers.get("host") || undefined;
+    const url = buildPayPalCheckoutUrl(purchase.id, type, host);
 
     return NextResponse.json({ url });
   } catch (error) {

@@ -5,8 +5,11 @@ const PAYPAL_URL =
     ? "https://www.sandbox.paypal.com/cgi-bin/webscr"
     : "https://www.paypal.com/cgi-bin/webscr";
 
-export function getAppUrl() {
-  if (process.env.NEXT_PUBLIC_APP_URL) return process.env.NEXT_PUBLIC_APP_URL;
+export function getAppUrl(host?: string) {
+  if (process.env.NEXT_PUBLIC_APP_URL && process.env.NEXT_PUBLIC_APP_URL !== "http://localhost:3000") {
+    return process.env.NEXT_PUBLIC_APP_URL;
+  }
+  if (host) return `https://${host}`;
   return "http://localhost:3000";
 }
 
@@ -16,8 +19,8 @@ export const PRODUCT_NAMES: Record<string, string> = {
   divination: "I Ching Divination Reading",
 };
 
-export function buildPayPalCheckoutUrl(purchaseId: string, type: string): string {
-  const appUrl = getAppUrl();
+export function buildPayPalCheckoutUrl(purchaseId: string, type: string, host?: string): string {
+  const appUrl = getAppUrl(host);
   const itemName = PRODUCT_NAMES[type] || "Chinese Culture Reading";
 
   const params = new URLSearchParams({
