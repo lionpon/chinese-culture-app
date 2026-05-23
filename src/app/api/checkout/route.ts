@@ -38,9 +38,7 @@ export async function POST(req: NextRequest) {
       data: { checkoutId },
     });
 
-    // Force English language on Lemon Squeezy checkout page
-    const englishUrl = url.includes("?") ? `${url}&lang=en` : `${url}?lang=en`;
-    return NextResponse.json({ url: englishUrl });
+    return NextResponse.json({ url });
   } catch (error) {
     console.error("Checkout error:", error);
     return NextResponse.json({ error: "Failed to create checkout" }, { status: 500 });
