@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createPayPalOrder } from "@/lib/paypal";
+import { buildPayPalCheckoutUrl } from "@/lib/paypal";
 import { prisma } from "@/lib/db";
 
 export async function POST(req: NextRequest) {
@@ -22,17 +22,9 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    const { orderId } = await createPayPalOrder({
-      purchaseId: purchase.id,
-      type,
-    });
+    const url = buildPayPalCheckoutUrl(purchase.id, type);
 
-    await prisma.purchase.update({
-      where: { id: purchase.id },
-      data: { checkoutId: orderId },
-    });
-
-    return NextResponse.json({ orderId, purchaseId: purchase.id });
+    return NextResponse.json({ url });
   } catch (error) {
     console.error("Checkout error:", error);
     return NextResponse.json({ error: "Failed to create checkout" }, { status: 500 });

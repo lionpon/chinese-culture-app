@@ -1,25 +1,13 @@
-const PAYPAL_API =
+export const PAYPAL_EMAIL = "lionpon@sina.com";
+
+const PAYPAL_URL =
   process.env.PAYPAL_SANDBOX === "true"
-    ? "https://api-m.sandbox.paypal.com"
-    : "https://api-m.paypal.com";
+    ? "https://www.sandbox.paypal.com/cgi-bin/webscr"
+    : "https://www.paypal.com/cgi-bin/webscr";
 
-async function getAccessToken(): Promise<string> {
-  const clientId = process.env.PAYPAL_CLIENT_ID!;
-  const secret = process.env.PAYPAL_CLIENT_SECRET!;
-  const auth = Buffer.from(`${clientId}:${secret}`).toString("base64");
-
-  const res = await fetch(`${PAYPAL_API}/v1/oauth2/token`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      Authorization: `Basic ${auth}`,
-    },
-    body: "grant_type=client_credentials",
-  });
-
-  const data = await res.json();
-  if (!res.ok) throw new Error(`PayPal auth failed: ${JSON.stringify(data)}`);
-  return data.access_token;
+export function getAppUrl() {
+  if (process.env.NEXT_PUBLIC_APP_URL) return process.env.NEXT_PUBLIC_APP_URL;
+  return "http://localhost:3000";
 }
 
 export const PRODUCT_NAMES: Record<string, string> = {
@@ -28,65 +16,37 @@ export const PRODUCT_NAMES: Record<string, string> = {
   divination: "I Ching Divination Reading",
 };
 
-export function getAppUrl() {
-  if (process.env.NEXT_PUBLIC_APP_URL) return process.env.NEXT_PUBLIC_APP_URL;
-  return "http://localhost:3000";
-}
-
-interface CreatePayPalOrderParams {
-  purchaseId: string;
-  type: string;
-}
-
-export async function createPayPalOrder(params: CreatePayPalOrderParams) {
-  const { purchaseId, type } = params;
-  const token = await getAccessToken();
+export function buildPayPalCheckoutUrl(purchaseId: string, type: string): string {
   const appUrl = getAppUrl();
+  const itemName = PRODUCT_NAMES[type] || "Chinese Culture Reading";
 
-  const body = {
-    intent: "CAPTURE",
-    purchase_units: [
-      {
-        reference_id: purchaseId,
-        amount: { currency_code: "USD", value: "1.00" },
-        description: PRODUCT_NAMES[type] || "Chinese Culture Reading",
-      },
-    ],
-    application_context: {
-      brand_name: "Chinese Culture Studio",
-      landing_page: "NO_PREFERENCE",
-      user_action: "PAY_NOW",
-      return_url: `${appUrl}/success?purchase_id=${purchaseId}`,
-      cancel_url: `${appUrl}/`,
-    },
-  };
-
-  const res = await fetch(`${PAYPAL_API}/v2/checkout/orders`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify(body),
+  const params = new URLSearchParams({
+    cmd: "_xclick",
+    business: PAYPAL_EMAIL,
+    item_name: itemName,
+    item_number: type,
+    amount: "1.00",
+    currency_code: "USD",
+    custom: purchaseId,
+    return: `${appUrl}/success?purchase_id=${purchaseId}`,
+    cancel_return: `${appUrl}/`,
+    notify_url: `${appUrl}/api/webhook/paypal`,
+    no_note: "1",
+    no_shipping: "1",
   });
 
-  const json = await res.json();
-  if (!res.ok) throw new Error(`PayPal order creation failed: ${JSON.stringify(json)}`);
-  return { orderId: json.id, status: json.status };
+  return `${PAYPAL_URL}?${params.toString()}`;
 }
 
-export async function capturePayPalOrder(orderId: string) {
-  const token = await getAccessToken();
+export async function verifyIPN(rawBody: string): Promise<boolean> {
+  const verifyBody = "cmd=_notify-validate&" + rawBody;
 
-  const res = await fetch(`${PAYPAL_API}/v2/checkout/orders/${orderId}/capture`, {
+  const res = await fetch(PAYPAL_URL, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: verifyBody,
   });
 
-  const json = await res.json();
-  if (!res.ok) throw new Error(`PayPal capture failed: ${JSON.stringify(json)}`);
-  return json;
+  const text = await res.text();
+  return text.trim() === "VERIFIED";
 }

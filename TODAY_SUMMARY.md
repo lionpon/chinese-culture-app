@@ -57,9 +57,31 @@ DATABASE_URL / ADMIN_TOKEN / NEXT_PUBLIC_APP_URL / LEMON_SQUEEZY_API_KEY / LEMON
 | TODAY_SUMMARY.md | 本文件 |
 | promotion/reddit/*.txt | 各 Reddit 帖子标题与正文 |
 
-## 七、后续待办
+## 七、PayPal 支付迁移 (2026-05-23)
 
-- [ ] 激活 Lemon Squeezy 商店（否则无法收款）
+| 项目 | 详情 |
+|---|---|
+| 原因 | Lemon Squeezy 不支持中国商家（Stripe Connect 不支持中国大陆） |
+| 新方案 | PayPal REST API Checkout（JS SDK） |
+| 状态 | Sandbox 测试通过，正式收款待切换 Live 凭证 |
+
+**新建文件：**
+| 文件 | 作用 |
+|---|---|
+| `src/lib/paypal.ts` | PayPal API（create order, capture） |
+| `src/app/api/paypal/capture/route.ts` | 扣款 + 生成结果 |
+| `src/components/PayPalButton.tsx` | 页面内嵌 PayPal 按钮 |
+
+**坑与修复：**
+- `checkoutId` 字段 `@unique` 约束 → 初始值 `""` 导致第二次创建冲突 → 改用 `crypto.randomUUID()` 作临时值
+- `PAYPAL_SANDBOX` 控制 API 端点 → Sandbox 凭证不能连正式 API，反之亦然
+- Render env var 改动后需要重新部署才能生效
+
+**当前凭证状态：** Sandbox（测试），待用户获取 Live 凭证后切换
+
+## 八、后续待办
+
+- [ ] 获取 PayPal Live 凭证，切换正式收款
 - [ ] 5月27日 Product Hunt 自动发布后查看数据
 - [ ] 继续提交剩余免费目录（Betalist, AlternativeTo, SaaS Hub 等）
 - [ ] 在 Twitter/X 上为 Product Hunt 预热

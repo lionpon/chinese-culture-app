@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { capturePayPalOrder } from "@/lib/paypal";
+import { verifyIPN } from "@/lib/paypal";
 import { prisma } from "@/lib/db";
 import { generateNames } from "@/lib/naming";
 import { selectAuspiciousDays } from "@/lib/calendar";
@@ -7,23 +7,27 @@ import { performDivination } from "@/lib/divination";
 import type { NamingInput, CalendarInput, DivinationInput } from "@/types";
 
 export async function POST(req: NextRequest) {
+  const rawBody = await req.text();
+
+  const ok = await verifyIPN(rawBody);
+  if (!ok) {
+    return NextResponse.json({ error: "Invalid IPN" }, { status: 400 });
+  }
+
+  const params = new URLSearchParams(rawBody);
+  const purchaseId = params.get("custom");
+  const paymentStatus = params.get("payment_status");
+
+  if (!purchaseId || paymentStatus !== "Completed") {
+    return NextResponse.json({ received: true });
+  }
+
   try {
-    const body = await req.json();
-    const { orderId, purchaseId } = body as { orderId: string; purchaseId: string };
-
     const purchase = await prisma.purchase.findUnique({ where: { id: purchaseId } });
-    if (!purchase) {
-      return NextResponse.json({ error: "Purchase not found" }, { status: 404 });
+    if (!purchase || purchase.status === "completed") {
+      return NextResponse.json({ received: true });
     }
 
-    if (purchase.status === "completed") {
-      return NextResponse.json({ success: true, purchaseId });
-    }
-
-    // Capture payment on PayPal
-    await capturePayPalOrder(orderId);
-
-    // Generate the result
     const input = JSON.parse(purchase.input);
     let result: unknown;
 
@@ -45,10 +49,13 @@ export async function POST(req: NextRequest) {
       where: { id: purchaseId },
       data: { status: "completed", result: JSON.stringify(result) },
     });
-
-    return NextResponse.json({ success: true, purchaseId });
   } catch (error) {
-    console.error("Capture error:", error);
-    return NextResponse.json({ error: "Payment capture failed" }, { status: 500 });
+    console.error("IPN error:", error);
+    await prisma.purchase.update({
+      where: { id: purchaseId },
+      data: { status: "failed" },
+    });
   }
+
+  return NextResponse.json({ received: true });
 }
