@@ -5,7 +5,6 @@ import { useResults } from "@/lib/result-store";
 
 export default function CalendarPage() {
   const [loading, setLoading] = useState(false);
-  const [testMode, setTestMode] = useState(false);
   const { results, setCalendarResult } = useResults();
   const result = results.calendar;
 
@@ -22,25 +21,14 @@ export default function CalendarPage() {
     };
 
     try {
-      if (testMode) {
-        const res = await fetch("/api/test", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ type: "calendar", input: data }),
-        });
-        const json = await res.json();
-        if (json.result) setCalendarResult(json.result);
-        else alert(json.error || "Error");
-      } else {
-        const res = await fetch("/api/checkout", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ type: "calendar", input: data }),
-        });
-        const { url, error } = await res.json();
-        if (url) window.location.href = url;
-        else alert(error || "Something went wrong");
-      }
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "calendar", input: data }),
+      });
+      const { url, error } = await res.json();
+      if (url) window.location.href = url;
+      else alert(error || "Something went wrong");
     } catch {
       alert("Failed. Please try again.");
     } finally {
@@ -53,8 +41,7 @@ export default function CalendarPage() {
       <div className="text-center mb-8">
         <h1 className="text-3xl font-bold" style={{ color: "var(--accent)" }}>Auspicious Date Selection</h1>
         <p className="text-stone-500 mt-2">Based on traditional Chinese almanac principles</p>
-        {!testMode && <p className="text-xs mt-1 inline-block px-3 py-1 rounded" style={{ color: "#8B7D5E", backgroundColor: "var(--gold-muted)" }}>$1 per reading</p>}
-        {testMode && <p className="text-xs text-green-700 mt-1 bg-green-50 inline-block px-3 py-1 rounded">Test Mode</p>}
+        <p className="text-xs mt-1 inline-block px-3 py-1 rounded" style={{ color: "#8B7D5E", backgroundColor: "var(--gold-muted)" }}>$1 per reading</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-5 card-classic p-6">
@@ -88,16 +75,11 @@ export default function CalendarPage() {
           </select>
         </div>
 
-        <label className="flex items-center gap-2 text-sm text-stone-600 cursor-pointer">
-          <input type="checkbox" checked={testMode} onChange={e => setTestMode(e.target.checked)} className="rounded" />
-          Test Mode (skip payment)
-        </label>
-
         <button type="submit" disabled={loading}
           className="w-full py-3 btn-primary">
-          {loading ? "Processing..." : testMode ? "Find Auspicious Dates (Test)" : "Find Auspicious Dates — $1.00"}
+          {loading ? "Processing..." : "Find Auspicious Dates — $1.00"}
         </button>
-        {!testMode && <p className="text-center text-xs text-stone-400">You will be redirected to a secure payment page</p>}
+        <p className="text-center text-xs text-stone-400">You will be redirected to a secure payment page</p>
       </form>
 
       {result && (
