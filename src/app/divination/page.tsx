@@ -2,9 +2,13 @@
 
 import { useState, FormEvent } from "react";
 import { useResults } from "@/lib/result-store";
+import PayPalButton from "@/components/PayPalButton";
 
 export default function DivinationPage() {
   const [loading, setLoading] = useState(false);
+  const [paypalOrderId, setPaypalOrderId] = useState<string | null>(null);
+  const [paypalPurchaseId, setPaypalPurchaseId] = useState<string | null>(null);
+  const [checkoutError, setCheckoutError] = useState("");
   const [method, setMethod] = useState<"time" | "random" | "manual">("time");
   const { results, setDivinationResult } = useResults();
   const result = results.divination;
@@ -12,6 +16,7 @@ export default function DivinationPage() {
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
+    setCheckoutError("");
     setDivinationResult(null);
 
     const form = e.currentTarget;
@@ -33,14 +38,22 @@ export default function DivinationPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ type: "divination", input: data }),
       });
-      const { url, error } = await res.json();
-      if (url) window.location.href = url;
-      else alert(error || "Something went wrong");
+      const { orderId, purchaseId, error } = await res.json();
+      if (orderId) {
+        setPaypalOrderId(orderId);
+        setPaypalPurchaseId(purchaseId);
+      } else {
+        setCheckoutError(error || "Something went wrong");
+      }
     } catch {
-      alert("Failed. Please try again.");
+      setCheckoutError("Failed. Please try again.");
     } finally {
       setLoading(false);
     }
+  }
+
+  function handlePayPalSuccess(purchaseId: string) {
+    window.location.href = `/success?purchase_id=${purchaseId}`;
   }
 
   return (
@@ -51,42 +64,60 @@ export default function DivinationPage() {
         <p className="text-xs mt-1 inline-block px-3 py-1 rounded" style={{ color: "#8B7D5E", backgroundColor: "var(--gold-muted)" }}>$1 per reading</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-5 card-classic p-6">
-        <div>
-          <label className="block text-sm font-medium text-stone-700 mb-1">Your Question (optional)</label>
-          <input name="question" placeholder="What would you like guidance on?" className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
+      {checkoutError && (
+        <div className="card-classic p-4 text-red-600 text-sm text-center mb-4">{checkoutError}</div>
+      )}
+
+      {paypalOrderId && paypalPurchaseId ? (
+        <div className="card-classic p-6 space-y-4">
+          <h2 className="text-lg font-bold text-center" style={{ color: "var(--accent)" }}>Complete Payment</h2>
+          <p className="text-sm text-stone-500 text-center">Pay securely with PayPal — $1.00 USD</p>
+          <PayPalButton
+            orderId={paypalOrderId}
+            purchaseId={paypalPurchaseId}
+            onSuccess={handlePayPalSuccess}
+            onError={(msg) => { setCheckoutError(msg); setPaypalOrderId(null); }}
+            onCancel={() => { setPaypalOrderId(null); setPaypalPurchaseId(null); }}
+          />
         </div>
-        <div>
-          <label className="block text-sm font-medium text-stone-700 mb-2">Casting Method</label>
-          <div className="grid grid-cols-3 gap-2">
-            {(["time", "random", "manual"] as const).map(m => (
-              <button key={m} type="button" onClick={() => setMethod(m)}
-                className="py-2 px-3 rounded-lg text-sm border transition-colors border-stone-200 text-stone-500 hover:border-stone-300"
-                style={method === m ? { borderColor: "var(--accent)", backgroundColor: "var(--accent-muted)", color: "var(--accent)" } : {}}>
-                {m === "time" && "Time-based (时间)"}
-                {m === "random" && "Random (随机)"}
-                {m === "manual" && "Manual (手动)"}
-              </button>
-            ))}
-          </div>
-        </div>
-        {method === "manual" && (
+      ) : (
+        <form onSubmit={handleSubmit} className="space-y-5 card-classic p-6">
           <div>
-            <label className="block text-sm font-medium text-stone-700 mb-1">Three Numbers (1-999)</label>
+            <label className="block text-sm font-medium text-stone-700 mb-1">Your Question (optional)</label>
+            <input name="question" placeholder="What would you like guidance on?" className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-stone-700 mb-2">Casting Method</label>
             <div className="grid grid-cols-3 gap-2">
-              <input name="num1" type="number" placeholder="First" required min={1} max={999} className="border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
-              <input name="num2" type="number" placeholder="Second" required min={1} max={999} className="border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
-              <input name="num3" type="number" placeholder="Third" required min={1} max={999} className="border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
+              {(["time", "random", "manual"] as const).map(m => (
+                <button key={m} type="button" onClick={() => setMethod(m)}
+                  className="py-2 px-3 rounded-lg text-sm border transition-colors border-stone-200 text-stone-500 hover:border-stone-300"
+                  style={method === m ? { borderColor: "var(--accent)", backgroundColor: "var(--accent-muted)", color: "var(--accent)" } : {}}>
+                  {m === "time" && "Time-based (时间)"}
+                  {m === "random" && "Random (随机)"}
+                  {m === "manual" && "Manual (手动)"}
+                </button>
+              ))}
             </div>
           </div>
-        )}
+          {method === "manual" && (
+            <div>
+              <label className="block text-sm font-medium text-stone-700 mb-1">Three Numbers (1-999)</label>
+              <div className="grid grid-cols-3 gap-2">
+                <input name="num1" type="number" placeholder="First" required min={1} max={999} className="border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
+                <input name="num2" type="number" placeholder="Second" required min={1} max={999} className="border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
+                <input name="num3" type="number" placeholder="Third" required min={1} max={999} className="border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
+              </div>
+            </div>
+          )}
 
-        <button type="submit" disabled={loading}
-          className="w-full py-3 btn-primary">
-          {loading ? "Processing..." : "Cast Hexagram — $1.00"}
-        </button>
-        <p className="text-center text-xs text-stone-400">You will be redirected to a secure payment page</p>
-      </form>
+          <button type="submit" disabled={loading}
+            className="w-full py-3 btn-primary">
+            {loading ? "Processing..." : "Cast Hexagram — $1.00"}
+          </button>
+          <p className="text-center text-xs text-stone-400">You will be redirected to a secure payment page</p>
+        </form>
+      )}
 
       {result && (
         <div className="mt-8">

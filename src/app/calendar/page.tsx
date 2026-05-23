@@ -2,15 +2,20 @@
 
 import { useState, FormEvent } from "react";
 import { useResults } from "@/lib/result-store";
+import PayPalButton from "@/components/PayPalButton";
 
 export default function CalendarPage() {
   const [loading, setLoading] = useState(false);
+  const [paypalOrderId, setPaypalOrderId] = useState<string | null>(null);
+  const [paypalPurchaseId, setPaypalPurchaseId] = useState<string | null>(null);
+  const [checkoutError, setCheckoutError] = useState("");
   const { results, setCalendarResult } = useResults();
   const result = results.calendar;
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
+    setCheckoutError("");
     setCalendarResult(null);
 
     const form = e.currentTarget;
@@ -26,14 +31,22 @@ export default function CalendarPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ type: "calendar", input: data }),
       });
-      const { url, error } = await res.json();
-      if (url) window.location.href = url;
-      else alert(error || "Something went wrong");
+      const { orderId, purchaseId, error } = await res.json();
+      if (orderId) {
+        setPaypalOrderId(orderId);
+        setPaypalPurchaseId(purchaseId);
+      } else {
+        setCheckoutError(error || "Something went wrong");
+      }
     } catch {
-      alert("Failed. Please try again.");
+      setCheckoutError("Failed. Please try again.");
     } finally {
       setLoading(false);
     }
+  }
+
+  function handlePayPalSuccess(purchaseId: string) {
+    window.location.href = `/success?purchase_id=${purchaseId}`;
   }
 
   return (
@@ -44,43 +57,61 @@ export default function CalendarPage() {
         <p className="text-xs mt-1 inline-block px-3 py-1 rounded" style={{ color: "#8B7D5E", backgroundColor: "var(--gold-muted)" }}>$1 per reading</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-5 card-classic p-6">
-        <div>
-          <label className="block text-sm font-medium text-stone-700 mb-1">Date Range</label>
-          <div className="grid grid-cols-2 gap-2">
-            <div><span className="text-xs text-stone-400">Start</span>
-              <input name="startDate" type="date" required className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" /></div>
-            <div><span className="text-xs text-stone-400">End</span>
-              <input name="endDate" type="date" required className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" /></div>
-          </div>
-          <p className="text-xs text-stone-400 mt-1">Select a range of up to 90 days for best results.</p>
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-stone-700 mb-1">Event Type</label>
-          <select name="eventType" required className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300">
-            <option value="">Select event type...</option>
-            <option value="wedding">Wedding · 嫁娶</option>
-            <option value="engagement">Engagement · 订婚</option>
-            <option value="business">Business Opening · 开市</option>
-            <option value="travel">Travel · 出行</option>
-            <option value="moving">Moving House · 搬家</option>
-            <option value="contract">Signing Contract · 签约</option>
-            <option value="sacrifice">Ancestral Ceremony · 祭祀</option>
-            <option value="construction">Construction · 修造</option>
-            <option value="medical">Medical Treatment · 求医</option>
-            <option value="funeral">Funeral & Burial · 安葬</option>
-            <option value="education">Education & Study · 入学</option>
-            <option value="meeting">Meeting & Gathering · 会友</option>
-            <option value="renovation">Renovation · 装修</option>
-          </select>
-        </div>
+      {checkoutError && (
+        <div className="card-classic p-4 text-red-600 text-sm text-center mb-4">{checkoutError}</div>
+      )}
 
-        <button type="submit" disabled={loading}
-          className="w-full py-3 btn-primary">
-          {loading ? "Processing..." : "Find Auspicious Dates — $1.00"}
-        </button>
-        <p className="text-center text-xs text-stone-400">You will be redirected to a secure payment page</p>
-      </form>
+      {paypalOrderId && paypalPurchaseId ? (
+        <div className="card-classic p-6 space-y-4">
+          <h2 className="text-lg font-bold text-center" style={{ color: "var(--accent)" }}>Complete Payment</h2>
+          <p className="text-sm text-stone-500 text-center">Pay securely with PayPal — $1.00 USD</p>
+          <PayPalButton
+            orderId={paypalOrderId}
+            purchaseId={paypalPurchaseId}
+            onSuccess={handlePayPalSuccess}
+            onError={(msg) => { setCheckoutError(msg); setPaypalOrderId(null); }}
+            onCancel={() => { setPaypalOrderId(null); setPaypalPurchaseId(null); }}
+          />
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit} className="space-y-5 card-classic p-6">
+          <div>
+            <label className="block text-sm font-medium text-stone-700 mb-1">Date Range</label>
+            <div className="grid grid-cols-2 gap-2">
+              <div><span className="text-xs text-stone-400">Start</span>
+                <input name="startDate" type="date" required className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" /></div>
+              <div><span className="text-xs text-stone-400">End</span>
+                <input name="endDate" type="date" required className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" /></div>
+            </div>
+            <p className="text-xs text-stone-400 mt-1">Select a range of up to 90 days for best results.</p>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-stone-700 mb-1">Event Type</label>
+            <select name="eventType" required className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300">
+              <option value="">Select event type...</option>
+              <option value="wedding">Wedding · 嫁娶</option>
+              <option value="engagement">Engagement · 订婚</option>
+              <option value="business">Business Opening · 开市</option>
+              <option value="travel">Travel · 出行</option>
+              <option value="moving">Moving House · 搬家</option>
+              <option value="contract">Signing Contract · 签约</option>
+              <option value="sacrifice">Ancestral Ceremony · 祭祀</option>
+              <option value="construction">Construction · 修造</option>
+              <option value="medical">Medical Treatment · 求医</option>
+              <option value="funeral">Funeral & Burial · 安葬</option>
+              <option value="education">Education & Study · 入学</option>
+              <option value="meeting">Meeting & Gathering · 会友</option>
+              <option value="renovation">Renovation · 装修</option>
+            </select>
+          </div>
+
+          <button type="submit" disabled={loading}
+            className="w-full py-3 btn-primary">
+            {loading ? "Processing..." : "Find Auspicious Dates — $1.00"}
+          </button>
+          <p className="text-center text-xs text-stone-400">You will be redirected to a secure payment page</p>
+        </form>
+      )}
 
       {result && (
         <div className="mt-8 space-y-4">

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createLemonCheckout } from "@/lib/lemon";
+import { createPayPalOrder } from "@/lib/paypal";
 import { prisma } from "@/lib/db";
 
 export async function POST(req: NextRequest) {
@@ -11,7 +11,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Invalid request type" }, { status: 400 });
     }
 
-    // Create Purchase record (status: pending)
     const purchase = await prisma.purchase.create({
       data: {
         checkoutId: "",
@@ -21,24 +20,17 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    const storeId = process.env.LEMON_SQUEEZY_STORE_ID || "1";
-    const variantId = process.env.LEMON_SQUEEZY_VARIANT_ID || "1";
-
-    // Create Lemon Squeezy checkout
-    const { checkoutId, url } = await createLemonCheckout({
-      storeId,
-      variantId,
+    const { orderId } = await createPayPalOrder({
       purchaseId: purchase.id,
       type,
     });
 
-    // Update purchase with Lemon Squeezy checkout ID
     await prisma.purchase.update({
       where: { id: purchase.id },
-      data: { checkoutId },
+      data: { checkoutId: orderId },
     });
 
-    return NextResponse.json({ url });
+    return NextResponse.json({ orderId, purchaseId: purchase.id });
   } catch (error) {
     console.error("Checkout error:", error);
     return NextResponse.json({ error: "Failed to create checkout" }, { status: 500 });
