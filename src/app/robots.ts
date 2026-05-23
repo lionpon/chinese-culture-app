@@ -1,10 +1,8 @@
 import type { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://chineseculture.studio";
-
   return {
-    rules: { userAgent: "*", allow: "/", disallow: ["/api/", "/admin", "/success?*"] },
-    sitemap: `${baseUrl}/sitemap.xml`,
+    rules: { userAgent: "*", allow: "/", disallow: ["/admin", "/api/"] },
+    sitemap: "https://chinese-culture-app.onrender.com/sitemap.xml",
   };
 }

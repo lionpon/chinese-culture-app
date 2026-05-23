@@ -2,16 +2,33 @@ import type { Metadata } from "next";
 import "./globals.css";
 import AppProvider from "@/components/AppProvider";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
+import JsonLd from "@/components/JsonLd";
 
 export const metadata: Metadata = {
   title: "Chinese Culture Studio — Create a Chinese Name, Auspicious Date Selection & I Ching Divination",
-  description: "Discover your Chinese name, find auspicious dates, and consult the I Ching. Traditional Chinese culture experiences based on classical texts.",
+  description: "Discover your authentic Chinese name from classical texts, find auspicious dates for weddings and business, or consult the I Ching (Book of Changes). Traditional Chinese culture experiences — $1 per reading.",
+  keywords: ["Chinese name", "I Ching", "divination", "auspicious date", "Chinese zodiac", "five elements", "feng shui", "Chinese culture", "Book of Changes", "Chinese naming"],
+  openGraph: {
+    title: "Chinese Culture Studio — Chinese Name, Auspicious Dates & I Ching",
+    description: "Discover your authentic Chinese name, find auspicious dates, or consult the I Ching — $1 per reading.",
+    url: "https://chinese-culture-app.onrender.com",
+    siteName: "Chinese Culture Studio",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Chinese Culture Studio — Chinese Name, Dates & I Ching",
+    description: "Authentic Chinese culture experiences. Chinese naming, auspicious date selection, I Ching divination. $1 each.",
+  },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className="min-h-screen text-stone-800 antialiased">
+        <JsonLd />
         <AppProvider>
         <AnalyticsTracker />
         <header className="border-b border-stone-200/60 bg-white/70 backdrop-blur-md sticky top-0 z-50">
