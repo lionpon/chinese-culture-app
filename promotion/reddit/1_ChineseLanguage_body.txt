@@ -1,0 +1,10 @@
+I've been studying Chinese naming conventions for a while and built a small app that generates authentic Chinese names using Five Elements (Wu Xing) theory, Bazi analysis, and classical sources like the I Ching and Tang poetry.
+
+How it works:
+1. Enter your surname, gender, date/time of birth
+2. Pick a style (elegant / grand / fresh)
+3. Get 2-3 names with pinyin, meaning, element analysis, and source citations
+
+It's $1 per reading. I'd love feedback from this community - does the output look culturally authentic? Any suggestions?
+
+https://chinese-culture-app.onrender.com
