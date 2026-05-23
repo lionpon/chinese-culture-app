@@ -11,9 +11,11 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Invalid request type" }, { status: 400 });
     }
 
+    const tempId = crypto.randomUUID();
+
     const purchase = await prisma.purchase.create({
       data: {
-        checkoutId: "",
+        checkoutId: tempId,
         type,
         input: JSON.stringify(input),
         status: "pending",
