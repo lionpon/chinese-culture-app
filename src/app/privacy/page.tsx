@@ -1,7 +1,7 @@
 export default function PrivacyPage() {
   return (
     <div className="max-w-2xl mx-auto prose prose-sm prose-stone">
-      <h1 className="text-2xl font-bold" style={{ color: "var(--accent)" }}>Privacy Policy</h1>
+      <h1 className="text-2xl font-bold text-accent">Privacy Policy</h1>
       <p className="text-xs text-stone-400">Last updated: May 2026</p>
 
       <h2>1. Data We Collect</h2>

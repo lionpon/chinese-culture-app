@@ -32,11 +32,11 @@ export default function DailyHexagram() {
 
   return (
     <section className="max-w-lg mx-auto mb-12">
-      <p className="text-center text-xs font-medium tracking-wide uppercase mb-4" style={{ color: "var(--gold)" }}>
+      <p className="text-center text-xs font-medium tracking-wide uppercase mb-4 text-gold">
         Free Daily Guidance
       </p>
       <div className="card-classic p-4 sm:p-6 text-center">
-        <p className="text-2xl sm:text-3xl font-bold mb-1" style={{ color: "var(--accent)" }}>
+        <p className="text-2xl sm:text-3xl font-bold mb-1 text-accent">
           {mainHexagram.nameZh}
         </p>
         <p className="text-sm text-stone-500 mb-4">

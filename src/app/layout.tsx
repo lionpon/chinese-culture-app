@@ -35,7 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AnalyticsTracker />
         <header className="border-b border-stone-200/60 bg-white/70 backdrop-blur-md sticky top-0 z-50">
           <div className="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
-            <a href="/" className="text-lg font-bold tracking-tight" style={{ color: "var(--accent)" }}>
+            <a href="/" className="text-lg font-bold tracking-tight text-accent">
               Chinese Culture Studio
             </a>
             <nav className="hidden sm:flex gap-5 text-sm text-stone-500">
