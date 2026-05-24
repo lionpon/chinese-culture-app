@@ -3,6 +3,7 @@
 import { useState, FormEvent } from "react";
 import { useCheckout } from "@/lib/useCheckout";
 import SubmitButton from "@/components/SubmitButton";
+import FreeTierBadge from "@/components/FreeTierBadge";
 
 export default function DivinationPage() {
   const { loading, checkout } = useCheckout("divination");
@@ -32,6 +33,8 @@ export default function DivinationPage() {
         <p className="text-stone-500 mt-2">Consult the ancient Book of Changes</p>
         <p className="text-xs mt-1 inline-block px-3 py-1 rounded badge-accent">$1 per reading</p>
       </div>
+
+      <FreeTierBadge />
 
       <form onSubmit={handleSubmit} className="space-y-5 card-classic p-4 sm:p-6">
         <div>

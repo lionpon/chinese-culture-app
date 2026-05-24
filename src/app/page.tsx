@@ -1,4 +1,5 @@
 import DailyHexagram from "@/components/DailyHexagram";
+import FreeTierBadge from "@/components/FreeTierBadge";
 
 export default function Home() {
   return (
@@ -11,6 +12,10 @@ export default function Home() {
           Discover the wisdom of ancient Chinese classics through names, dates, and divination
         </p>
       </section>
+
+      <div className="max-w-lg mx-auto mb-6">
+        <FreeTierBadge />
+      </div>
 
       <DailyHexagram />
 
