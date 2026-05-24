@@ -39,15 +39,15 @@ export default function CalendarPage() {
   return (
     <div className="max-w-lg mx-auto">
       <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold" style={{ color: "var(--accent)" }}>Auspicious Date Selection</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold" style={{ color: "var(--accent)" }}>Auspicious Date Selection</h1>
         <p className="text-stone-500 mt-2">Based on traditional Chinese almanac principles</p>
         <p className="text-xs mt-1 inline-block px-3 py-1 rounded" style={{ color: "#8B7D5E", backgroundColor: "var(--gold-muted)" }}>$1 per reading</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-5 card-classic p-6">
+      <form onSubmit={handleSubmit} className="space-y-5 card-classic p-4 sm:p-6">
           <div>
             <label className="block text-sm font-medium text-stone-700 mb-1">Date Range</label>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               <div><span className="text-xs text-stone-400">Start</span>
                 <input name="startDate" type="date" required className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" /></div>
               <div><span className="text-xs text-stone-400">End</span>
@@ -86,17 +86,17 @@ export default function CalendarPage() {
         <div className="mt-8 space-y-4">
           <h2 className="text-xl font-bold" style={{ color: "var(--accent)" }}>Auspicious Dates</h2>
           {result.auspiciousDays.map((day, i) => (
-            <div key={i} className="card-classic p-6 mb-4">
+          <div key={i} className="card-classic p-4 sm:p-6 mb-4">
               <div className="flex items-center justify-between mb-3">
                 <p className="text-xl font-bold" style={{ color: "var(--accent)" }}>{day.date}</p>
                 <span className="bg-green-50 text-green-700 text-xs px-2 py-1 rounded">Score: {day.score}/100</span>
               </div>
               <p className="text-sm text-stone-500 mb-3">{day.lunarDate}</p>
-              <div className="grid grid-cols-2 gap-3 text-sm">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 text-sm">
                 <div><p className="text-stone-400 text-xs">Heavenly Stems</p><p>{day.ganzhi.year} {day.ganzhi.month} {day.ganzhi.day}</p></div>
                 <div><p className="text-stone-400 text-xs">Jianchu / Constellation</p><p>{day.jianchu} / {day.constellation}</p></div>
               </div>
-              <div className="mt-3 grid grid-cols-2 gap-3 text-sm">
+              <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 text-sm">
                 <div>
                   <p className="text-xs font-medium" style={{ color: "var(--accent)" }}>Suitable 宜</p>
                   <p style={{ color: "var(--accent)" }}>{day.suitable.join("、")}</p>

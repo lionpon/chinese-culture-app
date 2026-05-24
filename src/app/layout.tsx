@@ -3,6 +3,7 @@ import "./globals.css";
 import AppProvider from "@/components/AppProvider";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
 import JsonLd from "@/components/JsonLd";
+import NavMenu from "@/components/NavMenu";
 
 export const metadata: Metadata = {
   title: "Chinese Culture Studio — Create a Chinese Name, Auspicious Date Selection & I Ching Divination",
@@ -36,15 +37,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <a href="/" className="text-lg font-bold tracking-tight" style={{ color: "var(--accent)" }}>
               Chinese Culture Studio
             </a>
-            <nav className="flex gap-5 text-sm text-stone-500">
+            <nav className="hidden sm:flex gap-5 text-sm text-stone-500">
               <a href="/naming" className="hover:text-stone-800 transition-colors">Create a Chinese Name</a>
               <a href="/calendar" className="hover:text-stone-800 transition-colors">Auspicious Date Selection</a>
               <a href="/divination" className="hover:text-stone-800 transition-colors">I Ching Divination</a>
             </nav>
+            <NavMenu />
           </div>
         </header>
-        <main className="max-w-5xl mx-auto px-4 py-8">{children}</main>
-        <footer className="border-t border-stone-200/60 py-8 mt-16">
+        <main className="max-w-5xl mx-auto px-3 sm:px-4 py-6 sm:py-8">{children}</main>
+        <footer className="border-t border-stone-200/60 py-6 sm:py-8 mt-12 sm:mt-16">
           <div className="max-w-5xl mx-auto px-4 text-center text-xs text-stone-400 space-y-2">
             <p>For entertainment and cultural appreciation only. Not professional advice.</p>
             <p>Payments are voluntary contributions for app maintenance — not a purchase of services.</p>

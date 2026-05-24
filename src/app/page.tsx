@@ -1,16 +1,16 @@
 export default function Home() {
   return (
     <div>
-      <section className="text-center py-24">
-        <h1 className="text-4xl font-bold tracking-tight text-stone-900 mb-4">
+      <section className="text-center py-12 sm:py-24">
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-stone-900 mb-4">
           Chinese Culture Studio
         </h1>
-        <p className="text-lg text-stone-500 max-w-lg mx-auto leading-relaxed">
+        <p className="text-base sm:text-lg text-stone-500 max-w-lg mx-auto leading-relaxed">
           Discover the wisdom of ancient Chinese classics through names, dates, and divination
         </p>
       </section>
 
-      <div className="grid md:grid-cols-3 gap-5 max-w-4xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 max-w-4xl mx-auto">
         <FeatureCard
           href="/naming"
           title="Create a Chinese Name"
@@ -28,7 +28,7 @@ export default function Home() {
         />
       </div>
 
-      <section className="mt-20 text-center">
+      <section className="mt-12 sm:mt-20 text-center">
         <p className="text-xs text-stone-400 max-w-md mx-auto leading-relaxed">
           For entertainment and cultural appreciation only. $1 per reading.
           <br />
@@ -43,7 +43,7 @@ export default function Home() {
 
 function FeatureCard({ href, title, desc }: { href: string; title: string; desc: string }) {
   return (
-    <a href={href} className="group block p-6 rounded-xl border border-stone-200 bg-white hover:border-stone-300 hover:shadow-md transition-all">
+    <a href={href} className="group block p-4 sm:p-6 rounded-xl border border-stone-200 bg-white hover:border-stone-300 hover:shadow-md transition-all">
       <h2 className="text-lg font-semibold text-stone-800 mb-2 group-hover:text-stone-900 transition-colors">
         {title}
       </h2>

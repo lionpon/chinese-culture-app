@@ -63,10 +63,10 @@ export default function AdminDashboard() {
   const totalRevenue = reports.reduce((s, r) => s + r.revenue, 0);
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8">
-      <div className="flex items-center justify-between mb-8">
+    <div className="max-w-5xl mx-auto px-3 sm:px-4 py-6 sm:py-8">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6 sm:mb-8">
         <div>
-          <h1 className="text-2xl font-bold" style={{ color: "var(--accent)" }}>Chinese Culture Studio — Admin</h1>
+          <h1 className="text-xl sm:text-2xl font-bold" style={{ color: "var(--accent)" }}>Chinese Culture Studio — Admin</h1>
           <p className="text-stone-500 text-sm">Analytics & Daily Report — auto-generates on visit</p>
         </div>
         <button onClick={() => fetchData(token)} className="px-4 py-2 rounded-lg text-sm btn-primary">
@@ -75,30 +75,30 @@ export default function AdminDashboard() {
       </div>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
-        <div className="card-classic p-5 text-center">
-          <p className="text-3xl font-bold" style={{ color: "var(--accent)" }}>{today?.visits ?? "-"}</p>
-          <p className="text-xs text-stone-500 mt-1">Visits Today</p>
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
+        <div className="card-classic p-3 sm:p-5 text-center">
+          <p className="text-2xl sm:text-3xl font-bold" style={{ color: "var(--accent)" }}>{today?.visits ?? "-"}</p>
+          <p className="text-[10px] sm:text-xs text-stone-500 mt-1">Visits Today</p>
         </div>
-        <div className="card-classic p-5 text-center">
-          <p className="text-3xl font-bold" style={{ color: "var(--gold)" }}>{today?.uniqueCountries ?? "-"}</p>
-          <p className="text-xs text-stone-500 mt-1">Countries Today</p>
+        <div className="card-classic p-3 sm:p-5 text-center">
+          <p className="text-2xl sm:text-3xl font-bold" style={{ color: "var(--gold)" }}>{today?.uniqueCountries ?? "-"}</p>
+          <p className="text-[10px] sm:text-xs text-stone-500 mt-1">Countries Today</p>
         </div>
-        <div className="card-classic p-5 text-center">
-          <p className="text-3xl font-bold" style={{ color: "var(--jade)" }}>${today?.revenue ?? "0"}</p>
-          <p className="text-xs text-stone-500 mt-1">Revenue Today</p>
+        <div className="card-classic p-3 sm:p-5 text-center">
+          <p className="text-2xl sm:text-3xl font-bold" style={{ color: "var(--jade)" }}>${today?.revenue ?? "0"}</p>
+          <p className="text-[10px] sm:text-xs text-stone-500 mt-1">Revenue Today</p>
         </div>
-        <div className="card-classic p-5 text-center">
-          <p className="text-3xl font-bold text-stone-700">{loading ? "..." : totalVisits}</p>
-          <p className="text-xs text-stone-500 mt-1">7-Day Visits</p>
+        <div className="card-classic p-3 sm:p-5 text-center">
+          <p className="text-2xl sm:text-3xl font-bold text-stone-700">{loading ? "..." : totalVisits}</p>
+          <p className="text-[10px] sm:text-xs text-stone-500 mt-1">7-Day Visits</p>
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
         {/* 7-Day Trend */}
-        <div className="card-classic p-6">
+        <div className="card-classic p-4 sm:p-6">
           <h2 className="text-sm font-semibold text-stone-700 mb-4">7-Day Trend</h2>
-          <div className="flex items-end gap-2 h-40">
+          <div className="flex items-end gap-1 sm:gap-2 h-32 sm:h-40">
             {reports.map((r) => (
               <div key={r.date} className="flex-1 flex flex-col items-center gap-1 h-full justify-end">
                 <span className="text-xs text-stone-600">{r.visits}</span>
@@ -113,9 +113,9 @@ export default function AdminDashboard() {
         </div>
 
         {/* Country Distribution */}
-        <div className="card-classic p-6">
+        <div className="card-classic p-4 sm:p-6">
           <h2 className="text-sm font-semibold text-stone-700 mb-4">Country Distribution (7-Day)</h2>
-          <div className="space-y-2 max-h-40 overflow-y-auto">
+          <div className="space-y-2 max-h-48 sm:max-h-60 overflow-y-auto">
             {today?.countries &&
               Object.entries(today.countries)
                 .sort(([, a], [, b]) => b - a)
@@ -133,9 +133,9 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
         {/* Page Visits */}
-        <div className="card-classic p-6">
+        <div className="card-classic p-4 sm:p-6">
           <h2 className="text-sm font-semibold text-stone-700 mb-4">Page Visits Today</h2>
           <div className="space-y-2">
             {today?.pages &&
@@ -154,7 +154,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Revenue by Type */}
-        <div className="card-classic p-6">
+        <div className="card-classic p-4 sm:p-6">
           <h2 className="text-sm font-semibold text-stone-700 mb-4">Revenue by Service</h2>
           <div className="space-y-3">
             {today?.byType &&
@@ -180,7 +180,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* 7-Day Summary Table */}
-      <div className="card-classic p-6">
+      <div className="card-classic p-4 sm:p-6">
         <h2 className="text-sm font-semibold text-stone-700 mb-4">7-Day Summary</h2>
         <div className="overflow-x-auto">
           <table className="w-full text-xs">

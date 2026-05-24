@@ -46,19 +46,19 @@ export default function DivinationPage() {
   return (
     <div className="max-w-lg mx-auto">
       <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold" style={{ color: "var(--accent)" }}>I Ching Divination</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold" style={{ color: "var(--accent)" }}>I Ching Divination</h1>
         <p className="text-stone-500 mt-2">Consult the ancient Book of Changes</p>
         <p className="text-xs mt-1 inline-block px-3 py-1 rounded" style={{ color: "#8B7D5E", backgroundColor: "var(--gold-muted)" }}>$1 per reading</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-5 card-classic p-6">
+      <form onSubmit={handleSubmit} className="space-y-5 card-classic p-4 sm:p-6">
           <div>
             <label className="block text-sm font-medium text-stone-700 mb-1">Your Question (optional)</label>
             <input name="question" placeholder="What would you like guidance on?" className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
           </div>
           <div>
             <label className="block text-sm font-medium text-stone-700 mb-2">Casting Method</label>
-            <div className="grid grid-cols-3 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
               {(["time", "random", "manual"] as const).map(m => (
                 <button key={m} type="button" onClick={() => setMethod(m)}
                   className="py-2 px-3 rounded-lg text-sm border transition-colors border-stone-200 text-stone-500 hover:border-stone-300"
@@ -73,7 +73,7 @@ export default function DivinationPage() {
           {method === "manual" && (
             <div>
               <label className="block text-sm font-medium text-stone-700 mb-1">Three Numbers (1-999)</label>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                 <input name="num1" type="number" placeholder="First" required min={1} max={999} className="border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
                 <input name="num2" type="number" placeholder="Second" required min={1} max={999} className="border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
                 <input name="num3" type="number" placeholder="Third" required min={1} max={999} className="border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
@@ -91,7 +91,7 @@ export default function DivinationPage() {
       {result && (
         <div className="mt-8">
           <h2 className="text-xl font-bold mb-4" style={{ color: "var(--accent)" }}>Your I Ching Reading</h2>
-          <div className="card-classic p-6 space-y-5">
+          <div className="card-classic p-4 sm:p-6 space-y-5">
             {/* Advice — most prominent for quick understanding */}
             <div className="rounded-xl p-5" style={{ background: "linear-gradient(135deg, var(--accent-muted), var(--gold-muted))", border: "1px solid rgba(155,74,58,0.15)" }}>
               <p className="text-xs font-medium mb-2 uppercase tracking-wide" style={{ color: "var(--accent)" }}>Guidance for You</p>
