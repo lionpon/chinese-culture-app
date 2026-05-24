@@ -4,6 +4,7 @@ import AppProvider from "@/components/AppProvider";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
 import JsonLd from "@/components/JsonLd";
 import NavMenu from "@/components/NavMenu";
+import ShareButton from "@/components/ShareButton";
 
 export const metadata: Metadata = {
   title: "Chinese Culture Studio — Create a Chinese Name, Auspicious Date Selection & I Ching Divination",
@@ -42,7 +43,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <a href="/calendar" className="hover:text-stone-800 transition-colors">Auspicious Date Selection</a>
               <a href="/divination" className="hover:text-stone-800 transition-colors">I Ching Divination</a>
             </nav>
-            <NavMenu />
+            <div className="flex items-center gap-2 sm:gap-4">
+              <ShareButton />
+              <NavMenu />
+            </div>
           </div>
         </header>
         <main className="max-w-5xl mx-auto px-3 sm:px-4 py-6 sm:py-8">{children}</main>
