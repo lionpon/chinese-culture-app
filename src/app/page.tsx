@@ -1,3 +1,5 @@
+import DailyHexagram from "@/components/DailyHexagram";
+
 export default function Home() {
   return (
     <div>
@@ -9,6 +11,8 @@ export default function Home() {
           Discover the wisdom of ancient Chinese classics through names, dates, and divination
         </p>
       </section>
+
+      <DailyHexagram />
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 max-w-4xl mx-auto">
         <FeatureCard
