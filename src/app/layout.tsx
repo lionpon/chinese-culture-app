@@ -6,6 +6,7 @@ import AnalyticsTracker from "@/components/AnalyticsTracker";
 import AutoDailyReport from "@/components/AutoDailyReport";
 import JsonLd from "@/components/JsonLd";
 import NavMenu from "@/components/NavMenu";
+import CookieConsent from "@/components/CookieConsent";
 import ShareButton from "@/components/ShareButton";
 
 export const metadata: Metadata = {
@@ -71,6 +72,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <p>2026 Chinese Culture Studio</p>
           </div>
         </footer>
+        <CookieConsent />
         </AppProvider>
       </body>
     </html>
