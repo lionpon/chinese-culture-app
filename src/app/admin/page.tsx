@@ -10,6 +10,8 @@ interface ReportData {
   countries: Record<string, number>;
   pages: Record<string, number>;
   byType: Record<string, { count: number; revenue: number }>;
+  freeTrials: number;
+  freeTrialsByType: Record<string, number>;
 }
 
 const COUNTRY_NAMES: Record<string, string> = {
@@ -30,6 +32,14 @@ function flag(country: string): string {
   return flags[country] || "🌐";
 }
 
+const MODULE_NAMES: Record<string, string> = {
+  naming: "取名", calendar: "择日", divination: "占卜",
+};
+const MODULE_COLORS: Record<string, string> = {
+  naming: "#a855f7", calendar: "#3b82f6", divination: "#f59e0b",
+};
+const MODULES = ["naming", "calendar", "divination"];
+
 export default function AdminDashboard() {
   const [reports, setReports] = useState<ReportData[]>([]);
   const [today, setToday] = useState<ReportData | null>(null);
@@ -46,7 +56,6 @@ export default function AdminDashboard() {
   async function fetchData(t: string) {
     setLoading(true);
     try {
-      // Auto-generate today's report first (upserts), then fetch
       await fetch(`/api/report?token=${t}`, { method: "POST" });
       const [todayRes, reportsRes] = await Promise.all([
         fetch(`/api/report?token=${t}&date=${new Date().toISOString().slice(0, 10)}`),
@@ -59,8 +68,10 @@ export default function AdminDashboard() {
   }
 
   const maxVisits = Math.max(1, ...reports.map((r) => r.visits));
+  const maxFreeByModule = Math.max(1, ...reports.flatMap((r) => Object.values(r.freeTrialsByType || {})));
   const totalVisits = reports.reduce((s, r) => s + r.visits, 0);
   const totalRevenue = reports.reduce((s, r) => s + r.revenue, 0);
+  const totalFreeTrials7d = reports.reduce((s, r) => s + (r.freeTrials || 0), 0);
 
   return (
     <div className="max-w-5xl mx-auto px-3 sm:px-4 py-6 sm:py-8">
@@ -75,7 +86,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 sm:gap-4 mb-6 sm:mb-8">
         <div className="card-classic p-3 sm:p-5 text-center">
           <p className="text-2xl sm:text-3xl font-bold" style={{ color: "var(--accent)" }}>{today?.visits ?? "-"}</p>
           <p className="text-[10px] sm:text-xs text-stone-500 mt-1">Visits Today</p>
@@ -87,6 +98,10 @@ export default function AdminDashboard() {
         <div className="card-classic p-3 sm:p-5 text-center">
           <p className="text-2xl sm:text-3xl font-bold" style={{ color: "var(--jade)" }}>${today?.revenue ?? "0"}</p>
           <p className="text-[10px] sm:text-xs text-stone-500 mt-1">Revenue Today</p>
+        </div>
+        <div className="card-classic p-3 sm:p-5 text-center">
+          <p className="text-2xl sm:text-3xl font-bold text-purple-600">{today?.freeTrials ?? "-"}</p>
+          <p className="text-[10px] sm:text-xs text-stone-500 mt-1">Free Trials Today</p>
         </div>
         <div className="card-classic p-3 sm:p-5 text-center">
           <p className="text-2xl sm:text-3xl font-bold text-stone-700">{loading ? "..." : totalVisits}</p>
@@ -179,35 +194,124 @@ export default function AdminDashboard() {
         </div>
       </div>
 
+      {/* Free Trials Detail Section */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
+        {/* Free Trials by Module Today */}
+        <div className="card-classic p-4 sm:p-6">
+          <h2 className="text-sm font-semibold text-stone-700 mb-4">今日免费试用分布</h2>
+          {today?.freeTrialsByType && Object.keys(today.freeTrialsByType).length > 0 ? (
+            <div className="space-y-3">
+              {MODULES.filter((m) => (today.freeTrialsByType[m] || 0) > 0).map((type) => (
+                <div key={type}>
+                  <div className="flex items-center justify-between text-xs mb-1">
+                    <span className="text-stone-700 font-medium">{MODULE_NAMES[type]}</span>
+                    <span className="font-medium" style={{ color: MODULE_COLORS[type] }}>
+                      {today.freeTrialsByType[type]} 次
+                    </span>
+                  </div>
+                  <div className="w-full h-2 bg-stone-100 rounded-full overflow-hidden">
+                    <div
+                      className="h-full rounded-full transition-all"
+                      style={{
+                        width: `${today.freeTrials > 0 ? ((today.freeTrialsByType[type] || 0) / today.freeTrials) * 100 : 0}%`,
+                        backgroundColor: MODULE_COLORS[type],
+                      }}
+                    />
+                  </div>
+                </div>
+              ))}
+              <div className="border-t border-stone-100 pt-2 mt-2 flex justify-between text-xs">
+                <span className="text-stone-500">合计</span>
+                <span className="text-purple-600 font-bold">{today.freeTrials} 次</span>
+              </div>
+            </div>
+          ) : (
+            <p className="text-xs text-stone-400">今日尚无免费试用。</p>
+          )}
+        </div>
+
+        {/* 7-Day Free Trials by Module Trend */}
+        <div className="card-classic p-4 sm:p-6">
+          <h2 className="text-sm font-semibold text-stone-700 mb-4">7日免费试用趋势（按模块）</h2>
+          {reports.length > 0 ? (
+            <div className="space-y-4">
+              <div className="flex items-end gap-1 sm:gap-1.5 h-32 sm:h-40">
+                {reports.map((r) => {
+                  const dayTotal = (r.freeTrialsByType?.naming || 0) + (r.freeTrialsByType?.calendar || 0) + (r.freeTrialsByType?.divination || 0);
+                  return (
+                    <div key={r.date} className="flex-1 flex flex-col items-center gap-0.5 h-full justify-end">
+                      <span className="text-[10px] text-stone-500">{dayTotal || ""}</span>
+                      <div className="w-full flex flex-col-reverse rounded-t overflow-hidden" style={{ height: `${Math.max(4, (dayTotal / maxFreeByModule) * 100)}%` }}>
+                        {MODULES.map((m) => {
+                          const cnt = r.freeTrialsByType?.[m] || 0;
+                          if (cnt === 0) return null;
+                          const totalForDay = dayTotal || 1;
+                          return (
+                            <div
+                              key={m}
+                              className="w-full transition-all"
+                              style={{ height: `${(cnt / totalForDay) * 100}%`, backgroundColor: MODULE_COLORS[m] }}
+                              title={`${MODULE_NAMES[m]}: ${cnt}`}
+                            />
+                          );
+                        })}
+                      </div>
+                      <span className="text-[10px] text-stone-400">{r.date.slice(5)}</span>
+                    </div>
+                  );
+                })}
+              </div>
+              {/* Legend */}
+              <div className="flex justify-center gap-4 text-[10px]">
+                {MODULES.map((m) => (
+                  <span key={m} className="flex items-center gap-0.5 text-stone-500">
+                    <span className="inline-block w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: MODULE_COLORS[m] }} />
+                    {MODULE_NAMES[m]}
+                  </span>
+                ))}
+              </div>
+              <div className="text-center text-xs text-stone-400">
+                7日合计：{totalFreeTrials7d} 次免费试用
+              </div>
+            </div>
+          ) : (
+            <p className="text-xs text-stone-400">暂无数据。</p>
+          )}
+        </div>
+      </div>
+
       {/* 7-Day Summary Table */}
       <div className="card-classic p-4 sm:p-6">
-        <h2 className="text-sm font-semibold text-stone-700 mb-4">7-Day Summary</h2>
+        <h2 className="text-sm font-semibold text-stone-700 mb-4">7日汇总明细</h2>
         <div className="overflow-x-auto">
           <table className="w-full text-xs">
             <thead>
               <tr className="text-stone-400 border-b border-stone-100">
                 <th className="text-left py-2 font-medium">Date</th>
                 <th className="text-right py-2 font-medium">Visits</th>
+                <th className="text-right py-2 font-medium">Trials</th>
+                <th className="text-right py-2 font-medium">取名</th>
+                <th className="text-right py-2 font-medium">择日</th>
+                <th className="text-right py-2 font-medium">占卜</th>
                 <th className="text-right py-2 font-medium">Countries</th>
                 <th className="text-right py-2 font-medium">Revenue</th>
-                <th className="text-right py-2 font-medium">Top Country</th>
               </tr>
             </thead>
             <tbody>
-              {reports.map((r) => {
-                const topCountry = Object.entries(r.countries || {}).sort(([, a], [, b]) => b - a)[0];
-                return (
+              {reports.map((r) => (
                   <tr key={r.date} className="border-b border-stone-50 hover:bg-stone-50/50">
                     <td className="py-2 text-stone-700">{r.date}</td>
                     <td className="py-2 text-right" style={{ color: "var(--accent)" }}>{r.visits}</td>
+                    <td className="py-2 text-right text-purple-600 font-medium">{r.freeTrials ?? 0}</td>
+                    {MODULES.map((m) => (
+                      <td key={m} className="py-2 text-right text-stone-500">
+                        {r.freeTrialsByType?.[m] || 0}
+                      </td>
+                    ))}
                     <td className="py-2 text-right text-stone-600">{r.uniqueCountries}</td>
                     <td className="py-2 text-right" style={{ color: "var(--jade)" }}>${r.revenue}</td>
-                    <td className="py-2 text-right text-stone-500">
-                      {topCountry ? `${flag(topCountry[0])} ${COUNTRY_NAMES[topCountry[0]] || topCountry[0]}` : "-"}
-                    </td>
                   </tr>
-                );
-              })}
+                ))}
             </tbody>
           </table>
         </div>

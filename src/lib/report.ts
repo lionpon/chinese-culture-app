@@ -8,13 +8,15 @@ export interface ReportData {
   countries: Record<string, number>;
   pages: Record<string, number>;
   byType: Record<string, { count: number; revenue: number }>;
+  freeTrials: number;
+  freeTrialsByType: Record<string, number>;
 }
 
 export async function generateReport(date: string): Promise<ReportData> {
   const dayStart = new Date(date + "T00:00:00.000Z");
   const dayEnd = new Date(date + "T23:59:59.999Z");
 
-  const [visits, purchases] = await Promise.all([
+  const [visits, purchases, freePurchases] = await Promise.all([
     prisma.visit.findMany({
       where: { createdAt: { gte: dayStart, lte: dayEnd } },
     }),
@@ -23,6 +25,13 @@ export async function generateReport(date: string): Promise<ReportData> {
         createdAt: { gte: dayStart, lte: dayEnd },
         status: "completed",
         paid: true,
+      },
+    }),
+    prisma.purchase.findMany({
+      where: {
+        createdAt: { gte: dayStart, lte: dayEnd },
+        status: "completed",
+        paid: false,
       },
     }),
   ]);
@@ -41,6 +50,12 @@ export async function generateReport(date: string): Promise<ReportData> {
     byType[p.type].revenue += 1;
   }
 
+  const freeTrialsByType: Record<string, number> = {};
+  for (const p of freePurchases) {
+    freeTrialsByType[p.type] = (freeTrialsByType[p.type] || 0) + 1;
+  }
+
+  const freeTrials = freePurchases.length;
   const revenue = purchases.length;
 
   await prisma.dailyReport.upsert({
@@ -49,14 +64,14 @@ export async function generateReport(date: string): Promise<ReportData> {
       visits: visits.length,
       uniqueCountries: Object.keys(countries).length,
       revenue,
-      details: JSON.stringify({ countries, pages, byType }),
+      details: JSON.stringify({ countries, pages, byType, freeTrials, freeTrialsByType }),
     },
     create: {
       date,
       visits: visits.length,
       uniqueCountries: Object.keys(countries).length,
       revenue,
-      details: JSON.stringify({ countries, pages, byType }),
+      details: JSON.stringify({ countries, pages, byType, freeTrials, freeTrialsByType }),
     },
   });
 
@@ -68,6 +83,8 @@ export async function generateReport(date: string): Promise<ReportData> {
     countries,
     pages,
     byType,
+    freeTrials,
+    freeTrialsByType,
   };
 }
 
@@ -77,11 +94,16 @@ export async function getReports(days: number = 7): Promise<ReportData[]> {
     take: days,
   });
 
-  return reports.map((r) => ({
-    date: r.date,
-    visits: r.visits,
-    uniqueCountries: r.uniqueCountries,
-    revenue: r.revenue,
-    ...JSON.parse(r.details),
-  }));
+  return reports.map((r) => {
+    const details = JSON.parse(r.details);
+    return {
+      date: r.date,
+      visits: r.visits,
+      uniqueCountries: r.uniqueCountries,
+      revenue: r.revenue,
+      freeTrials: details.freeTrials ?? Object.values(details.freeTrialsByType ?? {}).reduce((a: number, b) => a + (b as number), 0),
+      freeTrialsByType: details.freeTrialsByType ?? {},
+      ...details,
+    };
+  });
 }
