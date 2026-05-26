@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import "./globals.css";
 import AppProvider from "@/components/AppProvider";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
+import AutoDailyReport from "@/components/AutoDailyReport";
 import JsonLd from "@/components/JsonLd";
 import NavMenu from "@/components/NavMenu";
 import ShareButton from "@/components/ShareButton";
@@ -30,6 +32,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className="min-h-screen text-stone-800 antialiased">
+        <Suspense fallback={null}>
+          <AutoDailyReport />
+        </Suspense>
         <JsonLd />
         <AppProvider>
         <AnalyticsTracker />
