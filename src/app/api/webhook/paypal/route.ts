@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
 
     await prisma.purchase.update({
       where: { id: purchaseId },
-      data: { status: "completed", result: JSON.stringify(result) },
+      data: { status: "completed", paid: true, result: JSON.stringify(result) },
     });
   } catch (error) {
     console.error("IPN error:", error);
