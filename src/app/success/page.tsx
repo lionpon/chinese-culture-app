@@ -10,7 +10,7 @@ import CalendarResultView from "@/components/CalendarResultView";
 import DivinationResultView from "@/components/DivinationResultView";
 import LoadingSpinner from "@/components/LoadingSpinner";
 
-type ResultState = "loading" | "completed" | "failed";
+type ResultState = "loading" | "completed" | "failed" | "timeout";
 
 const SERVICE_LINKS: Record<string, { label: string; href: string }> = {
   naming: { label: "Get Another Name", href: "/naming" },
@@ -38,23 +38,21 @@ function SuccessContent() {
       return;
     }
 
-    // Free tier — read remaining from localStorage after the decrement in useCheckout
     if (isFree) {
       const tier = getFreeTier();
       setRemaining(tier.remaining);
     }
 
     let attempts = 0;
-    const maxAttempts = isFree ? 3 : 30; // free results are ready immediately
+    const maxAttempts = isFree ? 3 : 90; // free: 6s, paid: 3min for PayPal IPN delay
 
-    const poll = setInterval(async () => {
+    const checkResult = async () => {
       attempts++;
       try {
         const res = await fetch(`/api/result?purchase_id=${purchaseId}`);
         const data = await res.json();
 
         if (data.status === "completed") {
-          clearInterval(poll);
           setState("completed");
           setType(data.type);
           setResult(data.result);
@@ -62,24 +60,76 @@ function SuccessContent() {
           if (data.type === "naming") setNamingResult(data.result);
           else if (data.type === "calendar") setCalendarResult(data.result);
           else if (data.type === "divination") setDivinationResult(data.result);
+          return true;
         } else if (data.status === "failed") {
-          clearInterval(poll);
           setState("failed");
-          setError(data.error || "Processing failed.");
+          setError(data.error || "Processing failed. Your payment is safe — contact support for a refund if needed.");
+          return true;
         }
       } catch {
-        // Keep polling
+        // Network error, keep polling
       }
 
       if (attempts >= maxAttempts) {
-        clearInterval(poll);
-        setState("failed");
-        setError("Result is taking longer than expected. Please check back or contact support.");
+        setState("timeout");
+        return true;
       }
-    }, 2000);
+      return false;
+    };
 
-    return () => clearInterval(poll);
+    // Run first check immediately
+    checkResult().then((done) => {
+      if (done) return;
+      // Then poll every 2 seconds
+      const poll = setInterval(async () => {
+        const done = await checkResult();
+        if (done) clearInterval(poll);
+      }, 2000);
+      return () => clearInterval(poll);
+    });
   }, [purchaseId, isFree, setNamingResult, setCalendarResult, setDivinationResult]);
+
+  function retry() {
+    setState("loading");
+    let attempts = 0;
+
+    const checkResult = async () => {
+      attempts++;
+      try {
+        const res = await fetch(`/api/result?purchase_id=${purchaseId}`);
+        const data = await res.json();
+
+        if (data.status === "completed") {
+          setState("completed");
+          setType(data.type);
+          setResult(data.result);
+          if (data.type === "naming") setNamingResult(data.result);
+          else if (data.type === "calendar") setCalendarResult(data.result);
+          else if (data.type === "divination") setDivinationResult(data.result);
+          return true;
+        } else if (data.status === "failed") {
+          setState("failed");
+          setError("Processing failed. Your payment is safe — contact support for a refund if needed.");
+          return true;
+        }
+      } catch {}
+
+      if (attempts >= 30) {
+        setState("timeout");
+        return true;
+      }
+      return false;
+    };
+
+    checkResult().then((done) => {
+      if (done) return;
+      const poll = setInterval(async () => {
+        const done = await checkResult();
+        if (done) clearInterval(poll);
+      }, 2000);
+      return () => clearInterval(poll);
+    });
+  }
 
   if (!purchaseId) {
     return <div className="text-center py-16 text-red-600">Missing purchase ID. Please try your request again.</div>;
@@ -91,6 +141,34 @@ function SuccessContent() {
         <LoadingSpinner text={isFree ? "Preparing your reading..." : "Payment received. Preparing your reading..."} />
         <p className="text-center text-xs text-stone-400 -mt-12">
           {isFree ? "Your free reading is ready." : "This usually takes a few seconds."}
+        </p>
+      </div>
+    );
+  }
+
+  if (state === "timeout") {
+    return (
+      <div className="text-center py-16 max-w-md mx-auto">
+        <p className="text-amber-600 font-medium text-lg mb-2">Still Processing</p>
+        <p className="text-stone-500 text-sm mb-2">
+          Your payment has been received, but the result is taking longer than expected to prepare.
+        </p>
+        <p className="text-stone-400 text-xs mb-6">
+          This can happen when PayPal&apos;s notification is delayed. Your payment and reading are safe.
+        </p>
+        <div className="bg-stone-50 rounded-lg p-4 mb-6 text-left text-xs text-stone-500 font-mono break-all">
+          Reference: {purchaseId}
+        </div>
+        <div className="flex gap-3 justify-center">
+          <button onClick={retry} className="px-5 py-2.5 rounded-xl text-sm font-medium btn-primary">
+            Check Again
+          </button>
+          <a href="/" className="px-5 py-2.5 rounded-xl text-sm border border-stone-300 text-stone-500 hover:bg-stone-50 transition-colors">
+            Back to Home
+          </a>
+        </div>
+        <p className="text-xs text-stone-400 mt-6">
+          If the result doesn&apos;t appear within 10 minutes, please contact support with your reference ID.
         </p>
       </div>
     );
