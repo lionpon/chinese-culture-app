@@ -59,6 +59,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <div className="max-w-5xl mx-auto px-4 text-center text-xs text-stone-400 space-y-2">
             <p>For entertainment and cultural appreciation only. Not professional advice.</p>
             <p>Payments are voluntary contributions for app maintenance — not a purchase of services.</p>
+            <p className="flex justify-center gap-4 flex-wrap">
+              <a href="/guide/chinese-name" className="hover:text-stone-500 underline">Chinese Name Guide</a>
+              <a href="/guide/iching" className="hover:text-stone-500 underline">I Ching Guide</a>
+              <a href="/guide/auspicious-dates" className="hover:text-stone-500 underline">Auspicious Dates Guide</a>
+            </p>
             <p className="flex justify-center gap-4">
               <a href="/terms" className="hover:text-stone-500 underline">Terms of Service</a>
               <a href="/privacy" className="hover:text-stone-500 underline">Privacy Policy</a>
