@@ -22,6 +22,7 @@ export async function generateReport(date: string): Promise<ReportData> {
       where: {
         createdAt: { gte: dayStart, lte: dayEnd },
         status: "completed",
+        paid: true,
       },
     }),
   ]);

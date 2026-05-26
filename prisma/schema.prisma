@@ -14,6 +14,7 @@ model Purchase {
   input     String   @db.Text
   result    String?  @db.Text
   status    String   @default("pending")
+  paid      Boolean  @default(true)
   createdAt DateTime @default(now())
 }
 

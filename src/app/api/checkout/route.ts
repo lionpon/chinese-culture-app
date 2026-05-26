@@ -30,6 +30,7 @@ export async function POST(req: NextRequest) {
           type,
           input: JSON.stringify(input),
           status: "completed",
+          paid: false,
           result: JSON.stringify(result),
         },
       });
