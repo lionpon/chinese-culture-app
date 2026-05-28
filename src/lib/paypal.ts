@@ -53,3 +53,35 @@ export async function verifyIPN(rawBody: string): Promise<boolean> {
   const text = await res.text();
   return text.trim() === "VERIFIED";
 }
+
+export async function verifyPDT(tx: string): Promise<{ ok: boolean; paymentStatus?: string; purchaseId?: string; amount?: string }> {
+  const token = process.env.PAYPAL_PDT_TOKEN;
+  if (!token) return { ok: false };
+
+  const body = new URLSearchParams({ cmd: "_notify-synch", tx, at: token });
+
+  const res = await fetch("https://www.paypal.com/cgi-bin/webscr", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: body.toString(),
+  });
+
+  const text = await res.text();
+
+  if (!text.startsWith("SUCCESS")) return { ok: false };
+
+  // Parse PDT response lines: SUCCESS\nkey=value\nkey=value...
+  const lines = text.split("\n");
+  const data: Record<string, string> = {};
+  for (let i = 1; i < lines.length; i++) {
+    const eq = lines[i].indexOf("=");
+    if (eq > 0) data[lines[i].substring(0, eq)] = lines[i].substring(eq + 1);
+  }
+
+  return {
+    ok: true,
+    paymentStatus: data.payment_status,
+    purchaseId: data.custom || data.cm,
+    amount: data.mc_gross,
+  };
+}

@@ -23,6 +23,8 @@ function SuccessContent() {
   const purchaseId = searchParams.get("purchase_id");
   const isFree = searchParams.get("free") === "1";
 
+  const tx = searchParams.get("tx");
+
   const [state, setState] = useState<ResultState>("loading");
   const [type, setType] = useState<string>("");
   const [result, setResult] = useState<NamingResult | CalendarResult | DivinationResult | null>(null);
@@ -43,50 +45,70 @@ function SuccessContent() {
       setRemaining(tier.remaining);
     }
 
-    let attempts = 0;
-    const maxAttempts = isFree ? 3 : 90; // free: 6s, paid: 3min for PayPal IPN delay
-
-    const checkResult = async () => {
-      attempts++;
-      try {
-        const res = await fetch(`/api/result?purchase_id=${purchaseId}`);
-        const data = await res.json();
-
-        if (data.status === "completed") {
-          setState("completed");
-          setType(data.type);
-          setResult(data.result);
-
-          if (data.type === "naming") setNamingResult(data.result);
-          else if (data.type === "calendar") setCalendarResult(data.result);
-          else if (data.type === "divination") setDivinationResult(data.result);
-          return true;
-        } else if (data.status === "failed") {
-          setState("failed");
-          setError(data.error || "Processing failed. Your payment is safe — contact support for a refund if needed.");
-          return true;
-        }
-      } catch {
-        // Network error, keep polling
-      }
-
-      if (attempts >= maxAttempts) {
-        setState("timeout");
+    const showResult = (data: { status: string; type?: string; result?: unknown; error?: string }) => {
+      if (data.status === "completed" && data.type && data.result) {
+        setState("completed");
+        setType(data.type);
+        setResult(data.result as NamingResult | CalendarResult | DivinationResult);
+        if (data.type === "naming") setNamingResult(data.result as NamingResult);
+        else if (data.type === "calendar") setCalendarResult(data.result as CalendarResult);
+        else if (data.type === "divination") setDivinationResult(data.result as DivinationResult);
+        return true;
+      } else if (data.status === "failed") {
+        setState("failed");
+        setError(data.error || "Processing failed. Your payment is safe — contact support for a refund if needed.");
         return true;
       }
       return false;
     };
 
-    // Run first check immediately
-    checkResult().then((done) => {
-      if (done) return;
-      // Then poll every 2 seconds
-      const poll = setInterval(async () => {
-        const done = await checkResult();
-        if (done) clearInterval(poll);
-      }, 2000);
-      return () => clearInterval(poll);
-    });
+    // Paid flow with PDT: try instant verification first
+    if (!isFree && tx) {
+      fetch("/api/pdt", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ purchase_id: purchaseId, tx }),
+      })
+        .then((r) => r.json())
+        .then((data) => {
+          if (showResult(data)) return;
+          startPolling();
+        })
+        .catch(() => startPolling());
+      return;
+    }
+
+    startPolling();
+
+    function startPolling() {
+      let attempts = 0;
+      const maxAttempts = isFree ? 3 : 90;
+
+      const checkResult = async () => {
+        attempts++;
+        try {
+          const res = await fetch(`/api/result?purchase_id=${purchaseId}`);
+          const data = await res.json();
+          if (showResult(data)) return true;
+        } catch {
+          // Network error, keep polling
+        }
+        if (attempts >= maxAttempts) {
+          setState("timeout");
+          return true;
+        }
+        return false;
+      };
+
+      checkResult().then((done) => {
+        if (done) return;
+        const poll = setInterval(async () => {
+          const done = await checkResult();
+          if (done) clearInterval(poll);
+        }, 2000);
+        return () => clearInterval(poll);
+      });
+    }
   }, [purchaseId, isFree, setNamingResult, setCalendarResult, setDivinationResult]);
 
   function retry() {
