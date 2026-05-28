@@ -10,7 +10,7 @@ export default function Home() {
           Chinese Culture Studio
         </h1>
         <p className="text-base sm:text-lg text-stone-500 max-w-lg mx-auto leading-relaxed">
-          Discover the wisdom of ancient Chinese classics through names, dates, and divination
+          Discover the wisdom of ancient Chinese classics through names, dates, divination, and palm reading
         </p>
       </section>
 
@@ -38,7 +38,7 @@ export default function Home() {
         />
         <FeatureCard
           href="/palm-reading"
-          title="Palm Reading · 手相"
+          title="Palm Reading"
           desc="Upload a photo of your palm for a classical palmistry analysis based on Ma Yi Shen Xiang and other ancient texts."
           hideFree
         />
