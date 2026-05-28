@@ -33,12 +33,13 @@ function flag(country: string): string {
 }
 
 const MODULE_NAMES: Record<string, string> = {
-  naming: "取名", calendar: "择日", divination: "占卜",
+  naming: "取名", calendar: "择日", divination: "占卜", "palm-reading": "手相",
 };
 const MODULE_COLORS: Record<string, string> = {
-  naming: "#a855f7", calendar: "#3b82f6", divination: "#f59e0b",
+  naming: "#a855f7", calendar: "#3b82f6", divination: "#f59e0b", "palm-reading": "#ec4899",
 };
-const MODULES = ["naming", "calendar", "divination"];
+const ALL_MODULES = ["naming", "calendar", "divination", "palm-reading"];
+const FREE_MODULES = ["naming", "calendar", "divination"]; // palm-reading is never free
 
 export default function AdminDashboard() {
   const [reports, setReports] = useState<ReportData[]>([]);
@@ -201,7 +202,7 @@ export default function AdminDashboard() {
           <h2 className="text-sm font-semibold text-stone-700 mb-4">今日免费试用分布</h2>
           {today?.freeTrialsByType && Object.keys(today.freeTrialsByType).length > 0 ? (
             <div className="space-y-3">
-              {MODULES.filter((m) => (today.freeTrialsByType[m] || 0) > 0).map((type) => (
+              {FREE_MODULES.filter((m) => (today.freeTrialsByType[m] || 0) > 0).map((type) => (
                 <div key={type}>
                   <div className="flex items-center justify-between text-xs mb-1">
                     <span className="text-stone-700 font-medium">{MODULE_NAMES[type]}</span>
@@ -242,7 +243,7 @@ export default function AdminDashboard() {
                     <div key={r.date} className="flex-1 flex flex-col items-center gap-0.5 h-full justify-end">
                       <span className="text-[10px] text-stone-500">{dayTotal || ""}</span>
                       <div className="w-full flex flex-col-reverse rounded-t overflow-hidden" style={{ height: `${Math.max(4, (dayTotal / maxFreeByModule) * 100)}%` }}>
-                        {MODULES.map((m) => {
+                        {FREE_MODULES.map((m) => {
                           const cnt = r.freeTrialsByType?.[m] || 0;
                           if (cnt === 0) return null;
                           const totalForDay = dayTotal || 1;
@@ -263,7 +264,7 @@ export default function AdminDashboard() {
               </div>
               {/* Legend */}
               <div className="flex justify-center gap-4 text-[10px]">
-                {MODULES.map((m) => (
+                {FREE_MODULES.map((m) => (
                   <span key={m} className="flex items-center gap-0.5 text-stone-500">
                     <span className="inline-block w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: MODULE_COLORS[m] }} />
                     {MODULE_NAMES[m]}
@@ -293,6 +294,7 @@ export default function AdminDashboard() {
                 <th className="text-right py-2 font-medium">取名</th>
                 <th className="text-right py-2 font-medium">择日</th>
                 <th className="text-right py-2 font-medium">占卜</th>
+                <th className="text-right py-2 font-medium">手相</th>
                 <th className="text-right py-2 font-medium">Countries</th>
                 <th className="text-right py-2 font-medium">Revenue</th>
               </tr>
@@ -303,7 +305,7 @@ export default function AdminDashboard() {
                     <td className="py-2 text-stone-700">{r.date}</td>
                     <td className="py-2 text-right" style={{ color: "var(--accent)" }}>{r.visits}</td>
                     <td className="py-2 text-right text-purple-600 font-medium">{r.freeTrials ?? 0}</td>
-                    {MODULES.map((m) => (
+                    {ALL_MODULES.map((m) => (
                       <td key={m} className="py-2 text-right text-stone-500">
                         {r.freeTrialsByType?.[m] || 0}
                       </td>
