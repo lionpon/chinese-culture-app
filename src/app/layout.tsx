@@ -10,12 +10,12 @@ import CookieConsent from "@/components/CookieConsent";
 import ShareButton from "@/components/ShareButton";
 
 export const metadata: Metadata = {
-  title: "Chinese Culture Studio — Create a Chinese Name, Auspicious Date Selection & I Ching Divination",
-  description: "Discover your authentic Chinese name from classical texts, find auspicious dates for weddings and business, or consult the I Ching (Book of Changes). Traditional Chinese culture experiences — $1 per reading.",
-  keywords: ["Chinese name", "I Ching", "divination", "auspicious date", "Chinese zodiac", "five elements", "feng shui", "Chinese culture", "Book of Changes", "Chinese naming"],
+  title: "Chinese Culture Studio — Chinese Name, Auspicious Dates, I Ching & Palm Reading",
+  description: "Discover your authentic Chinese name, find auspicious dates, consult the I Ching, or get a palm reading based on classical Chinese texts. Pay what you want (min $1).",
+  keywords: ["Chinese name", "I Ching", "divination", "auspicious date", "palm reading", "palmistry", "Chinese zodiac", "five elements", "feng shui", "Chinese culture", "Book of Changes", "Chinese naming"],
   openGraph: {
-    title: "Chinese Culture Studio — Chinese Name, Auspicious Dates & I Ching",
-    description: "Discover your authentic Chinese name, find auspicious dates, or consult the I Ching — $1 per reading.",
+    title: "Chinese Culture Studio — Chinese Name, Dates, I Ching & Palm Reading",
+    description: "AI-powered Chinese cultural readings: names, auspicious dates, I Ching divination, and palm reading. Pay what you want (min $1).",
     url: "https://chinese-culture-app.onrender.com",
     siteName: "Chinese Culture Studio",
     locale: "en_US",
@@ -23,8 +23,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Chinese Culture Studio — Chinese Name, Dates & I Ching",
-    description: "Authentic Chinese culture experiences. Chinese naming, auspicious date selection, I Ching divination. $1 each.",
+    title: "Chinese Culture Studio — Names, Dates, I Ching & Palm Reading",
+    description: "AI-powered Chinese cultural readings from classical texts. Chinese naming, date selection, I Ching, palm reading. Pay what you want.",
   },
   robots: { index: true, follow: true },
 };
@@ -44,10 +44,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <a href="/" className="text-lg font-bold tracking-tight text-accent">
               Chinese Culture Studio
             </a>
-            <nav className="hidden sm:flex gap-5 text-sm text-stone-500">
-              <a href="/naming" className="hover:text-stone-800 transition-colors">Create a Chinese Name</a>
-              <a href="/calendar" className="hover:text-stone-800 transition-colors">Auspicious Date Selection</a>
-              <a href="/divination" className="hover:text-stone-800 transition-colors">I Ching Divination</a>
+            <nav className="hidden sm:flex gap-4 text-sm text-stone-500">
+              <a href="/naming" className="hover:text-stone-800 transition-colors">Name</a>
+              <a href="/calendar" className="hover:text-stone-800 transition-colors">Dates</a>
+              <a href="/divination" className="hover:text-stone-800 transition-colors">I Ching</a>
+              <a href="/palm-reading" className="hover:text-stone-800 transition-colors">Palm Reading</a>
             </nav>
             <div className="flex items-center gap-2 sm:gap-4">
               <ShareButton />

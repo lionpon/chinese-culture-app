@@ -32,6 +32,9 @@ export default function NavMenu() {
             <a href="/divination" className="text-sm text-stone-600 hover:text-stone-900 py-1" onClick={() => setOpen(false)}>
               I Ching Divination
             </a>
+            <a href="/palm-reading" className="text-sm text-stone-600 hover:text-stone-900 py-1" onClick={() => setOpen(false)}>
+              Palm Reading
+            </a>
           </div>
         </div>
       )}
