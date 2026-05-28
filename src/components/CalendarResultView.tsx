@@ -6,9 +6,6 @@ export default function CalendarResultView({ result }: { result: CalendarResult 
   return (
     <div>
       <h1 className="text-2xl font-bold text-center mb-6 text-accent">Auspicious Dates</h1>
-      <p className="text-xs text-stone-400 text-center -mt-4 mb-4">
-        For cultural appreciation only. Scheduling decisions are your own responsibility.
-      </p>
       <div className="space-y-4">
         {result.auspiciousDays.map((day, i) => (
           <div key={i} className="card-classic p-4 sm:p-6 mb-4">

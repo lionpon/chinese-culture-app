@@ -46,8 +46,6 @@ export default function Home() {
 
       <section className="mt-12 sm:mt-20 text-center">
         <p className="text-xs text-stone-400 max-w-md mx-auto leading-relaxed">
-          For entertainment and cultural appreciation only. Contributions support ongoing development and server costs.
-          <br />
           <a href="/privacy" className="underline hover:text-stone-500">Privacy Policy</a>
           {" · "}
           <a href="/terms" className="underline hover:text-stone-500">Terms of Service</a>

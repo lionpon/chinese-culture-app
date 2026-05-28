@@ -238,9 +238,6 @@ function SuccessContent() {
         </div>
       )}
 
-      <p className="text-center text-xs text-stone-400 mt-8">
-        For cultural appreciation only. Decisions are your own responsibility. Payments are voluntary contributions for app maintenance.
-      </p>
     </div>
   );
 }

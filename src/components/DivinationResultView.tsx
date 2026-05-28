@@ -10,9 +10,6 @@ export default function DivinationResultView({ result }: { result: DivinationRes
         <div className="rounded-xl p-5 advice-card">
           <p className="text-xs font-medium mb-2 uppercase tracking-wide text-accent">Guidance for You</p>
           <p className="text-sm text-stone-800 leading-relaxed">{result.mainHexagram.advice}</p>
-          <p className="text-xs text-stone-400 mt-3 pt-3 border-t border-stone-300/50">
-            For cultural appreciation only. Decisions are your own responsibility.
-          </p>
         </div>
 
         <div className="text-center border-t border-stone-100 pt-4">
