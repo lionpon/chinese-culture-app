@@ -6,7 +6,7 @@ export default function SpeakButton({ text }: { text: string }) {
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
     u.lang = "zh-CN";
-    u.rate = 0.6;
+    u.rate = 0.4;
     window.speechSynthesis.speak(u);
   }
 

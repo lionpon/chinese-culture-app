@@ -48,7 +48,8 @@ export default function PrivacyPage() {
         result. It is not used for identification, authentication, profiling, or any purpose other
         than this reading.</li>
         <li><strong>No Training:</strong> We do not use your palm image to train machine learning models.
-        Anthropic (our AI provider) does not train on API-submitted data.</li>
+        Our AI provider&apos;s API is accessed via OpenRouter. Neither OpenRouter nor the underlying model
+        provider (Qwen / Alibaba Cloud) train on API-submitted data.</li>
         <li><strong>No Sale or Disclosure:</strong> We do not sell, lease, trade, or otherwise disclose
         your palm image to any third party. It is transmitted only to Anthropic&apos;s API for processing,
         and only over encrypted (TLS) connections.</li>
@@ -121,7 +122,7 @@ export default function PrivacyPage() {
       </p>
       <ul>
         <li><strong>PayPal</strong> — Payment processing. Receives only your payment instrument details (not your cultural input data).</li>
-        <li><strong>Anthropic (Anthropic PBC)</strong> — AI processing for Palm Reading. Receives only your palm image (transmitted over encrypted TLS, never stored by Anthropic, and not used for model training per Anthropic&apos;s API data usage policy).</li>
+        <li><strong>OpenRouter (OpenRouter, Inc.)</strong> — AI API gateway routing Palm Reading requests. Receives only your palm image (transmitted over encrypted TLS). Underlying model inference is performed by <strong>Qwen (Alibaba Cloud)</strong>. Neither OpenRouter nor Alibaba Cloud store API-submitted images or use them for model training.</li>
         <li><strong>Render (Render Services, Inc.)</strong> — US-based cloud hosting. Our application code and database queries run on Render infrastructure.</li>
         <li><strong>Neon, Inc.</strong> — US-based managed PostgreSQL database. All stored data resides in Neon&apos;s us-east-1 region.</li>
       </ul>

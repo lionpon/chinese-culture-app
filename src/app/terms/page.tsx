@@ -43,8 +43,8 @@ export default function TermsPage() {
       <ul>
         <li>Your palm image will be held only in temporary server memory (not on disk or in a database)
         for a maximum of 5 minutes, and will be permanently deleted immediately after your reading is generated.</li>
-        <li>The image is transmitted to Anthropic&apos;s API solely for AI analysis; Anthropic does not store
-        or train on API-submitted data.</li>
+        <li>The image is transmitted via OpenRouter to Qwen&apos;s API (Alibaba Cloud) solely for AI analysis;
+        neither OpenRouter nor Alibaba Cloud store or train on API-submitted data.</li>
         <li>You are at least 18 years of age, or have obtained parental consent to use this service.</li>
         <li>You may withdraw this consent at any time by simply not submitting the form. Once a reading
         is generated, the image no longer exists and cannot be retrieved.</li>

@@ -77,7 +77,7 @@ export default function PalmReadingPage() {
   return (
     <div className="max-w-lg mx-auto">
       <div className="text-center mb-8">
-        <h1 className="text-2xl sm:text-3xl font-bold text-accent">Palm Reading · 手相</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-accent">Palm Reading</h1>
         <p className="text-stone-500 mt-2">
           Upload a photo of your palm for a classical Chinese palmistry analysis
         </p>
