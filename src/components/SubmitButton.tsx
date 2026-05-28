@@ -14,11 +14,11 @@ export default function SubmitButton({
           ? "Processing..."
           : hasFree
             ? `${label} — Free`
-            : `${label} — $1.00`}
+            : `${label} · Support $1`}
       </button>
       {!hasFree && (
         <p className="text-center text-xs text-stone-400">
-          You will be redirected to a secure payment page
+          Your contribution helps maintain the service
         </p>
       )}
     </>

@@ -22,11 +22,42 @@ export default function PrivacyPage() {
         <li><strong>Naming:</strong> Surname, gender, birth year/month/day/hour, style preference.</li>
         <li><strong>Date Selection:</strong> Date range and event type (e.g. wedding, business).</li>
         <li><strong>Divination:</strong> Optional question and casting method.</li>
+        <li><strong>Palm Reading:</strong> Palm photograph, hand side, gender (optional), age range (optional), and an optional question. See Section 3a for detailed handling.</li>
         <li><strong>Visit Analytics:</strong> Page path, country (derived from IP, not stored as IP), and referrer. Your IP address is never persisted.</li>
       </ul>
       <p>
         No account registration, email address, phone number, or full name is collected.
         All input is voluntarily provided by you when submitting a service form.
+      </p>
+
+      <h2>3a. Palm Image Processing (Biometric Data)</h2>
+      <p>
+        The Palm Reading service requires you to upload a photograph of your palm. Palm images may
+        be considered biometric data under certain privacy laws including GDPR Article 9 and the
+        Illinois Biometric Information Privacy Act (BIPA). We take the following measures:
+      </p>
+      <ul>
+        <li><strong>Explicit Consent:</strong> You must check a consent box before submitting. This constitutes
+        your informed, explicit consent to the processing of your palm image for the sole purpose of
+        generating this reading (GDPR Art. 9(2)(a); BIPA §15(b)).</li>
+        <li><strong>No Persistent Storage:</strong> Your palm image is held only in server memory (RAM)
+        for a maximum of 5 minutes. It is never written to disk, never stored in a database, and
+        automatically deleted after the reading is generated. If you abandon the checkout process,
+        the image expires automatically within 5 minutes.</li>
+        <li><strong>Single Purpose:</strong> The image is used exclusively to generate your palm reading
+        result. It is not used for identification, authentication, profiling, or any purpose other
+        than this reading.</li>
+        <li><strong>No Training:</strong> We do not use your palm image to train machine learning models.
+        Anthropic (our AI provider) does not train on API-submitted data.</li>
+        <li><strong>No Sale or Disclosure:</strong> We do not sell, lease, trade, or otherwise disclose
+        your palm image to any third party. It is transmitted only to Anthropic&apos;s API for processing,
+        and only over encrypted (TLS) connections.</li>
+        <li><strong>No Collection of Minors&apos; Data:</strong> We do not knowingly process palm images
+        from individuals under 18 years of age.</li>
+      </ul>
+      <p>
+        You may withdraw consent at any time by not submitting the form. Once a reading is generated,
+        the image has already been deleted — there is nothing retained to revoke consent for.
       </p>
 
       <h2>3. Legal Basis for Processing (GDPR)</h2>
@@ -90,6 +121,7 @@ export default function PrivacyPage() {
       </p>
       <ul>
         <li><strong>PayPal</strong> — Payment processing. Receives only your payment instrument details (not your cultural input data).</li>
+        <li><strong>Anthropic (Anthropic PBC)</strong> — AI processing for Palm Reading. Receives only your palm image (transmitted over encrypted TLS, never stored by Anthropic, and not used for model training per Anthropic&apos;s API data usage policy).</li>
         <li><strong>Render (Render Services, Inc.)</strong> — US-based cloud hosting. Our application code and database queries run on Render infrastructure.</li>
         <li><strong>Neon, Inc.</strong> — US-based managed PostgreSQL database. All stored data resides in Neon&apos;s us-east-1 region.</li>
       </ul>

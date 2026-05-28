@@ -25,7 +25,7 @@ export default function CalendarPage() {
         <h1 className="text-2xl sm:text-3xl font-bold text-accent">Auspicious Date Selection</h1>
         <p className="text-stone-500 mt-2">Based on traditional Chinese almanac principles</p>
         {!hasFreeUses() && (
-          <p className="text-xs mt-1 inline-block px-3 py-1 rounded badge-accent">$1 per reading</p>
+          <p className="text-xs mt-1 inline-block px-3 py-1 rounded badge-accent">$1 contribution</p>
         )}
       </div>
 

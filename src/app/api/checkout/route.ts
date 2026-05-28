@@ -11,12 +11,12 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
     const { type, input, free } = body as { type: string; input: Record<string, unknown>; free?: boolean };
 
-    if (!["naming", "calendar", "divination"].includes(type)) {
+    if (!["naming", "calendar", "divination", "palm-reading"].includes(type)) {
       return NextResponse.json({ error: "Invalid request type" }, { status: 400 });
     }
 
-    if (free) {
-      // Free tier — generate result immediately, no payment
+    if (free && type !== "palm-reading") {
+      // Free tier — generate result immediately, no payment (not available for palm-reading)
       let result: unknown;
       switch (type) {
         case "naming": result = generateNames(input as unknown as NamingInput); break;

@@ -1,12 +1,13 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from "react";
-import type { NamingResult, CalendarResult, DivinationResult } from "@/types";
+import type { NamingResult, CalendarResult, DivinationResult, PalmReadingResult } from "@/types";
 
 interface StoredResults {
   naming: NamingResult | null;
   calendar: CalendarResult | null;
   divination: DivinationResult | null;
+  palmReading: PalmReadingResult | null;
   updatedAt: Partial<Record<keyof StoredResults, number>>;
 }
 
@@ -15,6 +16,7 @@ interface ResultContextValue {
   setNamingResult: (r: NamingResult | null) => void;
   setCalendarResult: (r: CalendarResult | null) => void;
   setDivinationResult: (r: DivinationResult | null) => void;
+  setPalmReadingResult: (r: PalmReadingResult | null) => void;
   clearAll: () => void;
 }
 
@@ -24,6 +26,7 @@ const emptyResults: StoredResults = {
   naming: null,
   calendar: null,
   divination: null,
+  palmReading: null,
   updatedAt: {},
 };
 
@@ -67,6 +70,7 @@ export function ResultProvider({ children }: { children: ReactNode }) {
   const setNamingResult = useCallback((r: NamingResult | null) => update("naming", r), [update]);
   const setCalendarResult = useCallback((r: CalendarResult | null) => update("calendar", r), [update]);
   const setDivinationResult = useCallback((r: DivinationResult | null) => update("divination", r), [update]);
+  const setPalmReadingResult = useCallback((r: PalmReadingResult | null) => update("palmReading", r), [update]);
 
   const clearAll = useCallback(() => {
     setResults({ ...emptyResults });
@@ -74,7 +78,7 @@ export function ResultProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <ResultContext.Provider value={{ results, setNamingResult, setCalendarResult, setDivinationResult, clearAll }}>
+    <ResultContext.Provider value={{ results, setNamingResult, setCalendarResult, setDivinationResult, setPalmReadingResult, clearAll }}>
       {children}
     </ResultContext.Provider>
   );

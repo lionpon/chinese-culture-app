@@ -4,7 +4,8 @@ import { prisma } from "@/lib/db";
 import { generateNames } from "@/lib/naming";
 import { selectAuspiciousDays } from "@/lib/calendar";
 import { performDivination } from "@/lib/divination";
-import type { NamingInput, CalendarInput, DivinationInput } from "@/types";
+import { readPalm } from "@/lib/palm-reading";
+import type { NamingInput, CalendarInput, DivinationInput, PalmReadingInput } from "@/types";
 
 export async function POST(req: NextRequest) {
   try {
@@ -39,6 +40,7 @@ export async function POST(req: NextRequest) {
       case "naming": result = generateNames(input as NamingInput); break;
       case "calendar": result = selectAuspiciousDays(input as CalendarInput); break;
       case "divination": result = performDivination(input as DivinationInput); break;
+      case "palm-reading": result = await readPalm(input as PalmReadingInput); break;
       default:
         return NextResponse.json({ error: "Unknown type" }, { status: 400 });
     }

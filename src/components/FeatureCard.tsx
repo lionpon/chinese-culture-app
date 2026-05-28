@@ -7,10 +7,12 @@ export default function FeatureCard({
   href,
   title,
   desc,
+  hideFree,
 }: {
   href: string;
   title: string;
   desc: string;
+  hideFree?: boolean;
 }) {
   const [remaining, setRemaining] = useState(0);
 
@@ -28,7 +30,11 @@ export default function FeatureCard({
       </h2>
       <p className="text-sm text-stone-500 leading-relaxed">{desc}</p>
       <span className="inline-block mt-4 text-xs font-medium text-stone-400 group-hover:text-stone-500 transition-colors">
-        {remaining > 0 ? "Free trial available →" : "$1 per reading →"}
+        {hideFree
+          ? "Support with $1 →"
+          : remaining > 0
+            ? "Free trial available →"
+            : "Support with $1 →"}
       </span>
     </a>
   );

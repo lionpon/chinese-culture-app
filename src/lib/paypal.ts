@@ -14,9 +14,10 @@ export function getAppUrl(host?: string) {
 }
 
 export const PRODUCT_NAMES: Record<string, string> = {
-  naming: "Chinese Name Reading",
-  calendar: "Auspicious Date Reading",
-  divination: "I Ching Divination Reading",
+  naming: "Support Chinese Culture Studio — Name Reading",
+  calendar: "Support Chinese Culture Studio — Date Selection",
+  divination: "Support Chinese Culture Studio — I Ching Reading",
+  "palm-reading": "Support Chinese Culture Studio — Palm Reading",
 };
 
 export function buildPayPalCheckoutUrl(purchaseId: string, type: string, host?: string): string {

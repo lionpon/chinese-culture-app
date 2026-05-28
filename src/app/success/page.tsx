@@ -4,10 +4,11 @@ import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useResults } from "@/lib/result-store";
 import { getFreeTier } from "@/lib/free-tier";
-import type { NamingResult, CalendarResult, DivinationResult } from "@/types";
+import type { NamingResult, CalendarResult, DivinationResult, PalmReadingResult } from "@/types";
 import NamingResultView from "@/components/NamingResultView";
 import CalendarResultView from "@/components/CalendarResultView";
 import DivinationResultView from "@/components/DivinationResultView";
+import PalmReadingResultView from "@/components/PalmReadingResultView";
 import LoadingSpinner from "@/components/LoadingSpinner";
 
 type ResultState = "loading" | "completed" | "failed" | "timeout";
@@ -16,6 +17,7 @@ const SERVICE_LINKS: Record<string, { label: string; href: string }> = {
   naming: { label: "Get Another Name", href: "/naming" },
   calendar: { label: "Find Another Date", href: "/calendar" },
   divination: { label: "Cast Another Hexagram", href: "/divination" },
+  "palm-reading": { label: "Read Another Palm", href: "/palm-reading" },
 };
 
 function SuccessContent() {
@@ -27,11 +29,11 @@ function SuccessContent() {
 
   const [state, setState] = useState<ResultState>("loading");
   const [type, setType] = useState<string>("");
-  const [result, setResult] = useState<NamingResult | CalendarResult | DivinationResult | null>(null);
+  const [result, setResult] = useState<NamingResult | CalendarResult | DivinationResult | PalmReadingResult | null>(null);
   const [error, setError] = useState("");
   const [remaining, setRemaining] = useState(0);
 
-  const { setNamingResult, setCalendarResult, setDivinationResult } = useResults();
+  const { setNamingResult, setCalendarResult, setDivinationResult, setPalmReadingResult } = useResults();
 
   useEffect(() => {
     if (!purchaseId) {
@@ -53,6 +55,7 @@ function SuccessContent() {
         if (data.type === "naming") setNamingResult(data.result as NamingResult);
         else if (data.type === "calendar") setCalendarResult(data.result as CalendarResult);
         else if (data.type === "divination") setDivinationResult(data.result as DivinationResult);
+        else if (data.type === "palm-reading") setPalmReadingResult(data.result as PalmReadingResult);
         return true;
       } else if (data.status === "failed") {
         setState("failed");
@@ -109,7 +112,7 @@ function SuccessContent() {
         return () => clearInterval(poll);
       });
     }
-  }, [purchaseId, isFree, setNamingResult, setCalendarResult, setDivinationResult]);
+  }, [purchaseId, isFree, tx, setNamingResult, setCalendarResult, setDivinationResult, setPalmReadingResult]);
 
   function retry() {
     setState("loading");
@@ -128,6 +131,7 @@ function SuccessContent() {
           if (data.type === "naming") setNamingResult(data.result);
           else if (data.type === "calendar") setCalendarResult(data.result);
           else if (data.type === "divination") setDivinationResult(data.result);
+          else if (data.type === "palm-reading") setPalmReadingResult(data.result);
           return true;
         } else if (data.status === "failed") {
           setState("failed");
@@ -213,6 +217,7 @@ function SuccessContent() {
       {type === "naming" && result && <NamingResultView result={result as NamingResult} />}
       {type === "calendar" && result && <CalendarResultView result={result as CalendarResult} />}
       {type === "divination" && result && <DivinationResultView result={result as DivinationResult} />}
+      {type === "palm-reading" && result && <PalmReadingResultView result={result as PalmReadingResult} />}
 
       {isFree && (
         <div className="mt-8 card-classic p-5 text-center">

@@ -129,6 +129,64 @@ export interface DivinationResult {
   };
 }
 
+// Palm Reading types
+export interface PalmReadingInput {
+  imageKey: string;
+  gender?: "male" | "female";
+  ageRange?: string;
+  handSide: "left" | "right";
+  question?: string;
+}
+
+export interface LineAnalysis {
+  quality: "excellent" | "good" | "fair" | "poor";
+  description: string;
+  descriptionEn: string;
+  classicalRef?: string;
+}
+
+export interface MountAnalysis {
+  name: string;
+  nameEn: string;
+  condition: string;
+  meaning: string;
+  meaningEn: string;
+}
+
+export interface PalmReadingResult {
+  handType: {
+    element: string;
+    elementEn: string;
+    description: string;
+    descriptionEn: string;
+  };
+  threeLines: {
+    lifeLine: LineAnalysis;
+    headLine: LineAnalysis;
+    heartLine: LineAnalysis;
+  };
+  auxiliaryLines: {
+    fateLine?: LineAnalysis;
+    marriageLine?: LineAnalysis;
+    sunLine?: LineAnalysis;
+    healthLine?: LineAnalysis;
+  };
+  mounts: MountAnalysis[];
+  overallJudgment: {
+    text: string;
+    textEn: string;
+    classicalRef: string;
+  };
+  advice: {
+    career: string;
+    careerEn: string;
+    love: string;
+    loveEn: string;
+    health: string;
+    healthEn: string;
+  };
+}
+
 // Bazi types
 export interface BaziPillar {
   heavenlyStem: string;

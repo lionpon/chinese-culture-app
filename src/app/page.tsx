@@ -20,7 +20,7 @@ export default function Home() {
 
       <DailyHexagram />
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-5 max-w-4xl mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 max-w-6xl mx-auto">
         <FeatureCard
           href="/naming"
           title="Create a Chinese Name"
@@ -36,11 +36,17 @@ export default function Home() {
           title="I Ching Divination"
           desc="Consult the ancient Book of Changes and receive a personalized hexagram reading with clear guidance."
         />
+        <FeatureCard
+          href="/palm-reading"
+          title="Palm Reading · 手相"
+          desc="Upload a photo of your palm for a classical palmistry analysis based on Ma Yi Shen Xiang and other ancient texts."
+          hideFree
+        />
       </div>
 
       <section className="mt-12 sm:mt-20 text-center">
         <p className="text-xs text-stone-400 max-w-md mx-auto leading-relaxed">
-          For entertainment and cultural appreciation only. $1 per reading.
+          For entertainment and cultural appreciation only. Contributions support ongoing development and server costs.
           <br />
           <a href="/privacy" className="underline hover:text-stone-500">Privacy Policy</a>
           {" · "}
