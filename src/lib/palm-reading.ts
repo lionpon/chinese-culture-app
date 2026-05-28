@@ -106,7 +106,7 @@ export async function readPalm(input: PalmReadingInput): Promise<PalmReadingResu
 Provide a complete palm reading based on classical Chinese palmistry texts.`;
 
     const completion = await client.chat.completions.create({
-      model: "anthropic/claude-sonnet-4-6",
+      model: "qwen/qwen2.5-vl-72b-instruct",
       max_tokens: 4096,
       messages: [
         { role: "system", content: SYSTEM_PROMPT },
