@@ -1,8 +1,15 @@
-import Anthropic from "@anthropic-ai/sdk";
+import OpenAI from "openai";
 import { getPalmImage, deletePalmImage } from "./palm-store";
 import type { PalmReadingInput, PalmReadingResult } from "@/types";
 
-const client = new Anthropic();
+const client = new OpenAI({
+  baseURL: "https://openrouter.ai/api/v1",
+  apiKey: process.env.OPENROUTER_API_KEY || "sk-placeholder",
+  defaultHeaders: {
+    "HTTP-Referer": process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
+    "X-Title": "Chinese Culture Studio",
+  },
+});
 
 const SYSTEM_PROMPT = `You are a master of Chinese palmistry (手相学), trained on classical texts including:
 - 《麻衣神相》Ma Yi Shen Xiang (the most influential Chinese physiognomy classic)
@@ -98,28 +105,30 @@ export async function readPalm(input: PalmReadingInput): Promise<PalmReadingResu
 
 Provide a complete palm reading based on classical Chinese palmistry texts.`;
 
-    const msg = await client.messages.create({
-      model: "claude-sonnet-4-6",
+    const completion = await client.chat.completions.create({
+      model: "anthropic/claude-sonnet-4-6",
       max_tokens: 4096,
-      system: SYSTEM_PROMPT,
       messages: [
+        { role: "system", content: SYSTEM_PROMPT },
         {
           role: "user",
           content: [
             { type: "text", text: userMessage },
-            { type: "image", source: { type: "base64", media_type: "image/jpeg", data: imageBase64 } },
+            {
+              type: "image_url",
+              image_url: { url: `data:image/jpeg;base64,${imageBase64}` },
+            },
           ],
         },
       ],
     });
 
-    const text = msg.content.find((c) => c.type === "text");
-    if (!text || text.type !== "text") {
-      throw new Error("No text response from Claude");
+    const text = completion.choices[0]?.message?.content;
+    if (!text) {
+      throw new Error("No text response from model");
     }
 
-    // Parse JSON from response (strip possible markdown code fences)
-    let json = text.text.trim();
+    let json = text.trim();
     if (json.startsWith("```")) {
       json = json.replace(/^```(?:json)?\s*\n?/, "").replace(/\n?\s*```$/, "");
     }
