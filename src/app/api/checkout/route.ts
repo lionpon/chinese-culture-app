@@ -50,7 +50,8 @@ export async function POST(req: NextRequest) {
     });
 
     const host = req.headers.get("host") || undefined;
-    const url = buildPayPalCheckoutUrl(purchase.id, type, host);
+    const amount = typeof input.amount === "number" && input.amount >= 1 ? input.amount : 1;
+    const url = buildPayPalCheckoutUrl(purchase.id, type, host, amount);
 
     return NextResponse.json({ url });
   } catch (error) {

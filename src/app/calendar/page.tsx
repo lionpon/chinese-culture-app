@@ -1,13 +1,15 @@
 "use client";
 
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { useCheckout } from "@/lib/useCheckout";
 import SubmitButton from "@/components/SubmitButton";
+import AmountPicker from "@/components/AmountPicker";
 import FreeTierBadge from "@/components/FreeTierBadge";
 import { hasFreeUses } from "@/lib/free-tier";
 
 export default function CalendarPage() {
   const { loading, checkout } = useCheckout("calendar");
+  const [amount, setAmount] = useState(1);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -16,6 +18,7 @@ export default function CalendarPage() {
       startDate: form.startDate.value,
       endDate: form.endDate.value,
       eventType: form.eventType.value,
+      amount,
     });
   }
 
@@ -62,7 +65,8 @@ export default function CalendarPage() {
           </select>
         </div>
 
-        <SubmitButton loading={loading} label="Find Auspicious Dates" hasFree={hasFreeUses()} />
+        {!hasFreeUses() && <AmountPicker value={amount} onChange={setAmount} />}
+        <SubmitButton loading={loading} label="Find Auspicious Dates" hasFree={hasFreeUses()} amount={amount} />
       </form>
     </div>
   );

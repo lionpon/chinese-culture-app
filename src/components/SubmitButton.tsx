@@ -2,10 +2,12 @@ export default function SubmitButton({
   loading,
   label,
   hasFree,
+  amount = 1,
 }: {
   loading: boolean;
   label: string;
   hasFree?: boolean;
+  amount?: number;
 }) {
   return (
     <>
@@ -14,7 +16,7 @@ export default function SubmitButton({
           ? "Processing..."
           : hasFree
             ? `${label} — Free`
-            : `${label} · Support $1`}
+            : `${label} · Support $${amount}`}
       </button>
       {!hasFree && (
         <p className="text-center text-xs text-stone-400">

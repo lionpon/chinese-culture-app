@@ -20,7 +20,7 @@ export const PRODUCT_NAMES: Record<string, string> = {
   "palm-reading": "Support Chinese Culture Studio — Palm Reading",
 };
 
-export function buildPayPalCheckoutUrl(purchaseId: string, type: string, host?: string): string {
+export function buildPayPalCheckoutUrl(purchaseId: string, type: string, host?: string, amount = 1): string {
   const appUrl = getAppUrl(host);
   const itemName = PRODUCT_NAMES[type] || "Chinese Culture Reading";
 
@@ -29,7 +29,7 @@ export function buildPayPalCheckoutUrl(purchaseId: string, type: string, host?: 
     business: PAYPAL_EMAIL,
     item_name: itemName,
     item_number: type,
-    amount: "1.00",
+    amount: Math.max(1, amount).toFixed(2),
     currency_code: "USD",
     custom: purchaseId,
     return: `${appUrl}/success?purchase_id=${purchaseId}`,

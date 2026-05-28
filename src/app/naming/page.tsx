@@ -1,13 +1,15 @@
 "use client";
 
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { useCheckout } from "@/lib/useCheckout";
 import SubmitButton from "@/components/SubmitButton";
+import AmountPicker from "@/components/AmountPicker";
 import FreeTierBadge from "@/components/FreeTierBadge";
 import { hasFreeUses } from "@/lib/free-tier";
 
 export default function NamingPage() {
   const { loading, checkout } = useCheckout("naming");
+  const [amount, setAmount] = useState(1);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -20,6 +22,7 @@ export default function NamingPage() {
       birthDay: parseInt(form.birthDay.value),
       birthHour: parseInt(form.birthHour.value),
       style: (form.elements.namedItem("style") as HTMLSelectElement).value,
+      amount,
     });
   }
 
@@ -71,7 +74,8 @@ export default function NamingPage() {
           </select>
         </div>
 
-        <SubmitButton loading={loading} label="Generate Name" hasFree={hasFreeUses()} />
+        {!hasFreeUses() && <AmountPicker value={amount} onChange={setAmount} />}
+        <SubmitButton loading={loading} label="Generate Name" hasFree={hasFreeUses()} amount={amount} />
       </form>
     </div>
   );

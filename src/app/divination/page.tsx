@@ -3,12 +3,14 @@
 import { useState, FormEvent } from "react";
 import { useCheckout } from "@/lib/useCheckout";
 import SubmitButton from "@/components/SubmitButton";
+import AmountPicker from "@/components/AmountPicker";
 import FreeTierBadge from "@/components/FreeTierBadge";
 import { hasFreeUses } from "@/lib/free-tier";
 
 export default function DivinationPage() {
   const { loading, checkout } = useCheckout("divination");
   const [method, setMethod] = useState<"time" | "random" | "manual">("time");
+  const [amount, setAmount] = useState(1);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -24,6 +26,7 @@ export default function DivinationPage() {
         parseInt(form.num3.value) || 1,
       ];
     }
+    data.amount = amount;
     await checkout(data);
   }
 
@@ -69,7 +72,8 @@ export default function DivinationPage() {
           </div>
         )}
 
-        <SubmitButton loading={loading} label="Cast Hexagram" hasFree={hasFreeUses()} />
+        {!hasFreeUses() && <AmountPicker value={amount} onChange={setAmount} />}
+        <SubmitButton loading={loading} label="Cast Hexagram" hasFree={hasFreeUses()} amount={amount} />
       </form>
     </div>
   );

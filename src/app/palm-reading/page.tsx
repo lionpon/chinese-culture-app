@@ -4,10 +4,12 @@ import { useState, useRef, FormEvent, useCallback } from "react";
 import Image from "next/image";
 import { useCheckout } from "@/lib/useCheckout";
 import SubmitButton from "@/components/SubmitButton";
+import AmountPicker from "@/components/AmountPicker";
 
 export default function PalmReadingPage() {
   const { loading, checkout } = useCheckout("palm-reading");
   const [image, setImage] = useState<string | null>(null);
+  const [amount, setAmount] = useState(1);
   const [imageKey, setImageKey] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState("");
@@ -71,6 +73,7 @@ export default function PalmReadingPage() {
       gender: form.gender.value || undefined,
       ageRange: form.ageRange.value || undefined,
       question: form.question?.value || undefined,
+      amount,
     });
   }
 
@@ -195,10 +198,12 @@ export default function PalmReadingPage() {
           </label>
         </div>
 
+        <AmountPicker value={amount} onChange={setAmount} />
         <SubmitButton
           loading={loading || uploading}
           label={uploading ? "Uploading..." : loading ? "Processing..." : "Read My Palm"}
           hasFree={false}
+          amount={amount}
         />
       </form>
     </div>
