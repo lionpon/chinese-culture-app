@@ -110,6 +110,7 @@ export default function PalmReadingPage() {
                   {uploading ? "Uploading..." : "Click or drag a photo here"}
                 </p>
                 <p className="text-xs text-stone-400">Make sure your palm lines are clearly visible</p>
+                <p className="text-xs text-accent mt-1">Traditionally: gentlemen offer the left palm (男左), ladies the right (女右)</p>
               </div>
             )}
             <input
@@ -135,11 +136,11 @@ export default function PalmReadingPage() {
           </label>
           <select name="handSide" required className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300">
             <option value="">Select...</option>
-            <option value="left">Left Hand · 左手 (innate tendencies · 先天)</option>
-            <option value="right">Right Hand · 右手 (developed traits · 后天)</option>
+            <option value="left">Left Hand · 左手 (先天手 · 男左)</option>
+            <option value="right">Right Hand · 右手 (先天手 · 女右)</option>
           </select>
           <p className="text-xs text-stone-400 mt-1">
-            In Chinese palmistry, left hand reflects what you&apos;re born with, right hand shows what you&apos;ve developed.
+            In classical palmistry, the dominant hand reflects your innate fate: gentlemen read the left palm (男左), ladies read the right palm (女右). The other hand shows acquired changes.
           </p>
         </div>
 
