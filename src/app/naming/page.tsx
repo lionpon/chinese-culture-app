@@ -4,6 +4,7 @@ import { FormEvent } from "react";
 import { useCheckout } from "@/lib/useCheckout";
 import SubmitButton from "@/components/SubmitButton";
 import FreeTierBadge from "@/components/FreeTierBadge";
+import { hasFreeUses } from "@/lib/free-tier";
 
 export default function NamingPage() {
   const { loading, checkout } = useCheckout("naming");
@@ -27,7 +28,9 @@ export default function NamingPage() {
       <div className="text-center mb-8">
         <h1 className="text-2xl sm:text-3xl font-bold text-accent">Create a Chinese Name</h1>
         <p className="text-stone-500 mt-2">Based on your birth information and classical Chinese texts</p>
-        <p className="text-xs mt-1 inline-block px-3 py-1 rounded badge-accent">$1 per reading</p>
+        {!hasFreeUses() && (
+          <p className="text-xs mt-1 inline-block px-3 py-1 rounded badge-accent">$1 per reading</p>
+        )}
       </div>
 
       <FreeTierBadge />
@@ -68,7 +71,7 @@ export default function NamingPage() {
           </select>
         </div>
 
-        <SubmitButton loading={loading} label="Generate Name — $1.00" />
+        <SubmitButton loading={loading} label="Generate Name" hasFree={hasFreeUses()} />
       </form>
     </div>
   );
