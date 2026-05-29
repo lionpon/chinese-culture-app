@@ -41,6 +41,70 @@ const MODULE_COLORS: Record<string, string> = {
 const ALL_MODULES = ["naming", "calendar", "divination", "palm-reading"];
 const FREE_MODULES = ["naming", "calendar", "divination"]; // palm-reading is never free
 
+function DailySocialPosts() {
+  const [posts, setPosts] = useState<{
+    date: string;
+    posts: { en: Record<string, string>; ru: Record<string, string> };
+  } | null>(null);
+  const [copied, setCopied] = useState("");
+
+  useEffect(() => {
+    fetch("/api/daily-social")
+      .then((r) => r.json())
+      .then(setPosts)
+      .catch(() => {});
+  }, []);
+
+  async function copy(text: string, label: string) {
+    await navigator.clipboard.writeText(text);
+    setCopied(label);
+    setTimeout(() => setCopied(""), 2000);
+  }
+
+  if (!posts) return null;
+
+  const platforms = [
+    { key: "twitter", label: "X / Twitter", icon: "𝕏" },
+    { key: "telegram", label: "Telegram", icon: "📣" },
+    { key: "reddit", label: "Reddit", icon: "💬" },
+  ];
+
+  return (
+    <div className="card-classic p-4 sm:p-6 mb-6 sm:mb-8">
+      <h2 className="text-sm font-semibold text-stone-700 mb-4">
+        📋 Daily Social Posts — {posts.date}
+      </h2>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {(["en", "ru"] as const).map((lang) => (
+          <div key={lang}>
+            <h3 className="text-xs font-semibold text-stone-500 uppercase mb-3">
+              {lang === "en" ? "🇬🇧 English" : "🇷🇺 Русский"}
+            </h3>
+            <div className="space-y-3">
+              {platforms.map(({ key, label, icon }) => (
+                <div key={key} className="bg-stone-50 rounded-lg p-3">
+                  <div className="flex items-center justify-between mb-1.5">
+                    <span className="text-xs font-medium text-stone-600">{icon} {label}</span>
+                    <button
+                      onClick={() => copy(posts.posts[lang][key], `${lang}-${key}`)}
+                      className="text-xs px-2 py-0.5 rounded bg-stone-200 hover:bg-stone-300 text-stone-600 transition-colors"
+                    >
+                      {copied === `${lang}-${key}` ? "Copied!" : "Copy"}
+                    </button>
+                  </div>
+                  <pre className="text-xs text-stone-700 whitespace-pre-wrap leading-relaxed font-sans">
+                    {posts.posts[lang][key]}
+                  </pre>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function AdminDashboard() {
   const [reports, setReports] = useState<ReportData[]>([]);
   const [today, setToday] = useState<ReportData | null>(null);
@@ -318,6 +382,9 @@ export default function AdminDashboard() {
           </table>
         </div>
       </div>
+
+      {/* Daily Social Posts */}
+      <DailySocialPosts />
 
       <p className="text-center text-xs text-stone-400 mt-8">
         Admin dashboard — protected by token. Set <code className="bg-stone-100 px-1 rounded">ADMIN_TOKEN</code> in your environment variables.
