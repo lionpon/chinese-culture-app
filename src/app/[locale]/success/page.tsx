@@ -2,6 +2,7 @@
 
 import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useResults } from "@/lib/result-store";
 import { getFreeTier } from "@/lib/free-tier";
 import type { NamingResult, CalendarResult, DivinationResult, PalmReadingResult } from "@/types";
@@ -10,21 +11,15 @@ import CalendarResultView from "@/components/CalendarResultView";
 import DivinationResultView from "@/components/DivinationResultView";
 import PalmReadingResultView from "@/components/PalmReadingResultView";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import { Link } from "@/navigation";
 
 type ResultState = "loading" | "completed" | "failed" | "timeout";
 
-const SERVICE_LINKS: Record<string, { label: string; href: string }> = {
-  naming: { label: "Get Another Name", href: "/naming" },
-  calendar: { label: "Find Another Date", href: "/calendar" },
-  divination: { label: "Cast Another Hexagram", href: "/divination" },
-  "palm-reading": { label: "Read Another Palm", href: "/palm-reading" },
-};
-
 function SuccessContent() {
+  const t = useTranslations("success");
   const searchParams = useSearchParams();
   const purchaseId = searchParams.get("purchase_id");
   const isFree = searchParams.get("free") === "1";
-
   const tx = searchParams.get("tx");
 
   const [state, setState] = useState<ResultState>("loading");
@@ -37,7 +32,7 @@ function SuccessContent() {
 
   useEffect(() => {
     if (!purchaseId) {
-      setError("Missing purchase ID. Please try again.");
+      setError(t("missingId"));
       setState("failed");
       return;
     }
@@ -59,13 +54,12 @@ function SuccessContent() {
         return true;
       } else if (data.status === "failed") {
         setState("failed");
-        setError(data.error || "Processing failed. Your payment is safe — contact support for a refund if needed.");
+        setError(data.error || t("failedBody"));
         return true;
       }
       return false;
     };
 
-    // Paid flow with PDT: try instant verification first
     if (!isFree && tx) {
       fetch("/api/pdt", {
         method: "POST",
@@ -93,9 +87,7 @@ function SuccessContent() {
           const res = await fetch(`/api/result?purchase_id=${purchaseId}`);
           const data = await res.json();
           if (showResult(data)) return true;
-        } catch {
-          // Network error, keep polling
-        }
+        } catch {}
         if (attempts >= maxAttempts) {
           setState("timeout");
           return true;
@@ -112,7 +104,7 @@ function SuccessContent() {
         return () => clearInterval(poll);
       });
     }
-  }, [purchaseId, isFree, tx, setNamingResult, setCalendarResult, setDivinationResult, setPalmReadingResult]);
+  }, [purchaseId, isFree, tx, setNamingResult, setCalendarResult, setDivinationResult, setPalmReadingResult, t]);
 
   function retry() {
     setState("loading");
@@ -123,7 +115,6 @@ function SuccessContent() {
       try {
         const res = await fetch(`/api/result?purchase_id=${purchaseId}`);
         const data = await res.json();
-
         if (data.status === "completed") {
           setState("completed");
           setType(data.type);
@@ -135,11 +126,10 @@ function SuccessContent() {
           return true;
         } else if (data.status === "failed") {
           setState("failed");
-          setError("Processing failed. Your payment is safe — contact support for a refund if needed.");
+          setError(t("failedBody"));
           return true;
         }
       } catch {}
-
       if (attempts >= 30) {
         setState("timeout");
         return true;
@@ -157,16 +147,23 @@ function SuccessContent() {
     });
   }
 
+  const SERVICE_LINKS: Record<string, { label: string; href: string }> = {
+    naming: { label: t("anotherName"), href: "/naming" },
+    calendar: { label: t("anotherDate"), href: "/calendar" },
+    divination: { label: t("anotherHexagram"), href: "/divination" },
+    "palm-reading": { label: t("anotherPalm"), href: "/palm-reading" },
+  };
+
   if (!purchaseId) {
-    return <div className="text-center py-16 text-red-600">Missing purchase ID. Please try your request again.</div>;
+    return <div className="text-center py-16 text-red-600">{t("missingId")}</div>;
   }
 
   if (state === "loading") {
     return (
       <div>
-        <LoadingSpinner text={isFree ? "Preparing your reading..." : "Payment received. Preparing your reading..."} />
+        <LoadingSpinner text={isFree ? t("preparing") : t("paidPreparing")} />
         <p className="text-center text-xs text-stone-400 -mt-12">
-          {isFree ? "Your free reading is ready." : "This usually takes a few seconds."}
+          {isFree ? t("freeReady") : t("waitSubtitle")}
         </p>
       </div>
     );
@@ -175,27 +172,21 @@ function SuccessContent() {
   if (state === "timeout") {
     return (
       <div className="text-center py-16 max-w-md mx-auto">
-        <p className="text-amber-600 font-medium text-lg mb-2">Still Processing</p>
-        <p className="text-stone-500 text-sm mb-2">
-          Your payment has been received, but the result is taking longer than expected to prepare.
-        </p>
-        <p className="text-stone-400 text-xs mb-6">
-          This can happen when PayPal&apos;s notification is delayed. Your payment and reading are safe.
-        </p>
+        <p className="text-amber-600 font-medium text-lg mb-2">{t("timeoutTitle")}</p>
+        <p className="text-stone-500 text-sm mb-2">{t("timeoutBody")}</p>
+        <p className="text-stone-400 text-xs mb-6">{t("timeoutDetail")}</p>
         <div className="bg-stone-50 rounded-lg p-4 mb-6 text-left text-xs text-stone-500 font-mono break-all">
-          Reference: {purchaseId}
+          {t("reference", { id: purchaseId })}
         </div>
         <div className="flex gap-3 justify-center">
           <button onClick={retry} className="px-5 py-2.5 rounded-xl text-sm font-medium btn-primary">
-            Check Again
+            {t("checkAgain")}
           </button>
-          <a href="/" className="px-5 py-2.5 rounded-xl text-sm border border-stone-300 text-stone-500 hover:bg-stone-50 transition-colors">
-            Back to Home
-          </a>
+          <Link href="/" className="px-5 py-2.5 rounded-xl text-sm border border-stone-300 text-stone-500 hover:bg-stone-50 transition-colors">
+            {t("backHome")}
+          </Link>
         </div>
-        <p className="text-xs text-stone-400 mt-6">
-          If the result doesn&apos;t appear within 10 minutes, please contact support with your reference ID.
-        </p>
+        <p className="text-xs text-stone-400 mt-6">{t("timeoutFooter")}</p>
       </div>
     );
   }
@@ -203,9 +194,9 @@ function SuccessContent() {
   if (state === "failed") {
     return (
       <div className="text-center py-16">
-        <p className="text-red-600 font-medium">Something went wrong</p>
-        <p className="text-stone-500 text-sm mt-2">{error || "Please contact support."}</p>
-        <a href="/" className="inline-block mt-4 text-stone-600 underline text-sm hover:text-stone-800">Return to Home</a>
+        <p className="text-red-600 font-medium">{t("failedTitle")}</p>
+        <p className="text-stone-500 text-sm mt-2">{error || t("failedBody")}</p>
+        <Link href="/" className="inline-block mt-4 text-stone-600 underline text-sm hover:text-stone-800">{t("returnHome")}</Link>
       </div>
     );
   }
@@ -223,21 +214,17 @@ function SuccessContent() {
         <div className="mt-8 card-classic p-5 text-center">
           <p className="text-sm font-medium text-accent mb-2">
             {remaining > 0
-              ? `Free reading used — ${remaining} free ${remaining === 1 ? "use" : "uses"} remaining`
-              : "That was your last free reading"}
+              ? t("freeBanner", { n: remaining })
+              : t("freeLast")}
           </p>
-          <p className="text-xs text-stone-500 mb-4">
-            Each personalized reading requires computation based on classical texts and traditional methods.
-            Future readings are $1 each.
-          </p>
+          <p className="text-xs text-stone-500 mb-4">{t("freeText")}</p>
           {serviceLink && (
-            <a href={serviceLink.href} className="inline-block px-5 py-2.5 rounded-xl text-sm font-medium btn-primary">
-              {serviceLink.label} — $1.00
-            </a>
+            <Link href={serviceLink.href} className="inline-block px-5 py-2.5 rounded-xl text-sm font-medium btn-primary">
+              {serviceLink.label}
+            </Link>
           )}
         </div>
       )}
-
     </div>
   );
 }

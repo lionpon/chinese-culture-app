@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
+import { Link } from "@/navigation";
 import { getFreeTier } from "@/lib/free-tier";
 
 export default function FeatureCard({
@@ -14,6 +16,7 @@ export default function FeatureCard({
   desc: string;
   hideFree?: boolean;
 }) {
+  const t = useTranslations("home");
   const [remaining, setRemaining] = useState(0);
 
   useEffect(() => {
@@ -21,7 +24,7 @@ export default function FeatureCard({
   }, []);
 
   return (
-    <a
+    <Link
       href={href}
       className="group block p-4 sm:p-6 rounded-xl border border-stone-200 bg-white hover:border-stone-300 hover:shadow-md transition-all"
     >
@@ -31,11 +34,11 @@ export default function FeatureCard({
       <p className="text-sm text-stone-500 leading-relaxed">{desc}</p>
       <span className="inline-block mt-4 text-xs font-medium text-stone-400 group-hover:text-stone-500 transition-colors">
         {hideFree
-          ? "Support with $1 →"
+          ? t("cta.paid")
           : remaining > 0
-            ? "Free trial available →"
-            : "Support with $1 →"}
+            ? t("cta.free")
+            : t("cta.paid")}
       </span>
-    </a>
+    </Link>
   );
 }

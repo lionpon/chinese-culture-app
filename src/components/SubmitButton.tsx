@@ -1,3 +1,7 @@
+"use client";
+
+import { useTranslations } from "next-intl";
+
 export default function SubmitButton({
   loading,
   label,
@@ -9,18 +13,20 @@ export default function SubmitButton({
   hasFree?: boolean;
   amount?: number;
 }) {
+  const t = useTranslations("common");
+
   return (
     <>
       <button type="submit" disabled={loading} className="w-full py-3 btn-primary">
         {loading
-          ? "Processing..."
+          ? t("submit.processing")
           : hasFree
-            ? `${label} — Free`
-            : `${label} · Support $${amount}`}
+            ? t("submit.free", { label })
+            : t("submit.paid", { label, amount })}
       </button>
       {!hasFree && (
         <p className="text-center text-xs text-stone-400">
-          Your contribution helps maintain the service
+          {t("submit.helper")}
         </p>
       )}
     </>

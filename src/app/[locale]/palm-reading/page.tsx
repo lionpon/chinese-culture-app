@@ -2,11 +2,14 @@
 
 import { useState, useRef, FormEvent, useCallback } from "react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { useCheckout } from "@/lib/useCheckout";
 import SubmitButton from "@/components/SubmitButton";
 import AmountPicker from "@/components/AmountPicker";
+import { Link } from "@/navigation";
 
 export default function PalmReadingPage() {
+  const t = useTranslations("palm");
   const { loading, checkout } = useCheckout("palm-reading");
   const [image, setImage] = useState<string | null>(null);
   const [amount, setAmount] = useState(1);
@@ -18,11 +21,11 @@ export default function PalmReadingPage() {
 
   const handleFile = useCallback(async (file: File) => {
     if (!file.type.startsWith("image/")) {
-      setUploadError("Please select an image file.");
+      setUploadError(t("errors.noImage"));
       return;
     }
     if (file.size > 8 * 1024 * 1024) {
-      setUploadError("Image must be under 8MB.");
+      setUploadError(t("errors.tooBig"));
       return;
     }
 
@@ -48,14 +51,14 @@ export default function PalmReadingPage() {
           setImageKey(data.imageKey);
         }
       } catch {
-        setUploadError("Upload failed. Please try again.");
+        setUploadError(t("errors.uploadFailed"));
         setImage(null);
       } finally {
         setUploading(false);
       }
     };
     reader.readAsDataURL(file);
-  }, []);
+  }, [t]);
 
   function handleDrop(e: React.DragEvent) {
     e.preventDefault();
@@ -80,20 +83,15 @@ export default function PalmReadingPage() {
   return (
     <div className="max-w-lg mx-auto">
       <div className="text-center mb-8">
-        <h1 className="text-2xl sm:text-3xl font-bold text-accent">Palm Reading</h1>
-        <p className="text-stone-500 mt-2">
-          Upload a photo of your palm for a classical Chinese palmistry analysis
-        </p>
-        <p className="text-xs mt-1 inline-block px-3 py-1 rounded badge-accent">
-          $1 contribution
-        </p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-accent">{t("title")}</h1>
+        <p className="text-stone-500 mt-2">{t("subtitle")}</p>
+        <p className="text-xs mt-1 inline-block px-3 py-1 rounded badge-accent">{t("badge")}</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-5 card-classic p-4 sm:p-6">
-        {/* Image Upload */}
         <div>
           <label className="block text-sm font-medium text-stone-700 mb-2">
-            Palm Photo <span className="text-red-400">*</span>
+            {t("form.photo")} <span className="text-red-400">*</span>
           </label>
           <div
             onDrop={handleDrop}
@@ -110,10 +108,10 @@ export default function PalmReadingPage() {
             ) : (
               <div>
                 <p className="text-sm text-stone-500 mb-1">
-                  {uploading ? "Uploading..." : "Click or drag a photo here"}
+                  {uploading ? t("form.uploading") : t("form.uploadText")}
                 </p>
-                <p className="text-xs text-stone-400">Make sure your palm lines are clearly visible</p>
-                <p className="text-xs text-accent mt-1">Traditionally: gentlemen offer the left palm (男左), ladies the right (女右)</p>
+                <p className="text-xs text-stone-400">{t("form.helperLines")}</p>
+                <p className="text-xs text-accent mt-1">{t("form.helperHand")}</p>
               </div>
             )}
             <input
@@ -132,56 +130,47 @@ export default function PalmReadingPage() {
           )}
         </div>
 
-        {/* Hand Side */}
         <div>
           <label className="block text-sm font-medium text-stone-700 mb-1">
-            Which hand is this? <span className="text-red-400">*</span>
+            {t("form.whichHand")} <span className="text-red-400">*</span>
           </label>
           <select name="handSide" required className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300">
-            <option value="">Select...</option>
-            <option value="left">Left Hand · 左手 (先天手 · 男左)</option>
-            <option value="right">Right Hand · 右手 (先天手 · 女右)</option>
+            <option value="">{t("form.handPlaceholder")}</option>
+            <option value="left">{t("form.leftHand")}</option>
+            <option value="right">{t("form.rightHand")}</option>
           </select>
-          <p className="text-xs text-stone-400 mt-1">
-            In classical palmistry, the dominant hand reflects your innate fate: gentlemen read the left palm (男左), ladies read the right palm (女右). The other hand shows acquired changes.
-          </p>
+          <p className="text-xs text-stone-400 mt-1">{t("form.handHelper")}</p>
         </div>
 
-        {/* Gender */}
         <div>
-          <label className="block text-sm font-medium text-stone-700 mb-1">Gender (optional)</label>
+          <label className="block text-sm font-medium text-stone-700 mb-1">{t("form.gender")}</label>
           <select name="gender" className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300">
-            <option value="">Prefer not to say</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
+            <option value="">{t("form.preferNot")}</option>
+            <option value="male">{t("form.male")}</option>
+            <option value="female">{t("form.female")}</option>
           </select>
         </div>
 
-        {/* Age Range */}
         <div>
-          <label className="block text-sm font-medium text-stone-700 mb-1">Age Range (optional)</label>
+          <label className="block text-sm font-medium text-stone-700 mb-1">{t("form.age")}</label>
           <select name="ageRange" className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300">
-            <option value="">Prefer not to say</option>
-            <option value="under 18">Under 18</option>
-            <option value="18-30">18-30</option>
-            <option value="30-50">30-50</option>
-            <option value="50+">50+</option>
+            <option value="">{t("form.preferNot")}</option>
+            <option value="under 18">{t("form.under18")}</option>
+            <option value="18-30">{t("form.age18_30")}</option>
+            <option value="30-50">{t("form.age30_50")}</option>
+            <option value="50+">{t("form.age50plus")}</option>
           </select>
         </div>
 
-        {/* Question */}
         <div>
-          <label className="block text-sm font-medium text-stone-700 mb-1">
-            What would you like to know? (optional)
-          </label>
+          <label className="block text-sm font-medium text-stone-700 mb-1">{t("form.question")}</label>
           <input
             name="question"
-            placeholder="e.g. What does my career line say?"
+            placeholder={t("form.questionPlaceholder")}
             className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300"
           />
         </div>
 
-        {/* Privacy Consent */}
         <div className="flex items-start gap-2">
           <input
             type="checkbox"
@@ -192,16 +181,15 @@ export default function PalmReadingPage() {
             required
           />
           <label htmlFor="consent" className="text-xs text-stone-500 leading-relaxed">
-            I understand that my palm photo will be processed to generate this reading and will be
-            immediately deleted afterward. The image is never stored on disk or shared with third parties.{" "}
-            <a href="/privacy" className="underline hover:text-stone-700">Privacy Policy</a>
+            {t("form.consent")}{" "}
+            <Link href="/privacy" className="underline hover:text-stone-700">{t("form.consentLink")}</Link>
           </label>
         </div>
 
         <AmountPicker value={amount} onChange={setAmount} />
         <SubmitButton
           loading={loading || uploading}
-          label={uploading ? "Uploading..." : loading ? "Processing..." : "Read My Palm"}
+          label={uploading ? t("form.uploading") : loading ? t("form.processing") : t("form.submit")}
           hasFree={false}
           amount={amount}
         />

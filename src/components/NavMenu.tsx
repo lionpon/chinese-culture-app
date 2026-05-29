@@ -1,8 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
+import { Link } from "@/navigation";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 export default function NavMenu() {
+  const t = useTranslations("common");
   const [open, setOpen] = useState(false);
 
   return (
@@ -10,7 +14,7 @@ export default function NavMenu() {
       <button
         onClick={() => setOpen(!open)}
         className="p-2 -mr-2 text-stone-500 hover:text-stone-800 transition-colors"
-        aria-label="Toggle navigation menu"
+        aria-label={t("toggleMenu")}
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           {open ? (
@@ -23,18 +27,21 @@ export default function NavMenu() {
       {open && (
         <div className="absolute top-14 left-0 right-0 bg-white/95 backdrop-blur-md border-b border-stone-200 shadow-lg">
           <div className="flex flex-col p-4 space-y-3">
-            <a href="/naming" className="text-sm text-stone-600 hover:text-stone-900 py-1" onClick={() => setOpen(false)}>
-              Create a Chinese Name
-            </a>
-            <a href="/calendar" className="text-sm text-stone-600 hover:text-stone-900 py-1" onClick={() => setOpen(false)}>
-              Auspicious Date Selection
-            </a>
-            <a href="/divination" className="text-sm text-stone-600 hover:text-stone-900 py-1" onClick={() => setOpen(false)}>
-              I Ching Divination
-            </a>
-            <a href="/palm-reading" className="text-sm text-stone-600 hover:text-stone-900 py-1" onClick={() => setOpen(false)}>
-              Palm Reading
-            </a>
+            <Link href="/naming" className="text-sm text-stone-600 hover:text-stone-900 py-1" onClick={() => setOpen(false)}>
+              {t("nav.createName")}
+            </Link>
+            <Link href="/calendar" className="text-sm text-stone-600 hover:text-stone-900 py-1" onClick={() => setOpen(false)}>
+              {t("nav.dateSelection")}
+            </Link>
+            <Link href="/divination" className="text-sm text-stone-600 hover:text-stone-900 py-1" onClick={() => setOpen(false)}>
+              {t("nav.ichingDivination")}
+            </Link>
+            <Link href="/palm-reading" className="text-sm text-stone-600 hover:text-stone-900 py-1" onClick={() => setOpen(false)}>
+              {t("nav.palmMenu")}
+            </Link>
+            <div className="pt-2 border-t border-stone-100">
+              <LanguageSwitcher />
+            </div>
           </div>
         </div>
       )}

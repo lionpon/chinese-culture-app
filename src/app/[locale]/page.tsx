@@ -1,16 +1,22 @@
+"use client";
+
+import { useTranslations } from "next-intl";
 import DailyHexagram from "@/components/DailyHexagram";
 import FreeTierBadge from "@/components/FreeTierBadge";
 import FeatureCard from "@/components/FeatureCard";
+import { Link } from "@/navigation";
 
-export default function Home() {
+export default function HomePage() {
+  const t = useTranslations("home");
+
   return (
     <div>
       <section className="text-center py-12 sm:py-24">
         <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-stone-900 mb-4">
-          Chinese Culture Studio
+          {t("title")}
         </h1>
         <p className="text-base sm:text-lg text-stone-500 max-w-lg mx-auto leading-relaxed">
-          Discover the wisdom of ancient Chinese classics through names, dates, divination, and palm reading
+          {t("subtitle")}
         </p>
       </section>
 
@@ -23,35 +29,34 @@ export default function Home() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 max-w-6xl mx-auto">
         <FeatureCard
           href="/naming"
-          title="Create a Chinese Name"
-          desc="Generate your authentic Chinese name based on the Five Elements and I Ching principles, sourced from classical texts."
+          title={t("features.naming.title")}
+          desc={t("features.naming.desc")}
         />
         <FeatureCard
           href="/calendar"
-          title="Auspicious Date Selection"
-          desc="Find the most favorable dates for weddings, business, travel, and more using traditional almanac methods."
+          title={t("features.calendar.title")}
+          desc={t("features.calendar.desc")}
         />
         <FeatureCard
           href="/divination"
-          title="I Ching Divination"
-          desc="Consult the ancient Book of Changes and receive a personalized hexagram reading with clear guidance."
+          title={t("features.divination.title")}
+          desc={t("features.divination.desc")}
         />
         <FeatureCard
           href="/palm-reading"
-          title="Palm Reading"
-          desc="Upload a photo of your palm for a classical palmistry analysis based on Ma Yi Shen Xiang and other ancient texts."
+          title={t("features.palm.title")}
+          desc={t("features.palm.desc")}
           hideFree
         />
       </div>
 
       <section className="mt-12 sm:mt-20 text-center">
         <p className="text-xs text-stone-400 max-w-md mx-auto leading-relaxed">
-          <a href="/privacy" className="underline hover:text-stone-500">Privacy Policy</a>
+          <Link href="/privacy" className="underline hover:text-stone-500">{t("privacy")}</Link>
           {" · "}
-          <a href="/terms" className="underline hover:text-stone-500">Terms of Service</a>
+          <Link href="/terms" className="underline hover:text-stone-500">{t("terms")}</Link>
         </p>
       </section>
     </div>
   );
 }
-

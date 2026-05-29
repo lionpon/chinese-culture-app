@@ -1,0 +1,455 @@
+{
+  "common": {
+    "siteName": "Chinese Culture Studio",
+    "nav": {
+      "name": "Name",
+      "dates": "Dates",
+      "iching": "I Ching",
+      "palmReading": "Palm Reading",
+      "createName": "Create a Chinese Name",
+      "dateSelection": "Auspicious Date Selection",
+      "ichingDivination": "I Ching Divination",
+      "palmMenu": "Palm Reading"
+    },
+    "footer": {
+      "disclaimer": "For entertainment and cultural appreciation only. Not professional advice.",
+      "paymentNote": "Payments are voluntary contributions for app maintenance — not a purchase of services.",
+      "guides": {
+        "chineseName": "Chinese Name Guide",
+        "iching": "I Ching Guide",
+        "auspiciousDates": "Auspicious Dates Guide"
+      },
+      "terms": "Terms of Service",
+      "privacy": "Privacy Policy",
+      "copyright": "2026 Chinese Culture Studio"
+    },
+    "share": {
+      "button": "Share",
+      "tooltip": "Share this site",
+      "text": "Chinese Culture Studio — I Ching divination, Chinese names & auspicious dates",
+      "title": "Chinese Culture Studio",
+      "copied": "Copied!"
+    },
+    "cookie": {
+      "text": "This site uses essential cookies and local storage for free-tier tracking and analytics. By clicking \"Accept\" you consent to this. See our Privacy Policy for details.",
+      "privacyLink": "Privacy Policy",
+      "essentialOnly": "Essential Only",
+      "acceptAll": "Accept All"
+    },
+    "submit": {
+      "processing": "Processing...",
+      "free": "{label} — Free",
+      "paid": "{label} · Support ${amount}",
+      "helper": "Your contribution helps maintain the service"
+    },
+    "amount": {
+      "label": "Support Amount (USD)",
+      "custom": "Custom",
+      "placeholder": "Amount",
+      "helper": "Your contribution supports ongoing development, API costs, and server maintenance."
+    },
+    "speak": {
+      "listen": "Listen",
+      "tooltip": "Listen to pronunciation"
+    },
+    "loading": "Loading...",
+    "freeTier": {
+      "two": "You have 2 free readings — try it out!",
+      "one": "You have 1 free reading remaining"
+    },
+    "toggleMenu": "Toggle navigation menu"
+  },
+  "home": {
+    "title": "Chinese Culture Studio",
+    "subtitle": "Discover the wisdom of ancient Chinese classics through names, dates, divination, and palm reading",
+    "features": {
+      "naming": {
+        "title": "Create a Chinese Name",
+        "desc": "Generate your authentic Chinese name based on the Five Elements and I Ching principles, sourced from classical texts."
+      },
+      "calendar": {
+        "title": "Auspicious Date Selection",
+        "desc": "Find the most favorable dates for weddings, business, travel, and more using traditional almanac methods."
+      },
+      "divination": {
+        "title": "I Ching Divination",
+        "desc": "Consult the ancient Book of Changes and receive a personalized hexagram reading with clear guidance."
+      },
+      "palm": {
+        "title": "Palm Reading",
+        "desc": "Upload a photo of your palm for a classical palmistry analysis based on Ma Yi Shen Xiang and other ancient texts."
+      }
+    },
+    "cta": {
+      "paid": "Support with $1 →",
+      "free": "Free trial available →"
+    },
+    "dailyHexagram": {
+      "heading": "Free Daily Guidance",
+      "cta": "Get Your Full I Ching Reading → $1",
+      "helper": "Today's hexagram refreshes daily. For a personal reading based on your question, cast your own."
+    },
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  },
+  "naming": {
+    "title": "Create a Chinese Name",
+    "subtitle": "Based on your birth information and classical Chinese texts",
+    "badge": "$1 contribution",
+    "form": {
+      "surname": "Your Surname",
+      "surnamePlaceholder": "e.g. Smith",
+      "gender": "Gender",
+      "genderPlaceholder": "Select...",
+      "male": "Male",
+      "female": "Female",
+      "dob": "Date of Birth",
+      "year": "Year",
+      "month": "Month",
+      "day": "Day",
+      "hour": "Birth Hour (0-23)",
+      "hourPlaceholder": "e.g. 8 for 8:00 AM",
+      "hourHelper": "Approximate is fine if you don't know the exact hour.",
+      "style": "Name Style",
+      "stylePlaceholder": "Select...",
+      "styleElegant": "Elegant & Refined · 典雅",
+      "styleGrand": "Grand & Powerful · 大气",
+      "styleFresh": "Fresh & Natural · 清新",
+      "submit": "Generate Name"
+    },
+    "meta": {
+      "title": "Create Your Chinese Name | Chinese Culture Studio",
+      "description": "Generate an authentic Chinese name based on your birth date, gender, and the Five Elements (Wu Xing). AI-powered naming from classical Chinese texts. Pay what you want (min $1).",
+      "ogTitle": "Create Your Chinese Name | Chinese Culture Studio",
+      "ogDescription": "Generate an authentic Chinese name based on your birth date, gender, and the Five Elements (Wu Xing). Pay what you want.",
+      "twitterTitle": "Create Your Chinese Name | Chinese Culture Studio",
+      "twitterDescription": "AI-powered Chinese name generation based on Five Elements. Pay what you want.",
+      "ogSub": "Five Elements + AI Naming"
+    }
+  },
+  "calendar": {
+    "title": "Auspicious Date Selection",
+    "subtitle": "Based on traditional Chinese almanac principles",
+    "badge": "$1 contribution",
+    "form": {
+      "range": "Date Range",
+      "start": "Start",
+      "end": "End",
+      "rangeHelper": "Select a range of up to 90 days for best results.",
+      "eventType": "Event Type",
+      "eventPlaceholder": "Select event type...",
+      "submit": "Find Auspicious Dates"
+    },
+    "events": {
+      "wedding": "Wedding · 嫁娶",
+      "engagement": "Engagement · 订婚",
+      "businessOpening": "Business Opening · 开市",
+      "travel": "Travel · 出行",
+      "movingHouse": "Moving House · 搬家",
+      "signingContract": "Signing Contract · 签约",
+      "ancestralCeremony": "Ancestral Ceremony · 祭祀",
+      "construction": "Construction · 修造",
+      "medicalTreatment": "Medical Treatment · 求医",
+      "funeral": "Funeral & Burial · 安葬",
+      "education": "Education & Study · 入学",
+      "meeting": "Meeting & Gathering · 会友",
+      "renovation": "Renovation · 装修"
+    },
+    "meta": {
+      "title": "Auspicious Date Selection | Chinese Culture Studio",
+      "description": "Find the most favorable dates for weddings, business openings, travel, and more based on the traditional Chinese almanac (Tong Shu). Pay what you want (min $1).",
+      "ogTitle": "Auspicious Date Selection | Chinese Culture Studio",
+      "ogDescription": "Find the most favorable dates based on the traditional Chinese almanac. Pay what you want.",
+      "twitterTitle": "Auspicious Date Selection | Chinese Culture Studio",
+      "twitterDescription": "Traditional Chinese almanac date selection for important life events. Pay what you want.",
+      "ogSub": "Traditional Chinese Almanac"
+    }
+  },
+  "divination": {
+    "title": "I Ching Divination",
+    "subtitle": "Consult the ancient Book of Changes",
+    "badge": "$1 contribution",
+    "form": {
+      "question": "Your Question (optional)",
+      "questionPlaceholder": "What would you like guidance on?",
+      "method": "Casting Method",
+      "methodTime": "Time-based (时间)",
+      "methodRandom": "Random (随机)",
+      "methodManual": "Manual (手动)",
+      "numbers": "Three Numbers (1-999)",
+      "firstNum": "First",
+      "secondNum": "Second",
+      "thirdNum": "Third",
+      "submit": "Cast Hexagram"
+    },
+    "meta": {
+      "title": "I Ching Divination | Chinese Culture Studio",
+      "description": "Consult the ancient Book of Changes (I Ching) for guidance and insight. Three casting methods: time-based, random, or manual coin toss. Pay what you want (min $1).",
+      "ogTitle": "I Ching Divination | Chinese Culture Studio",
+      "ogDescription": "Consult the ancient Book of Changes. Three casting methods available. Pay what you want.",
+      "twitterTitle": "I Ching Divination | Chinese Culture Studio",
+      "twitterDescription": "Consult the I Ching — three divination methods, instant results. Pay what you want.",
+      "ogSub": "Consult the Book of Changes"
+    }
+  },
+  "palm": {
+    "title": "Palm Reading",
+    "subtitle": "Upload a photo of your palm for a classical Chinese palmistry analysis",
+    "badge": "$1 contribution",
+    "form": {
+      "photo": "Palm Photo *",
+      "uploadText": "Click or drag a photo here",
+      "uploading": "Uploading...",
+      "helperLines": "Make sure your palm lines are clearly visible",
+      "helperHand": "Traditionally: gentlemen offer the left palm (男左), ladies the right (女右)",
+      "whichHand": "Which hand is this? *",
+      "handPlaceholder": "Select...",
+      "leftHand": "Left Hand · 左手 (先天手 · 男左)",
+      "rightHand": "Right Hand · 右手 (先天手 · 女右)",
+      "handHelper": "In classical palmistry, the dominant hand reflects your innate fate: gentlemen read the left palm (男左), ladies read the right palm (女右). The other hand shows acquired changes.",
+      "gender": "Gender (optional)",
+      "preferNot": "Prefer not to say",
+      "male": "Male",
+      "female": "Female",
+      "age": "Age Range (optional)",
+      "under18": "Under 18",
+      "age18_30": "18-30",
+      "age30_50": "30-50",
+      "age50plus": "50+",
+      "question": "What would you like to know? (optional)",
+      "questionPlaceholder": "e.g. What does my career line say?",
+      "consent": "I understand that my palm photo will be processed to generate this reading and will be immediately deleted afterward. The image is never stored on disk or shared with third parties.",
+      "consentLink": "Privacy Policy",
+      "submit": "Read My Palm",
+      "processing": "Processing..."
+    },
+    "errors": {
+      "noImage": "Please select an image file.",
+      "tooBig": "Image must be under 8MB.",
+      "uploadFailed": "Upload failed. Please try again."
+    },
+    "meta": {
+      "title": "Palm Reading | Chinese Culture Studio",
+      "description": "Upload a photo of your palm and receive an AI-powered analysis based on classical Chinese palmistry. Your image is processed in memory and never stored. Pay what you want (min $1).",
+      "ogTitle": "Palm Reading | Chinese Culture Studio",
+      "ogDescription": "AI-powered palm reading based on classical Chinese palmistry. Privacy-first — images never stored. Pay what you want.",
+      "twitterTitle": "Palm Reading | Chinese Culture Studio",
+      "twitterDescription": "AI palm reading from classical Chinese texts. Zero persistence, full privacy. Pay what you want.",
+      "ogSub": "Classical Chinese Palmistry + AI"
+    }
+  },
+  "result": {
+    "naming": {
+      "title": "Your Chinese Name",
+      "meaning": "Meaning",
+      "elements": "Elements",
+      "source": "Source",
+      "recommended": "Recommended — Best match for your elemental profile",
+      "baziAnalysis": "Bazi Analysis"
+    },
+    "calendar": {
+      "title": "Auspicious Dates",
+      "score": "Score: {n}/100",
+      "stemsBranches": "Heavenly Stems & Branches",
+      "jianchu": "Jianchu / Constellation",
+      "suitable": "Suitable 宜",
+      "unsuitable": "Unsuitable 忌",
+      "auspiciousGods": "Auspicious gods",
+      "auspiciousHours": "Auspicious Hours 吉时",
+      "auspicious": "Auspicious",
+      "inauspicious": "Inauspicious"
+    },
+    "divination": {
+      "title": "Your I Ching Reading",
+      "guidance": "Guidance for You",
+      "originalJudgment": "Original Judgment (卦辞)",
+      "interpretation": "Interpretation",
+      "changedHexagram": "Changed Hexagram (变卦)",
+      "mutualHexagram": "Mutual Hexagram (互卦)",
+      "changingLine": "Changing Line (动爻) — Position {n}"
+    },
+    "palm": {
+      "handType": "Hand Type · 五行手型",
+      "threeLines": "Three Talent Lines · 三才纹",
+      "lifeLine": "Life Line · 地纹",
+      "headLine": "Head Line · 人纹",
+      "heartLine": "Heart Line · 天纹",
+      "health": "Health & Vitality",
+      "wisdom": "Wisdom & Career",
+      "emotion": "Emotion & Status",
+      "excellent": "Excellent 上吉",
+      "good": "Good 吉",
+      "fair": "Fair 平",
+      "weak": "Weak 弱",
+      "auxiliary": "Auxiliary Lines · 辅助纹",
+      "fateLine": "Fate Line · 玉柱纹",
+      "careerPath": "Career Path",
+      "marriageLine": "Marriage Line · 婚姻线",
+      "relationships": "Relationships",
+      "sunLine": "Sun Line · 太阳线",
+      "successFame": "Success & Fame",
+      "healthLine": "Health Line · 健康线",
+      "wellness": "Wellness",
+      "ninePalaces": "Nine Palaces · 掌中九宫",
+      "overall": "Overall Judgment · 综合判断",
+      "career": "Career · 事业",
+      "love": "Love · 感情",
+      "healthTitle": "Health · 健康"
+    }
+  },
+  "guide": {
+    "chineseName": {
+      "title": "How to Choose an Authentic Chinese Name",
+      "subtitle": "A guide to the ancient art of Chinese naming — from classical texts to modern life.",
+      "why": "Why Chinese Names Matter",
+      "structure": "The Structure of a Chinese Name",
+      "methods": "How Chinese Names Are Chosen: The 5 Classical Methods",
+      "method1": "Five Elements (Wu Xing) Balancing",
+      "method2": "Bazi (Four Pillars) Analysis",
+      "method3": "Stroke Count Numerology",
+      "method4": "Sound and Rhythm",
+      "method5": "Poetic & Literary Allusions",
+      "mistakes": "Common Mistakes to Avoid",
+      "cta": "Create Your Chinese Name → $1.00",
+      "disclaimer": "For cultural appreciation only. Not professional advice."
+    },
+    "iching": {
+      "title": "I Ching Divination: A Beginner's Guide",
+      "subtitle": "Understanding the 3,000-year-old Book of Changes — from tossing coins to interpreting hexagrams.",
+      "what": "What is the I Ching?",
+      "how": "How Does I Ching Divination Work?",
+      "structure": "The Structure of a Hexagram (卦, Gua)",
+      "bagua": "The 8 Trigrams (八卦, Bagua)",
+      "trigramName": "Name",
+      "trigramChinese": "Chinese",
+      "trigramNature": "Nature",
+      "trigramSymbol": "Symbol",
+      "casting": "How to Cast a Hexagram",
+      "interpretation": "Interpreting Your Reading",
+      "cta": "Consult the I Ching → $1.00",
+      "disclaimer": "For cultural appreciation and entertainment only. Not professional advice."
+    },
+    "auspiciousDates": {
+      "title": "How to Select Auspicious Dates: A Chinese Calendar Guide",
+      "subtitle": "Master the art of choosing lucky dates — from wedding planning to business openings.",
+      "why": "Why Dates Matter in Chinese Culture",
+      "what": "What Makes a Date Auspicious?",
+      "element1": "Heavenly Stems & Earthly Branches",
+      "element2": "Jianchu (建除) Twelve Day Officers",
+      "element3": "Auspicious & Inauspicious Stars",
+      "element4": "Clash with Personal Zodiac",
+      "common": "Good Dates for Common Events",
+      "cta": "Find Your Auspicious Date → $1.00",
+      "disclaimer": "For cultural appreciation only. Not professional advice."
+    }
+  },
+  "success": {
+    "preparing": "Preparing your reading...",
+    "freeReady": "Your free reading is ready.",
+    "paidPreparing": "Payment received. Preparing your reading...",
+    "waitSubtitle": "This usually takes a few seconds.",
+    "missingId": "Missing purchase ID. Please try again.",
+    "timeoutTitle": "Still Processing",
+    "timeoutBody": "Your payment has been received, but the result is taking longer than expected to prepare.",
+    "timeoutDetail": "This can happen when PayPal's notification is delayed. Your payment and reading are safe.",
+    "reference": "Reference: {id}",
+    "checkAgain": "Check Again",
+    "backHome": "Back to Home",
+    "timeoutFooter": "If the result doesn't appear within 10 minutes, please contact support with your reference ID.",
+    "failedTitle": "Something went wrong",
+    "failedBody": "Processing failed. Your payment is safe — contact support for a refund if needed.",
+    "returnHome": "Return to Home",
+    "freeBanner": "{n} free use(s) remaining",
+    "freeLast": "That was your last free reading",
+    "freeText": "Each personalized reading requires computation based on classical texts and traditional methods. Future readings are $1 each.",
+    "anotherName": "Get Another Name",
+    "anotherDate": "Find Another Date",
+    "anotherHexagram": "Cast Another Hexagram",
+    "anotherPalm": "Read Another Palm"
+  },
+  "legal": {
+    "privacy": {
+      "title": "Privacy Policy",
+      "lastUpdated": "Last updated: 26 May 2026",
+      "section1": "1. Who We Are",
+      "section2": "2. Data We Collect",
+      "section3": "3. Palm Image Processing",
+      "section3a": "3a. Palm Image Processing",
+      "section4": "4. Payment Processing",
+      "section5": "5. Cookies & Local Storage",
+      "section6": "6. Data Retention",
+      "section7": "7. Your Rights (GDPR)",
+      "section8": "8. Data Sharing & Third Parties",
+      "section9": "9. International Data Transfers",
+      "section10": "10. Security",
+      "section11": "11. Children's Privacy",
+      "section12": "12. Changes to This Policy",
+      "section13": "13. Contact Us",
+      "contactEmail": "privacy@easternwisdom.app"
+    },
+    "terms": {
+      "title": "Terms of Service",
+      "lastUpdated": "Last updated: May 2026",
+      "section1": "1. Nature of Service",
+      "section2": "2. No Guarantees",
+      "section3": "3. Payment & Contributions",
+      "section4": "4. Biometric Data Consent",
+      "section5": "5. Privacy",
+      "section6": "6. Age Restriction",
+      "section7": "7. Intellectual Property",
+      "section8": "8. Limitation of Liability",
+      "section9": "9. Changes",
+      "section10": "10. Contact",
+      "contactEmail": "support@easternwisdom.app"
+    }
+  },
+  "admin": {
+    "title": "Chinese Culture Studio — Admin",
+    "subtitle": "Analytics & Daily Report — auto-generates on visit",
+    "refresh": "Refresh Data",
+    "visitsToday": "Visits Today",
+    "countriesToday": "Countries Today",
+    "revenueToday": "Revenue Today",
+    "freeTrialsToday": "Free Trials Today",
+    "visits7Day": "7-Day Visits",
+    "trend7": "7-Day Trend",
+    "countries7": "Country Distribution (7-Day)",
+    "pagesToday": "Page Visits Today",
+    "revenueService": "Revenue by Service",
+    "noReport": "No data yet. Generate today's report.",
+    "noData": "No data yet.",
+    "noPurchases": "No purchases today.",
+    "freeTrialsTrend7": "7-Day Free Trials Trend",
+    "tableDate": "Date",
+    "tableVisits": "Visits",
+    "tableTrials": "Trials",
+    "tableCountries": "Countries",
+    "tableRevenue": "Revenue",
+    "footer": "Admin dashboard — protected by token. Set ADMIN_TOKEN in your environment variables.",
+    "freeToday": "Today's Free Trial Distribution",
+    "total": "Total",
+    "noFreeToday": "No free trials today",
+    "sevenDays": "7-Day",
+    "noData7d": "No data",
+    "total7": "7-Day Total",
+    "detail7": "7-Day Summary Detail",
+    "naming": "Naming",
+    "calendar": "Date Selection",
+    "divination": "Divination",
+    "palm": "Palm Reading"
+  },
+  "payment": {
+    "name": "Support Chinese Culture Studio — Name Reading",
+    "date": "Support Chinese Culture Studio — Date Selection",
+    "iching": "Support Chinese Culture Studio — I Ching Reading",
+    "palm": "Support Chinese Culture Studio — Palm Reading",
+    "error": "Something went wrong",
+    "failed": "Failed. Please try again.",
+    "returnApp": "Return to App",
+    "thankYou": "Thank you for supporting Chinese Culture Studio!"
+  },
+  "languageSwitcher": {
+    "en": "English",
+    "ru": "Русский"
+  }
+}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 const PRESETS = [1, 3, 5, 10];
 
@@ -10,12 +11,13 @@ interface Props {
 }
 
 export default function AmountPicker({ value, onChange }: Props) {
+  const t = useTranslations("common");
   const [customMode, setCustomMode] = useState(false);
 
   return (
     <div>
       <label className="block text-sm font-medium text-stone-700 mb-2">
-        Support Amount (USD)
+        {t("amount.label")}
       </label>
       <div className="flex flex-wrap gap-2 mb-2">
         {PRESETS.map((amt) => (
@@ -41,7 +43,7 @@ export default function AmountPicker({ value, onChange }: Props) {
               : "border-stone-200 text-stone-600 hover:border-stone-300"
           }`}
         >
-          Custom
+          {t("amount.custom")}
         </button>
       </div>
       {customMode && (
@@ -52,11 +54,11 @@ export default function AmountPicker({ value, onChange }: Props) {
           value={value}
           onChange={(e) => onChange(Math.max(1, parseInt(e.target.value) || 1))}
           className="w-24 border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300"
-          placeholder="Amount"
+          placeholder={t("amount.placeholder")}
         />
       )}
       <p className="text-xs text-stone-400 mt-1.5">
-        Your contribution supports ongoing development, API costs, and server maintenance.
+        {t("amount.helper")}
       </p>
     </div>
   );
