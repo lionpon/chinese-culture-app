@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
   }
 
   if (purchase.status === "failed") {
-    return NextResponse.json({ status: "failed", error: "Processing failed. Please contact support for a refund." });
+    return NextResponse.json({ status: "failed", error: "Processing failed. Please contact support for assistance." });
   }
 
   return NextResponse.json({

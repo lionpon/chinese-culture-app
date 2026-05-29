@@ -99,7 +99,7 @@ export default async function LocaleLayout({ children, params }: Props) {
                   <a href={`${pathname}/guide/iching`} className="hover:text-stone-500 underline">I Ching Guide</a>
                   <a href={`${pathname}/guide/auspicious-dates`} className="hover:text-stone-500 underline">Auspicious Dates Guide</a>
                 </p>
-                <p className="flex justify-center gap-4">
+                <p className="flex justify-center gap-4 flex-wrap">
                   <a href={`${pathname}/terms`} className="hover:text-stone-500 underline">Terms of Service</a>
                   <a href={`${pathname}/privacy`} className="hover:text-stone-500 underline">Privacy Policy</a>
                 </p>

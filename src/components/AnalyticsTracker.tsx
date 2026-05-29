@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
+import { getConsent } from "@/components/CookieConsent";
 
 export default function AnalyticsTracker() {
   const pathname = usePathname();
@@ -10,6 +11,9 @@ export default function AnalyticsTracker() {
   useEffect(() => {
     if (tracked.current === pathname) return;
     tracked.current = pathname;
+
+    const consent = getConsent();
+    if (consent === false) return;
 
     fetch("/api/track", {
       method: "POST",
