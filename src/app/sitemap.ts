@@ -16,8 +16,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/terms", priority: 0.3, changeFreq: "yearly" as const },
   ];
 
+  // Last 30 days of daily hexagram pages
+  const dailyPages: { path: string; priority: number; changeFreq: "daily" | "weekly" | "monthly" | "yearly" }[] = [];
+  for (let i = 0; i < 30; i++) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const dateStr = d.toISOString().slice(0, 10);
+    const priority = i === 0 ? 0.8 : i <= 7 ? 0.6 : 0.4;
+    dailyPages.push({ path: `/daily/${dateStr}`, priority, changeFreq: "daily" as const });
+  }
+
+  const allPages = [...pages, ...dailyPages];
+
   // English URLs
-  const enEntries = pages.map(({ path, priority, changeFreq }) => ({
+  const enEntries = allPages.map(({ path, priority, changeFreq }) => ({
     url: `${baseUrl}${path}`,
     lastModified: new Date(),
     changeFrequency: changeFreq,
@@ -31,7 +43,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }));
 
   // Russian URLs
-  const ruEntries = pages.map(({ path, priority, changeFreq }) => ({
+  const ruEntries = allPages.map(({ path, priority, changeFreq }) => ({
     url: `${baseUrl}/ru${path}`,
     lastModified: new Date(),
     changeFrequency: changeFreq,

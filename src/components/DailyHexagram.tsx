@@ -47,15 +47,20 @@ export default function DailyHexagram() {
         <p className="text-sm text-stone-600 leading-relaxed mb-5 max-w-md mx-auto">
           {teaser}
         </p>
-        <Link
-          href="/divination"
-          className="inline-block px-5 py-2.5 rounded-xl text-sm font-medium btn-primary"
-        >
-          {t("dailyHexagram.cta")}
-        </Link>
-        <p className="text-xs text-stone-400 mt-3">
-          {t("dailyHexagram.helper")}
-        </p>
+        <div className="flex flex-col sm:flex-row gap-2 justify-center">
+          <Link
+            href={`/daily/${new Date().toISOString().slice(0, 10)}`}
+            className="inline-block px-5 py-2.5 rounded-xl text-sm font-medium btn-primary"
+          >
+            {t("dailyHexagram.cta")}
+          </Link>
+          <Link
+            href="/divination"
+            className="inline-block px-5 py-2.5 rounded-xl text-sm font-medium text-stone-600 hover:text-stone-800 transition-colors"
+          >
+            {t("dailyHexagram.askOwn")}
+          </Link>
+        </div>
       </div>
     </section>
   );

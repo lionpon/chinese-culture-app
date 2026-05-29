@@ -87,7 +87,8 @@
     "dailyHexagram": {
       "heading": "Free Daily Guidance",
       "cta": "Get Your Full I Ching Reading → $1",
-      "helper": "Today's hexagram refreshes daily. For a personal reading based on your question, cast your own."
+      "helper": "Today's hexagram refreshes daily. For a personal reading based on your question, cast your own.",
+      "askOwn": "Cast Your Own →"
     },
     "privacy": "Privacy Policy",
     "terms": "Terms of Service"
