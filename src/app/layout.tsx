@@ -20,11 +20,13 @@ export const metadata: Metadata = {
     siteName: "Chinese Culture Studio",
     locale: "en_US",
     type: "website",
+    images: [{ url: "https://chinese-culture-app.onrender.com/api/og", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Chinese Culture Studio — Names, Dates, I Ching & Palm Reading",
     description: "AI-powered Chinese cultural readings from classical texts. Chinese naming, date selection, I Ching, palm reading. Pay what you want.",
+    images: ["https://chinese-culture-app.onrender.com/api/og"],
   },
   robots: { index: true, follow: true },
 };
