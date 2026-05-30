@@ -57,7 +57,7 @@ export async function GET() {
     <description>Daily I Ching hexagram readings and Chinese cultural wisdom. A new hexagram every day with guidance, judgment, and interpretation from the ancient Book of Changes.</description>
     <language>en</language>
     <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
-    <atom:link href="${BASE_URL}/rss.xml" rel="self" type="application/rss+xml"/>
+    <atom:link href="${BASE_URL}/api/rss" rel="self" type="application/rss+xml"/>
     <image>
       <url>${BASE_URL}/api/og?title=Daily+I+Ching&amp;sub=Chinese+Culture+Studio&amp;lang=en</url>
       <title>Chinese Culture Studio</title>
