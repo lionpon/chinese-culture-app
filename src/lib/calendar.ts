@@ -380,7 +380,25 @@ function getAuspiciousHours(dayStem: string): HourInfo[] {
   }));
 }
 
-export function selectAuspiciousDays(input: CalendarInput): CalendarResult {
+export function selectAuspiciousDays(input: CalendarInput, preview = false): CalendarResult {
+  const full = _selectAuspiciousDays(input);
+  if (!preview) return full;
+  if (full.auspiciousDays.length === 0) return full; // shouldn't happen, but don't break
+  const day = full.auspiciousDays[0];
+  return {
+    auspiciousDays: [{
+      ...day,
+      suitable: day.suitable.slice(0, 2),
+      suitableEn: day.suitableEn.slice(0, 2),
+      unsuitable: [],
+      unsuitableEn: [],
+      gods: [],
+      hours: [],
+    }],
+  };
+}
+
+function _selectAuspiciousDays(input: CalendarInput): CalendarResult {
   const { startDate, endDate, eventType } = input;
   const start = new Date(startDate + "T00:00:00");
   const end = new Date(endDate + "T00:00:00");

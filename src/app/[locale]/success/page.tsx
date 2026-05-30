@@ -211,18 +211,46 @@ function SuccessContent() {
       {type === "palm-reading" && result && <PalmReadingResultView result={result as PalmReadingResult} />}
 
       {isFree && (
-        <div className="mt-8 card-classic p-5 text-center">
-          <p className="text-sm font-medium text-accent mb-2">
+        <div className="mt-8 card-classic p-5 sm:p-6 text-center" style={{ borderColor: "rgba(155,74,58,0.3)", borderWidth: 2 }}>
+          <p className="text-lg font-bold mb-2" style={{ color: "var(--accent)" }}>
             {remaining > 0
               ? t("freeBanner", { n: remaining })
               : t("freeLast")}
           </p>
-          <p className="text-xs text-stone-500 mb-4">{t("freeText")}</p>
-          {serviceLink && (
-            <Link href={serviceLink.href} className="inline-block px-5 py-2.5 rounded-xl text-sm font-medium btn-primary">
-              {serviceLink.label}
+          <p className="text-sm text-stone-500 mb-4">{t("freeText")}</p>
+          <div className="mb-5 p-4 rounded-xl" style={{ background: "linear-gradient(135deg, #FFF9F5 0%, #FFF5F0 100%)", border: "1px solid rgba(155,74,58,0.15)" }}>
+            <p className="text-sm font-medium text-stone-700 mb-2">{t("unlockTitle")}</p>
+            <ul className="text-xs text-stone-500 text-left space-y-1 max-w-xs mx-auto">
+              {type === "naming" && (
+                <>
+                  <li>+ {t("unlockNaming1")}</li>
+                  <li>+ {t("unlockNaming2")}</li>
+                </>
+              )}
+              {type === "divination" && (
+                <>
+                  <li>+ {t("unlockDivination1")}</li>
+                  <li>+ {t("unlockDivination2")}</li>
+                </>
+              )}
+              {type === "calendar" && (
+                <>
+                  <li>+ {t("unlockCalendar1")}</li>
+                  <li>+ {t("unlockCalendar2")}</li>
+                </>
+              )}
+            </ul>
+          </div>
+          <div className="flex gap-3 justify-center flex-wrap">
+            <Link href={`/${type}`} className="px-5 py-2.5 rounded-xl text-sm font-medium btn-primary">
+              {t("unlockNow")}
             </Link>
-          )}
+            {serviceLink && (
+              <Link href={serviceLink.href} className="px-5 py-2.5 rounded-xl text-sm border border-stone-300 text-stone-500 hover:bg-stone-50 transition-colors">
+                {serviceLink.label}
+              </Link>
+            )}
+          </div>
         </div>
       )}
     </div>

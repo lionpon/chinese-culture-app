@@ -4,7 +4,20 @@ import { analyzeWuxing } from "./wuxing";
 import { characters, surnameMap } from "../data/characters";
 import type { NamingInput, NameOption, NamingResult, BaziResult } from "../types";
 
-export function generateNames(input: NamingInput): NamingResult {
+export function generateNames(input: NamingInput, preview = false): NamingResult {
+  const full = _generateNames(input);
+  if (!preview) return full;
+  return {
+    options: full.options.slice(0, 1),
+    baziAnalysis: {
+      ...full.baziAnalysis,
+      analysis: "",
+      analysisEn: "Unlock full Bazi analysis with a contribution.",
+    },
+  };
+}
+
+function _generateNames(input: NamingInput): NamingResult {
   const { surname, gender, birthYear, birthMonth, birthDay, birthHour, style } = input;
 
   // 1. Calculate Bazi

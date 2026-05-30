@@ -16,12 +16,12 @@ export async function POST(req: NextRequest) {
     }
 
     if (free && type !== "palm-reading") {
-      // Free tier — generate result immediately, no payment (not available for palm-reading)
+      // Free tier — preview only, unlock full result with contribution
       let result: unknown;
       switch (type) {
-        case "naming": result = generateNames(input as unknown as NamingInput); break;
-        case "calendar": result = selectAuspiciousDays(input as unknown as CalendarInput); break;
-        case "divination": result = performDivination(input as unknown as DivinationInput); break;
+        case "naming": result = generateNames(input as unknown as NamingInput, true); break;
+        case "calendar": result = selectAuspiciousDays(input as unknown as CalendarInput, true); break;
+        case "divination": result = performDivination(input as unknown as DivinationInput, true); break;
       }
 
       const purchase = await prisma.purchase.create({

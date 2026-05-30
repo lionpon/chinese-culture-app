@@ -8,6 +8,39 @@ import AmountPicker from "@/components/AmountPicker";
 import FreeTierBadge from "@/components/FreeTierBadge";
 import { hasFreeUses } from "@/lib/free-tier";
 
+function ExampleResult() {
+  return (
+    <details className="card-classic p-4 sm:p-5 mb-6 cursor-pointer group">
+      <summary className="text-sm font-medium text-stone-600 select-none">
+        Example result — see what you&apos;ll get
+      </summary>
+      <div className="mt-4 pt-4 border-t border-stone-100 space-y-4">
+        <div className="card-classic p-4">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-xl font-bold text-accent">2026-06-15</p>
+            <span className="bg-green-50 text-green-700 text-xs px-2 py-1 rounded">Score: 92/100</span>
+          </div>
+          <p className="text-sm text-stone-500 mb-3">农历五月廿九</p>
+          <div className="grid grid-cols-2 gap-2 text-sm">
+            <div>
+              <p className="text-stone-400 text-xs">Suitable 宜</p>
+              <p className="text-accent">嫁娶、纳采</p>
+            </div>
+            <div>
+              <p className="text-stone-400 text-xs">Unsuitable 忌</p>
+              <p className="text-stone-600">词讼、安葬</p>
+            </div>
+          </div>
+          <p className="mt-2 text-xs text-accent">Auspicious gods: 天德、月德</p>
+        </div>
+        <p className="text-xs text-stone-400 italic">
+          Select your event type and date range above. Free preview shows 1 date — unlock all 3 with auspicious hours.
+        </p>
+      </div>
+    </details>
+  );
+}
+
 export default function CalendarPage() {
   const t = useTranslations("calendar");
   const { loading, checkout } = useCheckout("calendar");
@@ -35,6 +68,7 @@ export default function CalendarPage() {
       </div>
 
       <FreeTierBadge />
+      <ExampleResult />
 
       <form onSubmit={handleSubmit} className="space-y-5 card-classic p-4 sm:p-6">
         <div>
@@ -67,7 +101,10 @@ export default function CalendarPage() {
           </select>
         </div>
 
-        {!hasFreeUses() && <AmountPicker value={amount} onChange={setAmount} />}
+        <AmountPicker value={amount} onChange={setAmount} />
+        {hasFreeUses() && (
+          <p className="text-xs text-stone-400 text-center">{t("form.previewNote")}</p>
+        )}
         <SubmitButton loading={loading} label={t("form.submit")} hasFree={hasFreeUses()} amount={amount} />
       </form>
     </div>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { performDivination } from "@/lib/divination";
+import { generateHexagramArticle } from "@/lib/hexagram-article";
 import { Link } from "@/navigation";
 import { notFound } from "next/navigation";
 
@@ -113,6 +114,16 @@ export default async function DailyHexagramPage({ params }: Props) {
           <p className="text-stone-700 leading-relaxed">{ch.judgmentEn}</p>
         </section>
       )}
+
+      {/* Article */}
+      <section className="card-classic p-4 sm:p-6 mb-6 prose prose-sm max-w-none">
+        <h2 className="text-lg font-semibold text-stone-700 mb-4">
+          {params.locale === "ru" ? "Толкование дня" : "Today's I Ching Interpretation"}
+        </h2>
+        {generateHexagramArticle(result).split("\n\n").map((p, i) => (
+          <p key={i} className="text-stone-600 leading-relaxed mb-3 text-sm">{p}</p>
+        ))}
+      </section>
 
       {/* CTA */}
       <div className="text-center mt-8 mb-12">

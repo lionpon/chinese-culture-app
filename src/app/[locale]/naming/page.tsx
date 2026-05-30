@@ -8,6 +8,36 @@ import AmountPicker from "@/components/AmountPicker";
 import FreeTierBadge from "@/components/FreeTierBadge";
 import { hasFreeUses } from "@/lib/free-tier";
 
+function ExampleResult() {
+  return (
+    <details className="card-classic p-4 sm:p-5 mb-6 cursor-pointer group">
+      <summary className="text-sm font-medium text-stone-600 select-none">
+        Example result — see what you&apos;ll get
+      </summary>
+      <div className="mt-4 pt-4 border-t border-stone-100 space-y-4">
+        <div className="card-classic p-4" style={{ borderColor: "rgba(155,74,58,0.15)" }}>
+          <div className="text-center mb-2">
+            <p className="text-3xl font-bold text-accent">林明哲</p>
+            <p className="text-lg text-stone-500">lín míng zhé</p>
+          </div>
+          <div className="space-y-1 text-sm">
+            <p><span className="text-stone-400">Meaning:</span> Forest of bright wisdom</p>
+            <p><span className="text-stone-400">Elements:</span> Wood + Fire</p>
+            <p><span className="text-stone-400">Source:</span> 《尚书·尧典》, 《易经·系辞》</p>
+          </div>
+        </div>
+        <div className="bg-stone-50 rounded-lg p-3 text-xs text-stone-500">
+          <p className="font-medium mb-1">Bazi Analysis (八字分析)</p>
+          <p>Your day master is 甲木 (Yang Wood) — strong, upright, and growth-oriented. Favorable elements: Water + Wood. The selected names nourish your day master and balance your elemental chart.</p>
+        </div>
+        <p className="text-xs text-stone-400 italic">
+          Fill in the form above to get your personalized names. Free preview shows 1 name — unlock all 5 with full Bazi analysis.
+        </p>
+      </div>
+    </details>
+  );
+}
+
 export default function NamingPage() {
   const t = useTranslations("naming");
   const { loading, checkout } = useCheckout("naming");
@@ -39,6 +69,7 @@ export default function NamingPage() {
       </div>
 
       <FreeTierBadge />
+      <ExampleResult />
 
       <form onSubmit={handleSubmit} className="space-y-5 card-classic p-4 sm:p-6">
         <div>
@@ -76,7 +107,10 @@ export default function NamingPage() {
           </select>
         </div>
 
-        {!hasFreeUses() && <AmountPicker value={amount} onChange={setAmount} />}
+        <AmountPicker value={amount} onChange={setAmount} />
+        {hasFreeUses() && (
+          <p className="text-xs text-stone-400 text-center">{t("form.previewNote")}</p>
+        )}
         <SubmitButton loading={loading} label={t("form.submit")} hasFree={hasFreeUses()} amount={amount} />
       </form>
     </div>

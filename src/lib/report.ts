@@ -39,6 +39,7 @@ export async function generateReport(date: string): Promise<ReportData> {
   const countries: Record<string, number> = {};
   const pages: Record<string, number> = {};
   for (const v of visits) {
+    if (v.page.startsWith("/admin") || v.page.startsWith("/ru/admin")) continue;
     countries[v.country] = (countries[v.country] || 0) + 1;
     pages[v.page] = (pages[v.page] || 0) + 1;
   }

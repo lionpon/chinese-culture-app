@@ -54,8 +54,8 @@
     },
     "loading": "Loading...",
     "freeTier": {
-      "two": "You have 2 free readings — try it out!",
-      "one": "You have 1 free reading remaining"
+      "two": "You have 2 free previews — try it out!",
+      "one": "You have 1 free preview remaining"
     },
     "toggleMenu": "Toggle navigation menu"
   },
@@ -111,6 +111,7 @@
       "hour": "Birth Hour (0-23)",
       "hourPlaceholder": "e.g. 8 for 8:00 AM",
       "hourHelper": "Approximate is fine if you don't know the exact hour.",
+      "previewNote": "Your contribution amount will be used after free previews are exhausted.",
       "style": "Name Style",
       "stylePlaceholder": "Select...",
       "styleElegant": "Elegant & Refined · 典雅",
@@ -137,6 +138,7 @@
       "start": "Start",
       "end": "End",
       "rangeHelper": "Select a range of up to 90 days for best results.",
+      "previewNote": "Your contribution amount will be used after free previews are exhausted.",
       "eventType": "Event Type",
       "eventPlaceholder": "Select event type...",
       "submit": "Find Auspicious Dates"
@@ -181,6 +183,7 @@
       "firstNum": "First",
       "secondNum": "Second",
       "thirdNum": "Third",
+      "previewNote": "Your contribution amount will be used after free previews are exhausted.",
       "submit": "Cast Hexagram"
     },
     "meta": {
@@ -366,7 +369,15 @@
     "anotherName": "Get Another Name",
     "anotherDate": "Find Another Date",
     "anotherHexagram": "Cast Another Hexagram",
-    "anotherPalm": "Read Another Palm"
+    "anotherPalm": "Read Another Palm",
+    "unlockTitle": "This is a preview. Unlock the full result:",
+    "unlockNaming1": "4 more name options with detailed meanings",
+    "unlockNaming2": "Full Bazi analysis of your elemental profile",
+    "unlockDivination1": "Changed & Mutual hexagrams (full picture)",
+    "unlockDivination2": "Changing line interpretation and specific advice",
+    "unlockCalendar1": "2 more auspicious dates with scores",
+    "unlockCalendar2": "Auspicious hours & gods for each date",
+    "unlockNow": "Unlock Full Result — from $1"
   },
   "legal": {
     "privacy": {

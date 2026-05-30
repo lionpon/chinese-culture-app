@@ -8,7 +8,25 @@ const NUMBER_TO_TRIGRAM: Record<number, string> = {
   1: "乾", 2: "兑", 3: "离", 4: "震", 5: "巽", 6: "坎", 7: "艮", 8: "坤",
 };
 
-export function performDivination(input: DivinationInput): DivinationResult {
+export function performDivination(input: DivinationInput, preview = false): DivinationResult {
+  const full = _performDivination(input);
+  if (!preview) return full;
+  return {
+    mainHexagram: {
+      id: full.mainHexagram.id,
+      nameZh: full.mainHexagram.nameZh,
+      nameEn: full.mainHexagram.nameEn,
+      pinyin: full.mainHexagram.pinyin,
+      judgment: full.mainHexagram.judgment,
+      judgmentEn: full.mainHexagram.judgmentEn,
+      description: full.mainHexagram.description,
+      descriptionEn: full.mainHexagram.descriptionEn,
+      advice: full.mainHexagram.advice.slice(0, 150) + "... Unlock the full reading with a contribution.",
+    },
+  };
+}
+
+function _performDivination(input: DivinationInput): DivinationResult {
   const { method, numbers } = input;
 
   let upperNum: number;
