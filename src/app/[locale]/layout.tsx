@@ -51,6 +51,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         en: "https://chinese-culture-app.onrender.com",
         ru: "https://chinese-culture-app.onrender.com/ru",
       },
+      types: {
+        "application/rss+xml": "https://chinese-culture-app.onrender.com/rss.xml",
+      },
     },
   };
 }
