@@ -352,7 +352,7 @@
     "freeReady": "Your free reading is ready.",
     "paidPreparing": "Payment received. Preparing your reading...",
     "waitSubtitle": "This usually takes a few seconds.",
-    "missingId": "Missing purchase ID. Please try again.",
+    "missingId": "Missing reference ID. Please try again.",
     "timeoutTitle": "Still Processing",
     "timeoutBody": "Your payment has been received, but the result is taking longer than expected to prepare.",
     "timeoutDetail": "This can happen when PayPal's notification is delayed. Your payment and reading are safe.",

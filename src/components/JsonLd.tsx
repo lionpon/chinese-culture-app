@@ -4,7 +4,7 @@ export default function JsonLd() {
     "@type": "WebApplication",
     name: "Chinese Culture Studio",
     url: "https://chinese-culture-app.onrender.com",
-    description: "Authentic Chinese culture experiences: Chinese name creation, auspicious date selection, and I Ching divination. $1 per reading.",
+    description: "Cultural experiences based on Chinese classics: name creation, auspicious date selection, I Ching divination, and palm reading. Voluntary contributions welcome (min $1).",
     applicationCategory: "LifestyleApplication",
     operatingSystem: "Web",
     offers: {
