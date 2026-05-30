@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Link } from "@/navigation";
+import GuideFaq from "@/components/GuideFaq";
 
 type Props = { params: { locale: string } };
 
@@ -93,6 +94,23 @@ export default function IChingGuide({ params: { locale } }: Props) {
       ) : (
         <p>Our online I Ching tool handles the coin-tossing for you and provides a clear interpretation of your hexagram with historical context and practical advice.</p>
       )}
+
+      <GuideFaq
+        lang={locale}
+        faqs={
+          isRu
+            ? [
+                { q: "Что такое И-Цзин?", a: "И-Цзин (Книга Перемен) — древний китайский текст возрастом более 3000 лет. Это система из 64 гексаграмм, каждая из которых описывает определённую жизненную ситуацию и даёт мудрый совет." },
+                { q: "Как работает гадание И-Цзин?", a: "Вы задаёте вопрос, система генерирует гексаграмму, и вы получаете толкование. И-Цзин не предсказывает будущее — он раскрывает динамику вашей ситуации и предлагает наилучший путь." },
+                { q: "Это платно?", a: "Вы сами выбираете сумму взноса — от $1. Первые 2 чтения бесплатны (в режиме предпросмотра). Это добровольный вклад, а не покупка." },
+              ]
+            : [
+                { q: "What is the I Ching?", a: "The I Ching (Book of Changes) is an ancient Chinese text over 3,000 years old. It's a system of 64 hexagrams, each describing a specific life situation with wise counsel." },
+                { q: "How does I Ching divination work?", a: "You ask a question, the system generates a hexagram, and you receive an interpretation. The I Ching doesn't predict the future — it reveals the dynamics of your situation and suggests the wisest path." },
+                { q: "Is it paid?", a: "You choose the contribution amount — from $1. First 2 readings are free (preview mode). It's a voluntary contribution, not a purchase." },
+              ]
+        }
+      />
 
       <div className="not-prose my-8">
         <Link href="/divination" className="inline-block px-6 py-3 rounded-xl text-white font-medium" style={{ backgroundColor: "var(--accent)" }}>

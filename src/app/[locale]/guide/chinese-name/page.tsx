@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Link } from "@/navigation";
+import GuideFaq from "@/components/GuideFaq";
 
 type Props = { params: { locale: string } };
 
@@ -99,6 +100,23 @@ export default function ChineseNameGuide({ params: { locale } }: Props) {
       ) : (
         <p>At Chinese Culture Studio, our naming tool draws from classical texts and Five Elements theory to generate personalized Chinese names based on your preferences. Each reading includes the characters, pronunciation, meaning, and cultural background.</p>
       )}
+
+      <GuideFaq
+        lang={locale}
+        faqs={
+          isRu
+            ? [
+                { q: "Как создаются китайские имена?", a: "Китайские имена создаются на основе Пяти Элементов (У-Син), анализа Ба-цзы и классических текстов. Каждое имя уникально и отражает баланс элементов человека." },
+                { q: "Что такое Ба-цзы?", a: "Ба-цзы (Восемь Иероглифов) — это система судьбы, основанная на годе, месяце, дне и часе рождения. Она показывает элементный состав человека и помогает подобрать гармоничное имя." },
+                { q: "Сколько стоит создание имени?", a: "Вы сами выбираете сумму взноса — от $1. Это добровольный вклад в поддержку приложения, а не покупка услуги." },
+              ]
+            : [
+                { q: "How are Chinese names created?", a: "Chinese names are created based on the Five Elements (Wu Xing), Bazi analysis, and classical texts. Each name is unique and reflects the person's elemental balance." },
+                { q: "What is Bazi?", a: "Bazi (Eight Characters) is a destiny system based on the year, month, day, and hour of birth. It reveals a person's elemental composition and helps select a harmonious name." },
+                { q: "How much does it cost?", a: "You choose the contribution amount — from $1. It's a voluntary contribution to support the app, not a purchase of a service." },
+              ]
+        }
+      />
 
       <div className="not-prose my-8">
         <Link href="/naming" className="inline-block px-6 py-3 rounded-xl text-white font-medium" style={{ backgroundColor: "var(--accent)" }}>

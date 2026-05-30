@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Link } from "@/navigation";
+import GuideFaq from "@/components/GuideFaq";
 
 type Props = { params: { locale: string } };
 
@@ -86,6 +87,23 @@ export default function AuspiciousDatesGuide({ params: { locale } }: Props) {
       ) : (
         <p>Our Auspicious Date Selection tool checks the Chinese almanac against your preferences and zodiac sign to find the most favorable dates for your specific event.</p>
       )}
+
+      <GuideFaq
+        lang={locale}
+        faqs={
+          isRu
+            ? [
+                { q: "Что делает дату благоприятной?", a: "Благоприятность даты определяется по китайскому альманаху (Тун Шу) с учётом зодиакальной совместимости, фаз луны, 12 дневных офицеров и гармонии Пяти Элементов." },
+                { q: "Для каких событий можно выбрать дату?", a: "Свадьба, помолвка, открытие бизнеса, путешествие, переезд, подписание контракта, строительство, лечение и многие другие." },
+                { q: "Это платно?", a: "Вы сами выбираете сумму взноса — от $1. Первые 2 выбора дат бесплатны (в режиме предпросмотра). Это добровольный вклад." },
+              ]
+            : [
+                { q: "What makes a date auspicious?", a: "A date's auspiciousness is determined by the Chinese almanac (Tong Shu), considering zodiac compatibility, moon phases, the 12 Day Officers, and Five Elements harmony." },
+                { q: "What events can I find dates for?", a: "Weddings, engagements, business openings, travel, moving house, signing contracts, construction, medical treatment, and many more." },
+                { q: "Is it paid?", a: "You choose the contribution amount — from $1. First 2 date selections are free (preview mode). It's a voluntary contribution." },
+              ]
+        }
+      />
 
       <div className="not-prose my-8">
         <Link href="/calendar" className="inline-block px-6 py-3 rounded-xl text-white font-medium" style={{ backgroundColor: "var(--accent)" }}>
