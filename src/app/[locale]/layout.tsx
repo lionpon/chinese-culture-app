@@ -99,8 +99,15 @@ export default async function LocaleLayout({ children, params }: Props) {
                 <p>Payments are voluntary contributions for app maintenance — not a purchase of services.</p>
                 <p className="flex justify-center gap-4 flex-wrap">
                   <a href={`${pathname}/guide/chinese-name`} className="hover:text-stone-500 underline">Chinese Name Guide</a>
+                  <a href={`${pathname}/guide/chinese-name-boy`} className="hover:text-stone-500 underline">Boy Names</a>
+                  <a href={`${pathname}/guide/chinese-name-girl`} className="hover:text-stone-500 underline">Girl Names</a>
                   <a href={`${pathname}/guide/iching`} className="hover:text-stone-500 underline">I Ching Guide</a>
-                  <a href={`${pathname}/guide/auspicious-dates`} className="hover:text-stone-500 underline">Auspicious Dates Guide</a>
+                  <a href={`${pathname}/guide/iching-beginner`} className="hover:text-stone-500 underline">I Ching Beginner</a>
+                  <a href={`${pathname}/guide/auspicious-dates`} className="hover:text-stone-500 underline">Auspicious Dates</a>
+                  <a href={`${pathname}/guide/wedding-dates-2026`} className="hover:text-stone-500 underline">Wedding Dates 2026</a>
+                  <a href={`${pathname}/guide/chinese-zodiac`} className="hover:text-stone-500 underline">Chinese Zodiac</a>
+                  <a href={`${pathname}/guide/five-elements`} className="hover:text-stone-500 underline">Five Elements</a>
+                  <a href={`${pathname}/guide/chinese-new-year-2027`} className="hover:text-stone-500 underline">CNY 2027</a>
                 </p>
                 <p className="flex justify-center gap-4 flex-wrap">
                   <a href={`${pathname}/terms`} className="hover:text-stone-500 underline">Terms of Service</a>
