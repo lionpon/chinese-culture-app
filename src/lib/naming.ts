@@ -18,7 +18,9 @@ export function generateNames(input: NamingInput, preview = false): NamingResult
 }
 
 function _generateNames(input: NamingInput): NamingResult {
-  const { surname, gender, birthYear, birthMonth, birthDay, birthHour, style } = input;
+  const rawLastName = input.lastName || input.surname || "";
+  const rawFirstName = input.firstName || "";
+  const { gender, birthYear, birthMonth, birthDay, birthHour, style } = input;
 
   // 1. Calculate Bazi
   const bazi = calculateBazi(birthYear, birthMonth, birthDay, birthHour);
@@ -27,10 +29,13 @@ function _generateNames(input: NamingInput): NamingResult {
   const wuxing = analyzeWuxing(bazi.day.wuxing, bazi.elements);
   const favorable = wuxing.favorable;
 
-  // 3. Select Chinese surname
-  const chineseSurname = selectSurname(surname);
+  // 3. Select Chinese surname from last name
+  const chineseSurname = selectSurname(rawLastName);
 
-  // 4. Filter characters by favorable elements and gender
+  // 4. Build phonetic bonus map from first name
+  const phoneticScore = buildPhoneticScores(rawFirstName);
+
+  // 5. Filter characters by favorable elements and gender
   const candidates = characters.filter(c => {
     const elementMatch = favorable.includes(c.element);
     const genderMatch = c.gender === gender || c.gender === "neutral";
@@ -38,13 +43,17 @@ function _generateNames(input: NamingInput): NamingResult {
     return elementMatch && genderMatch && styleMatch;
   });
 
-  // 5. Score and select best characters
+  // 6. Score — element match + phonetic similarity
   const scored = candidates.map(c => ({
     ...c,
-    score: (favorable.includes(c.element) ? 3 : 0) + (c.element === favorable[0] ? 2 : 0) + (c.gender === gender ? 1 : 0),
+    score:
+      (favorable.includes(c.element) ? 3 : 0) +
+      (c.element === favorable[0] ? 2 : 0) +
+      (c.gender === gender ? 1 : 0) +
+      (phoneticScore.get(c.char) || 0),
   })).sort((a, b) => b.score - a.score);
 
-  // 6. Build candidate given-name characters (scored)
+  // 7. Build candidate given-name characters (scored)
   const topCandidates = scored.slice(0, 30);
 
   // Helper: generate options for a given surname
@@ -135,6 +144,111 @@ function selectSurname(englishSurname: string): string {
     if (key.startsWith(first) || first.startsWith(key)) return surname;
   }
   return surnameMap["default"] || "李";
+}
+
+// Phonetic mapping: first-name sound clusters → Chinese characters with similar pronunciation
+// Each syllable maps to characters that sound like it, with a score bonus
+const phoneticMap: Record<string, string[]> = {
+  // English / Western name sounds
+  ma: ["玛", "马", "迈"], may: ["梅", "美"], mi: ["米", "密"], mo: ["莫", "墨"],
+  mi_: ["米", "蜜"], ma_: ["玛", "马"],
+  ke: ["克", "可", "科"], ka: ["卡", "凯"], ko: ["科", "柯"], ki: ["基", "琪"],
+  re: ["瑞", "若"], ri: ["瑞", "日"], ra: ["拉", "然"], ro: ["若", "罗"], ru: ["如", "汝"],
+  le: ["乐", "勒"], la: ["拉", "兰"], li: ["莉", "丽", "力", "理"], lo: ["洛", "罗"], lu: ["露", "路", "鲁"],
+  an: ["安", "岸"], an_: ["安", "安"], en: ["恩", "恩"],
+  na: ["娜", "纳"], ne: ["妮", "讷"], ni: ["妮", "尼"], no: ["诺", "娜"], ny: ["妮", "尼"],
+  el: ["尔", "儿"], er: ["尔", "儿"], ar: ["尔", "雅"],
+  ja: ["杰", "嘉"], je: ["杰", "捷"], ji: ["吉", "纪"], jo: ["乔", "娇"], ju: ["俊", "君"],
+  da: ["达", "大"], de: ["德", "得"], di: ["迪", "蒂"], do: ["多", "朵"], du: ["杜", "都"],
+  sa: ["萨", "飒"], se: ["思", "瑟"], si: ["思", "丝"], so: ["索", "苏"],
+  be: ["贝", "蓓"], ba: ["巴", "芭"], bi: ["比", "碧"], bo: ["博", "波"], bu: ["布", "步"],
+  pe: ["佩", "沛"], pa: ["帕", "派"], pi: ["皮", "匹"], po: ["珀", "坡"],
+  te: ["特", "特"], ta: ["塔", "泰"], ti: ["蒂", "提"], to: ["托", "拓"],
+  va: ["瓦", "娃"], ve: ["维", "薇"], vi: ["维", "薇"], vo: ["沃", "渥"],
+  // Russian / Slavic name sounds (transliterated)
+  bo_: ["博", "波"], va_: ["瓦", "娃"], ve_: ["维", "蔚"], vla: ["弗", "拉"],
+  dmi: ["德", "米"], dm: ["德", "明"],
+  i_: ["伊", "一"], i_van: ["伊", "凡"],
+  ye: ["叶", "烨"], yo: ["约", "岳"],
+  a_: ["阿", "雅"], alek: ["阿", "列"], alex: ["亚", "力"],
+  an_na: ["安", "娜"], anas: ["安", "娜"],
+  ek: ["叶", "卡"], kat: ["卡", "嘉"],
+  ol: ["奥", "莉"], ol_ga: ["奥", "莉"],
+  ir: ["伊", "琳"], ir_ina: ["伊", "琳"],
+  ta_: ["塔", "泰"], taty: ["塔", "嘉"],
+  ma_ria: ["玛", "丽"], ma_sha: ["玛", "莎"],
+  nat: ["娜", "塔"], natasha: ["娜", "莎"],
+  ser: ["谢", "尔"], sergei: ["谢", "尔"],
+  nik: ["妮", "琪"], nikolai: ["尼", "柯"],
+  an_drei: ["安", "德"], an_drey: ["安", "德"],
+  mi_khail: ["米", "凯"], mi_xail: ["米", "凯"],
+  el_ena: ["叶", "莲"], e_lena: ["叶", "莲"],
+  sve: ["斯", "维"], svet: ["斯", "维"],
+  ga: ["嘉", "加"], ga_lina: ["嘉", "琳"],
+  yu: ["尤", "雨"], yu_liya: ["尤", "莉"],
+  lyu: ["柳", "露"], lyu_dmila: ["柳", "德"],
+  // Additional common sounds
+  ch: ["琪", "琦"], chen: ["晨", "辰"], cheng: ["成", "程"],
+  xin: ["欣", "馨"], xue: ["雪", "学"], xiao: ["晓", "小"],
+  fei: ["菲", "飞"], fang: ["芳", "方"],
+  mei: ["美", "玫"], ming: ["明", "铭"],
+  ling: ["玲", "灵"], lin: ["琳", "林"],
+  jing: ["静", "晶"], jian: ["健", "建"],
+  yun: ["云", "韵"], yuan: ["远", "媛"],
+  hua: ["华", "花"], hui: ["慧", "辉"],
+  long: ["龙", "隆"], feng: ["凤", "峰"],
+  wei: ["伟", "薇"], wen: ["文", "雯"],
+  lan: ["兰", "蓝"], lei: ["磊", "蕾"],
+  xiang: ["翔", "香"], qiang: ["强", "蔷"],
+  tian: ["天", "甜"], hai: ["海", "涵"],
+  shan: ["山", "珊"], shui: ["水", "睡"],
+  guang: ["光", "广"], yong: ["勇", "永"],
+};
+
+function buildPhoneticScores(firstName: string): Map<string, number> {
+  const scores = new Map<string, number>();
+  if (!firstName) return scores;
+
+  const lower = firstName.toLowerCase().replace(/[^a-zа-яё]/g, "");
+
+  // Transliterate Cyrillic to Latin for matching
+  const latin = transliterateCyrillic(lower);
+  const combined = lower + latin; // match against both
+
+  // Try multi-syllable matches first (greedy), then single syllables
+  for (const [key, chars] of Object.entries(phoneticMap)) {
+    const cleanKey = key.replace(/_/g, "");
+    let bonus = 2; // default bonus
+
+    // Longer keys get higher bonus (more specific match)
+    if (cleanKey.length >= 4) bonus = 4;
+    else if (cleanKey.length >= 3) bonus = 3;
+
+    // Check if the name contains this sound
+    if (combined.includes(cleanKey)) {
+      for (const char of chars) {
+        const existing = scores.get(char) || 0;
+        scores.set(char, Math.max(existing, bonus));
+      }
+    }
+  }
+
+  return scores;
+}
+
+// Transliterate Cyrillic → Latin for phonetic matching
+function transliterateCyrillic(text: string): string {
+  const map: Record<string, string> = {
+    а: "a", б: "b", в: "v", г: "g", д: "d", е: "ye", ё: "yo", ж: "zh",
+    з: "z", и: "i", й: "y", к: "k", л: "l", м: "m", н: "n", о: "o",
+    п: "p", р: "r", с: "s", т: "t", у: "u", ф: "f", х: "kh", ц: "ts",
+    ч: "ch", ш: "sh", щ: "shch", ъ: "", ы: "y", ь: "", э: "e", ю: "yu", я: "ya",
+  };
+  let result = "";
+  for (const ch of text) {
+    result += map[ch] || ch;
+  }
+  return result;
 }
 
 function toPinyin(chars: string): string {

@@ -98,8 +98,10 @@
     "subtitle": "На основе ваших данных рождения и классических китайских текстов",
     "badge": "Взнос $1",
     "form": {
-      "surname": "Ваша Фамилия",
-      "surnamePlaceholder": "например Smith",
+      "firstName": "Имя",
+      "firstNamePlaceholder": "например Michael, Анна",
+      "lastName": "Фамилия",
+      "lastNamePlaceholder": "например Smith, Петров",
       "gender": "Пол",
       "genderPlaceholder": "Выберите...",
       "male": "Мужской",

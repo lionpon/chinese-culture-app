@@ -98,8 +98,10 @@
     "subtitle": "Based on your birth information and classical Chinese texts",
     "badge": "$1 contribution",
     "form": {
-      "surname": "Your Surname",
-      "surnamePlaceholder": "e.g. Smith",
+      "firstName": "First / Given Name",
+      "firstNamePlaceholder": "e.g. Michael, Анна",
+      "lastName": "Last / Family Name",
+      "lastNamePlaceholder": "e.g. Smith, Петров",
       "gender": "Gender",
       "genderPlaceholder": "Select...",
       "male": "Male",

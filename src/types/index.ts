@@ -1,6 +1,8 @@
 // Naming types
 export interface NamingInput {
-  surname: string;       // user's English surname
+  firstName?: string;    // user's given name (for phonetic matching)
+  lastName?: string;     // user's family name (for surname mapping)
+  surname?: string;      // legacy — kept for backward compat, prefer lastName
   gender: "male" | "female";
   birthYear: number;
   birthMonth: number;
