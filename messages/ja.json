@@ -1,0 +1,500 @@
+{
+  "common": {
+    "siteName": "Chinese Culture Studio",
+    "nav": {
+      "name": "命名",
+      "dates": "吉日",
+      "iching": "易経",
+      "palmReading": "手相",
+      "createName": "中国名を作る",
+      "dateSelection": "吉日選択",
+      "ichingDivination": "易経占い",
+      "palmMenu": "手相鑑定"
+    },
+    "footer": {
+      "disclaimer": "娯楽と文化理解のためのものです。専門的なアドバイスではありません。",
+      "paymentNote": "お支払いはアプリ維持のための任意のご支援であり、サービスの購入ではありません。",
+      "guides": {
+        "chineseName": "中国名ガイド",
+        "iching": "易経ガイド",
+        "auspiciousDates": "吉日ガイド"
+      },
+      "terms": "利用規約",
+      "privacy": "プライバシーポリシー",
+      "copyright": "2026 Chinese Culture Studio"
+    },
+    "share": {
+      "button": "共有",
+      "tooltip": "サイトを共有",
+      "text": "Chinese Culture Studio — 易経占い、中国名、吉日選択",
+      "title": "Chinese Culture Studio",
+      "copied": "コピーしました！"
+    },
+    "cookie": {
+      "text": "本サイトでは無料枠の管理と分析のために必須Cookieとローカルストレージを使用します。「同意する」をクリックするとこれに同意したことになります。詳細はプライバシーポリシーをご覧ください。",
+      "privacyLink": "プライバシーポリシー",
+      "essentialOnly": "必須のみ",
+      "acceptAll": "同意する"
+    },
+    "submit": {
+      "processing": "処理中...",
+      "free": "{label} — 無料",
+      "paid": "{label} · ${amount} 支援",
+      "helper": "ご支援がサービスの維持に役立ちます"
+    },
+    "amount": {
+      "label": "支援額 (USD)",
+      "custom": "任意",
+      "placeholder": "金額",
+      "helper": "ご支援は開発、API費用、サーバー維持に充てられます。"
+    },
+    "speak": {
+      "listen": "聞く",
+      "tooltip": "発音を聞く"
+    },
+    "loading": "読み込み中...",
+    "freeTier": {
+      "two": "無料プレビューが2回あります — お試しください！",
+      "one": "無料プレビューが残り1回です"
+    },
+    "toggleMenu": "ナビゲーションメニューを開く"
+  },
+  "home": {
+    "title": "Chinese Culture Studio",
+    "subtitle": "名前、吉日、占い、手相を通じて古代中国の知恵を発見しましょう",
+    "features": {
+      "naming": {
+        "title": "中国名を作る",
+        "desc": "五行と易経の原理に基づき、古典テキストからあなただけの本格的な中国名を生成します。"
+      },
+      "calendar": {
+        "title": "吉日選択",
+        "desc": "伝統的な暦法を用いて、結婚、ビジネス、旅行などに最も縁起の良い日を見つけます。"
+      },
+      "divination": {
+        "title": "易経占い",
+        "desc": "古代の易経に問いかけ、パーソナライズされた卦と明快な指針を受け取りましょう。"
+      },
+      "palm": {
+        "title": "手相鑑定",
+        "desc": "手のひらの写真をアップロードして、麻衣神相などの古典テキストに基づく本格的な手相分析を受けましょう。"
+      }
+    },
+    "cta": {
+      "paid": "$1で支援 →",
+      "free": "無料トライアル →"
+    },
+    "dailyHexagram": {
+      "heading": "今日の無料運勢",
+      "cta": "完全な易経リーディング → $1",
+      "helper": "今日の卦は毎日更新されます。あなたの質問に対する個人的なリーディングは、ご自身で卦を立ててください。",
+      "askOwn": "自分の卦を立てる →"
+    },
+    "privacy": "プライバシーポリシー",
+    "terms": "利用規約"
+  },
+  "naming": {
+    "title": "中国名を作る",
+    "subtitle": "あなたの誕生情報と中国古典テキストに基づいて",
+    "badge": "$1 支援",
+    "form": {
+      "firstName": "名（名前）",
+      "firstNamePlaceholder": "例: Michael, Анна",
+      "lastName": "姓（名字）",
+      "lastNamePlaceholder": "例: Smith, Петров",
+      "gender": "性別",
+      "genderPlaceholder": "選択...",
+      "male": "男性",
+      "female": "女性",
+      "dob": "生年月日",
+      "year": "年",
+      "month": "月",
+      "day": "日",
+      "hour": "出生時間 (0-23)",
+      "hourPlaceholder": "例: 午前8時 → 8",
+      "hourHelper": "正確な時間がわからない場合はおおよそでも大丈夫です。",
+      "previewNote": "無料プレビューが尽きると支援額が使用されます。",
+      "style": "名前のスタイル",
+      "stylePlaceholder": "選択...",
+      "styleElegant": "優雅で洗練 · 典雅",
+      "styleGrand": "雄大で力強い · 大気",
+      "styleFresh": "清新で自然 · 清新",
+      "submit": "名前を生成"
+    },
+    "example": {
+      "summary": "結果の例 — 何が得られるか確認",
+      "meaning": "意味",
+      "elements": "五行",
+      "source": "出典",
+      "meaningText": "明るい知恵の森",
+      "elementsText": "木 + 火",
+      "baziTitle": "八字分析",
+      "baziText": "あなたの日主は甲木（陽の木）— 強く、正しく、成長志向です。喜神：水 + 木。選ばれた名前は日主を養い、五行のバランスを整えます。",
+      "footer": "上のフォームに記入してパーソナライズされた名前を取得してください。無料プレビューでは1つの名前が表示されます — 完全な八字分析と5つの名前をアンロック。"
+    },
+    "meta": {
+      "title": "中国名を作成 | Chinese Culture Studio",
+      "description": "生年月日、性別、五行に基づいた本格的な中国名を生成。古典テキストからのAI命名。お好きな金額で（最低$1）。",
+      "ogTitle": "中国名を作成 | Chinese Culture Studio",
+      "ogDescription": "五行に基づいた本格的な中国名を生成。お好きな金額で。",
+      "twitterTitle": "中国名を作成 | Chinese Culture Studio",
+      "twitterDescription": "五行に基づくAI中国名生成。お好きな金額で。",
+      "ogSub": "五行 + AI命名"
+    }
+  },
+  "calendar": {
+    "title": "吉日選択",
+    "subtitle": "伝統的な中国暦の原理に基づいて",
+    "badge": "$1 支援",
+    "form": {
+      "range": "日付範囲",
+      "start": "開始",
+      "end": "終了",
+      "rangeHelper": "最良の結果を得るには最大90日間の範囲を選択してください。",
+      "previewNote": "無料プレビューが尽きると支援額が使用されます。",
+      "eventType": "イベント種類",
+      "eventPlaceholder": "イベント種類を選択...",
+      "submit": "吉日を探す"
+    },
+    "example": {
+      "summary": "結果の例 — 何が得られるか確認",
+      "score": "スコア: 92/100",
+      "suitableLabel": "宜 よろしい",
+      "unsuitableLabel": "忌 いむべし",
+      "godsLabel": "吉神",
+      "suitableItems": "結婚、婚約",
+      "unsuitableItems": "訴訟、葬儀",
+      "godsItems": "天徳、月徳",
+      "footer": "上のフォームでイベント種類と日付範囲を選択してください。無料プレビューでは1つの日付が表示されます — 吉時付きの3つの日付をアンロック。"
+    },
+    "events": {
+      "wedding": "結婚 · 嫁娶",
+      "engagement": "婚約 · 訂婚",
+      "businessOpening": "開業 · 開市",
+      "travel": "旅行 · 出行",
+      "movingHouse": "引越し · 搬家",
+      "signingContract": "契約締結 · 簽約",
+      "ancestralCeremony": "祖先祭祀 · 祭祀",
+      "construction": "建築 · 修造",
+      "medicalTreatment": "治療 · 求医",
+      "funeral": "葬儀 · 安葬",
+      "education": "教育 · 入学",
+      "meeting": "会合 · 会友",
+      "renovation": "改装 · 裝修"
+    },
+    "meta": {
+      "title": "吉日選択 | Chinese Culture Studio",
+      "description": "伝統的な中国暦（通書）に基づき、結婚、開業、旅行などに最も縁起の良い日を見つけます。お好きな金額で（最低$1）。",
+      "ogTitle": "吉日選択 | Chinese Culture Studio",
+      "ogDescription": "伝統的な中国暦に基づく吉日検索。お好きな金額で。",
+      "twitterTitle": "吉日選択 | Chinese Culture Studio",
+      "twitterDescription": "伝統的中国暦による人生の重要イベントの日取り。お好きな金額で。",
+      "ogSub": "伝統的中国暦"
+    }
+  },
+  "divination": {
+    "title": "易経占い",
+    "subtitle": "古代の易経に問いかける",
+    "badge": "$1 支援",
+    "form": {
+      "question": "あなたの質問（任意）",
+      "questionPlaceholder": "何について指針を得たいですか？",
+      "method": "卦の立て方",
+      "methodTime": "時間による（時間）",
+      "methodRandom": "ランダム（随機）",
+      "methodManual": "手動（手動）",
+      "numbers": "3つの数字 (1-999)",
+      "firstNum": "1番目",
+      "secondNum": "2番目",
+      "thirdNum": "3番目",
+      "previewNote": "無料プレビューが尽きると支援額が使用されます。",
+      "submit": "卦を立てる"
+    },
+    "example": {
+      "summary": "結果の例 — 何が得られるか確認",
+      "guidance": "あなたへの指針",
+      "guidanceText": "☀️ 判定: 吉 — 大胆で決断力のある行動の時です。今すぐイニシアチブを取りましょう — プロジェクトを立ち上げ、最初の一歩を踏み出し、リーダーシップを発揮してください。あなたの勢いは報われます。",
+      "judgmentTitle": "卦辞",
+      "judgmentText": "成功。忍耐が利する。創造力は忍耐を通じて偉大な成功をもたらす。",
+      "footer": "上で自分の卦を立ててください。無料プレビューでは基本的なリーディングが表示されます — ご支援で変卦・互卦をアンロック。"
+    },
+    "meta": {
+      "title": "易経占い | Chinese Culture Studio",
+      "description": "古代の易経（易経）に指針を求めましょう。時間、ランダム、手動コイン投げの3つの方法。お好きな金額で（最低$1）。",
+      "ogTitle": "易経占い | Chinese Culture Studio",
+      "ogDescription": "古代の易経に問いかけましょう。3つの方法から選択可能。お好きな金額で。",
+      "twitterTitle": "易経占い | Chinese Culture Studio",
+      "twitterDescription": "3つの占術で即座に結果が得られます。お好きな金額で。",
+      "ogSub": "易経に問いかける"
+    }
+  },
+  "palm": {
+    "title": "手相鑑定",
+    "subtitle": "手のひらの写真をアップロードして古典中国手相術の分析を受けましょう",
+    "badge": "$1 支援",
+    "form": {
+      "photo": "手のひらの写真 *",
+      "uploadText": "クリックまたはドラッグで写真をここに",
+      "uploading": "アップロード中...",
+      "helperLines": "手のひらの線がはっきり見えるようにしてください",
+      "helperHand": "伝統的に：男性は左手（男左）、女性は右手（女右）を差し出します",
+      "whichHand": "どちらの手ですか？ *",
+      "handPlaceholder": "選択...",
+      "leftHand": "左手 · 左手（先天手 · 男左）",
+      "rightHand": "右手 · 右手（先天手 · 女右）",
+      "handHelper": "古典手相術では、利き手が先天の運命を反映します：男性は左手（男左）、女性は右手（女右）を見ます。もう一方の手は後天的な変化を示します。",
+      "gender": "性別（任意）",
+      "preferNot": "答えたくない",
+      "male": "男性",
+      "female": "女性",
+      "age": "年齢層（任意）",
+      "under18": "18歳未満",
+      "age18_30": "18〜30歳",
+      "age30_50": "30〜50歳",
+      "age50plus": "50歳以上",
+      "question": "何を知りたいですか？（任意）",
+      "questionPlaceholder": "例: 私のキャリア線は何を語っていますか？",
+      "consent": "手のひらの写真がこの鑑定のために処理され、直ちに削除されることを理解しました。画像はディスクに保存されたり第三者と共有されたりすることはありません。",
+      "consentLink": "プライバシーポリシー",
+      "submit": "手相を鑑定",
+      "processing": "処理中..."
+    },
+    "errors": {
+      "noImage": "画像ファイルを選択してください。",
+      "tooBig": "画像は8MB以下にしてください。",
+      "uploadFailed": "アップロードに失敗しました。もう一度お試しください。"
+    },
+    "meta": {
+      "title": "手相鑑定 | Chinese Culture Studio",
+      "description": "手のひらの写真をアップロードして古典中国手相術に基づくAI分析を受けましょう。画像はメモリ内で処理され保存されません。お好きな金額で（最低$1）。",
+      "ogTitle": "手相鑑定 | Chinese Culture Studio",
+      "ogDescription": "古典中国手相術に基づくAI手相鑑定。プライバシー最優先 — 画像は保存されません。お好きな金額で。",
+      "twitterTitle": "手相鑑定 | Chinese Culture Studio",
+      "twitterDescription": "古典テキストからのAI手相鑑定。ゼロ保存、完全プライバシー。お好きな金額で。",
+      "ogSub": "古典中国手相術 + AI"
+    }
+  },
+  "result": {
+    "naming": {
+      "title": "あなたの中国名",
+      "meaning": "意味",
+      "elements": "五行",
+      "source": "出典",
+      "recommended": "おすすめ — あなたの五行プロファイルに最適",
+      "baziAnalysis": "八字分析"
+    },
+    "calendar": {
+      "title": "吉日",
+      "score": "スコア: {n}/100",
+      "stemsBranches": "干支",
+      "jianchu": "建除 / 星座",
+      "suitable": "宜 よろしい",
+      "unsuitable": "忌 いむべし",
+      "auspiciousGods": "吉神",
+      "auspiciousHours": "吉時",
+      "auspicious": "吉",
+      "inauspicious": "凶"
+    },
+    "divination": {
+      "title": "易経リーディング",
+      "guidance": "あなたへの指針",
+      "originalJudgment": "卦辞",
+      "interpretation": "解釈",
+      "changedHexagram": "変卦",
+      "mutualHexagram": "互卦",
+      "changingLine": "動爻 — 位置 {n}"
+    },
+    "palm": {
+      "handType": "手型 · 五行手型",
+      "threeLines": "三才紋 · 三才紋",
+      "lifeLine": "生命線 · 地紋",
+      "headLine": "頭脳線 · 人紋",
+      "heartLine": "感情線 · 天紋",
+      "health": "健康と活力",
+      "wisdom": "知恵とキャリア",
+      "emotion": "感情と地位",
+      "excellent": "非常に良い 上吉",
+      "good": "良い 吉",
+      "fair": "普通 平",
+      "weak": "弱い 弱",
+      "auxiliary": "補助線 · 補助紋",
+      "fateLine": "運命線 · 玉柱紋",
+      "careerPath": "キャリアパス",
+      "marriageLine": "結婚線 · 婚姻線",
+      "relationships": "人間関係",
+      "sunLine": "太陽線 · 太陽線",
+      "successFame": "成功と名声",
+      "healthLine": "健康線 · 健康線",
+      "wellness": "健康状態",
+      "ninePalaces": "掌中九宮 · 掌中九宮",
+      "overall": "総合判断 · 綜合判断",
+      "career": "キャリア · 事業",
+      "love": "愛情 · 感情",
+      "healthTitle": "健康 · 健康"
+    }
+  },
+  "guide": {
+    "chineseName": {
+      "title": "本格的な中国名の選び方",
+      "subtitle": "古代中国の命名術ガイド — 古典テキストから現代生活まで。",
+      "why": "中国名が重要な理由",
+      "structure": "中国名の構造",
+      "methods": "中国名の選び方：5つの古典的方法",
+      "method1": "五行バランス",
+      "method2": "八字（四柱）分析",
+      "method3": "画数占い",
+      "method4": "音とリズム",
+      "method5": "詩的・文学的典拠",
+      "mistakes": "よくある間違い",
+      "cta": "中国名を作成 → $1.00",
+      "disclaimer": "文化理解のためのものです。専門的なアドバイスではありません。"
+    },
+    "iching": {
+      "title": "易経占い：初心者ガイド",
+      "subtitle": "3000年の歴史を持つ易経を理解する — コイン投げから卦の解釈まで。",
+      "what": "易経とは？",
+      "how": "易経占いはどのように機能するのか？",
+      "structure": "卦（Gua）の構造",
+      "bagua": "八卦（Bagua）",
+      "trigramName": "名称",
+      "trigramChinese": "中国語",
+      "trigramNature": "自然",
+      "trigramSymbol": "象徴",
+      "casting": "卦の立て方",
+      "interpretation": "リーディングの解釈",
+      "cta": "易経に問いかける → $1.00",
+      "disclaimer": "文化理解と娯楽のためのものです。専門的なアドバイスではありません。"
+    },
+    "auspiciousDates": {
+      "title": "吉日の選び方：中国暦ガイド",
+      "subtitle": "結婚式の計画から開業まで、縁起の良い日を選ぶ技術をマスターしましょう。",
+      "why": "中国文化において日付が重要な理由",
+      "what": "何が日を吉にするのか？",
+      "element1": "干支",
+      "element2": "建除十二神",
+      "element3": "吉星と凶星",
+      "element4": "個人の干支との衝突",
+      "common": "一般的なイベントの良い日",
+      "cta": "吉日を探す → $1.00",
+      "disclaimer": "文化理解のためのものです。専門的なアドバイスではありません。"
+    }
+  },
+  "success": {
+    "preparing": "リーディングを準備中...",
+    "freeReady": "無料リーディングの準備ができました。",
+    "paidPreparing": "お支払い確認。リーディングを準備中...",
+    "waitSubtitle": "通常は数秒かかります。",
+    "missingId": "参照IDがありません。もう一度お試しください。",
+    "timeoutTitle": "処理中",
+    "timeoutBody": "お支払いは受領されましたが、結果の準備に通常より時間がかかっています。",
+    "timeoutDetail": "PayPalの通知が遅延した場合に発生することがあります。お支払いとリーディングは安全です。",
+    "reference": "参照: {id}",
+    "checkAgain": "再度確認",
+    "backHome": "ホームに戻る",
+    "timeoutFooter": "10分以内に結果が表示されない場合は、参照IDを添えてサポートまでご連絡ください。",
+    "failedTitle": "問題が発生しました",
+    "failedBody": "処理に失敗しました。ご支援は安全です — サポートまでお問い合わせください。",
+    "returnHome": "ホームに戻る",
+    "freeBanner": "残り{n}回の無料鑑定",
+    "freeLast": "最後の無料鑑定でした",
+    "freeText": "各鑑定は古典テキストと伝統的手法に基づく計算を必要とします。今後の鑑定は$1のご支援でご利用いただけます。",
+    "anotherName": "別の名前を取得",
+    "anotherDate": "別の日付を検索",
+    "anotherHexagram": "別の卦を立てる",
+    "anotherPalm": "別の手相を鑑定",
+    "unlockTitle": "これはプレビューです。完全な結果をアンロック：",
+    "unlockNaming1": "詳細な意味付きの追加の名前候補4件",
+    "unlockNaming2": "五行プロファイルの完全な八字分析",
+    "unlockDivination1": "変卦と互卦（全体像）",
+    "unlockDivination2": "動爻の解釈と具体的なアドバイス",
+    "unlockCalendar1": "スコア付きの追加の吉日2件",
+    "unlockCalendar2": "各日付の吉時と吉神",
+    "unlockNow": "完全な結果をアンロック — $1から"
+  },
+  "legal": {
+    "privacy": {
+      "title": "プライバシーポリシー",
+      "lastUpdated": "最終更新日: 2026年5月26日",
+      "section1": "1. 運営者について",
+      "section2": "2. 収集するデータ",
+      "section3": "3. 手のひら画像の処理",
+      "section3a": "3a. 手のひら画像の処理",
+      "section4": "4. 決済処理",
+      "section5": "5. Cookieとローカルストレージ",
+      "section6": "6. データ保持",
+      "section7": "7. お客様の権利（GDPR）",
+      "section8": "8. データ共有と第三者",
+      "section9": "9. 国際データ転送",
+      "section10": "10. セキュリティ",
+      "section11": "11. 子どものプライバシー",
+      "section12": "12. 本ポリシーの変更",
+      "section13": "13. お問い合わせ",
+      "contactEmail": "privacy@easternwisdom.app"
+    },
+    "terms": {
+      "title": "利用規約",
+      "lastUpdated": "最終更新日: 2026年5月",
+      "section1": "1. サービスの性質",
+      "section2": "2. 保証なし",
+      "section3": "3. お支払いとご支援",
+      "section4": "4. 生体データの同意",
+      "section5": "5. プライバシー",
+      "section6": "6. 年齢制限",
+      "section7": "7. 知的財産権",
+      "section8": "8. 責任の制限",
+      "section9": "9. 変更",
+      "section10": "10. お問い合わせ",
+      "contactEmail": "support@easternwisdom.app"
+    }
+  },
+  "admin": {
+    "title": "Chinese Culture Studio — 管理",
+    "subtitle": "分析と日次レポート — 訪問時に自動生成",
+    "refresh": "データ更新",
+    "visitsToday": "本日の訪問",
+    "countriesToday": "本日の国数",
+    "revenueToday": "本日の収益",
+    "freeTrialsToday": "本日の無料トライアル",
+    "visits7Day": "7日間の訪問",
+    "trend7": "7日間のトレンド",
+    "countries7": "国別分布（7日間）",
+    "pagesToday": "本日のページ別訪問",
+    "revenueService": "サービス別収益",
+    "noReport": "まだデータがありません。本日のレポートを生成してください。",
+    "noData": "まだデータがありません。",
+    "noPurchases": "本日の購入はありません。",
+    "freeTrialsTrend7": "7日間の無料トライアルトレンド",
+    "tableDate": "日付",
+    "tableVisits": "訪問",
+    "tableTrials": "トライアル",
+    "tableCountries": "国",
+    "tableRevenue": "収益",
+    "footer": "管理パネル — トークンで保護されています。ADMIN_TOKENを環境変数に設定してください。",
+    "freeToday": "本日の無料トライアル分布",
+    "total": "合計",
+    "noFreeToday": "本日の無料トライアルはありません",
+    "sevenDays": "7日間",
+    "noData7d": "データなし",
+    "total7": "7日間合計",
+    "detail7": "7日間サマリー詳細",
+    "naming": "命名",
+    "calendar": "日付選択",
+    "divination": "占い",
+    "palm": "手相"
+  },
+  "payment": {
+    "name": "Chinese Culture Studioを支援 — 命名リーディング",
+    "date": "Chinese Culture Studioを支援 — 日付選択",
+    "iching": "Chinese Culture Studioを支援 — 易経リーディング",
+    "palm": "Chinese Culture Studioを支援 — 手相鑑定",
+    "error": "問題が発生しました",
+    "failed": "失敗しました。もう一度お試しください。",
+    "returnApp": "アプリに戻る",
+    "thankYou": "Chinese Culture Studioへのご支援ありがとうございます！"
+  },
+  "languageSwitcher": {
+    "en": "English",
+    "ru": "Русский",
+    "ja": "日本語"
+  }
+}

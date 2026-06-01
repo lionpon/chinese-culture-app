@@ -19,37 +19,60 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const t = await getTranslations({ locale: params.locale, namespace: "common" });
+  const locale = params.locale;
+
+  const localeMeta: Record<string, { tagline: string; desc: string; ogDesc: string; twitterDesc: string; ogLocale: string }> = {
+    en: {
+      tagline: "Chinese Name, Auspicious Dates, I Ching & Palm Reading",
+      desc: "Discover your authentic Chinese name, find auspicious dates, consult the I Ching, or get a palm reading based on classical Chinese texts. Pay what you want (min $1).",
+      ogDesc: "AI-powered Chinese cultural readings: names, auspicious dates, I Ching divination, and palm reading. Pay what you want (min $1).",
+      twitterDesc: "AI-powered Chinese cultural readings from classical texts. Chinese naming, date selection, I Ching, palm reading. Pay what you want.",
+      ogLocale: "en_US",
+    },
+    ru: {
+      tagline: "Китайское Имя, Даты, И-Цзин и Хиромантия",
+      desc: "Откройте для себя подлинное китайское имя, найдите благоприятные даты, обратитесь к И-Цзин или получите чтение ладони на основе классических китайских текстов. Платите сколько хотите (мин. $1).",
+      ogDesc: "Культурные чтения с ИИ: китайские имена, благоприятные даты, гадание И-Цзин и хиромантия. Платите сколько хотите.",
+      twitterDesc: "Культурные чтения с ИИ из классических китайских текстов. Именование, выбор дат, И-Цзин, хиромантия. Платите сколько хотите.",
+      ogLocale: "ru_RU",
+    },
+    ja: {
+      tagline: "中国名、吉日、易経、手相",
+      desc: "本格的な中国名を見つけ、縁起の良い日を選び、易経に問いかけ、古典テキストに基づいた手相鑑定を受けましょう。お好きな金額で（最低$1）。",
+      ogDesc: "AI搭載の中国文化リーディング：命名、吉日選択、易経占い、手相鑑定。お好きな金額で。",
+      twitterDesc: "古典テキストからのAI中国文化リーディング。中国命名、日付選択、易経、手相。お好きな金額で。",
+      ogLocale: "ja_JP",
+    },
+  };
+
+  const meta = localeMeta[locale] || localeMeta.en;
+  const urlPath = locale === "en" ? "" : `/${locale}`;
 
   return {
-    title: `${t("siteName")} — ${params.locale === "ru" ? "Китайское Имя, Даты, И-Цзин и Хиромантия" : "Chinese Name, Auspicious Dates, I Ching & Palm Reading"}`,
-    description: params.locale === "ru"
-      ? "Откройте для себя подлинное китайское имя, найдите благоприятные даты, обратитесь к И-Цзин или получите чтение ладони на основе классических китайских текстов. Платите сколько хотите (мин. $1)."
-      : "Discover your authentic Chinese name, find auspicious dates, consult the I Ching, or get a palm reading based on classical Chinese texts. Pay what you want (min $1).",
+    title: `${t("siteName")} — ${meta.tagline}`,
+    description: meta.desc,
     keywords: ["Chinese name", "I Ching", "divination", "auspicious date", "palm reading", "palmistry", "Chinese zodiac", "five elements", "feng shui", "Chinese culture", "Book of Changes", "Chinese naming"],
     openGraph: {
-      title: `Chinese Culture Studio — ${params.locale === "ru" ? "Имя, Даты, И-Цзин и Хиромантия" : "Chinese Name, Dates, I Ching & Palm Reading"}`,
-      description: params.locale === "ru"
-        ? "Культурные чтения с ИИ: китайские имена, благоприятные даты, гадание И-Цзин и хиромантия. Платите сколько хотите."
-        : "AI-powered Chinese cultural readings: names, auspicious dates, I Ching divination, and palm reading. Pay what you want (min $1).",
-      url: `https://chinese-culture-app.onrender.com${params.locale === "en" ? "" : "/ru"}`,
+      title: `Chinese Culture Studio — ${meta.tagline}`,
+      description: meta.ogDesc,
+      url: `https://chinese-culture-app.onrender.com${urlPath}`,
       siteName: "Chinese Culture Studio",
-      locale: params.locale === "ru" ? "ru_RU" : "en_US",
+      locale: meta.ogLocale,
       type: "website",
       images: [{ url: `https://chinese-culture-app.onrender.com/api/og?lang=${params.locale}`, width: 1200, height: 630 }],
     },
     twitter: {
       card: "summary_large_image",
-      title: `Chinese Culture Studio — ${params.locale === "ru" ? "Имена, Даты, И-Цзин и Хиромантия" : "Names, Dates, I Ching & Palm Reading"}`,
-      description: params.locale === "ru"
-        ? "Культурные чтения с ИИ из классических китайских текстов. Именование, выбор дат, И-Цзин, хиромантия. Платите сколько хотите."
-        : "AI-powered Chinese cultural readings from classical texts. Chinese naming, date selection, I Ching, palm reading. Pay what you want.",
-      images: [`https://chinese-culture-app.onrender.com/api/og?lang=${params.locale}`],
+      title: `Chinese Culture Studio — ${meta.tagline}`,
+      description: meta.twitterDesc,
+      images: [`https://chinese-culture-app.onrender.com/api/og?lang=${locale}`],
     },
     robots: { index: true, follow: true },
     alternates: {
       languages: {
         en: "https://chinese-culture-app.onrender.com",
         ru: "https://chinese-culture-app.onrender.com/ru",
+        ja: "https://chinese-culture-app.onrender.com/ja",
       },
       types: {
         "application/rss+xml": "https://chinese-culture-app.onrender.com/api/rss",
@@ -62,34 +85,24 @@ export default async function LocaleLayout({ children, params }: Props) {
   const messages = await getMessages();
   const t = await getTranslations({ locale: params.locale, namespace: "common" });
 
-  const pathname = params.locale === "ru" ? "/ru" : "";
-  const isRu = params.locale === "ru";
+  const pathname = params.locale === "en" ? "" : `/${params.locale}`;
 
-  const footerGuides = isRu
-    ? [
-        { href: "/guide/chinese-name", label: "Гид по Китайским Именам" },
-        { href: "/guide/chinese-name-boy", label: "Мужские Имена" },
-        { href: "/guide/chinese-name-girl", label: "Женские Имена" },
-        { href: "/guide/iching", label: "Гид по И-Цзин" },
-        { href: "/guide/iching-beginner", label: "И-Цзин для Начинающих" },
-        { href: "/guide/auspicious-dates", label: "Благоприятные Даты" },
-        { href: "/guide/wedding-dates-2026", label: "Свадебные Даты 2026" },
-        { href: "/guide/chinese-zodiac", label: "Китайский Зодиак" },
-        { href: "/guide/five-elements", label: "Пять Элементов" },
-        { href: "/guide/chinese-new-year-2027", label: "КНГ 2027" },
-      ]
-    : [
-        { href: "/guide/chinese-name", label: "Chinese Name Guide" },
-        { href: "/guide/chinese-name-boy", label: "Boy Names" },
-        { href: "/guide/chinese-name-girl", label: "Girl Names" },
-        { href: "/guide/iching", label: "I Ching Guide" },
-        { href: "/guide/iching-beginner", label: "I Ching Beginner" },
-        { href: "/guide/auspicious-dates", label: "Auspicious Dates" },
-        { href: "/guide/wedding-dates-2026", label: "Wedding Dates 2026" },
-        { href: "/guide/chinese-zodiac", label: "Chinese Zodiac" },
-        { href: "/guide/five-elements", label: "Five Elements" },
-        { href: "/guide/chinese-new-year-2027", label: "CNY 2027" },
-      ];
+  const footerGuideLabels: Record<string, string[]> = {
+    en: ["Chinese Name Guide", "Boy Names", "Girl Names", "I Ching Guide", "I Ching Beginner", "Auspicious Dates", "Wedding Dates 2026", "Chinese Zodiac", "Five Elements", "CNY 2027"],
+    ru: ["Гид по Китайским Именам", "Мужские Имена", "Женские Имена", "Гид по И-Цзин", "И-Цзин для Начинающих", "Благоприятные Даты", "Свадебные Даты 2026", "Китайский Зодиак", "Пять Элементов", "КНГ 2027"],
+    ja: ["中国名ガイド", "男性の名前", "女性の名前", "易経ガイド", "易経入門", "吉日", "2026年結婚日", "十二支", "五行", "旧正月2027"],
+  };
+
+  const guideSlugs = [
+    "chinese-name", "chinese-name-boy", "chinese-name-girl", "iching", "iching-beginner",
+    "auspicious-dates", "wedding-dates-2026", "chinese-zodiac", "five-elements", "chinese-new-year-2027",
+  ];
+
+  const labels = footerGuideLabels[params.locale] || footerGuideLabels.en;
+  const footerGuides = guideSlugs.map((slug, i) => ({
+    href: `/guide/${slug}`,
+    label: labels[i],
+  }));
 
   return (
     <html lang={params.locale}>
