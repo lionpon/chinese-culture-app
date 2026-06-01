@@ -115,6 +115,7 @@ export default async function LocaleLayout({ children, params }: Props) {
                   <LanguageSwitcher />
                 </nav>
                 <div className="flex items-center gap-2 sm:gap-4">
+                  <span className="sm:hidden"><LanguageSwitcher /></span>
                   <ShareButton />
                   <NavMenu />
                 </div>
