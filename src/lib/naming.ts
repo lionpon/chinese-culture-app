@@ -1,7 +1,7 @@
 // Naming algorithm: combines Bazi analysis with classical text character selection
 import { calculateBazi } from "./bazi";
 import { analyzeWuxing } from "./wuxing";
-import { characters, surnameMap } from "../data/characters";
+import { characters, surnameMap, compoundSurnames } from "../data/characters";
 import type { NamingInput, NameOption, NamingResult, BaziResult } from "../types";
 
 export function generateNames(input: NamingInput, preview = false): NamingResult {
@@ -44,49 +44,69 @@ function _generateNames(input: NamingInput): NamingResult {
     score: (favorable.includes(c.element) ? 3 : 0) + (c.element === favorable[0] ? 2 : 0) + (c.gender === gender ? 1 : 0),
   })).sort((a, b) => b.score - a.score);
 
-  // 6. Generate name combinations
-  const options: NameOption[] = [];
-  const usedChars = new Set<string>();
+  // 6. Build candidate given-name characters (scored)
+  const topCandidates = scored.slice(0, 30);
 
-  // Generate two-character given names
-  for (let i = 0; i < Math.min(scored.length, 30); i++) {
-    for (let j = i + 1; j < Math.min(scored.length, 30); j++) {
-      if (options.length >= 5) break;
-      const a = scored[i];
-      const b = scored[j];
-      if (usedChars.has(`${a.char}${b.char}`)) continue;
-      if (a.char === b.char) continue;
-
-      // Prefer combinations where both characters contribute favorable elements
-      const bothFavorable = favorable.includes(a.element) && favorable.includes(b.element);
-      if (!bothFavorable && options.length >= 3) continue;
-
-      usedChars.add(`${a.char}${b.char}`);
-      const givenName = a.char + b.char;
-      const fullName = chineseSurname + givenName;
-
-      options.push({
-        characters: fullName,
-        surname: chineseSurname,
-        givenName,
-        pinyin: toPinyin(fullName),
-        meaning: `${a.meaning}; ${b.meaning}`,
-        wuxing: `${a.element}${b.element}`,
-        source: a.source || b.source,
-        sourceText: [a.sourceText, b.sourceText].filter(Boolean).join(" | "),
-      });
+  // Helper: generate options for a given surname
+  function buildOptions(surname: string, maxCount: number): NameOption[] {
+    const results: NameOption[] = [];
+    const usedPairs = new Set<string>();
+    for (let i = 0; i < topCandidates.length; i++) {
+      for (let j = i + 1; j < topCandidates.length; j++) {
+        if (results.length >= maxCount) break;
+        const a = topCandidates[i];
+        const b = topCandidates[j];
+        const pairKey = `${a.char}${b.char}`;
+        if (usedPairs.has(pairKey)) continue;
+        if (a.char === b.char) continue;
+        const bothFavorable = favorable.includes(a.element) && favorable.includes(b.element);
+        if (!bothFavorable && results.length >= Math.ceil(maxCount / 2)) continue;
+        usedPairs.add(pairKey);
+        const givenName = a.char + b.char;
+        results.push({
+          characters: surname + givenName,
+          surname,
+          givenName,
+          pinyin: toPinyin(surname + givenName),
+          meaning: `${a.meaning}; ${b.meaning}`,
+          wuxing: `${a.element}${b.element}`,
+          source: a.source || b.source,
+          sourceText: [a.sourceText, b.sourceText].filter(Boolean).join(" | "),
+        });
+      }
+      if (results.length >= maxCount) break;
     }
+    return results;
   }
 
-  // If not enough options, add single-character names
+  // Generate regular 3-character names (single surname)
+  const regularOptions = buildOptions(chineseSurname, 3);
+
+  // Generate 4-character names with compound surnames (复姓)
+  const scoredCompounds = compoundSurnames
+    .map(cs => {
+      const overlap = cs.elements.filter(e => favorable.includes(e)).length;
+      return { ...cs, score: overlap };
+    })
+    .sort((a, b) => b.score - a.score);
+
+  const compoundOptions: NameOption[] = [];
+  for (const cs of scoredCompounds.slice(0, 2)) {
+    const built = buildOptions(cs.surname, 1);
+    compoundOptions.push(...built);
+  }
+
+  // Mix: regular first, then compound (total up to 5)
+  const options = [...regularOptions, ...compoundOptions];
+
+  // If not enough, add single-character given names
   if (options.length < 3) {
-    for (const c of scored.slice(0, 5)) {
-      const givenName = c.char;
+    for (const c of topCandidates.slice(0, 5)) {
       options.push({
-        characters: chineseSurname + givenName,
+        characters: chineseSurname + c.char,
         surname: chineseSurname,
-        givenName,
-        pinyin: toPinyin(chineseSurname + givenName),
+        givenName: c.char,
+        pinyin: toPinyin(chineseSurname + c.char),
         meaning: c.meaning,
         wuxing: c.element,
         source: c.source,
@@ -161,6 +181,11 @@ function toPinyin(chars: string): string {
     伟: "wěi", 强: "qiáng", 森: "sēn", 菲: "fēi",
     刘: "liú", 赵: "zhào", 周: "zhōu", 郑: "zhèng", 韩: "hán",
     朱: "zhū", 何: "hé", 吕: "lǚ", 施: "shī", 孙: "sūn",
+    // Compound surname characters (复姓)
+    阳: "yáng", 上: "shàng", 官: "guān", 司: "sī",
+    诸: "zhū", 葛: "gě", 慕: "mù", 容: "róng", 令: "líng",
+    狐: "hú", 端: "duān", 木: "mù", 皇: "huáng", 甫: "fǔ",
+    长: "zhǎng",
   };
 
   let result = "";

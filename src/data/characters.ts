@@ -150,13 +150,37 @@ export const characters: NameChar[] = [
 
 // Surname mapping: English first letter → Chinese surname
 export const surnameMap: Record<string, string> = {
+  // Latin
   A: "安", B: "白", C: "陈", D: "杜", E: "袁",
   F: "冯", G: "郭", H: "黄", I: "易", J: "蒋",
   K: "康", L: "李", M: "马", N: "倪", O: "欧",
   P: "潘", Q: "秦", R: "任", S: "沈", T: "唐",
   U: "吴", V: "范", W: "王", X: "许", Y: "杨", Z: "张",
+  // Cyrillic (Russian / Central Asian)
+  А: "安", Б: "白", В: "王", Г: "郭", Д: "杜",
+  Е: "袁", Ё: "袁", Ж: "张", З: "张", И: "易",
+  Й: "杨", К: "康", Л: "李", М: "马", Н: "倪",
+  О: "欧", П: "潘", Р: "任", С: "沈", Т: "唐",
+  У: "吴", Ф: "冯", Х: "黄", Ц: "陈", Ч: "陈",
+  Ш: "沈", Щ: "沈", Ъ: "林", Ы: "杨", Ь: "林",
+  Э: "袁", Ю: "杨", Я: "杨",
   default: "林",
 };
+
+// Compound surnames (复姓) — used to generate 4-character Chinese names
+// Each entry: { surname, elements, pinyin }
+export const compoundSurnames = [
+  { surname: "欧阳", elements: ["Fire", "Earth"], pinyin: "ōuyáng" },
+  { surname: "上官", elements: ["Metal", "Earth"], pinyin: "shàngguān" },
+  { surname: "司马", elements: ["Water", "Wood"], pinyin: "sīmǎ" },
+  { surname: "诸葛", elements: ["Metal", "Wood"], pinyin: "zhūgě" },
+  { surname: "慕容", elements: ["Wood", "Earth"], pinyin: "mùróng" },
+  { surname: "令狐", elements: ["Fire", "Water"], pinyin: "línghú" },
+  { surname: "端木", elements: ["Fire", "Wood"], pinyin: "duānmù" },
+  { surname: "皇甫", elements: ["Water", "Earth"], pinyin: "huángfǔ" },
+  { surname: "长孙", elements: ["Fire", "Metal"], pinyin: "zhǎngsūn" },
+  { surname: "宇文", elements: ["Earth", "Water"], pinyin: "yǔwén" },
+];
 
 // Remove duplicate 旭
 const seen = new Set<string>();
