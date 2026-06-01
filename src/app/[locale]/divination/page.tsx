@@ -6,6 +6,7 @@ import { useCheckout } from "@/lib/useCheckout";
 import SubmitButton from "@/components/SubmitButton";
 import AmountPicker from "@/components/AmountPicker";
 import FreeTierBadge from "@/components/FreeTierBadge";
+import SpeakButton from "@/components/SpeakButton";
 import { hasFreeUses } from "@/lib/free-tier";
 
 function ExampleResult() {
@@ -23,7 +24,10 @@ function ExampleResult() {
         </div>
         <div className="text-center">
           <p className="text-2xl font-bold text-accent">乾</p>
-          <p className="text-base text-stone-500">qián</p>
+          <div className="flex items-center justify-center gap-2">
+            <p className="text-base text-stone-500">qián</p>
+            <SpeakButton text="乾" />
+          </div>
           <p className="text-sm text-stone-400">The Creative (Heaven)</p>
         </div>
         <div className="bg-stone-50 rounded-lg p-3 text-xs text-stone-500">

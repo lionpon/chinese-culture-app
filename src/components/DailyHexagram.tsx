@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/navigation";
+import SpeakButton from "./SpeakButton";
 
 interface DailyData {
   mainHexagram: {
@@ -41,9 +42,12 @@ export default function DailyHexagram() {
         <p className="text-2xl sm:text-3xl font-bold mb-1 text-accent">
           {mainHexagram.nameZh}
         </p>
-        <p className="text-sm text-stone-500 mb-4">
-          {mainHexagram.pinyin} — {mainHexagram.nameEn}
-        </p>
+        <div className="flex items-center justify-center gap-2 mb-4">
+          <p className="text-sm text-stone-500">
+            {mainHexagram.pinyin} — {mainHexagram.nameEn}
+          </p>
+          <SpeakButton text={mainHexagram.nameZh} />
+        </div>
         <p className="text-sm text-stone-600 leading-relaxed mb-5 max-w-md mx-auto">
           {teaser}
         </p>

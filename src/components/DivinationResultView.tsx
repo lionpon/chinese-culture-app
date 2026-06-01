@@ -1,6 +1,7 @@
 "use client";
 
 import type { DivinationResult } from "@/types";
+import SpeakButton from "./SpeakButton";
 
 export default function DivinationResultView({ result }: { result: DivinationResult }) {
   return (
@@ -14,7 +15,10 @@ export default function DivinationResultView({ result }: { result: DivinationRes
 
         <div className="text-center border-t border-stone-100 pt-4">
           <p className="text-2xl font-bold text-accent">{result.mainHexagram.nameZh}</p>
-          <p className="text-base text-stone-500">{result.mainHexagram.pinyin}</p>
+          <div className="flex items-center justify-center gap-2">
+            <p className="text-base text-stone-500">{result.mainHexagram.pinyin}</p>
+            <SpeakButton text={result.mainHexagram.nameZh} />
+          </div>
           <p className="text-sm text-stone-400">{result.mainHexagram.nameEn}</p>
         </div>
 
@@ -33,7 +37,10 @@ export default function DivinationResultView({ result }: { result: DivinationRes
           <div className="bg-stone-50 rounded-lg p-4">
             <p className="text-sm font-medium text-stone-600 mb-1">Changed Hexagram (变卦)</p>
             <p className="text-stone-800 font-medium">{result.changedHexagram.nameZh}</p>
-            <p className="text-xs text-stone-500">{result.changedHexagram.pinyin} — {result.changedHexagram.nameEn}</p>
+            <div className="flex items-center gap-2">
+              <p className="text-xs text-stone-500">{result.changedHexagram.pinyin} — {result.changedHexagram.nameEn}</p>
+              <SpeakButton text={result.changedHexagram.nameZh} />
+            </div>
             <p className="text-xs text-stone-500 mt-1">{result.changedHexagram.descriptionEn}</p>
           </div>
         )}

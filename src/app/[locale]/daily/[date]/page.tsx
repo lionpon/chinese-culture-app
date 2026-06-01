@@ -3,6 +3,7 @@ import { performDivination } from "@/lib/divination";
 import { generateHexagramArticle } from "@/lib/hexagram-article";
 import { Link } from "@/navigation";
 import { notFound } from "next/navigation";
+import SpeakButton from "@/components/SpeakButton";
 
 type Props = {
   params: { locale: string; date: string };
@@ -70,9 +71,12 @@ export default async function DailyHexagramPage({ params }: Props) {
       <h1 className="text-2xl sm:text-3xl font-bold text-center mb-2" style={{ color: "var(--accent)" }}>
         {h.nameZh}
       </h1>
-      <p className="text-center text-sm text-stone-500 mb-6">
-        {h.pinyin} — {h.nameEn}
-      </p>
+      <div className="flex items-center justify-center gap-2 mb-6">
+        <p className="text-sm text-stone-500">
+          {h.pinyin} — {h.nameEn}
+        </p>
+        <SpeakButton text={h.nameZh} />
+      </div>
 
       {/* Judgment */}
       <section className="card-classic p-4 sm:p-6 mb-6">
@@ -110,7 +114,10 @@ export default async function DailyHexagramPage({ params }: Props) {
             {params.locale === "ru" ? "Развитие ситуации" : "Where This Is Heading"}
           </h2>
           <p className="text-xl font-bold mb-1" style={{ color: "var(--accent)" }}>{ch.nameZh}</p>
-          <p className="text-sm text-stone-500 mb-3">{ch.pinyin} — {ch.nameEn}</p>
+          <div className="flex items-center gap-2 mb-3">
+            <p className="text-sm text-stone-500">{ch.pinyin} — {ch.nameEn}</p>
+            <SpeakButton text={ch.nameZh} />
+          </div>
           <p className="text-stone-700 leading-relaxed">{ch.judgmentEn}</p>
         </section>
       )}
