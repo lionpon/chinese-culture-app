@@ -1,11 +1,10 @@
 import createMiddleware from "next-intl/middleware";
-import { locales, defaultLocale } from "@/i18n-config";
+import { defaultLocale } from "@/i18n-config";
 import { NextRequest, NextResponse } from "next/server";
 import { isBadBot, checkRateLimit, checkCsrf } from "@/lib/security";
 
-// i18n routing: en (default), ru, ja
 const intlMiddleware = createMiddleware({
-  locales,
+  locales: ["en", "ru", "ja"],
   defaultLocale,
   localePrefix: "as-needed",
 });
