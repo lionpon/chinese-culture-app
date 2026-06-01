@@ -6,6 +6,7 @@ import { useCheckout } from "@/lib/useCheckout";
 import SubmitButton from "@/components/SubmitButton";
 import AmountPicker from "@/components/AmountPicker";
 import FreeTierBadge from "@/components/FreeTierBadge";
+import SpeakButton from "@/components/SpeakButton";
 import { hasFreeUses } from "@/lib/free-tier";
 
 function ExampleResult() {
@@ -18,7 +19,10 @@ function ExampleResult() {
         <div className="card-classic p-4" style={{ borderColor: "rgba(155,74,58,0.15)" }}>
           <div className="text-center mb-2">
             <p className="text-3xl font-bold text-accent">林明哲</p>
-            <p className="text-lg text-stone-500">lín míng zhé</p>
+            <div className="flex items-center justify-center gap-2 mt-1">
+              <p className="text-lg text-stone-500">lín míng zhé</p>
+              <SpeakButton text="林明哲" />
+            </div>
           </div>
           <div className="space-y-1 text-sm">
             <p><span className="text-stone-400">Meaning:</span> Forest of bright wisdom</p>
