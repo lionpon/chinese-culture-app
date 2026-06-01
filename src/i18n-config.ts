@@ -1,4 +1,4 @@
 // Supported locales: English (default), Russian, Japanese
-export const locales = ["en", "ru", "ja"] as const;
-export type Locale = (typeof locales)[number];
+export const locales: string[] = ["en", "ru", "ja"];
+export type Locale = "en" | "ru" | "ja";
 export const defaultLocale: Locale = "en";
