@@ -121,6 +121,17 @@
       "styleFresh": "Fresh & Natural · 清新",
       "submit": "Generate Name"
     },
+    "example": {
+      "summary": "Example result — see what you'll get",
+      "meaning": "Meaning",
+      "elements": "Elements",
+      "source": "Source",
+      "meaningText": "Forest of bright wisdom",
+      "elementsText": "Wood + Fire",
+      "baziTitle": "Bazi Analysis (八字分析)",
+      "baziText": "Your day master is 甲木 (Yang Wood) — strong, upright, and growth-oriented. Favorable elements: Water + Wood. The selected names nourish your day master and balance your elemental chart.",
+      "footer": "Fill in the form above to get your personalized names. Free preview shows 1 name — unlock all 5 with full Bazi analysis."
+    },
     "meta": {
       "title": "Create Your Chinese Name | Chinese Culture Studio",
       "description": "Generate an authentic Chinese name based on your birth date, gender, and the Five Elements (Wu Xing). AI-powered naming from classical Chinese texts. Pay what you want (min $1).",
@@ -146,9 +157,15 @@
       "submit": "Find Auspicious Dates"
     },
     "example": {
+      "summary": "Example result — see what you'll get",
+      "score": "Score: 92/100",
+      "suitableLabel": "Suitable 宜",
+      "unsuitableLabel": "Unsuitable 忌",
+      "godsLabel": "Auspicious gods",
       "suitableItems": "Wedding, Engagement",
       "unsuitableItems": "Litigation, Funeral",
-      "godsItems": "Heavenly Virtue, Lunar Virtue"
+      "godsItems": "Heavenly Virtue, Lunar Virtue",
+      "footer": "Select your event type and date range above. Free preview shows 1 date — unlock all 3 with auspicious hours."
     },
     "events": {
       "wedding": "Wedding · 嫁娶",
@@ -192,6 +209,14 @@
       "thirdNum": "Third",
       "previewNote": "Your contribution amount will be used after free previews are exhausted.",
       "submit": "Cast Hexagram"
+    },
+    "example": {
+      "summary": "Example result — see what you'll get",
+      "guidance": "Guidance for You",
+      "guidanceText": "☀️ Verdict: Auspicious 吉 — This is a time for bold, decisive action. Take the initiative now — launch that project, make the first move, step into leadership. Your momentum will be rewarded.",
+      "judgmentTitle": "Original Judgment (卦辞)",
+      "judgmentText": "Success. Perseverance furthers. The Creative works sublime success, furthering through perseverance.",
+      "footer": "Cast your own hexagram above. Free preview shows the core reading — unlock changed & mutual hexagrams with a contribution."
     },
     "meta": {
       "title": "I Ching Divination | Chinese Culture Studio",

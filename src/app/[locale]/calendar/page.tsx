@@ -17,34 +17,34 @@ export default function CalendarPage() {
     return (
       <details className="card-classic p-4 sm:p-5 mb-6 cursor-pointer group">
         <summary className="text-sm font-medium text-stone-600 select-none">
-          Example result — see what you&apos;ll get
+          {t("example.summary")}
         </summary>
         <div className="mt-4 pt-4 border-t border-stone-100 space-y-4">
           <div className="card-classic p-4">
             <div className="flex items-center justify-between mb-2">
               <p className="text-xl font-bold text-accent">2026-06-15</p>
-              <span className="bg-green-50 text-green-700 text-xs px-2 py-1 rounded">Score: 92/100</span>
+              <span className="bg-green-50 text-green-700 text-xs px-2 py-1 rounded">{t("example.score")}</span>
             </div>
             <p className="text-sm text-stone-500 mb-3">农历五月廿九</p>
             <div className="grid grid-cols-2 gap-2 text-sm">
               <div>
-                <p className="text-stone-400 text-xs">Suitable 宜</p>
+                <p className="text-stone-400 text-xs">{t("example.suitableLabel")}</p>
                 <p className="text-accent">嫁娶、纳采</p>
                 <p className="text-stone-400 text-xs mt-0.5">{t("example.suitableItems")}</p>
               </div>
               <div>
-                <p className="text-stone-400 text-xs">Unsuitable 忌</p>
+                <p className="text-stone-400 text-xs">{t("example.unsuitableLabel")}</p>
                 <p className="text-stone-600">词讼、安葬</p>
                 <p className="text-stone-400 text-xs mt-0.5">{t("example.unsuitableItems")}</p>
               </div>
             </div>
             <p className="mt-2 text-xs text-accent">
-              Auspicious gods: 天德、月德
+              {t("example.godsLabel")}: 天德、月德
               <span className="text-stone-400 block">{t("example.godsItems")}</span>
             </p>
           </div>
           <p className="text-xs text-stone-400 italic">
-            Select your event type and date range above. Free preview shows 1 date — unlock all 3 with auspicious hours.
+            {t("example.footer")}
           </p>
         </div>
       </details>

@@ -9,44 +9,44 @@ import FreeTierBadge from "@/components/FreeTierBadge";
 import SpeakButton from "@/components/SpeakButton";
 import { hasFreeUses } from "@/lib/free-tier";
 
-function ExampleResult() {
-  return (
-    <details className="card-classic p-4 sm:p-5 mb-6 cursor-pointer group">
-      <summary className="text-sm font-medium text-stone-600 select-none">
-        Example result — see what you&apos;ll get
-      </summary>
-      <div className="mt-4 pt-4 border-t border-stone-100 space-y-4">
-        <div className="rounded-xl p-4 advice-card">
-          <p className="text-xs font-medium mb-1 uppercase tracking-wide text-accent">Guidance for You</p>
-          <p className="text-sm text-stone-800 leading-relaxed">
-            ☀️ Verdict: Auspicious 吉 — This is a time for bold, decisive action. Take the initiative now — launch that project, make the first move, step into leadership. Your momentum will be rewarded.
-          </p>
-        </div>
-        <div className="text-center">
-          <p className="text-2xl font-bold text-accent">乾</p>
-          <div className="flex items-center justify-center gap-2">
-            <p className="text-base text-stone-500">qián</p>
-            <SpeakButton text="乾" />
-          </div>
-          <p className="text-sm text-stone-400">The Creative (Heaven)</p>
-        </div>
-        <div className="bg-stone-50 rounded-lg p-3 text-xs text-stone-500">
-          <p className="font-medium mb-1">Original Judgment (卦辞)</p>
-          <p>Success. Perseverance furthers. The Creative works sublime success, furthering through perseverance.</p>
-        </div>
-        <p className="text-xs text-stone-400 italic">
-          Cast your own hexagram above. Free preview shows the core reading — unlock changed & mutual hexagrams with a contribution.
-        </p>
-      </div>
-    </details>
-  );
-}
-
 export default function DivinationPage() {
   const t = useTranslations("divination");
   const { loading, checkout } = useCheckout("divination");
   const [method, setMethod] = useState<"time" | "random" | "manual">("time");
   const [amount, setAmount] = useState(1);
+
+  function ExampleResult() {
+    return (
+      <details className="card-classic p-4 sm:p-5 mb-6 cursor-pointer group">
+        <summary className="text-sm font-medium text-stone-600 select-none">
+          {t("example.summary")}
+        </summary>
+        <div className="mt-4 pt-4 border-t border-stone-100 space-y-4">
+          <div className="rounded-xl p-4 advice-card">
+            <p className="text-xs font-medium mb-1 uppercase tracking-wide text-accent">{t("example.guidance")}</p>
+            <p className="text-sm text-stone-800 leading-relaxed">
+              {t("example.guidanceText")}
+            </p>
+          </div>
+          <div className="text-center">
+            <p className="text-2xl font-bold text-accent">乾</p>
+            <div className="flex items-center justify-center gap-2">
+              <p className="text-base text-stone-500">qián</p>
+              <SpeakButton text="乾" />
+            </div>
+            <p className="text-sm text-stone-400">The Creative (Heaven)</p>
+          </div>
+          <div className="bg-stone-50 rounded-lg p-3 text-xs text-stone-500">
+            <p className="font-medium mb-1">{t("example.judgmentTitle")}</p>
+            <p>{t("example.judgmentText")}</p>
+          </div>
+          <p className="text-xs text-stone-400 italic">
+            {t("example.footer")}
+          </p>
+        </div>
+      </details>
+    );
+  }
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();

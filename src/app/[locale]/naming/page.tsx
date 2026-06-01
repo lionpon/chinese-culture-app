@@ -9,43 +9,43 @@ import FreeTierBadge from "@/components/FreeTierBadge";
 import SpeakButton from "@/components/SpeakButton";
 import { hasFreeUses } from "@/lib/free-tier";
 
-function ExampleResult() {
-  return (
-    <details className="card-classic p-4 sm:p-5 mb-6 cursor-pointer group">
-      <summary className="text-sm font-medium text-stone-600 select-none">
-        Example result — see what you&apos;ll get
-      </summary>
-      <div className="mt-4 pt-4 border-t border-stone-100 space-y-4">
-        <div className="card-classic p-4" style={{ borderColor: "rgba(155,74,58,0.15)" }}>
-          <div className="text-center mb-2">
-            <p className="text-3xl font-bold text-accent">林明哲</p>
-            <div className="flex items-center justify-center gap-2 mt-1">
-              <p className="text-lg text-stone-500">lín míng zhé</p>
-              <SpeakButton text="林明哲" />
-            </div>
-          </div>
-          <div className="space-y-1 text-sm">
-            <p><span className="text-stone-400">Meaning:</span> Forest of bright wisdom</p>
-            <p><span className="text-stone-400">Elements:</span> Wood + Fire</p>
-            <p><span className="text-stone-400">Source:</span> 《尚书·尧典》, 《易经·系辞》</p>
-          </div>
-        </div>
-        <div className="bg-stone-50 rounded-lg p-3 text-xs text-stone-500">
-          <p className="font-medium mb-1">Bazi Analysis (八字分析)</p>
-          <p>Your day master is 甲木 (Yang Wood) — strong, upright, and growth-oriented. Favorable elements: Water + Wood. The selected names nourish your day master and balance your elemental chart.</p>
-        </div>
-        <p className="text-xs text-stone-400 italic">
-          Fill in the form above to get your personalized names. Free preview shows 1 name — unlock all 5 with full Bazi analysis.
-        </p>
-      </div>
-    </details>
-  );
-}
-
 export default function NamingPage() {
   const t = useTranslations("naming");
   const { loading, checkout } = useCheckout("naming");
   const [amount, setAmount] = useState(1);
+
+  function ExampleResult() {
+    return (
+      <details className="card-classic p-4 sm:p-5 mb-6 cursor-pointer group">
+        <summary className="text-sm font-medium text-stone-600 select-none">
+          {t("example.summary")}
+        </summary>
+        <div className="mt-4 pt-4 border-t border-stone-100 space-y-4">
+          <div className="card-classic p-4" style={{ borderColor: "rgba(155,74,58,0.15)" }}>
+            <div className="text-center mb-2">
+              <p className="text-3xl font-bold text-accent">林明哲</p>
+              <div className="flex items-center justify-center gap-2 mt-1">
+                <p className="text-lg text-stone-500">lín míng zhé</p>
+                <SpeakButton text="林明哲" />
+              </div>
+            </div>
+            <div className="space-y-1 text-sm">
+              <p><span className="text-stone-400">{t("example.meaning")}:</span> {t("example.meaningText")}</p>
+              <p><span className="text-stone-400">{t("example.elements")}:</span> {t("example.elementsText")}</p>
+              <p><span className="text-stone-400">{t("example.source")}:</span> 《尚书·尧典》, 《易经·系辞》</p>
+            </div>
+          </div>
+          <div className="bg-stone-50 rounded-lg p-3 text-xs text-stone-500">
+            <p className="font-medium mb-1">{t("example.baziTitle")}</p>
+            <p>{t("example.baziText")}</p>
+          </div>
+          <p className="text-xs text-stone-400 italic">
+            {t("example.footer")}
+          </p>
+        </div>
+      </details>
+    );
+  }
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
