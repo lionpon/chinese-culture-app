@@ -30,17 +30,17 @@ export default function CalendarPage() {
               <div>
                 <p className="text-stone-400 text-xs">Suitable 宜</p>
                 <p className="text-accent">嫁娶、纳采</p>
-                <p className="text-stone-400 text-xs mt-0.5">{t("form.example.suitableItems")}</p>
+                <p className="text-stone-400 text-xs mt-0.5">{t("example.suitableItems")}</p>
               </div>
               <div>
                 <p className="text-stone-400 text-xs">Unsuitable 忌</p>
                 <p className="text-stone-600">词讼、安葬</p>
-                <p className="text-stone-400 text-xs mt-0.5">{t("form.example.unsuitableItems")}</p>
+                <p className="text-stone-400 text-xs mt-0.5">{t("example.unsuitableItems")}</p>
               </div>
             </div>
             <p className="mt-2 text-xs text-accent">
               Auspicious gods: 天德、月德
-              <span className="text-stone-400 block">{t("form.example.godsItems")}</span>
+              <span className="text-stone-400 block">{t("example.godsItems")}</span>
             </p>
           </div>
           <p className="text-xs text-stone-400 italic">
