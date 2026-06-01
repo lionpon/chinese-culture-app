@@ -145,6 +145,11 @@
       "eventPlaceholder": "Select event type...",
       "submit": "Find Auspicious Dates"
     },
+    "example": {
+      "suitableItems": "Wedding, Engagement",
+      "unsuitableItems": "Litigation, Funeral",
+      "godsItems": "Heavenly Virtue, Lunar Virtue"
+    },
     "events": {
       "wedding": "Wedding · 嫁娶",
       "engagement": "Engagement · 订婚",

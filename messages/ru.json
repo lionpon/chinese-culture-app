@@ -145,6 +145,11 @@
       "eventPlaceholder": "Выберите тип события...",
       "submit": "Найти Благоприятные Даты"
     },
+    "example": {
+      "suitableItems": "Свадьба, Помолвка",
+      "unsuitableItems": "Суд, Похороны",
+      "godsItems": "Небесная Добродетель, Лунная Добродетель"
+    },
     "events": {
       "wedding": "Свадьба · 嫁娶",
       "engagement": "Помолвка · 订婚",
