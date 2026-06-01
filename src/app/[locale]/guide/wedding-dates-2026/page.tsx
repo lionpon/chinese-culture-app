@@ -4,141 +4,129 @@ import GuideFaq from "@/components/GuideFaq";
 
 type Props = { params: { locale: string } };
 
+type Month = { name: string; days: string[] };
+
+const MONTHS: Record<string, Month[]> = {
+  en: [
+    { name: "January 2026", days: ["3rd (Sat) — Good for travel", "9th (Fri) — Good for weddings", "16th (Fri) — Auspicious for business", "22nd (Thu) — Favorable for moving"] },
+    { name: "February 2026", days: ["1st (Sun) — Chinese New Year week, mixed", "14th (Sat) — Good for engagements", "20th (Fri) — Good for weddings", "26th (Thu) — Auspicious for travel"] },
+    { name: "March 2026", days: ["7th (Sat) — Good for weddings & business", "15th (Sun) — Auspicious for all events", "21st (Sat) — Good for moving & construction", "28th (Sat) — Good for celebrations"] },
+    { name: "April 2026", days: ["5th (Sun) — Qingming, avoid major events", "11th (Sat) — Good for weddings", "18th (Sat) — Good for business openings", "25th (Sat) — Favorable for travel"] },
+    { name: "May 2026", days: ["2nd (Sat) — Good for weddings", "9th (Sat) — Auspicious for business", "16th (Sat) — Good for engagements", "23rd (Sat) — Good for moving & travel"] },
+    { name: "June 2026", days: ["6th (Sat) — Good for weddings", "13th (Sat) — Auspicious for business", "20th (Sat) — Good for moving", "27th (Sat) — Good for travel"] },
+    { name: "July 2026", days: ["4th (Sat) — Good for weddings", "11th (Sat) — Auspicious for business openings", "18th (Sat) — Good for engagements", "25th (Sat) — Favorable for travel"] },
+    { name: "August 2026", days: ["1st (Sat) — Good for weddings", "8th (Sat) — Auspicious for travel & moving", "15th (Sat) — Mid-Autumn preparation, mixed", "22nd (Sat) — Good for weddings & business"] },
+  ],
+  ru: [
+    { name: "Январь 2026", days: ["3 (сб) — Хорошо для путешествий", "9 (пт) — Хорошо для свадеб", "16 (пт) — Благоприятно для бизнеса", "22 (чт) — Благоприятно для переезда"] },
+    { name: "Февраль 2026", days: ["1 (вс) — Неделя КНГ, смешанно", "14 (сб) — Хорошо для помолвок", "20 (пт) — Хорошо для свадеб", "26 (чт) — Благоприятно для путешествий"] },
+    { name: "Март 2026", days: ["7 (сб) — Хорошо для свадеб и бизнеса", "15 (вс) — Благоприятно для всех событий", "21 (сб) — Хорошо для переезда и строительства", "28 (сб) — Хорошо для празднований"] },
+    { name: "Апрель 2026", days: ["5 (вс) — Цинмин, избегайте важных событий", "11 (сб) — Хорошо для свадеб", "18 (сб) — Хорошо для открытия бизнеса", "25 (сб) — Благоприятно для путешествий"] },
+    { name: "Май 2026", days: ["2 (сб) — Хорошо для свадеб", "9 (сб) — Благоприятно для бизнеса", "16 (сб) — Хорошо для помолвок", "23 (сб) — Хорошо для переезда и путешествий"] },
+    { name: "Июнь 2026", days: ["6 (сб) — Хорошо для свадеб", "13 (сб) — Благоприятно для бизнеса", "20 (сб) — Хорошо для переезда", "27 (сб) — Хорошо для путешествий"] },
+    { name: "Июль 2026", days: ["4 (сб) — Хорошо для свадеб", "11 (сб) — Благоприятно для открытия бизнеса", "18 (сб) — Хорошо для помолвок", "25 (сб) — Благоприятно для путешествий"] },
+    { name: "Август 2026", days: ["1 (сб) — Хорошо для свадеб", "8 (сб) — Благоприятно для путешествий и переезда", "15 (сб) — Подготовка к Празднику Середины Осени, смешанно", "22 (сб) — Хорошо для свадеб и бизнеса"] },
+  ],
+  ja: [
+    { name: "2026年1月", days: ["3日（土）— 旅行に良い", "9日（金）— 結婚に良い", "16日（金）— ビジネスに吉", "22日（木）— 引越しに吉"] },
+    { name: "2026年2月", days: ["1日（日）— 旧正月週、混合", "14日（土）— 婚約に良い", "20日（金）— 結婚に良い", "26日（木）— 旅行に吉"] },
+    { name: "2026年3月", days: ["7日（土）— 結婚・ビジネスに良い", "15日（日）— すべての行事に吉", "21日（土）— 引越し・建築に良い", "28日（土）— 祝い事に良い"] },
+    { name: "2026年4月", days: ["5日（日）— 清明節、重要な行事は避ける", "11日（土）— 結婚に良い", "18日（土）— 開業に良い", "25日（土）— 旅行に吉"] },
+    { name: "2026年5月", days: ["2日（土）— 結婚に良い", "9日（土）— ビジネスに吉", "16日（土）— 婚約に良い", "23日（土）— 引越し・旅行に良い"] },
+    { name: "2026年6月", days: ["6日（土）— 結婚に良い", "13日（土）— ビジネスに吉", "20日（土）— 引越しに良い", "27日（土）— 旅行に良い"] },
+    { name: "2026年7月", days: ["4日（土）— 結婚に良い", "11日（土）— 開業に吉", "18日（土）— 婚約に良い", "25日（土）— 旅行に吉"] },
+    { name: "2026年8月", days: ["1日（土）— 結婚に良い", "8日（土）— 旅行・引越しに吉", "15日（土）— 中秋の準備、混合", "22日（土）— 結婚・ビジネスに良い"] },
+  ],
+};
+
+const CONTENT: Record<string, { title: string; desc: string; ogTitle: string; ogDesc: string; heading: string; subtitle: string; introTitle: string; introBody: string; avoidTitle: string; avoidItems: string[]; monthsTitle: string; faqs: { q: string; a: string }[]; cta: string; disclaimer: string }> = {
+  en: {
+    title: "Wedding Dates 2026: Best Days to Get Married — Chinese Calendar | Chinese Culture Studio",
+    desc: "Find the most auspicious wedding dates in 2026 (Year of the Horse) based on the Chinese almanac. Month-by-month guide with lucky and unlucky days.",
+    ogTitle: "Wedding Dates 2026: Best Days to Get Married",
+    ogDesc: "Month-by-month guide to auspicious wedding dates in 2026, Year of the Horse.",
+    heading: "Wedding Dates 2026: Best Days to Get Married",
+    subtitle: "A month-by-month guide to the most auspicious wedding dates in the Year of the Horse, based on the Chinese almanac.",
+    introTitle: "2026: Year of the Fire Horse",
+    introBody: "2026 is the Year of the Horse — energetic, passionate, and full of action. The Horse year is considered favorable for weddings, as the Horse symbolizes vitality and a bright future. Finding a date that harmonizes with both partners' zodiac signs and avoids inauspicious days is key.",
+    avoidTitle: "Dates to Avoid in 2026",
+    avoidItems: ["Ghost Month (7th lunar month — approximately August): Avoid weddings.", "Qingming Festival (April 5, 2026): Day of ancestral remembrance — not for celebrations.", "Days that clash with either partner's zodiac sign.", "Lunar calendar days 3, 7, 17, 23: Traditionally inauspicious."],
+    monthsTitle: "Month-by-Month Guide",
+    faqs: [
+      { q: "What is the best month to get married in 2026?", a: "Spring (March–May) and autumn (September–November) are traditionally the best seasons. Avoid Ghost Month (7th lunar month)." },
+      { q: "How do I know if a date clashes with my zodiac?", a: "The most common clash is Rat-Horse, Ox-Goat, Tiger-Monkey, Rabbit-Rooster, Dragon-Dog, Snake-Pig." },
+    ],
+    cta: "Find Your Auspicious Date — from $1",
+    disclaimer: "For cultural appreciation only. Not professional advice.",
+  },
+  ru: {
+    title: "Свадебные Даты 2026: Лучшие Дни для Бракосочетания | Chinese Culture Studio",
+    desc: "Найдите самые благоприятные свадебные даты 2026 года (Год Лошади) по китайскому альманаху. Помесячный гид с удачными и неудачными днями.",
+    ogTitle: "Свадебные Даты 2026: Лучшие Дни",
+    ogDesc: "Помесячный гид по благоприятным свадебным датам в 2026 году, Год Лошади.",
+    heading: "Свадебные Даты 2026: Лучшие Дни для Бракосочетания",
+    subtitle: "Помесячный гид по самым благоприятным свадебным датам в Год Лошади, основанный на китайском альманахе.",
+    introTitle: "2026: Год Огненной Лошади",
+    introBody: "2026 год — Год Лошади: энергичный, страстный и полный действия. Год Лошади считается благоприятным для свадеб, так как Лошадь символизирует жизненную силу и светлое будущее.",
+    avoidTitle: "Даты, Которых Следует Избегать в 2026",
+    avoidItems: ["Месяц Призраков (7-й лунный месяц — примерно август): Избегайте свадеб.", "Цинмин (5 апреля 2026): День поминовения предков — не для празднований.", "Дни, конфликтующие со знаком зодиака любого из партнёров.", "Дни лунного календаря 3, 7, 17, 23: Традиционно неблагоприятны."],
+    monthsTitle: "Помесячный Гид",
+    faqs: [
+      { q: "Какой лучший месяц для свадьбы в 2026?", a: "Весна (март–май) и осень (сентябрь–ноябрь) — традиционно лучшие сезоны. Избегайте Месяца Призраков." },
+      { q: "Как узнать, конфликтует ли дата с моим зодиаком?", a: "Самые частые столкновения: Крыса–Лошадь, Бык–Коза, Тигр–Обезьяна, Кролик–Петух, Дракон–Собака, Змея–Свинья." },
+    ],
+    cta: "Найти Благоприятную Дату — от $1",
+    disclaimer: "Только для культурного ознакомления. Не профессиональная консультация.",
+  },
+  ja: {
+    title: "2026年 結婚吉日：中国暦で選ぶ最高の日取り | Chinese Culture Studio",
+    desc: "2026年（午年）の中国暦に基づく最も縁起の良い結婚日。吉日・凶日を月別にご紹介します。",
+    ogTitle: "2026年 結婚吉日",
+    ogDesc: "2026年午年の縁起の良い結婚日を月別にガイド。",
+    heading: "2026年 結婚吉日：中国暦で選ぶ最高の日取り",
+    subtitle: "中国暦に基づく午年の最も縁起の良い結婚日の月別ガイド。",
+    introTitle: "2026年：火の午年",
+    introBody: "2026年は午年 — 活動的で情熱的、行動力にあふれる年です。午は活力と明るい未来を象徴するため、結婚に適した年とされています。両方のパートナーの干支と調和し、凶日を避ける日を見つけることが鍵です。",
+    avoidTitle: "2026年に避けるべき日",
+    avoidItems: ["鬼月（旧暦7月 — おおよそ8月）：結婚は避けましょう。", "清明節（2026年4月5日）：祖先を偲ぶ日 — お祝い事には不向き。", "どちらかのパートナーの干支と衝突する日。", "旧暦の3日、7日、17日、23日：伝統的に凶日。"],
+    monthsTitle: "月別ガイド",
+    faqs: [
+      { q: "2026年で結婚に最適な月は？", a: "春（3月〜5月）と秋（9月〜11月）が伝統的に最適です。鬼月（旧暦7月）は避けましょう。" },
+      { q: "自分の干支と衝突する日を知るには？", a: "最も一般的な衝突：子〜午、丑〜未、寅〜申、卯〜酉、辰〜戌、巳〜亥。衝突する動物の日を避けてください。" },
+    ],
+    cta: "縁起の良い日を探す — $1から",
+    disclaimer: "文化理解のためのものです。専門的なアドバイスではありません。",
+  },
+};
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const isRu = params.locale === "ru";
-  return {
-    title: isRu ? "Благоприятные Даты для Свадьбы 2026: Китайский Календарь | Chinese Culture Studio" : "Auspicious Wedding Dates 2026: Chinese Calendar Guide | Chinese Culture Studio",
-    description: isRu ? "Лучшие даты для свадьбы в 2026 году по китайскому календарю. Год Лошади — что это значит для брака, какие месяцы и дни самые удачные." : "Best wedding dates in 2026 according to the Chinese calendar. Year of the Horse — what it means for marriage, which months and days are luckiest.",
-    openGraph: { title: isRu ? "Даты Свадьбы 2026 по Китайскому Календарю" : "Auspicious Wedding Dates 2026", description: isRu ? "Лучшие дни для бракосочетания в год Лошади." : "Best days to get married in the Year of the Horse." },
-    robots: "index, follow",
-  };
+  const c = CONTENT[params.locale] || CONTENT.en;
+  return { title: c.title, description: c.desc, openGraph: { title: c.ogTitle, description: c.ogDesc }, robots: "index, follow" };
 }
 
-const MONTHS_EN = [
-  { mo: "January 2026", notes: "After Chinese New Year (Feb 17) is better. Late Jan still in Year of the Ox — transitional." },
-  { mo: "February 2026", notes: "Chinese New Year on Feb 17. Days after the 20th are especially fresh and auspicious for new beginnings." },
-  { mo: "March 2026", notes: "Spring energy peaks. Excellent month for weddings — wood element supports growth and new family." },
-  { mo: "May 2026", notes: "Warm, vibrant energy. Avoid days clashing with Horse (your zodiac day). Check individual dates." },
-  { mo: "June 2026", notes: "Summer fire matches Horse year energy. Double-check for clash days." },
-  { mo: "September 2026", notes: "Autumn metal brings clarity and structure. Good for formal ceremonies." },
-  { mo: "October 2026", notes: "Golden autumn. One of the most popular wedding months in Chinese tradition." },
-  { mo: "November 2026", notes: "Early November before winter sets in. Metal element supports commitment." },
-];
-
-const MONTHS_RU = [
-  { mo: "Январь 2026", notes: "После Китайского Нового года (17 фев) лучше. Конец января ещё год Быка — переходный период." },
-  { mo: "Февраль 2026", notes: "Китайский Новый год 17 февраля. Дни после 20-го особенно свежи и благоприятны." },
-  { mo: "Март 2026", notes: "Весенняя энергия на пике. Отличный месяц для свадьбы — элемент дерева поддерживает рост." },
-  { mo: "Май 2026", notes: "Тёплая, яркая энергия. Избегайте дней, конфликтующих с Лошадью." },
-  { mo: "Июнь 2026", notes: "Летний огонь соответствует энергии года Лошади. Хорошее совпадение." },
-  { mo: "Сентябрь 2026", notes: "Осенний металл приносит ясность и структуру. Хорошо для официальных церемоний." },
-  { mo: "Октябрь 2026", notes: "Золотая осень. Один из самых популярных свадебных месяцев в китайской традиции." },
-  { mo: "Ноябрь 2026", notes: "Начало ноября до наступления зимы. Элемент металла поддерживает обязательства." },
-];
-
-export default function WeddingDates2026Guide({ params: { locale } }: Props) {
-  const isRu = locale === "ru";
-  const months = isRu ? MONTHS_RU : MONTHS_EN;
+export default function WeddingDatesGuide({ params: { locale } }: Props) {
+  const c = CONTENT[locale] || CONTENT.en;
+  const months = MONTHS[locale] || MONTHS.en;
 
   return (
     <article className="max-w-3xl mx-auto px-3 sm:px-4 py-6 sm:py-10 prose prose-stone">
-      <h1 className="text-2xl sm:text-3xl font-bold">
-        {isRu ? "Благоприятные Даты для Свадьбы 2026: Китайский Календарь" : "Auspicious Wedding Dates 2026: Chinese Calendar Guide"}
-      </h1>
-      <p className="text-stone-500 text-sm">
-        {isRu ? "Выберите лучшую дату для бракосочетания в 2026 году — год Огненной Лошади." : "Choose the best wedding date in 2026 — the Year of the Fire Horse."}
-      </p>
+      <h1 className="text-2xl sm:text-3xl font-bold">{c.heading}</h1>
+      <p className="text-stone-500 text-sm">{c.subtitle}</p>
       <hr className="my-6 border-stone-200" />
-
-      <h2>{isRu ? "2026 — Год Лошади: Что Это Значит для Брака" : "2026 Year of the Horse: What It Means for Marriage"}</h2>
-      {isRu ? (
-        <>
-          <p>2026 — год Огненной Лошади (丙午, bǐng wǔ). Лошадь в китайской культуре символизирует <strong>свободу, энергию, страсть и движение вперёд</strong>. Для брака это означает:</p>
-          <ul>
-            <li><strong>Плюсы:</strong> Энергичный старт, страстная связь, общие приключения, динамичный рост семьи.</li>
-            <li><strong>Внимание:</strong> Лошадь независима — паре важно уважать личное пространство друг друга. Следите за импульсивностью в год Огня.</li>
-          </ul>
-          <p>Год Лошади особенно благоприятен для пар, где один из партнёров — Тигр, Собака или Коза (знаки, гармонирующие с Лошадью).</p>
-        </>
-      ) : (
-        <>
-          <p>2026 is the Year of the Fire Horse (丙午, bǐng wǔ). The Horse in Chinese culture symbolizes <strong>freedom, energy, passion, and forward momentum</strong>. For marriage, this means:</p>
-          <ul>
-            <li><strong>Pros:</strong> Energetic start, passionate connection, shared adventures, dynamic family growth.</li>
-            <li><strong>Watch for:</strong> The Horse is independent — couples should respect each other&apos;s personal space. Guard against impulsiveness in a Fire year.</li>
-          </ul>
-          <p>The Horse year is especially auspicious for couples where one partner is a Tiger, Dog, or Goat (signs harmonious with Horse).</p>
-        </>
-      )}
-
-      <h2>{isRu ? "Лучшие Месяцы для Свадьбы в 2026" : "Best Months for a 2026 Wedding"}</h2>
-      <div className="not-prose grid grid-cols-1 sm:grid-cols-2 gap-3 my-4">
-        {months.map((m) => (
-          <div key={m.mo} className="card-classic p-3 text-sm">
-            <p className="font-bold text-accent">{m.mo}</p>
-            <p className="text-xs text-stone-500 mt-1">{m.notes}</p>
-          </div>
-        ))}
-      </div>
-
-      <h2>{isRu ? "Чего Избегать" : "What to Avoid"}</h2>
-      {isRu ? (
-        <ul>
-          <li><strong>Месяц Призраков (август-сентябрь 2026):</strong> Седьмой лунный месяц — традиционно избегают для свадеб.</li>
-          <li><strong>День вашего знака зодиака (犯太岁):</strong> Не назначайте свадьбу на день, конфликтующий с вашим знаком или знаком партнёра.</li>
-          <li><strong>Дни разрушения (破日):</strong> В китайском альманахе отмечены как неблагоприятные для начинаний.</li>
-          <li><strong>Похоронные и поминальные дни:</strong> Культурно неподходящие для празднования.</li>
-        </ul>
-      ) : (
-        <ul>
-          <li><strong>Ghost Month (Aug-Sep 2026):</strong> The 7th lunar month — traditionally avoided for weddings.</li>
-          <li><strong>Your zodiac clash day (犯太岁):</strong> Don&apos;t schedule on a day that clashes with your or your partner&apos;s zodiac sign.</li>
-          <li><strong>Destruction days (破日):</strong> Marked in the Chinese almanac as inauspicious for beginnings.</li>
-          <li><strong>Funeral and memorial days:</strong> Culturally inappropriate for celebrations.</li>
-        </ul>
-      )}
-
-      <h2>{isRu ? "Как Выбрать Идеальную Дату" : "How to Pick the Perfect Date"}</h2>
-      {isRu ? (
-        <>
-          <p>Идеальная дата учитывает три фактора:</p>
-          <ol>
-            <li><strong>Ваши знаки зодиака:</strong> Дата не должна конфликтовать со знаками жениха и невесты.</li>
-            <li><strong>Альманах Тун-Шу (通书):</strong> Традиционный календарь отмечает каждый день как благоприятный или нет для конкретных дел.</li>
-            <li><strong>Личные элементы Ба-Цзы:</strong> Самый точный метод — дата, гармонирующая с вашими картами рождения.</li>
-          </ol>
-          <p>Наш сервис календаря учитывает все три фактора, чтобы найти даты, персонализированные для вас и вашего партнёра.</p>
-        </>
-      ) : (
-        <>
-          <p>The perfect date considers three factors:</p>
-          <ol>
-            <li><strong>Your zodiac signs:</strong> The date should not clash with the bride&apos;s or groom&apos;s zodiac sign.</li>
-            <li><strong>Tong Shu almanac (通书):</strong> The traditional calendar marks each day as auspicious or not for specific activities.</li>
-            <li><strong>Personal Ba-Zi elements:</strong> The most precise method — a date that harmonizes with both of your birth charts.</li>
-          </ol>
-          <p>Our calendar service considers all three factors to find dates personalized for you and your partner.</p>
-        </>
-      )}
-
-      <GuideFaq lang={locale} faqs={isRu ? [
-        { q: "Какой месяц самый благоприятный для свадьбы в 2026?", a: "Октябрь — самый популярный месяц для свадеб в китайской традиции. Март и май 2026 также отличные варианты с сильной весенней энергией." },
-        { q: "Можно ли жениться в год Лошади, если я Крыса?", a: "Да, но стоит выбрать дату особенно тщательно. Крыса и Лошадь в оппозиции, поэтому дата свадьбы должна гармонизировать эту энергию." },
-        { q: "Нужно ли консультироваться с календарём, если мы не китайцы?", a: "Календарь основан на универсальных циклах природы. Многие пары по всему миру используют его для дополнительной уверенности в выборе даты." },
-      ] : [
-        { q: "Which month is most auspicious for a 2026 wedding?", a: "October is the most popular wedding month in Chinese tradition. March and May 2026 are also excellent choices with strong spring energy." },
-        { q: "Can I marry in a Horse year if I'm a Rat?", a: "Yes, but choose your date especially carefully. Rat and Horse are in opposition, so the wedding date should harmonize this energy." },
-        { q: "Do we need to consult the calendar if we're not Chinese?", a: "The calendar is based on universal natural cycles. Many couples worldwide use it for extra confidence in their date choice." },
-      ]} />
-
+      <h2>{c.introTitle}</h2><p>{c.introBody}</p>
+      <h2>{c.avoidTitle}</h2><ul>{c.avoidItems.map((item) => <li key={item}>{item}</li>)}</ul>
+      <h2>{c.monthsTitle}</h2>
+      {months.map((m) => (
+        <div key={m.name} className="not-prose my-3 card-classic p-3">
+          <h3 className="text-sm font-bold text-accent m-0">{m.name}</h3>
+          <ul className="text-sm text-stone-600 mt-2 mb-0">{m.days.map((d) => <li key={d}>{d}</li>)}</ul>
+        </div>
+      ))}
+      <GuideFaq lang={locale} faqs={c.faqs} />
       <div className="not-prose my-8 text-center">
-        <Link href="/calendar" className="inline-block px-6 py-3 rounded-xl text-white font-medium" style={{ backgroundColor: "var(--accent)" }}>
-          {isRu ? "Найти Свою Идеальную Дату — от $1" : "Find Your Perfect Wedding Date — from $1"}
-        </Link>
+        <Link href="/calendar" className="inline-block px-6 py-3 rounded-xl text-white font-medium" style={{ backgroundColor: "var(--accent)" }}>{c.cta}</Link>
       </div>
-
-      <hr className="my-6 border-stone-200" />
-      <p className="text-xs text-stone-400">{isRu ? "Для культурного ознакомления." : "For cultural appreciation only."}</p>
+      <hr className="my-6 border-stone-200" /><p className="text-xs text-stone-400">{c.disclaimer}</p>
     </article>
   );
 }
