@@ -6,6 +6,7 @@ export interface ReportData {
   uniqueCountries: number;
   revenue: number;
   countries: Record<string, number>;
+  cities: Record<string, number>;
   pages: Record<string, number>;
   byType: Record<string, { count: number; revenue: number }>;
   freeTrials: number;
@@ -37,10 +38,15 @@ export async function generateReport(date: string): Promise<ReportData> {
   ]);
 
   const countries: Record<string, number> = {};
+  const cities: Record<string, number> = {};
   const pages: Record<string, number> = {};
   for (const v of visits) {
     if (v.page.startsWith("/admin") || v.page.startsWith("/ru/admin")) continue;
     countries[v.country] = (countries[v.country] || 0) + 1;
+    const cityKey = [v.city, v.region, v.country].filter(Boolean).join(", ");
+    if (cityKey !== "Unknown") {
+      cities[cityKey] = (cities[cityKey] || 0) + 1;
+    }
     pages[v.page] = (pages[v.page] || 0) + 1;
   }
 
@@ -65,14 +71,14 @@ export async function generateReport(date: string): Promise<ReportData> {
       visits: visits.length,
       uniqueCountries: Object.keys(countries).length,
       revenue,
-      details: JSON.stringify({ countries, pages, byType, freeTrials, freeTrialsByType }),
+      details: JSON.stringify({ countries, cities, pages, byType, freeTrials, freeTrialsByType }),
     },
     create: {
       date,
       visits: visits.length,
       uniqueCountries: Object.keys(countries).length,
       revenue,
-      details: JSON.stringify({ countries, pages, byType, freeTrials, freeTrialsByType }),
+      details: JSON.stringify({ countries, cities, pages, byType, freeTrials, freeTrialsByType }),
     },
   });
 
@@ -82,6 +88,7 @@ export async function generateReport(date: string): Promise<ReportData> {
     uniqueCountries: Object.keys(countries).length,
     revenue,
     countries,
+    cities,
     pages,
     byType,
     freeTrials,

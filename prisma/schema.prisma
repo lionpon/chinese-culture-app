@@ -22,6 +22,8 @@ model Visit {
   id        String   @id @default(cuid())
   page      String
   country   String   @default("Unknown")
+  city      String   @default("")
+  region    String   @default("")
   referrer  String   @default("")
   createdAt DateTime @default(now())
 }
