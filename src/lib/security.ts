@@ -49,6 +49,7 @@ export function checkCsrf(req: NextRequest): NextResponse | null {
   if (!origin) return null; // same-origin requests or non-browser clients
 
   const allowedHosts = [
+    "chinese-culture.app",
     "chinese-culture-app.onrender.com",
     "localhost:3000",
   ];
@@ -75,6 +76,12 @@ const BOT_PATTERNS = [
   /semrushbot/i,        // Semrush
   /mj12bot/i,           // Majestic
   /dotbot/i,            // Moz
+  /anthropic-ai/i,      // Anthropic AI training
+  /cohere-ai/i,         // Cohere AI training
+  /perplexity/i,        // Perplexity AI
+  /amazonbot/i,         // Amazon crawler
+  /googleother/i,       // Google non-search crawler
+  /blexbot/i,           // WebMeUp crawler
 ];
 
 export function isBadBot(userAgent: string | null): boolean {
