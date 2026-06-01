@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { buildPayPalCheckoutUrl } from "@/lib/paypal";
 import { prisma } from "@/lib/db";
-import { generateNames } from "@/lib/naming";
+import { generateNames, analyzeName } from "@/lib/naming";
 import { selectAuspiciousDays } from "@/lib/calendar";
 import { performDivination } from "@/lib/divination";
 import type { NamingInput, CalendarInput, DivinationInput } from "@/types";
@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
       // Free tier — preview only, unlock full result with contribution
       let result: unknown;
       switch (type) {
-        case "naming": result = generateNames(input as unknown as NamingInput, true); break;
+        case "naming": result = (input.mode === "analyze") ? analyzeName(input as unknown as NamingInput) : generateNames(input as unknown as NamingInput, true); break;
         case "calendar": result = selectAuspiciousDays(input as unknown as CalendarInput, true); break;
         case "divination": result = performDivination(input as unknown as DivinationInput, true); break;
       }

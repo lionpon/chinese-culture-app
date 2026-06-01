@@ -119,7 +119,15 @@
       "styleElegant": "優雅で洗練 · 典雅",
       "styleGrand": "雄大で力強い · 大気",
       "styleFresh": "清新で自然 · 清新",
-      "submit": "名前を生成"
+      "submit": "名前を生成",
+      "modeLabel": "何をしたいですか？",
+      "modeCreate": "中国名を作成する",
+      "modeAnalyze": "自分の名前を分析する",
+      "firstNameAnalyze": "あなたの名（漢字）",
+      "firstNameAnalyzePlaceholder": "例: 一郎, 法子",
+      "lastNameAnalyze": "あなたの姓（漢字）",
+      "lastNameAnalyzePlaceholder": "例: 山本, 李",
+      "submitAnalyze": "名前を分析"
     },
     "example": {
       "summary": "結果の例 — 何が得られるか確認",
@@ -282,6 +290,19 @@
       "source": "出典",
       "recommended": "おすすめ — あなたの五行プロファイルに最適",
       "baziAnalysis": "八字分析"
+    },
+    "analyze": {
+      "title": "名前分析",
+      "score": "適合スコア",
+      "favorableElements": "喜神（ favourable elements）",
+      "surnameElement": "姓の五行",
+      "givenNameElements": "名の五行",
+      "suggestion": "八字に基づくおすすめ",
+      "suggestionNote": "姓はそのまま、より調和した名前",
+      "matchExcellent": "非常に良好",
+      "matchGood": "良好",
+      "matchFair": "普通",
+      "matchPoor": "要調整"
     },
     "calendar": {
       "title": "吉日",

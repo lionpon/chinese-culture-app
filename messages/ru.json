@@ -119,7 +119,15 @@
       "styleElegant": "Элегантный и Утончённый · 典雅",
       "styleGrand": "Величественный и Мощный · 大气",
       "styleFresh": "Свежий и Естественный · 清新",
-      "submit": "Создать Имя"
+      "submit": "Создать Имя",
+      "modeLabel": "Что вы хотите сделать?",
+      "modeCreate": "Создать китайское имя",
+      "modeAnalyze": "Проанализировать моё имя",
+      "firstNameAnalyze": "Ваше имя (иероглифами)",
+      "firstNameAnalyzePlaceholder": "например 一郎, 法子",
+      "lastNameAnalyze": "Ваша фамилия (иероглифами)",
+      "lastNameAnalyzePlaceholder": "например 山本, 李",
+      "submitAnalyze": "Анализировать Имя"
     },
     "example": {
       "summary": "Пример результата — посмотрите, что вы получите",
@@ -282,6 +290,19 @@
       "source": "Источник",
       "recommended": "Рекомендовано — Лучшее соответствие вашему профилю элементов",
       "baziAnalysis": "Анализ Ба-Цзы"
+    },
+    "analyze": {
+      "title": "Анализ Вашего Имени",
+      "score": "Оценка Совместимости",
+      "favorableElements": "Благоприятные Элементы",
+      "surnameElement": "Элемент Фамилии",
+      "givenNameElements": "Элементы Имени",
+      "suggestion": "На основе Ба-цзы, рассмотрите",
+      "suggestionNote": "Та же фамилия, более сбалансированное имя",
+      "matchExcellent": "Отлично",
+      "matchGood": "Хорошо",
+      "matchFair": "Удовлетворительно",
+      "matchPoor": "Слабо"
     },
     "calendar": {
       "title": "Благоприятные Даты",

@@ -2,7 +2,7 @@
 import { calculateBazi } from "./bazi";
 import { analyzeWuxing } from "./wuxing";
 import { characters, surnameMap, compoundSurnames } from "../data/characters";
-import type { NamingInput, NameOption, NamingResult, BaziResult } from "../types";
+import type { NamingInput, NameOption, NamingResult, NameAnalysisResult, BaziResult } from "../types";
 
 export function generateNames(input: NamingInput, preview = false): NamingResult {
   const full = _generateNames(input);
@@ -310,3 +310,278 @@ function toPinyin(chars: string): string {
 }
 
 export { toPinyin };
+
+// Character → element lookup (for analyze mode)
+// Extends the characters dataset with common JP/KR name kanji
+const EXTENDED_ELEMENTS: Record<string, { element: string; meaning: string }> = {
+  // JP/KR common surname kanji
+  山: { element: "土", meaning: "Mountain — stability, strength" },
+  本: { element: "木", meaning: "Root/origin — grounded, foundational" },
+  田: { element: "土", meaning: "Rice field — nourishment, abundance" },
+  中: { element: "火", meaning: "Center/middle — balance, moderation" },
+  村: { element: "木", meaning: "Village — community, roots" },
+  小: { element: "金", meaning: "Small — humility, precision" },
+  高: { element: "金", meaning: "Tall/high — ambition, elevation" },
+  大: { element: "火", meaning: "Great/big — grandeur, expansiveness" },
+  森: { element: "木", meaning: "Forest — vitality, abundance" },
+  石: { element: "土", meaning: "Stone — resilience, endurance" },
+  井: { element: "水", meaning: "Well — depth, resourcefulness" },
+  松: { element: "木", meaning: "Pine — longevity, steadfastness" },
+  木: { element: "木", meaning: "Tree — growth, vitality" },
+  川: { element: "水", meaning: "River — flow, adaptability" },
+  吉: { element: "木", meaning: "Fortune — luck, auspiciousness" },
+  野: { element: "土", meaning: "Field/wild — freedom, nature" },
+  藤: { element: "木", meaning: "Wisteria — elegance, grace" },
+  原: { element: "土", meaning: "Plain/field — openness, simplicity" },
+  渡: { element: "水", meaning: "To cross — transition, journey" },
+  辺: { element: "水", meaning: "Border — boundary, frontier" },
+  近: { element: "金", meaning: "Near — closeness, intimacy" },
+  宮: { element: "土", meaning: "Palace/shrine — nobility, reverence" },
+  竹: { element: "木", meaning: "Bamboo — integrity, resilience" },
+  池: { element: "水", meaning: "Pond — stillness, reflection" },
+  橋: { element: "木", meaning: "Bridge — connection, transition" },
+  長: { element: "火", meaning: "Long — endurance, longevity" },
+  鈴: { element: "金", meaning: "Bell — clarity, resonance" },
+  佐: { element: "金", meaning: "To assist — support, service" },
+  伊: { element: "水", meaning: "That one — classical grace" },
+  斎: { element: "火", meaning: "Purification — refinement, piety" },
+  加: { element: "木", meaning: "To add — increase, enhancement" },
+  // JP/KR common given name kanji
+  一: { element: "水", meaning: "One/first — primacy, unity" },
+  二: { element: "火", meaning: "Two — balance, duality" },
+  三: { element: "木", meaning: "Three — creativity, growth" },
+  郎: { element: "火", meaning: "Son/man — masculinity, strength" },
+  子: { element: "水", meaning: "Child — innocence, potential" },
+  美: { element: "金", meaning: "Beauty — elegance, grace" },
+  花: { element: "木", meaning: "Flower — beauty, transience" },
+  香: { element: "木", meaning: "Fragrance — virtue, refinement" },
+  太: { element: "火", meaning: "Thick/great — abundance, strength" },
+  夫: { element: "土", meaning: "Husband/man — maturity, stability" },
+  代: { element: "金", meaning: "Generation/era — legacy, continuity" },
+  正: { element: "金", meaning: "Correct/upright — justice, rectitude" },
+  光: { element: "火", meaning: "Light — brilliance, illumination" },
+  和: { element: "水", meaning: "Harmony/peace — concord, balance" },
+  平: { element: "水", meaning: "Peace/level — tranquility, fairness" },
+  真: { element: "金", meaning: "Truth — authenticity, sincerity" },
+  直: { element: "金", meaning: "Straight/direct — honesty, integrity" },
+  良: { element: "火", meaning: "Good/excellent — virtue, quality" },
+  行: { element: "水", meaning: "To go/action — movement, purpose" },
+  幸: { element: "水", meaning: "Happiness/fortune — blessed, fortunate" },
+  愛: { element: "土", meaning: "Love — compassion, warmth" },
+  優: { element: "土", meaning: "Gentle/superior — kindness, excellence" },
+  勇: { element: "木", meaning: "Courage — bravery, valor" },
+  翔: { element: "土", meaning: "To soar — freedom, aspiration" },
+  輝: { element: "火", meaning: "Radiance — brilliance, glory" },
+  恵: { element: "水", meaning: "Blessing/grace — kindness, favor" },
+  実: { element: "金", meaning: "Fruit/truth — substance, reality" },
+  結: { element: "木", meaning: "To bind/tie — connection, completion" },
+  菜: { element: "木", meaning: "Greens/vegetables — natural, simple" },
+  奈: { element: "火", meaning: "What/apple tree — classical beauty" },
+  葵: { element: "木", meaning: "Hollyhock — ambition, aspiration" },
+  陽: { element: "火", meaning: "Sun/yang — positivity, warmth" },
+  奏: { element: "木", meaning: "To play music — artistry, harmony" },
+  颯: { element: "水", meaning: "Swift wind — freshness, speed" },
+  悠: { element: "水", meaning: "Leisurely — serenity, ease" },
+  凛: { element: "水", meaning: "Dignified/cold — composure, strength" },
+  // Korean name kanji
+  在: { element: "土", meaning: "To exist/be present — presence, being" },
+  浩: { element: "水", meaning: "Vast/grand — expansiveness, greatness" },
+  秀: { element: "木", meaning: "Excellent/outstanding — talent, distinction" },
+  賢: { element: "金", meaning: "Wise/virtuous — wisdom, sagacity" },
+  民: { element: "水", meaning: "People/citizen — community, humanity" },
+  洙: { element: "水", meaning: "River name — flow, continuity" },
+  熙: { element: "水", meaning: "Bright/prosperous — radiance, flourishing" },
+  英: { element: "木", meaning: "Hero/flower — excellence, brilliance" },
+  成: { element: "金", meaning: "To accomplish — achievement, completion" },
+  鎮: { element: "金", meaning: "To calm/garrison — stability, protection" },
+  東: { element: "木", meaning: "East — rising, new beginnings" },
+  南: { element: "火", meaning: "South — warmth, passion" },
+  西: { element: "金", meaning: "West — harvest, completion" },
+  北: { element: "水", meaning: "North — wisdom, depth" },
+  权: { element: "木", meaning: "Authority/right — justice, balance" },
+  承: { element: "金", meaning: "To inherit — legacy, continuity" },
+  奎: { element: "土", meaning: "Star constellation — destiny, brilliance" },
+  // Additional general kanji
+  上: { element: "金", meaning: "Above/upper — elevation, superiority" },
+  下: { element: "水", meaning: "Below/lower — humility, grounding" },
+  口: { element: "土", meaning: "Mouth/opening — communication" },
+  目: { element: "水", meaning: "Eye — perception, insight" },
+  力: { element: "金", meaning: "Power/strength — capability, force" },
+  天: { element: "金", meaning: "Heaven/sky — transcendence, vastness" },
+  元: { element: "木", meaning: "Origin/source — beginning, foundation" },
+  内: { element: "火", meaning: "Inside — interior, introspection" },
+  年: { element: "火", meaning: "Year — time, maturity" },
+  立: { element: "火", meaning: "To stand/establish — independence" },
+  間: { element: "金", meaning: "Between/interval — space, connection" },
+  学: { element: "水", meaning: "To learn — knowledge, study" },
+  生: { element: "木", meaning: "Life/birth — vitality, creation" },
+  白: { element: "金", meaning: "White — purity, clarity" },
+  百: { element: "水", meaning: "Hundred — abundance, completeness" },
+  千: { element: "金", meaning: "Thousand — multitude, infinity" },
+  万: { element: "水", meaning: "Ten thousand — boundlessness" },
+  今: { element: "金", meaning: "Now/present — mindfulness, presence" },
+  金: { element: "金", meaning: "Gold/metal — value, refinement" },
+  水: { element: "水", meaning: "Water — wisdom, adaptability" },
+  火: { element: "火", meaning: "Fire — passion, energy" },
+  土: { element: "土", meaning: "Earth — stability, nourishment" },
+  日: { element: "火", meaning: "Sun/day — brightness, vitality" },
+  月: { element: "水", meaning: "Moon/month — mystery, femininity" },
+};
+
+function lookupChar(c: string): { element: string; meaning: string } | null {
+  // first check main dataset
+  const found = characters.find(ch => ch.char === c);
+  if (found) return { element: found.element, meaning: found.meaning };
+  // then extended map
+  return EXTENDED_ELEMENTS[c] || null;
+}
+
+export function analyzeName(input: NamingInput): NameAnalysisResult {
+  const rawLastName = input.lastName || input.surname || "";
+  const rawFirstName = input.firstName || "";
+  const { birthYear, birthMonth, birthDay, birthHour } = input;
+
+  const bazi = calculateBazi(birthYear, birthMonth, birthDay, birthHour);
+  const wuxing = analyzeWuxing(bazi.day.wuxing, bazi.elements);
+  const favorable = wuxing.favorable;
+  const unfavorable = wuxing.unfavorable;
+
+  // Analyze each character in the name
+  const surnameChars = rawLastName.split("");
+  const givenChars = rawFirstName.split("");
+
+  const surnameElements: string[] = [];
+  const givenNameElements: string[] = [];
+
+  for (const c of surnameChars) {
+    const info = lookupChar(c);
+    surnameElements.push(info ? info.element : "?");
+  }
+  for (const c of givenChars) {
+    const info = lookupChar(c);
+    givenNameElements.push(info ? info.element : "?");
+  }
+
+  // Score: each char in favorable = +30, in unfavorable = -20, neutral/unknown = 0
+  let rawScore = 0;
+  const allElements = [...surnameElements, ...givenNameElements];
+  for (const el of allElements) {
+    if (el === "?") continue; // unknown — neutral
+    if (favorable.includes(el)) rawScore += 30;
+    else if (unfavorable.includes(el)) rawScore -= 20;
+  }
+  // Normalize to 0-100 (reasonable range with up to 4 chars)
+  const score = Math.max(0, Math.min(100, 50 + rawScore));
+
+  let match: "excellent" | "good" | "fair" | "poor";
+  if (score >= 80) match = "excellent";
+  else if (score >= 60) match = "good";
+  else if (score >= 40) match = "fair";
+  else match = "poor";
+
+  const dayMasterEl = bazi.day.wuxing;
+
+  const baziResult: BaziResult = {
+    year: bazi.year,
+    month: bazi.month,
+    day: bazi.day,
+    hour: bazi.hour,
+    elements: bazi.elements,
+    analysis: bazi.analysis,
+    analysisEn: wuxing.descriptionEn,
+  };
+
+  // Generate suggestion if match is not excellent
+  let suggestion: NameOption | undefined;
+  if (match !== "excellent") {
+    suggestion = suggestGivenName(rawLastName, input);
+  }
+
+  return {
+    type: "analysis",
+    surname: rawLastName,
+    givenName: rawFirstName,
+    characters: rawLastName + rawFirstName,
+    pinyin: toPinyin(rawLastName + rawFirstName),
+    score,
+    elementBreakdown: {
+      surnameElement: surnameElements.join(" + ") || "?",
+      givenNameElements,
+    },
+    baziCompatibility: {
+      dayMaster: dayMasterEl,
+      favorableElements: favorable,
+      unfavorableElements: unfavorable,
+      match,
+      analysis: bazi.analysis,
+      analysisEn: wuxing.descriptionEn,
+    },
+    suggestion,
+    baziAnalysis: baziResult,
+  };
+}
+
+export function suggestGivenName(surname: string, input: NamingInput): NameOption {
+  const { gender, birthYear, birthMonth, birthDay, birthHour } = input;
+
+  const bazi = calculateBazi(birthYear, birthMonth, birthDay, birthHour);
+  const wuxing = analyzeWuxing(bazi.day.wuxing, bazi.elements);
+  const favorable = wuxing.favorable;
+
+  // Filter characters by favorable elements and gender
+  const candidates = characters
+    .filter(c => {
+      const elementMatch = favorable.includes(c.element);
+      const genderMatch = c.gender === gender || c.gender === "neutral";
+      return elementMatch && genderMatch;
+    })
+    .map(c => ({
+      ...c,
+      score: (favorable.includes(c.element) ? 3 : 0) + (c.element === favorable[0] ? 2 : 0),
+    }))
+    .sort((a, b) => b.score - a.score);
+
+  const top = candidates.slice(0, 20);
+
+  // Build a 2-character given name with the top candidates
+  let bestPair: { char1: typeof top[0]; char2: typeof top[0] } | null = null;
+  let bestScore = -1;
+
+  for (let i = 0; i < top.length; i++) {
+    for (let j = i + 1; j < top.length; j++) {
+      if (top[i].char === top[j].char) continue;
+      const pairScore = top[i].score + top[j].score;
+      if (pairScore > bestScore) {
+        bestScore = pairScore;
+        bestPair = { char1: top[i], char2: top[j] };
+      }
+    }
+  }
+
+  if (bestPair) {
+    const givenName = bestPair.char1.char + bestPair.char2.char;
+    return {
+      characters: surname + givenName,
+      surname,
+      givenName,
+      pinyin: toPinyin(surname + givenName),
+      meaning: `${bestPair.char1.meaning}; ${bestPair.char2.meaning}`,
+      wuxing: `${bestPair.char1.element}${bestPair.char2.element}`,
+      source: bestPair.char1.source || bestPair.char2.source,
+      sourceText: [bestPair.char1.sourceText, bestPair.char2.sourceText].filter(Boolean).join(" | "),
+    };
+  }
+
+  // Fallback: single character
+  const fallback = top[0] || { char: "文", element: "水", meaning: "Culture, refinement", source: "论语", sourceText: "文质彬彬" };
+  return {
+    characters: surname + fallback.char,
+    surname,
+    givenName: fallback.char,
+    pinyin: toPinyin(surname + fallback.char),
+    meaning: fallback.meaning,
+    wuxing: fallback.element,
+    source: fallback.source || "",
+    sourceText: fallback.sourceText || "",
+  };
+}

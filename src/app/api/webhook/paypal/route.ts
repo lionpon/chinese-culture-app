@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyIPN } from "@/lib/paypal";
 import { prisma } from "@/lib/db";
-import { generateNames } from "@/lib/naming";
+import { generateNames, analyzeName } from "@/lib/naming";
 import { selectAuspiciousDays } from "@/lib/calendar";
 import { performDivination } from "@/lib/divination";
 import { readPalm } from "@/lib/palm-reading";
@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
 
     switch (purchase.type) {
       case "naming":
-        result = generateNames(input as NamingInput);
+        result = (input.mode === "analyze") ? analyzeName(input as NamingInput) : generateNames(input as NamingInput);
         break;
       case "calendar":
         result = selectAuspiciousDays(input as CalendarInput);

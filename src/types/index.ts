@@ -8,7 +8,8 @@ export interface NamingInput {
   birthMonth: number;
   birthDay: number;
   birthHour: number;     // 0-23
-  style: "elegant" | "grand" | "fresh"; // 典雅/大气/清新
+  style?: "elegant" | "grand" | "fresh"; // 典雅/大气/清新 — optional for analyze mode
+  mode?: "create" | "analyze"; // create = generate new name (default), analyze = analyze existing name
 }
 
 export interface NameOption {
@@ -24,6 +25,29 @@ export interface NameOption {
 
 export interface NamingResult {
   options: NameOption[];
+  baziAnalysis: BaziResult;
+}
+
+export interface NameAnalysisResult {
+  type: "analysis";
+  surname: string;
+  givenName: string;
+  characters: string;
+  pinyin: string;
+  score: number;
+  elementBreakdown: {
+    surnameElement: string;
+    givenNameElements: string[];
+  };
+  baziCompatibility: {
+    dayMaster: string;
+    favorableElements: string[];
+    unfavorableElements: string[];
+    match: "excellent" | "good" | "fair" | "poor";
+    analysis: string;
+    analysisEn: string;
+  };
+  suggestion?: NameOption;
   baziAnalysis: BaziResult;
 }
 

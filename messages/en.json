@@ -119,7 +119,15 @@
       "styleElegant": "Elegant & Refined · 典雅",
       "styleGrand": "Grand & Powerful · 大气",
       "styleFresh": "Fresh & Natural · 清新",
-      "submit": "Generate Name"
+      "submit": "Generate Name",
+      "modeLabel": "What would you like to do?",
+      "modeCreate": "Create a Chinese name",
+      "modeAnalyze": "Analyze my existing name",
+      "firstNameAnalyze": "Your Given Name (kanji/hanja)",
+      "firstNameAnalyzePlaceholder": "e.g. 一郎, 法子",
+      "lastNameAnalyze": "Your Surname (kanji/hanja)",
+      "lastNameAnalyzePlaceholder": "e.g. 山本, 李",
+      "submitAnalyze": "Analyze My Name"
     },
     "example": {
       "summary": "Example result — see what you'll get",
@@ -282,6 +290,19 @@
       "source": "Source",
       "recommended": "Recommended — Best match for your elemental profile",
       "baziAnalysis": "Bazi Analysis"
+    },
+    "analyze": {
+      "title": "Your Name Analysis",
+      "score": "Compatibility Score",
+      "favorableElements": "Favorable Elements",
+      "surnameElement": "Surname Element",
+      "givenNameElements": "Given Name Elements",
+      "suggestion": "Based on your Bazi, consider",
+      "suggestionNote": "Same surname, more balanced given name",
+      "matchExcellent": "Excellent",
+      "matchGood": "Good",
+      "matchFair": "Fair",
+      "matchPoor": "Poor"
     },
     "calendar": {
       "title": "Auspicious Dates",

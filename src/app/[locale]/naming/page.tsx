@@ -13,6 +13,7 @@ export default function NamingPage() {
   const t = useTranslations("naming");
   const { loading, checkout } = useCheckout("naming");
   const [amount, setAmount] = useState(1);
+  const [mode, setMode] = useState<"create" | "analyze">("create");
 
   function ExampleResult() {
     return (
@@ -50,6 +51,7 @@ export default function NamingPage() {
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
+    const styleEl = form.elements.namedItem("style") as HTMLSelectElement | null;
     await checkout({
       firstName: form.firstName.value,
       lastName: form.lastName.value,
@@ -58,7 +60,8 @@ export default function NamingPage() {
       birthMonth: parseInt(form.birthMonth.value),
       birthDay: parseInt(form.birthDay.value),
       birthHour: parseInt(form.birthHour.value),
-      style: (form.elements.namedItem("style") as HTMLSelectElement).value,
+      style: styleEl ? styleEl.value as "elegant" | "grand" | "fresh" : "elegant",
+      mode,
       amount,
     });
   }
@@ -77,14 +80,51 @@ export default function NamingPage() {
       <ExampleResult />
 
       <form onSubmit={handleSubmit} className="space-y-5 card-classic p-4 sm:p-6">
+        {/* Mode toggle */}
+        <div>
+          <label className="block text-sm font-medium text-stone-700 mb-2">{t("form.modeLabel")}</label>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => setMode("create")}
+              className={`flex-1 py-2 px-3 rounded-lg text-sm border transition-colors ${
+                mode === "create"
+                  ? "bg-accent text-white border-accent"
+                  : "bg-white text-stone-600 border-stone-300 hover:border-stone-400"
+              }`}
+            >
+              {t("form.modeCreate")}
+            </button>
+            <button
+              type="button"
+              onClick={() => setMode("analyze")}
+              className={`flex-1 py-2 px-3 rounded-lg text-sm border transition-colors ${
+                mode === "analyze"
+                  ? "bg-accent text-white border-accent"
+                  : "bg-white text-stone-600 border-stone-300 hover:border-stone-400"
+              }`}
+            >
+              {t("form.modeAnalyze")}
+            </button>
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
-            <label className="block text-sm font-medium text-stone-700 mb-1">{t("form.firstName")}</label>
-            <input name="firstName" required placeholder={t("form.firstNamePlaceholder")} className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
+            <label className="block text-sm font-medium text-stone-700 mb-1">
+              {mode === "analyze" ? t("form.firstNameAnalyze") : t("form.firstName")}
+            </label>
+            <input name="firstName" required
+              placeholder={mode === "analyze" ? t("form.firstNameAnalyzePlaceholder") : t("form.firstNamePlaceholder")}
+              className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
           </div>
           <div>
-            <label className="block text-sm font-medium text-stone-700 mb-1">{t("form.lastName")}</label>
-            <input name="lastName" required placeholder={t("form.lastNamePlaceholder")} className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
+            <label className="block text-sm font-medium text-stone-700 mb-1">
+              {mode === "analyze" ? t("form.lastNameAnalyze") : t("form.lastName")}
+            </label>
+            <input name="lastName" required
+              placeholder={mode === "analyze" ? t("form.lastNameAnalyzePlaceholder") : t("form.lastNamePlaceholder")}
+              className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
           </div>
         </div>
         <div>
@@ -108,21 +148,24 @@ export default function NamingPage() {
           <input name="birthHour" type="number" placeholder={t("form.hourPlaceholder")} required min={0} max={23} className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
           <p className="text-xs text-stone-400 mt-1">{t("form.hourHelper")}</p>
         </div>
-        <div>
-          <label className="block text-sm font-medium text-stone-700 mb-1">{t("form.style")}</label>
-          <select name="style" required className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300">
-            <option value="">{t("form.stylePlaceholder")}</option>
-            <option value="elegant">{t("form.styleElegant")}</option>
-            <option value="grand">{t("form.styleGrand")}</option>
-            <option value="fresh">{t("form.styleFresh")}</option>
-          </select>
-        </div>
+
+        {mode !== "analyze" && (
+          <div>
+            <label className="block text-sm font-medium text-stone-700 mb-1">{t("form.style")}</label>
+            <select name="style" required className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300">
+              <option value="">{t("form.stylePlaceholder")}</option>
+              <option value="elegant">{t("form.styleElegant")}</option>
+              <option value="grand">{t("form.styleGrand")}</option>
+              <option value="fresh">{t("form.styleFresh")}</option>
+            </select>
+          </div>
+        )}
 
         <AmountPicker value={amount} onChange={setAmount} />
         {hasFreeUses() && (
           <p className="text-xs text-stone-400 text-center">{t("form.previewNote")}</p>
         )}
-        <SubmitButton loading={loading} label={t("form.submit")} hasFree={hasFreeUses()} amount={amount} />
+        <SubmitButton loading={loading} label={mode === "analyze" ? t("form.submitAnalyze") : t("form.submit")} hasFree={hasFreeUses()} amount={amount} />
       </form>
     </div>
   );
