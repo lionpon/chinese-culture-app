@@ -3,7 +3,7 @@ import { generateReport, getReports } from "@/lib/report";
 
 function checkAuth(req: NextRequest): boolean {
   const token = req.nextUrl.searchParams.get("token") || req.headers.get("x-admin-token") || "";
-  const expected = process.env.ADMIN_TOKEN || "chinese-culture-admin-2024";
+  const expected = process.env.ADMIN_TOKEN || "";
   return token === expected;
 }
 

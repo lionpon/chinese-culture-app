@@ -113,7 +113,7 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const t = params.get("token") || "chinese-culture-admin-2024";
+    const t = params.get("token") || "";
     setToken(t);
     fetchData(t);
   }, []);
