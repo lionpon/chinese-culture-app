@@ -60,8 +60,36 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function LocaleLayout({ children, params }: Props) {
   const messages = await getMessages();
+  const t = await getTranslations({ locale: params.locale, namespace: "common" });
 
   const pathname = params.locale === "ru" ? "/ru" : "";
+  const isRu = params.locale === "ru";
+
+  const footerGuides = isRu
+    ? [
+        { href: "/guide/chinese-name", label: "Гид по Китайским Именам" },
+        { href: "/guide/chinese-name-boy", label: "Мужские Имена" },
+        { href: "/guide/chinese-name-girl", label: "Женские Имена" },
+        { href: "/guide/iching", label: "Гид по И-Цзин" },
+        { href: "/guide/iching-beginner", label: "И-Цзин для Начинающих" },
+        { href: "/guide/auspicious-dates", label: "Благоприятные Даты" },
+        { href: "/guide/wedding-dates-2026", label: "Свадебные Даты 2026" },
+        { href: "/guide/chinese-zodiac", label: "Китайский Зодиак" },
+        { href: "/guide/five-elements", label: "Пять Элементов" },
+        { href: "/guide/chinese-new-year-2027", label: "КНГ 2027" },
+      ]
+    : [
+        { href: "/guide/chinese-name", label: "Chinese Name Guide" },
+        { href: "/guide/chinese-name-boy", label: "Boy Names" },
+        { href: "/guide/chinese-name-girl", label: "Girl Names" },
+        { href: "/guide/iching", label: "I Ching Guide" },
+        { href: "/guide/iching-beginner", label: "I Ching Beginner" },
+        { href: "/guide/auspicious-dates", label: "Auspicious Dates" },
+        { href: "/guide/wedding-dates-2026", label: "Wedding Dates 2026" },
+        { href: "/guide/chinese-zodiac", label: "Chinese Zodiac" },
+        { href: "/guide/five-elements", label: "Five Elements" },
+        { href: "/guide/chinese-new-year-2027", label: "CNY 2027" },
+      ];
 
   return (
     <html lang={params.locale}>
@@ -79,10 +107,10 @@ export default async function LocaleLayout({ children, params }: Props) {
                   Chinese Culture Studio
                 </a>
                 <nav className="hidden sm:flex gap-4 text-sm text-stone-500 items-center">
-                  <a href={`${pathname}/naming`} className="hover:text-stone-800 transition-colors">Name</a>
-                  <a href={`${pathname}/calendar`} className="hover:text-stone-800 transition-colors">Dates</a>
-                  <a href={`${pathname}/divination`} className="hover:text-stone-800 transition-colors">I Ching</a>
-                  <a href={`${pathname}/palm-reading`} className="hover:text-stone-800 transition-colors">Palm Reading</a>
+                  <a href={`${pathname}/naming`} className="hover:text-stone-800 transition-colors">{t("nav.name")}</a>
+                  <a href={`${pathname}/calendar`} className="hover:text-stone-800 transition-colors">{t("nav.dates")}</a>
+                  <a href={`${pathname}/divination`} className="hover:text-stone-800 transition-colors">{t("nav.iching")}</a>
+                  <a href={`${pathname}/palm-reading`} className="hover:text-stone-800 transition-colors">{t("nav.palmReading")}</a>
                   <span className="text-stone-300 mx-1">|</span>
                   <LanguageSwitcher />
                 </nav>
@@ -95,25 +123,18 @@ export default async function LocaleLayout({ children, params }: Props) {
             <main className="max-w-5xl mx-auto px-3 sm:px-4 py-6 sm:py-8">{children}</main>
             <footer className="border-t border-stone-200/60 py-6 sm:py-8 mt-12 sm:mt-16">
               <div className="max-w-5xl mx-auto px-4 text-center text-xs text-stone-400 space-y-2">
-                <p>For entertainment and cultural appreciation only. Not professional advice.</p>
-                <p>Payments are voluntary contributions for app maintenance — not a purchase of services.</p>
+                <p>{t("footer.disclaimer")}</p>
+                <p>{t("footer.paymentNote")}</p>
                 <p className="flex justify-center gap-4 flex-wrap">
-                  <a href={`${pathname}/guide/chinese-name`} className="hover:text-stone-500 underline">Chinese Name Guide</a>
-                  <a href={`${pathname}/guide/chinese-name-boy`} className="hover:text-stone-500 underline">Boy Names</a>
-                  <a href={`${pathname}/guide/chinese-name-girl`} className="hover:text-stone-500 underline">Girl Names</a>
-                  <a href={`${pathname}/guide/iching`} className="hover:text-stone-500 underline">I Ching Guide</a>
-                  <a href={`${pathname}/guide/iching-beginner`} className="hover:text-stone-500 underline">I Ching Beginner</a>
-                  <a href={`${pathname}/guide/auspicious-dates`} className="hover:text-stone-500 underline">Auspicious Dates</a>
-                  <a href={`${pathname}/guide/wedding-dates-2026`} className="hover:text-stone-500 underline">Wedding Dates 2026</a>
-                  <a href={`${pathname}/guide/chinese-zodiac`} className="hover:text-stone-500 underline">Chinese Zodiac</a>
-                  <a href={`${pathname}/guide/five-elements`} className="hover:text-stone-500 underline">Five Elements</a>
-                  <a href={`${pathname}/guide/chinese-new-year-2027`} className="hover:text-stone-500 underline">CNY 2027</a>
+                  {footerGuides.map((g) => (
+                    <a key={g.href} href={`${pathname}${g.href}`} className="hover:text-stone-500 underline">{g.label}</a>
+                  ))}
                 </p>
                 <p className="flex justify-center gap-4 flex-wrap">
-                  <a href={`${pathname}/terms`} className="hover:text-stone-500 underline">Terms of Service</a>
-                  <a href={`${pathname}/privacy`} className="hover:text-stone-500 underline">Privacy Policy</a>
+                  <a href={`${pathname}/terms`} className="hover:text-stone-500 underline">{t("footer.terms")}</a>
+                  <a href={`${pathname}/privacy`} className="hover:text-stone-500 underline">{t("footer.privacy")}</a>
                 </p>
-                <p>2026 Chinese Culture Studio</p>
+                <p>{t("footer.copyright")}</p>
               </div>
             </footer>
             <CookieConsent />
