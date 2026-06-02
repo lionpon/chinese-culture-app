@@ -22,4 +22,4 @@ services:
         sync: false
       - key: NEXT_PUBLIC_APP_URL
         sync: false
-    healthCheckPath: /api/report?token=chinese-culture-admin-2024
+    healthCheckPath: /api/health
