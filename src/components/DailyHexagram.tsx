@@ -13,6 +13,8 @@ interface DailyData {
     nameRu?: string;
     pinyin: string;
     advice: string;
+    adviceJa?: string;
+    adviceRu?: string;
   };
 }
 
@@ -31,10 +33,15 @@ export default function DailyHexagram() {
   if (!data) return null;
 
   const { mainHexagram } = data;
+  const localizedAdvice =
+    locale === "ja" ? mainHexagram.adviceJa
+    : locale === "ru" ? mainHexagram.adviceRu
+    : mainHexagram.advice;
+  const advice = localizedAdvice || mainHexagram.advice;
   const teaser =
-    mainHexagram.advice.length > 160
-      ? mainHexagram.advice.slice(0, 157).replace(/\s+\S*$/, "") + "…"
-      : mainHexagram.advice;
+    advice.length > 160
+      ? advice.slice(0, 157).replace(/\s+\S*$/, "") + "…"
+      : advice;
 
   const localizedName =
     locale === "ja" ? mainHexagram.nameJa

@@ -130,9 +130,15 @@ export interface DivinationResult {
     pinyin: string;
     judgment: string;
     judgmentEn: string;
+    judgmentJa?: string;
+    judgmentRu?: string;
     description: string;
     descriptionEn: string;
+    descriptionJa?: string;
+    descriptionRu?: string;
     advice: string;
+    adviceJa?: string;
+    adviceRu?: string;
   };
   changedHexagram?: {
     id: number;
@@ -143,8 +149,12 @@ export interface DivinationResult {
     pinyin: string;
     judgment: string;
     judgmentEn: string;
+    judgmentJa?: string;
+    judgmentRu?: string;
     description: string;
     descriptionEn: string;
+    descriptionJa?: string;
+    descriptionRu?: string;
   };
   mutualHexagram?: {
     id: number;

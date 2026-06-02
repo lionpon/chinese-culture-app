@@ -1,5 +1,7 @@
 // Generates a unique SEO article for each daily hexagram page
 import type { DivinationResult } from "@/types";
+import { judgmentJa, judgmentRu, descriptionJa, descriptionRu, adviceJa, adviceRu } from "@/data/hexagram-content";
+import { hexagramNameJa, hexagramNameRu } from "@/data/hexagram-names";
 
 const HEXAGRAM_GUIDE: Record<number, { theme: string; lifeAreas: string; practicalTip: string }> = {
   1: { theme: "creativity and initiative", lifeAreas: "career advancement, starting new projects, and taking leadership roles", practicalTip: "Today is ideal for launching initiatives. Write down your top 3 goals and commit to the first step before noon." },
@@ -68,33 +70,49 @@ const HEXAGRAM_GUIDE: Record<number, { theme: string; lifeAreas: string; practic
   64: { theme: "before completion — the final stretch", lifeAreas: "near-success, finishing touches, and careful progress", practicalTip: "You're almost there. Don't rush the final 5%. Careful, deliberate steps across the finish line bring true completion." },
 };
 
-export function generateHexagramArticle(r: DivinationResult): string {
+export function generateHexagramArticle(r: DivinationResult, locale = "en"): string {
   const main = r.mainHexagram;
   const guide = HEXAGRAM_GUIDE[main.id] || { theme: "self-reflection", lifeAreas: "personal growth and awareness", practicalTip: "Take a moment to reflect on your current path. Clarity comes from quiet contemplation." };
+
+  const id = main.id;
+  const localizedName = locale === "ja" ? hexagramNameJa[id] : locale === "ru" ? hexagramNameRu[id] : main.nameEn;
+  const displayName = localizedName || main.nameEn;
+  const localJudgment = locale === "ja" ? judgmentJa[id] : locale === "ru" ? judgmentRu[id] : main.judgmentEn;
+  const localAdvice = locale === "ja" ? adviceJa[id] : locale === "ru" ? adviceRu[id] : main.advice;
+  const localDesc = locale === "ja" ? descriptionJa[id] : locale === "ru" ? descriptionRu[id] : main.descriptionEn;
+
+  const changedId = r.changedHexagram?.id;
+  const changedLocalName = changedId ? (locale === "ja" ? hexagramNameJa[changedId] : locale === "ru" ? hexagramNameRu[changedId] : r.changedHexagram?.nameEn) : undefined;
+  const changedDisplayName = changedLocalName || r.changedHexagram?.nameEn;
+  const changedLocalDesc = changedId ? (locale === "ja" ? descriptionJa[changedId] : locale === "ru" ? descriptionRu[changedId] : r.changedHexagram?.descriptionEn) : undefined;
+
+  const mutualId = r.mutualHexagram?.id;
+  const mutualLocalName = mutualId ? (locale === "ja" ? hexagramNameJa[mutualId] : locale === "ru" ? hexagramNameRu[mutualId] : r.mutualHexagram?.nameEn) : undefined;
 
   const parts: string[] = [];
 
   // Opening — describes the hexagram in context
-  parts.push(`Today's I Ching hexagram is ${main.nameZh} (${main.pinyin}), known in English as "${main.nameEn}". This hexagram speaks to ${guide.theme}, offering guidance for those seeking clarity in ${guide.lifeAreas}.`);
+  parts.push(`Today's I Ching hexagram is ${main.nameZh} (${main.pinyin}), known as "${displayName}". This hexagram speaks to ${guide.theme}, offering guidance for those seeking clarity in ${guide.lifeAreas}.`);
 
   // The judgment — core message
-  parts.push(`The ancient judgment for this hexagram reads: "${main.judgmentEn}" This wisdom, passed down through millennia, reminds us that the patterns of heaven and earth are reflected in our daily affairs.`);
+  parts.push(`The ancient judgment for this hexagram reads: "${localJudgment || main.judgmentEn}" This wisdom, passed down through millennia, reminds us that the patterns of heaven and earth are reflected in our daily affairs.`);
 
   // Practical interpretation
-  parts.push(`In practical terms, ${main.nameEn} appears when we are being called to focus on ${guide.theme}. ${guide.practicalTip} The hexagram's energy is particularly relevant for matters of ${guide.lifeAreas}.`);
+  parts.push(`In practical terms, ${displayName} appears when we are being called to focus on ${guide.theme}. ${guide.practicalTip} The hexagram's energy is particularly relevant for matters of ${guide.lifeAreas}.`);
 
   // If there's a changing line, describe the evolution
   if (r.changingLine && r.changingLine.textEn && r.changedHexagram) {
-    parts.push(`The ${ordinal(r.changingLine.position)} line is changing, which transforms the reading into ${r.changedHexagram?.nameZh} (${r.changedHexagram?.nameEn}). This indicates that the situation is shifting toward ${r.changedHexagram?.descriptionEn.toLowerCase()} The changing line reveals a pivotal moment — the direction of events hinges on how you respond right now.`);
+    parts.push(`The ${ordinal(r.changingLine.position)} line is changing, which transforms the reading into ${r.changedHexagram?.nameZh} (${changedDisplayName}). This indicates that the situation is shifting toward ${(changedLocalDesc || r.changedHexagram?.descriptionEn || "").toLowerCase()} The changing line reveals a pivotal moment — the direction of events hinges on how you respond right now.`);
   }
 
   // If there's a mutual hexagram (inner dynamics)
   if (r.mutualHexagram) {
-    parts.push(`The mutual hexagram (互卦) is ${r.mutualHexagram.nameZh} (${r.mutualHexagram.nameEn}), which reveals the inner dynamics at play behind the surface situation. Understanding these hidden forces helps you navigate the visible challenges with deeper wisdom.`);
+    parts.push(`The mutual hexagram (互卦) is ${r.mutualHexagram.nameZh} (${mutualLocalName || r.mutualHexagram.nameEn}), which reveals the inner dynamics at play behind the surface situation. Understanding these hidden forces helps you navigate the visible challenges with deeper wisdom.`);
   }
 
   // The advice — synthesized guidance
-  parts.push(`The I Ching's counsel for today is clear: ${main.advice.replace(/^[⚖️☀️⚠️]+\s*Verdict: [^—]+—\s*/, "")}`);
+  const adviceRaw = localAdvice || main.advice;
+  parts.push(`The I Ching's counsel for today is clear: ${adviceRaw.replace(/^[⚖️☀️⚠️]+\s*Verdict: [^—]+—\s*/, "")}`);
 
   // Closing — how to use the reading
   parts.push(`Whether you are facing decisions about ${guide.lifeAreas}, or simply seeking daily guidance, this hexagram invites you to embody ${guide.theme} in your thoughts and actions. The ancient Chinese believed that heaven, earth, and humanity form a single interconnected system — your choices today ripple through this web. Use this reading as a mirror, not a map. It reflects your current situation and suggests the wisest path forward, but the steps you take are yours alone.`);
