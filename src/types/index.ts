@@ -125,6 +125,8 @@ export interface DivinationResult {
     id: number;
     nameZh: string;
     nameEn: string;
+    nameJa?: string;
+    nameRu?: string;
     pinyin: string;
     judgment: string;
     judgmentEn: string;
@@ -136,6 +138,8 @@ export interface DivinationResult {
     id: number;
     nameZh: string;
     nameEn: string;
+    nameJa?: string;
+    nameRu?: string;
     pinyin: string;
     judgment: string;
     judgmentEn: string;

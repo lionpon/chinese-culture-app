@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/navigation";
 import SpeakButton from "./SpeakButton";
 
@@ -9,6 +9,8 @@ interface DailyData {
   mainHexagram: {
     nameZh: string;
     nameEn: string;
+    nameJa?: string;
+    nameRu?: string;
     pinyin: string;
     advice: string;
   };
@@ -16,6 +18,7 @@ interface DailyData {
 
 export default function DailyHexagram() {
   const t = useTranslations("home");
+  const locale = useLocale();
   const [data, setData] = useState<DailyData | null>(null);
 
   useEffect(() => {
@@ -33,6 +36,11 @@ export default function DailyHexagram() {
       ? mainHexagram.advice.slice(0, 157).replace(/\s+\S*$/, "") + "…"
       : mainHexagram.advice;
 
+  const localizedName =
+    locale === "ja" ? mainHexagram.nameJa
+    : locale === "ru" ? mainHexagram.nameRu
+    : mainHexagram.nameEn;
+
   return (
     <section className="max-w-lg mx-auto mb-12">
       <p className="text-center text-xs font-medium tracking-wide uppercase mb-4 text-gold">
@@ -44,7 +52,7 @@ export default function DailyHexagram() {
         </p>
         <div className="flex items-center justify-center gap-2 mb-4">
           <p className="text-sm text-stone-500">
-            {mainHexagram.pinyin} — {mainHexagram.nameEn}
+            {mainHexagram.pinyin} — {localizedName}
           </p>
           <SpeakButton text={mainHexagram.nameZh} />
         </div>

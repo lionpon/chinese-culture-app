@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { performDivination } from "@/lib/divination";
 import { generateHexagramArticle } from "@/lib/hexagram-article";
+import { hexagramNameJa, hexagramNameRu } from "@/data/hexagram-names";
 import { Link } from "@/navigation";
 import { notFound } from "next/navigation";
 import SpeakButton from "@/components/SpeakButton";
@@ -8,6 +9,18 @@ import SpeakButton from "@/components/SpeakButton";
 type Props = {
   params: { locale: string; date: string };
 };
+
+function getLocalizedName(id: number, locale: string): string {
+  if (locale === "ja") return hexagramNameJa[id] || "";
+  if (locale === "ru") return hexagramNameRu[id] || "";
+  return "";
+}
+
+function getDateLocale(locale: string): string {
+  if (locale === "ru") return "ru";
+  if (locale === "ja") return "ja";
+  return "en";
+}
 
 function getHexagramForDate(dateStr: string) {
   const d = new Date(dateStr + "T00:00:00Z");
@@ -26,7 +39,7 @@ function getHexagramForDate(dateStr: string) {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const formatter = new Intl.DateTimeFormat(params.locale === "ru" ? "ru" : "en", {
+  const formatter = new Intl.DateTimeFormat(getDateLocale(params.locale), {
     year: "numeric", month: "long", day: "numeric",
   });
   const result = getHexagramForDate(params.date);
@@ -34,9 +47,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const { mainHexagram: h } = result;
   const dateStr = formatter.format(new Date(params.date + "T00:00:00Z"));
+  const displayName = getLocalizedName(h.id, params.locale) || h.nameEn;
+  const localePrefix = params.locale === "en" ? "" : `/${params.locale}`;
   const title = params.locale === "ru"
-    ? `И-Цзин дня ${dateStr}: ${h.nameZh} — ${h.nameEn}`
-    : `Daily I Ching ${dateStr}: ${h.nameZh} — ${h.nameEn}`;
+    ? `И-Цзин дня ${dateStr}: ${h.nameZh} — ${displayName}`
+    : params.locale === "ja"
+    ? `今日の易経 ${dateStr}: ${h.nameZh} — ${displayName}`
+    : `Daily I Ching ${dateStr}: ${h.nameZh} — ${displayName}`;
   const desc = h.advice.slice(0, 160);
 
   return {
@@ -45,8 +62,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title,
       description: desc,
-      url: `https://chinese-culture-app.onrender.com${params.locale === "ru" ? "/ru" : ""}/daily/${params.date}`,
-      images: [{ url: `https://chinese-culture-app.onrender.com/api/og?title=${encodeURIComponent(h.nameZh)}&sub=${encodeURIComponent(h.nameEn)}&lang=${params.locale}`, width: 1200, height: 630 }],
+      url: `https://chinese-culture-app.onrender.com${localePrefix}/daily/${params.date}`,
+      images: [{ url: `https://chinese-culture-app.onrender.com/api/og?title=${encodeURIComponent(h.nameZh)}&sub=${encodeURIComponent(displayName)}&lang=${params.locale}`, width: 1200, height: 630 }],
     },
     twitter: { card: "summary_large_image", title, description: desc },
     robots: "index, follow",
@@ -59,9 +76,12 @@ export default async function DailyHexagramPage({ params }: Props) {
 
   const { mainHexagram: h, changedHexagram: ch, changingLine: cl } = result;
 
-  const formatter = new Intl.DateTimeFormat(params.locale === "ru" ? "ru" : "en", {
+  const formatter = new Intl.DateTimeFormat(getDateLocale(params.locale), {
     weekday: "long", year: "numeric", month: "long", day: "numeric",
   });
+
+  const mainName = getLocalizedName(h.id, params.locale) || h.nameEn;
+  const changedName = ch && ch.id !== h.id ? (getLocalizedName(ch.id, params.locale) || ch.nameEn) : null;
 
   return (
     <div className="max-w-2xl mx-auto">
@@ -73,7 +93,7 @@ export default async function DailyHexagramPage({ params }: Props) {
       </h1>
       <div className="flex items-center justify-center gap-2 mb-6">
         <p className="text-sm text-stone-500">
-          {h.pinyin} — {h.nameEn}
+          {h.pinyin} — {mainName}
         </p>
         <SpeakButton text={h.nameZh} />
       </div>
@@ -81,7 +101,7 @@ export default async function DailyHexagramPage({ params }: Props) {
       {/* Judgment */}
       <section className="card-classic p-4 sm:p-6 mb-6">
         <h2 className="text-sm font-semibold text-stone-600 mb-2">
-          {params.locale === "ru" ? "Суждение" : "Judgment"}
+          {params.locale === "ru" ? "Суждение" : params.locale === "ja" ? "卦辞" : "Judgment"}
         </h2>
         <p className="text-stone-700 leading-relaxed">{h.judgmentEn}</p>
         {h.judgment && h.judgment !== h.judgmentEn && (
@@ -92,7 +112,7 @@ export default async function DailyHexagramPage({ params }: Props) {
       {/* Advice */}
       <section className="card-classic p-4 sm:p-6 mb-6">
         <h2 className="text-sm font-semibold text-stone-600 mb-2">
-          {params.locale === "ru" ? "Совет" : "Advice"}
+          {params.locale === "ru" ? "Совет" : params.locale === "ja" ? "助言" : "Advice"}
         </h2>
         <p className="text-stone-700 leading-relaxed">{h.advice}</p>
       </section>
@@ -101,7 +121,7 @@ export default async function DailyHexagramPage({ params }: Props) {
       {cl && cl.textEn && (
         <section className="card-classic p-4 sm:p-6 mb-6">
           <h2 className="text-sm font-semibold text-stone-600 mb-2">
-            {params.locale === "ru" ? "Меняющаяся линия" : "Changing Line"} #{cl.position}
+            {params.locale === "ru" ? "Меняющаяся линия" : params.locale === "ja" ? "変爻" : "Changing Line"} #{cl.position}
           </h2>
           <p className="text-stone-700 leading-relaxed">{cl.textEn}</p>
         </section>
@@ -111,11 +131,11 @@ export default async function DailyHexagramPage({ params }: Props) {
       {ch && ch.id !== h.id && (
         <section className="card-classic p-4 sm:p-6 mb-6">
           <h2 className="text-sm font-semibold text-stone-600 mb-3">
-            {params.locale === "ru" ? "Развитие ситуации" : "Where This Is Heading"}
+            {params.locale === "ru" ? "Развитие ситуации" : params.locale === "ja" ? "展開" : "Where This Is Heading"}
           </h2>
           <p className="text-xl font-bold mb-1" style={{ color: "var(--accent)" }}>{ch.nameZh}</p>
           <div className="flex items-center gap-2 mb-3">
-            <p className="text-sm text-stone-500">{ch.pinyin} — {ch.nameEn}</p>
+            <p className="text-sm text-stone-500">{ch.pinyin} — {changedName}</p>
             <SpeakButton text={ch.nameZh} />
           </div>
           <p className="text-stone-700 leading-relaxed">{ch.judgmentEn}</p>
@@ -125,7 +145,7 @@ export default async function DailyHexagramPage({ params }: Props) {
       {/* Article */}
       <section className="card-classic p-4 sm:p-6 mb-6 prose prose-sm max-w-none">
         <h2 className="text-lg font-semibold text-stone-700 mb-4">
-          {params.locale === "ru" ? "Толкование дня" : "Today's I Ching Interpretation"}
+          {params.locale === "ru" ? "Толкование дня" : params.locale === "ja" ? "今日の解釈" : "Today's I Ching Interpretation"}
         </h2>
         {generateHexagramArticle(result).split("\n\n").map((p, i) => (
           <p key={i} className="text-stone-600 leading-relaxed mb-3 text-sm">{p}</p>
@@ -138,14 +158,14 @@ export default async function DailyHexagramPage({ params }: Props) {
           href="/divination"
           className="inline-block px-6 py-3 rounded-xl font-medium btn-primary"
         >
-          {params.locale === "ru" ? "Задайте свой вопрос И-Цзин" : "Ask I Ching Your Own Question"}
+          {params.locale === "ru" ? "Задайте свой вопрос И-Цзин" : params.locale === "ja" ? "易経に問いかける" : "Ask I Ching Your Own Question"}
         </Link>
       </div>
 
       {/* Link back to today */}
       <p className="text-center text-xs text-stone-400">
         <Link href="/" className="hover:text-stone-600 underline">
-          {params.locale === "ru" ? "← Сегодняшняя гексаграмма" : "← Today's hexagram"}
+          {params.locale === "ru" ? "← Сегодняшняя гексаграмма" : params.locale === "ja" ? "← 今日の卦" : "← Today's hexagram"}
         </Link>
       </p>
     </div>
