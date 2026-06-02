@@ -45,6 +45,8 @@ export async function createLemonCheckout(params: CreateCheckoutParams) {
           media: false,
           logo: true,
           desc: true,
+          discount: false,
+          locale: "zh-CN",
         },
       },
       relationships: {
