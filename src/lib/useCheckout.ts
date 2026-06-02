@@ -6,14 +6,14 @@ import { hasFreeUses, consumeFreeUse } from "./free-tier";
 export function useCheckout(type: string) {
   const [loading, setLoading] = useState(false);
 
-  async function checkout(data: Record<string, unknown>) {
+  async function checkout(data: Record<string, unknown>, method?: "paypal" | "lemon") {
     setLoading(true);
     const free = hasFreeUses();
     try {
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ type, input: data, free }),
+        body: JSON.stringify({ type, input: data, free, method }),
       });
       const result = await res.json();
       if (result.url) {

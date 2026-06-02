@@ -13,6 +13,7 @@ interface CreateCheckoutParams {
   variantId: string;
   purchaseId: string;
   type: string;
+  amount?: number; // USD, will be converted to cents
 }
 
 const PRODUCT_NAMES: Record<string, string> = {
@@ -23,14 +24,14 @@ const PRODUCT_NAMES: Record<string, string> = {
 };
 
 export async function createLemonCheckout(params: CreateCheckoutParams) {
-  const { storeId, variantId, purchaseId, type } = params;
+  const { storeId, variantId, purchaseId, type, amount } = params;
   const appUrl = getAppUrl();
 
   const body = {
     data: {
       type: "checkouts",
       attributes: {
-        custom_price: 100,
+        custom_price: Math.round((amount ?? 1) * 100), // USD → cents, min $1
         checkout_data: {
           custom: { purchaseId, type },
         },

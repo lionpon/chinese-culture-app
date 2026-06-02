@@ -4,7 +4,8 @@ import { prisma } from "@/lib/db";
 import { generateNames } from "@/lib/naming";
 import { selectAuspiciousDays } from "@/lib/calendar";
 import { performDivination } from "@/lib/divination";
-import type { NamingInput, CalendarInput, DivinationInput } from "@/types";
+import { readPalm } from "@/lib/palm-reading";
+import type { NamingInput, CalendarInput, DivinationInput, PalmReadingInput } from "@/types";
 
 export async function POST(req: NextRequest) {
   const rawBody = await req.text();
@@ -53,13 +54,16 @@ export async function POST(req: NextRequest) {
       case "divination":
         result = performDivination(input as DivinationInput);
         break;
+      case "palm-reading":
+        result = await readPalm(input as PalmReadingInput);
+        break;
       default:
         return NextResponse.json({ error: "Unknown type" }, { status: 400 });
     }
 
     await prisma.purchase.update({
       where: { id: purchaseId },
-      data: { status: "completed", result: JSON.stringify(result) },
+      data: { status: "completed", paid: true, result: JSON.stringify(result) },
     });
   } catch (error) {
     console.error("Webhook processing error:", error);
