@@ -24,7 +24,7 @@ export default function DailyHexagram() {
   const [data, setData] = useState<DailyData | null>(null);
 
   useEffect(() => {
-    fetch("/api/daily")
+    fetch(`/api/daily?_=${new Date().toISOString().slice(0, 10)}`)
       .then((r) => r.json())
       .then(setData)
       .catch(() => {});
