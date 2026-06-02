@@ -10,8 +10,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/divination", priority: 0.9, changeFreq: "weekly" as const },
     { path: "/palm-reading", priority: 0.9, changeFreq: "weekly" as const },
     { path: "/guide/chinese-name", priority: 0.7, changeFreq: "monthly" as const },
+    { path: "/guide/chinese-name-boy", priority: 0.6, changeFreq: "monthly" as const },
+    { path: "/guide/chinese-name-girl", priority: 0.6, changeFreq: "monthly" as const },
     { path: "/guide/iching", priority: 0.7, changeFreq: "monthly" as const },
+    { path: "/guide/iching-beginner", priority: 0.6, changeFreq: "monthly" as const },
     { path: "/guide/auspicious-dates", priority: 0.7, changeFreq: "monthly" as const },
+    { path: "/guide/wedding-dates-2026", priority: 0.6, changeFreq: "monthly" as const },
+    { path: "/guide/chinese-zodiac", priority: 0.6, changeFreq: "monthly" as const },
+    { path: "/guide/five-elements", priority: 0.6, changeFreq: "monthly" as const },
+    { path: "/guide/chinese-new-year-2027", priority: 0.6, changeFreq: "monthly" as const },
+    { path: "/guide/lucky-numbers", priority: 0.6, changeFreq: "monthly" as const },
     { path: "/privacy", priority: 0.3, changeFreq: "yearly" as const },
     { path: "/terms", priority: 0.3, changeFreq: "yearly" as const },
   ];
@@ -38,6 +46,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       languages: {
         en: `${baseUrl}${path}`,
         ru: `${baseUrl}/ru${path}`,
+        ja: `${baseUrl}/ja${path}`,
       },
     },
   }));
@@ -52,9 +61,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
       languages: {
         en: `${baseUrl}${path}`,
         ru: `${baseUrl}/ru${path}`,
+        ja: `${baseUrl}/ja${path}`,
       },
     },
   }));
 
-  return [...enEntries, ...ruEntries];
+  // Japanese URLs
+  const jaEntries = allPages.map(({ path, priority, changeFreq }) => ({
+    url: `${baseUrl}/ja${path}`,
+    lastModified: new Date(),
+    changeFrequency: changeFreq,
+    priority: path === "" ? 0.9 : priority - 0.1,
+    alternates: {
+      languages: {
+        en: `${baseUrl}${path}`,
+        ru: `${baseUrl}/ru${path}`,
+        ja: `${baseUrl}/ja${path}`,
+      },
+    },
+  }));
+
+  return [...enEntries, ...ruEntries, ...jaEntries];
 }

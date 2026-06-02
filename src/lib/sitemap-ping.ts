@@ -19,45 +19,37 @@ const ENGINES: { name: string; url: string; method?: string; body?: string }[] =
       host: HOST,
       key: INDEXNOW_KEY,
       keyLocation: `https://${HOST}/${INDEXNOW_KEY}.txt`,
-      urlList: [
-        `https://${HOST}`,
-        `https://${HOST}/`,
-        `https://${HOST}/naming`,
-        `https://${HOST}/calendar`,
-        `https://${HOST}/divination`,
-        `https://${HOST}/palm-reading`,
-        `https://${HOST}/guide/chinese-name`,
-        `https://${HOST}/guide/chinese-name-boy`,
-        `https://${HOST}/guide/chinese-name-girl`,
-        `https://${HOST}/guide/iching`,
-        `https://${HOST}/guide/iching-beginner`,
-        `https://${HOST}/guide/auspicious-dates`,
-        `https://${HOST}/guide/wedding-dates-2026`,
-        `https://${HOST}/guide/chinese-zodiac`,
-        `https://${HOST}/guide/five-elements`,
-        `https://${HOST}/guide/chinese-new-year-2027`,
-        `https://${HOST}/daily/2026-05-30`,
-        `https://${HOST}/ru`,
-        `https://${HOST}/ru/`,
-        `https://${HOST}/ru/naming`,
-        `https://${HOST}/ru/calendar`,
-        `https://${HOST}/ru/divination`,
-        `https://${HOST}/ru/palm-reading`,
-        `https://${HOST}/ru/guide/chinese-name`,
-        `https://${HOST}/ru/guide/chinese-name-boy`,
-        `https://${HOST}/ru/guide/chinese-name-girl`,
-        `https://${HOST}/ru/guide/iching`,
-        `https://${HOST}/ru/guide/iching-beginner`,
-        `https://${HOST}/ru/guide/auspicious-dates`,
-        `https://${HOST}/ru/guide/wedding-dates-2026`,
-        `https://${HOST}/ru/guide/chinese-zodiac`,
-        `https://${HOST}/ru/guide/five-elements`,
-        `https://${HOST}/ru/guide/chinese-new-year-2027`,
-        `https://${HOST}/ru/daily/2026-05-30`,
-      ],
+      urlList: buildIndexNowUrls(),
     }),
   },
 ];
+
+function buildIndexNowUrls(): string[] {
+  const staticPaths = [
+    "", "/naming", "/calendar", "/divination", "/palm-reading",
+    "/guide/chinese-name", "/guide/chinese-name-boy", "/guide/chinese-name-girl",
+    "/guide/iching", "/guide/iching-beginner", "/guide/auspicious-dates",
+    "/guide/wedding-dates-2026", "/guide/chinese-zodiac", "/guide/five-elements",
+    "/guide/chinese-new-year-2027",
+  ];
+
+  // Last 30 daily pages
+  const dailyPaths: string[] = [];
+  for (let i = 0; i < 30; i++) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    dailyPaths.push(`/daily/${d.toISOString().slice(0, 10)}`);
+  }
+
+  const allPaths = [...staticPaths, ...dailyPaths];
+  const urls: string[] = [];
+  for (const path of allPaths) {
+    urls.push(`https://${HOST}${path}`);
+    urls.push(`https://${HOST}/ru${path}`);
+    urls.push(`https://${HOST}/ja${path}`);
+  }
+  return urls;
+}
 
 export async function pingSitemaps() {
   const results = await Promise.allSettled(

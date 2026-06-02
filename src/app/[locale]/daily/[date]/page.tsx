@@ -6,6 +6,7 @@ import { judgmentJa, judgmentRu, descriptionJa, descriptionRu, adviceJa, adviceR
 import { Link } from "@/navigation";
 import { notFound } from "next/navigation";
 import SpeakButton from "@/components/SpeakButton";
+import { DailyArticleSchema } from "@/components/JsonLd";
 
 type Props = {
   params: { locale: string; date: string };
@@ -104,8 +105,21 @@ export default async function DailyHexagramPage({ params }: Props) {
   const adviceText = localizedContent?.advice || h.advice;
   const changedJudgment = localizedChanged?.judgment || (ch?.judgmentEn || "");
 
+  const localePrefix = params.locale === "en" ? "" : `/${params.locale}`;
+  const pageUrl = `https://chinese-culture-app.onrender.com${localePrefix}/daily/${params.date}`;
+
   return (
     <div className="max-w-2xl mx-auto">
+      <DailyArticleSchema
+        title={params.locale === "ru"
+          ? `И-Цзин дня: ${h.nameZh} — ${mainName}`
+          : params.locale === "ja"
+          ? `今日の易経: ${h.nameZh} — ${mainName}`
+          : `Daily I Ching: ${h.nameZh} — ${mainName}`}
+        description={h.descriptionEn}
+        date={params.date}
+        url={pageUrl}
+      />
       <p className="text-center text-xs text-stone-400 mb-2">
         {formatter.format(new Date(params.date + "T00:00:00Z"))}
       </p>

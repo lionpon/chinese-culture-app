@@ -16,6 +16,7 @@ function getTodayNumbers(): [number, number, number] {
 
 const HASHTAGS_EN = "#IChing #DailyHexagram #ChineseWisdom #BookOfChanges #Divination";
 const HASHTAGS_RU = "#ИЦзин #КнигаПеремен #КитайскаяМудрость #Гадание #ГексаграммаДня";
+const HASHTAGS_JA = "#易経 #今日の卦 #中国の知恵 #易占い #陰陽五行";
 
 export async function GET() {
   const hex = getTodayNumbers();
@@ -54,8 +55,22 @@ export async function GET() {
     }---\n\nЕжедневная гексаграмма от Chinese Culture Studio. Задайте свой вопрос: ${SITE_URL}/ru/divination`,
   };
 
+  const ja = {
+    twitter: `今日の易経: ${h.nameZh} (${h.pinyin}) — ${h.nameJa || h.nameEn}\n\n${adviceBrief}\n\nあなたも占ってみる: ${SITE_URL}/ja/divination\n\n${HASHTAGS_JA}`,
+    telegram: `☯️ 今日の易経: ${h.nameZh} — ${h.nameJa || h.nameEn} (${h.pinyin})\n\n${h.judgmentJa || h.judgmentEn}\n\n${adviceBrief}\n\n${
+      ch && ch.id !== h.id
+        ? `卦は次のように変化しています: ${ch.nameZh} — ${ch.nameJa || ch.nameEn}\n\n`
+        : ""
+    }あなたの卦を立てる: ${SITE_URL}/ja/divination\n\n${HASHTAGS_JA}`,
+    reddit: `☯️ 今日の易経 — ${h.nameZh} (${h.nameJa || h.nameEn}) [r/iching]\n\n**判断:** ${h.judgmentJa || h.judgmentEn}\n\n**アドバイス:** ${adviceBrief}\n\n${
+      ch && ch.id !== h.id
+        ? `**変化:** ${ch.nameZh} — ${ch.nameJa || ch.nameEn}\n\n`
+        : ""
+    }---\n\n今日の卦は Chinese Culture Studio の易経占いツールからお届けします。あなた自身の質問で試してみてください: ${SITE_URL}/ja/divination\n\n今日の卦はあなたの状況にどう響きますか？コメントで共有してください。`,
+  };
+
   return Response.json(
-    { date: new Date().toISOString().slice(0, 10), hexagram: result, posts: { en, ru } },
+    { date: new Date().toISOString().slice(0, 10), hexagram: result, posts: { en, ru, ja } },
     { headers: { "Cache-Control": "public, max-age=3600, s-maxage=3600" } }
   );
 }
