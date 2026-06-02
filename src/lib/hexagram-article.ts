@@ -79,7 +79,6 @@ export function generateHexagramArticle(r: DivinationResult, locale = "en"): str
   const displayName = localizedName || main.nameEn;
   const localJudgment = locale === "ja" ? judgmentJa[id] : locale === "ru" ? judgmentRu[id] : main.judgmentEn;
   const localAdvice = locale === "ja" ? adviceJa[id] : locale === "ru" ? adviceRu[id] : main.advice;
-  const localDesc = locale === "ja" ? descriptionJa[id] : locale === "ru" ? descriptionRu[id] : main.descriptionEn;
 
   const changedId = r.changedHexagram?.id;
   const changedLocalName = changedId ? (locale === "ja" ? hexagramNameJa[changedId] : locale === "ru" ? hexagramNameRu[changedId] : r.changedHexagram?.nameEn) : undefined;

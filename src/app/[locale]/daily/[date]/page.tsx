@@ -102,9 +102,7 @@ export default async function DailyHexagramPage({ params }: Props) {
 
   const judgmentText = localizedContent?.judgment || h.judgmentEn;
   const adviceText = localizedContent?.advice || h.advice;
-  const descText = localizedContent?.description || h.descriptionEn;
   const changedJudgment = localizedChanged?.judgment || (ch?.judgmentEn || "");
-  const changedDesc = localizedChanged?.description || (ch?.descriptionEn || "");
 
   return (
     <div className="max-w-2xl mx-auto">
