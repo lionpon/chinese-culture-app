@@ -70,15 +70,80 @@ const HEXAGRAM_GUIDE: Record<number, { theme: string; lifeAreas: string; practic
   64: { theme: "before completion — the final stretch", lifeAreas: "near-success, finishing touches, and careful progress", practicalTip: "You're almost there. Don't rush the final 5%. Careful, deliberate steps across the finish line bring true completion." },
 };
 
+// Locale-specific article framing — keeps non-English articles fully localized
+const FRAME: Record<string, {
+  opening: (nameZh: string, pinyin: string, displayName: string, desc: string) => string;
+  judgment: (localJudgment: string) => string;
+  judgmentNoLocale: (judgmentEn: string) => string;
+  interpretation: (displayName: string, desc: string, advice: string) => string;
+  changingLine: (nameZh: string, displayName: string, changedDesc: string, linePos: string) => string;
+  mutual: (nameZh: string, localName: string) => string;
+  advice: (adviceRaw: string) => string;
+  closing: (desc: string) => string;
+}> = {
+  ja: {
+    opening: (nameZh, pinyin, displayName, desc) =>
+      `今日の易経の卦は${nameZh}（${pinyin}）、邦訳では「${displayName}」として知られています。${desc}`,
+    judgment: (localJudgment) =>
+      `この卦の古の卦辞にはこうあります：「${localJudgment}」この数千年にわたって受け継がれてきた知恵は、天と地の理が私たちの日常にも映し出されていることを教えてくれます。`,
+    judgmentNoLocale: (judgmentEn) =>
+      `この卦の古の卦辞にはこうあります：「${judgmentEn}」`,
+    interpretation: (displayName, desc, advice) =>
+      `実際的な意味では、${displayName}は私たちに深い内省を促しています。${desc} 今日の実践のヒント：${advice}`,
+    changingLine: (nameZh, displayName, changedDesc, linePos) =>
+      `${linePos}爻が変化しており、この読みを${nameZh}（${displayName}）へと変容させます。これは状況が次の方向へと移り変わりつつあることを示しています：${changedDesc} この変化爻は決定的な瞬間を表しています——今、どう応答するかで物事の方向性が決まります。`,
+    mutual: (nameZh, localName) =>
+      `互卦は${nameZh}（${localName}）で、表面的な状況の背後に働いている内的な力関係を明らかにしています。これらの隠れた力を理解することで、目に見える課題をより深い知恵で乗り越えることができます。`,
+    advice: (adviceRaw) =>
+      `今日の易経の助言は明らかです：${adviceRaw.replace(/^[⚖️☀️⚠️]+\s*Verdict: [^—]+—\s*/, "")}`,
+    closing: (desc) =>
+      `${desc} 古代中国の賢者は、天と地と人が一つのつながったシステムを形成していると信じていました——あなたの今日の選択もこの網の目を通じて波及していきます。この読みを地図ではなく鏡として使ってください。それはあなたの現在の状況を映し出し、最も賢い進むべき道を示唆しますが、そこに踏み出す一歩はあなた自身のものです。`,
+  },
+  ru: {
+    opening: (nameZh, pinyin, displayName, desc) =>
+      `Сегодняшняя гексаграмма И-Цзин — ${nameZh} (${pinyin}), известная как «${displayName}». ${desc}`,
+    judgment: (localJudgment) =>
+      `Древнее суждение этой гексаграммы гласит: «${localJudgment}» Эта мудрость, передаваемая на протяжении тысячелетий, напоминает, что закономерности неба и земли отражаются в наших повседневных делах.`,
+    judgmentNoLocale: (judgmentEn) =>
+      `Древнее суждение этой гексаграммы гласит: «${judgmentEn}»`,
+    interpretation: (displayName, desc, advice) =>
+      `В практическом смысле, ${displayName} призывает нас задуматься. ${desc} Практический совет на сегодня: ${advice}`,
+    changingLine: (nameZh, displayName, changedDesc, linePos) =>
+      `${linePos} линия меняется, трансформируя чтение в ${nameZh} (${displayName}). Это указывает на то, что ситуация сдвигается в направлении: ${changedDesc} Меняющаяся линия раскрывает поворотный момент — направление событий зависит от того, как вы отреагируете прямо сейчас.`,
+    mutual: (nameZh, localName) =>
+      `Взаимная гексаграмма (互卦) — ${nameZh} (${localName}), которая раскрывает внутреннюю динамику, действующую за поверхностной ситуацией. Понимание этих скрытых сил помогает вам преодолевать видимые трудности с более глубокой мудростью.`,
+    advice: (adviceRaw) =>
+      `Совет И-Цзин на сегодня ясен: ${adviceRaw.replace(/^[⚖️☀️⚠️]+\s*Verdict: [^—]+—\s*/, "")}`,
+    closing: (desc) =>
+      `${desc} Древние китайцы верили, что небо, земля и человечество образуют единую взаимосвязанную систему — ваш сегодняшний выбор отражается в этой сети. Используйте это чтение как зеркало, а не карту. Оно отражает вашу текущую ситуацию и предлагает мудрейший путь вперёд, но шаги, которые вы делаете — только ваши.`,
+  },
+};
+
+function ordinal(n: number): string {
+  if (n === 1) return "first";
+  if (n === 2) return "second";
+  if (n === 3) return "third";
+  if (n === 4) return "fourth";
+  if (n === 5) return "fifth";
+  return "sixth";
+}
+
+function ordinalLocal(n: number, locale: string): string {
+  if (locale === "ru") {
+    return ["первая", "вторая", "третья", "четвёртая", "пятая", "шестая"][n - 1] || "шестая";
+  }
+  return ordinal(n);
+}
+
 export function generateHexagramArticle(r: DivinationResult, locale = "en"): string {
   const main = r.mainHexagram;
-  const guide = HEXAGRAM_GUIDE[main.id] || { theme: "self-reflection", lifeAreas: "personal growth and awareness", practicalTip: "Take a moment to reflect on your current path. Clarity comes from quiet contemplation." };
-
   const id = main.id;
+
   const localizedName = locale === "ja" ? hexagramNameJa[id] : locale === "ru" ? hexagramNameRu[id] : main.nameEn;
   const displayName = localizedName || main.nameEn;
   const localJudgment = locale === "ja" ? judgmentJa[id] : locale === "ru" ? judgmentRu[id] : main.judgmentEn;
   const localAdvice = locale === "ja" ? adviceJa[id] : locale === "ru" ? adviceRu[id] : main.advice;
+  const localDesc = locale === "ja" ? descriptionJa[id] : locale === "ru" ? descriptionRu[id] : main.descriptionEn;
 
   const changedId = r.changedHexagram?.id;
   const changedLocalName = changedId ? (locale === "ja" ? hexagramNameJa[changedId] : locale === "ru" ? hexagramNameRu[changedId] : r.changedHexagram?.nameEn) : undefined;
@@ -90,40 +155,68 @@ export function generateHexagramArticle(r: DivinationResult, locale = "en"): str
 
   const parts: string[] = [];
 
-  // Opening — describes the hexagram in context
-  parts.push(`Today's I Ching hexagram is ${main.nameZh} (${main.pinyin}), known as "${displayName}". This hexagram speaks to ${guide.theme}, offering guidance for those seeking clarity in ${guide.lifeAreas}.`);
+  if (locale === "ja" || locale === "ru") {
+    const f = FRAME[locale];
 
-  // The judgment — core message
-  parts.push(`The ancient judgment for this hexagram reads: "${localJudgment || main.judgmentEn}" This wisdom, passed down through millennia, reminds us that the patterns of heaven and earth are reflected in our daily affairs.`);
+    // Opening — use translated description for context
+    parts.push(f.opening(main.nameZh, main.pinyin, displayName, localDesc));
 
-  // Practical interpretation
-  parts.push(`In practical terms, ${displayName} appears when we are being called to focus on ${guide.theme}. ${guide.practicalTip} The hexagram's energy is particularly relevant for matters of ${guide.lifeAreas}.`);
+    // Judgment
+    if (localJudgment) {
+      parts.push(f.judgment(localJudgment));
+    } else {
+      parts.push(f.judgmentNoLocale(main.judgmentEn));
+    }
 
-  // If there's a changing line, describe the evolution
-  if (r.changingLine && r.changingLine.textEn && r.changedHexagram) {
-    parts.push(`The ${ordinal(r.changingLine.position)} line is changing, which transforms the reading into ${r.changedHexagram?.nameZh} (${changedDisplayName}). This indicates that the situation is shifting toward ${(changedLocalDesc || r.changedHexagram?.descriptionEn || "").toLowerCase()} The changing line reveals a pivotal moment — the direction of events hinges on how you respond right now.`);
+    // Practical interpretation — use description + advice snippet
+    const shortAdvice = (localAdvice || main.advice).replace(/^[⚖️☀️⚠️]+\s*Verdict:\s*[^—]+—\s*/, "").trim();
+    parts.push(f.interpretation(displayName, localDesc, shortAdvice));
+
+    // Changing line
+    if (r.changingLine && r.changingLine.textEn && r.changedHexagram) {
+      const linePos = ordinalLocal(r.changingLine.position, locale);
+      parts.push(f.changingLine(
+        r.changedHexagram.nameZh,
+        changedDisplayName || r.changedHexagram.nameEn,
+        changedLocalDesc || r.changedHexagram.descriptionEn || "",
+        linePos,
+      ));
+    }
+
+    // Mutual
+    if (r.mutualHexagram) {
+      parts.push(f.mutual(r.mutualHexagram.nameZh, mutualLocalName || r.mutualHexagram.nameEn));
+    }
+
+    // Advice
+    const adviceRaw = localAdvice || main.advice;
+    parts.push(f.advice(adviceRaw));
+
+    // Closing
+    parts.push(f.closing(localDesc));
+  } else {
+    // English — keep original pattern with HEXAGRAM_GUIDE
+    const guide = HEXAGRAM_GUIDE[main.id] || { theme: "self-reflection", lifeAreas: "personal growth and awareness", practicalTip: "Take a moment to reflect on your current path. Clarity comes from quiet contemplation." };
+
+    parts.push(`Today's I Ching hexagram is ${main.nameZh} (${main.pinyin}), known as "${displayName}". This hexagram speaks to ${guide.theme}, offering guidance for those seeking clarity in ${guide.lifeAreas}.`);
+
+    parts.push(`The ancient judgment for this hexagram reads: "${localJudgment || main.judgmentEn}" This wisdom, passed down through millennia, reminds us that the patterns of heaven and earth are reflected in our daily affairs.`);
+
+    parts.push(`In practical terms, ${displayName} appears when we are being called to focus on ${guide.theme}. ${guide.practicalTip} The hexagram's energy is particularly relevant for matters of ${guide.lifeAreas}.`);
+
+    if (r.changingLine && r.changingLine.textEn && r.changedHexagram) {
+      parts.push(`The ${ordinal(r.changingLine.position)} line is changing, which transforms the reading into ${r.changedHexagram?.nameZh} (${changedDisplayName}). This indicates that the situation is shifting toward ${(changedLocalDesc || r.changedHexagram?.descriptionEn || "").toLowerCase()} The changing line reveals a pivotal moment — the direction of events hinges on how you respond right now.`);
+    }
+
+    if (r.mutualHexagram) {
+      parts.push(`The mutual hexagram (互卦) is ${r.mutualHexagram.nameZh} (${mutualLocalName || r.mutualHexagram.nameEn}), which reveals the inner dynamics at play behind the surface situation. Understanding these hidden forces helps you navigate the visible challenges with deeper wisdom.`);
+    }
+
+    const adviceRaw = localAdvice || main.advice;
+    parts.push(`The I Ching's counsel for today is clear: ${adviceRaw.replace(/^[⚖️☀️⚠️]+\s*Verdict: [^—]+—\s*/, "")}`);
+
+    parts.push(`Whether you are facing decisions about ${guide.lifeAreas}, or simply seeking daily guidance, this hexagram invites you to embody ${guide.theme} in your thoughts and actions. The ancient Chinese believed that heaven, earth, and humanity form a single interconnected system — your choices today ripple through this web. Use this reading as a mirror, not a map. It reflects your current situation and suggests the wisest path forward, but the steps you take are yours alone.`);
   }
-
-  // If there's a mutual hexagram (inner dynamics)
-  if (r.mutualHexagram) {
-    parts.push(`The mutual hexagram (互卦) is ${r.mutualHexagram.nameZh} (${mutualLocalName || r.mutualHexagram.nameEn}), which reveals the inner dynamics at play behind the surface situation. Understanding these hidden forces helps you navigate the visible challenges with deeper wisdom.`);
-  }
-
-  // The advice — synthesized guidance
-  const adviceRaw = localAdvice || main.advice;
-  parts.push(`The I Ching's counsel for today is clear: ${adviceRaw.replace(/^[⚖️☀️⚠️]+\s*Verdict: [^—]+—\s*/, "")}`);
-
-  // Closing — how to use the reading
-  parts.push(`Whether you are facing decisions about ${guide.lifeAreas}, or simply seeking daily guidance, this hexagram invites you to embody ${guide.theme} in your thoughts and actions. The ancient Chinese believed that heaven, earth, and humanity form a single interconnected system — your choices today ripple through this web. Use this reading as a mirror, not a map. It reflects your current situation and suggests the wisest path forward, but the steps you take are yours alone.`);
 
   return parts.join("\n\n");
-}
-
-function ordinal(n: number): string {
-  if (n === 1) return "first";
-  if (n === 2) return "second";
-  if (n === 3) return "third";
-  if (n === 4) return "fourth";
-  if (n === 5) return "fifth";
-  return "sixth";
 }
