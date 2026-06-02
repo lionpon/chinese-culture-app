@@ -10,7 +10,7 @@ import type { NamingInput, CalendarInput, DivinationInput } from "@/types";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { type, input, free, method = "lemon" } = body as { type: string; input: Record<string, unknown>; free?: boolean; method?: "paypal" | "lemon" };
+    const { type, input, free, method = "paypal" } = body as { type: string; input: Record<string, unknown>; free?: boolean; method?: "paypal" | "lemon" };
 
     if (!["naming", "calendar", "divination", "palm-reading"].includes(type)) {
       return NextResponse.json({ error: "Invalid request type" }, { status: 400 });
