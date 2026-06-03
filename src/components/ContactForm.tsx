@@ -17,7 +17,6 @@ export default function ContactForm() {
     const email = (form.elements.namedItem("email") as HTMLInputElement).value.trim();
     const message = (form.elements.namedItem("message") as HTMLTextAreaElement).value.trim();
 
-    // Client-side validation
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       setStatus("error");
       setErrorMsg("Please enter a valid email address.");
@@ -55,58 +54,44 @@ export default function ContactForm() {
 
   if (status === "success") {
     return (
-      <section className="py-16 px-4 max-w-2xl mx-auto text-center">
-        <div className="bg-green-50 border border-green-200 rounded-2xl p-8">
-          <div className="text-4xl mb-3">&#10003;</div>
-          <h3 className="text-lg font-semibold text-green-800 mb-2">{t("success")}</h3>
-        </div>
+      <section className="py-8 px-4 max-w-md mx-auto text-center">
+        <p className="text-sm text-green-600">{t("success")}</p>
       </section>
     );
   }
 
   return (
-    <section className="py-16 px-4 max-w-2xl mx-auto">
-      <div className="text-center mb-8">
-        <h2 className="text-2xl sm:text-3xl font-bold text-stone-800 mb-3">{t("title")}</h2>
-        <p className="text-stone-500">{t("description")}</p>
-      </div>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label htmlFor="contact-email" className="block text-sm font-medium text-stone-700 mb-1">
-            {t("email")}
-          </label>
+    <section className="py-8 px-4 max-w-md mx-auto">
+      <h2 className="text-sm font-medium text-stone-400 text-center mb-4">{t("title")}</h2>
+      <form onSubmit={handleSubmit} className="space-y-2">
+        <div className="flex gap-2">
           <input
             id="contact-email"
             name="email"
             type="email"
             required
             placeholder={t("emailPlaceholder")}
-            className="w-full px-4 py-2.5 border border-stone-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent text-stone-800"
+            className="flex-1 px-3 py-1.5 text-sm border border-stone-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-amber-400 text-stone-700 placeholder:text-stone-300"
           />
+          <button
+            type="submit"
+            disabled={status === "loading"}
+            className="px-4 py-1.5 text-sm bg-stone-100 hover:bg-stone-200 disabled:bg-stone-50 text-stone-500 font-medium rounded-lg transition-colors shrink-0"
+          >
+            {status === "loading" ? t("sending") : t("submit")}
+          </button>
         </div>
-        <div>
-          <label htmlFor="contact-message" className="block text-sm font-medium text-stone-700 mb-1">
-            {t("message")}
-          </label>
-          <textarea
-            id="contact-message"
-            name="message"
-            required
-            rows={4}
-            placeholder={t("messagePlaceholder")}
-            className="w-full px-4 py-2.5 border border-stone-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent text-stone-800 resize-y"
-          />
-        </div>
+        <textarea
+          id="contact-message"
+          name="message"
+          required
+          rows={2}
+          placeholder={t("messagePlaceholder")}
+          className="w-full px-3 py-1.5 text-sm border border-stone-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-amber-400 text-stone-700 placeholder:text-stone-300 resize-none"
+        />
         {status === "error" && errorMsg && (
-          <p className="text-red-600 text-sm">{errorMsg}</p>
+          <p className="text-red-500 text-xs">{errorMsg}</p>
         )}
-        <button
-          type="submit"
-          disabled={status === "loading"}
-          className="w-full py-3 bg-amber-500 hover:bg-amber-600 disabled:bg-amber-300 text-white font-medium rounded-xl transition-colors"
-        >
-          {status === "loading" ? t("sending") : t("submit")}
-        </button>
       </form>
     </section>
   );
