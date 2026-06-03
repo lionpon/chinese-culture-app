@@ -34,7 +34,7 @@ export default function DailyHexagram() {
 
   const { mainHexagram } = data;
   const localizedAdvice =
-    locale === "ja" ? mainHexagram.adviceJa
+    locale === "ja" || locale === "ko" ? mainHexagram.adviceJa
     : locale === "ru" ? mainHexagram.adviceRu
     : mainHexagram.advice;
   const advice = localizedAdvice || mainHexagram.advice;
@@ -44,7 +44,7 @@ export default function DailyHexagram() {
       : advice;
 
   const localizedName =
-    locale === "ja" ? mainHexagram.nameJa
+    locale === "ja" || locale === "ko" ? mainHexagram.nameJa
     : locale === "ru" ? mainHexagram.nameRu
     : mainHexagram.nameEn;
 
