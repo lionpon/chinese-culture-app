@@ -22,6 +22,10 @@ const ENGINES: { name: string; url: string; method?: string; body?: string }[] =
       urlList: buildIndexNowUrls(),
     }),
   },
+  {
+    name: "Naver",
+    url: `https://apis.naver.com/searchadvisor/ping?sitemap=${encodeURIComponent(SITEMAP_URL)}`,
+  },
 ];
 
 function buildIndexNowUrls(): string[] {

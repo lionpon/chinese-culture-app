@@ -15,11 +15,12 @@ export default async function AutoDailyReport() {
   if (!existed) {
     pingSitemaps().catch(() => {});
 
-    // Auto-post daily hexagram to Telegram (EN + RU)
+    // Auto-post daily hexagram to Telegram (all 4 locales)
     const secret = process.env.TELEGRAM_POST_SECRET;
     if (secret) {
-      fetch(`${BASE_URL}/api/telegram-post?token=${secret}`).catch(() => {});
-      fetch(`${BASE_URL}/api/telegram-post?token=${secret}&lang=ru`).catch(() => {});
+      for (const lang of ["en", "ru", "ja", "ko"]) {
+        fetch(`${BASE_URL}/api/telegram-post?token=${secret}&lang=${lang}`).catch(() => {});
+      }
     }
   }
 
