@@ -111,23 +111,25 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState("");
   const [authError, setAuthError] = useState(false);
+  const [locale, setLocale] = useState("all");
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const t = params.get("token") || "";
     setToken(t);
-    if (t) fetchData(t);
+    if (t) fetchData(t, "all");
     else { setLoading(false); setAuthError(true); }
   }, []);
 
-  async function fetchData(t: string) {
+  async function fetchData(t: string, loc: string) {
     setLoading(true);
     setAuthError(false);
     try {
+      const localeParam = loc !== "all" ? `&locale=${loc}` : "";
       const todayStr = new Date().toISOString().slice(0, 10);
       const [todayRes, reportsRes] = await Promise.all([
-        fetch(`/api/report?token=${t}&date=${todayStr}`),
-        fetch(`/api/report?token=${t}&days=7`),
+        fetch(`/api/report?token=${t}&date=${todayStr}${localeParam}`),
+        fetch(`/api/report?token=${t}&days=7${localeParam}`),
       ]);
       if (todayRes.status === 401 || reportsRes.status === 401) {
         setAuthError(true);
@@ -159,13 +161,35 @@ export default function AdminDashboard() {
             placeholder="Admin token"
             value={token}
             onChange={(e) => { setToken(e.target.value); setAuthError(false); }}
-            onKeyDown={(e) => e.key === "Enter" && fetchData(token)}
+            onKeyDown={(e) => e.key === "Enter" && fetchData(token, locale)}
             className="px-3 py-1.5 text-sm border border-stone-300 rounded-lg w-48"
           />
-          <button onClick={() => fetchData(token)} className="px-4 py-2 rounded-lg text-sm btn-primary">
+          <button onClick={() => fetchData(token, locale)} className="px-4 py-2 rounded-lg text-sm btn-primary">
             Refresh
           </button>
         </div>
+      </div>
+
+      {/* Locale filter */}
+      <div className="flex gap-2 mb-6">
+        {[
+          ["all", "All"],
+          ["en", "EN"],
+          ["ru", "RU"],
+          ["ja", "JA"],
+        ].map(([val, label]) => (
+          <button
+            key={val}
+            onClick={() => { setLocale(val); fetchData(token, val); }}
+            className={`px-3 py-1 text-sm rounded-lg transition-colors ${
+              locale === val
+                ? "bg-amber-500 text-white"
+                : "bg-stone-100 text-stone-600 hover:bg-stone-200"
+            }`}
+          >
+            {label}
+          </button>
+        ))}
       </div>
 
       {authError && (

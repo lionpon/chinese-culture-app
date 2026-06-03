@@ -13,7 +13,7 @@ export interface ReportData {
   freeTrialsByType: Record<string, number>;
 }
 
-export async function generateReport(date: string): Promise<ReportData> {
+export async function generateReport(date: string, locale?: string): Promise<ReportData> {
   const dayStart = new Date(date + "T00:00:00.000Z");
   const dayEnd = new Date(date + "T23:59:59.999Z");
 
@@ -37,10 +37,19 @@ export async function generateReport(date: string): Promise<ReportData> {
     }),
   ]);
 
+  // Filter by locale
+  let filtered = visits;
+  if (locale === "ru") filtered = visits.filter(v => v.page.startsWith("/ru/") || v.page === "/ru");
+  else if (locale === "ja") filtered = visits.filter(v => v.page.startsWith("/ja/") || v.page === "/ja");
+  else if (locale === "en") filtered = visits.filter(v =>
+    !v.page.startsWith("/ru/") && v.page !== "/ru" &&
+    !v.page.startsWith("/ja/") && v.page !== "/ja"
+  );
+
   const countries: Record<string, number> = {};
   const cities: Record<string, number> = {};
   const pages: Record<string, number> = {};
-  for (const v of visits) {
+  for (const v of filtered) {
     if (v.page.startsWith("/admin") || v.page.startsWith("/ru/admin")) continue;
     countries[v.country] = (countries[v.country] || 0) + 1;
     const cityKey = [v.city, v.region, v.country].filter(Boolean).join(", ");
@@ -68,14 +77,14 @@ export async function generateReport(date: string): Promise<ReportData> {
   await prisma.dailyReport.upsert({
     where: { date },
     update: {
-      visits: visits.length,
+      visits: filtered.length,
       uniqueCountries: Object.keys(countries).length,
       revenue,
       details: JSON.stringify({ countries, cities, pages, byType, freeTrials, freeTrialsByType }),
     },
     create: {
       date,
-      visits: visits.length,
+      visits: filtered.length,
       uniqueCountries: Object.keys(countries).length,
       revenue,
       details: JSON.stringify({ countries, cities, pages, byType, freeTrials, freeTrialsByType }),
@@ -84,7 +93,7 @@ export async function generateReport(date: string): Promise<ReportData> {
 
   return {
     date,
-    visits: visits.length,
+    visits: filtered.length,
     uniqueCountries: Object.keys(countries).length,
     revenue,
     countries,
@@ -96,7 +105,19 @@ export async function generateReport(date: string): Promise<ReportData> {
   };
 }
 
-export async function getReports(days: number = 7): Promise<ReportData[]> {
+export async function getReports(days: number = 7, locale?: string): Promise<ReportData[]> {
+  // When locale filter is active, generate on-the-fly per day (bypasses cache)
+  if (locale) {
+    const results: ReportData[] = [];
+    for (let i = 0; i < days; i++) {
+      const d = new Date();
+      d.setDate(d.getDate() - i);
+      const date = d.toISOString().slice(0, 10);
+      results.push(await generateReport(date, locale));
+    }
+    return results;
+  }
+
   const reports = await prisma.dailyReport.findMany({
     orderBy: { date: "desc" },
     take: days,

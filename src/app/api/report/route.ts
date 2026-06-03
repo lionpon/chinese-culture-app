@@ -15,18 +15,17 @@ export async function GET(req: NextRequest) {
   const { searchParams } = req.nextUrl;
   const date = searchParams.get("date");
   const days = parseInt(searchParams.get("days") || "7");
+  const locale = searchParams.get("locale") || undefined;
 
   if (date) {
-    // Auto-generate if not exists, then return
-    const report = await generateReport(date);
+    const report = await generateReport(date, locale);
     return NextResponse.json(report);
   }
 
-  // Auto-generate today's report first, then return recent days
   const today = new Date().toISOString().slice(0, 10);
   await generateReport(today);
 
-  const reports = await getReports(days);
+  const reports = await getReports(days, locale);
   return NextResponse.json(reports);
 }
 
