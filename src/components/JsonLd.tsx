@@ -15,7 +15,7 @@ export default function JsonLd() {
       "@type": "WebSite",
       name: "Chinese Culture Studio",
       url: BASE_URL,
-      inLanguage: ["en", "ru", "ja"],
+      inLanguage: ["en", "ru", "ja", "ko"],
       potentialAction: {
         "@type": "SearchAction",
         target: `${BASE_URL}/divination`,

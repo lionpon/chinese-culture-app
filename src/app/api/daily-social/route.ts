@@ -17,6 +17,7 @@ function getTodayNumbers(): [number, number, number] {
 const HASHTAGS_EN = "#IChing #DailyHexagram #ChineseWisdom #BookOfChanges #Divination";
 const HASHTAGS_RU = "#ИЦзин #КнигаПеремен #КитайскаяМудрость #Гадание #ГексаграммаДня";
 const HASHTAGS_JA = "#易経 #今日の卦 #中国の知恵 #易占い #陰陽五行";
+const HASHTAGS_KO = "#주역 #오늘의괘 #중국의지혜 #역경 #점술";
 
 export async function GET() {
   const hex = getTodayNumbers();
@@ -69,8 +70,22 @@ export async function GET() {
     }---\n\n今日の卦は Chinese Culture Studio の易経占いツールからお届けします。あなた自身の質問で試してみてください: ${SITE_URL}/ja/divination\n\n今日の卦はあなたの状況にどう響きますか？コメントで共有してください。`,
   };
 
+  const ko = {
+    twitter: `오늘의 주역: ${h.nameZh} (${h.pinyin}) — ${h.nameJa || h.nameEn}\n\n${adviceBrief}\n\n당신도 점쳐보기: ${SITE_URL}/ko/divination\n\n${HASHTAGS_KO}`,
+    telegram: `☯️ 오늘의 주역: ${h.nameZh} — ${h.nameJa || h.nameEn} (${h.pinyin})\n\n${h.judgmentJa || h.judgmentEn}\n\n${adviceBrief}\n\n${
+      ch && ch.id !== h.id
+        ? `괘가 다음으로 변화하고 있습니다: ${ch.nameZh} — ${ch.nameJa || ch.nameEn}\n\n`
+        : ""
+    }당신의 괘를 세우기: ${SITE_URL}/ko/divination\n\n${HASHTAGS_KO}`,
+    reddit: `☯️ 오늘의 주역 — ${h.nameZh} (${h.nameJa || h.nameEn}) [r/iching]\n\n**판단:** ${h.judgmentJa || h.judgmentEn}\n\n**조언:** ${adviceBrief}\n\n${
+      ch && ch.id !== h.id
+        ? `**변화:** ${ch.nameZh} — ${ch.nameJa || ch.nameEn}\n\n`
+        : ""
+    }---\n\n오늘의 괘는 Chinese Culture Studio 의 주역 점술 도구에서 제공합니다. 당신의 질문으로 직접 시도해 보세요: ${SITE_URL}/ko/divination\n\n오늘의 괘가 당신의 상황에 어떻게 다가옵니까? 댓글로 공유해 주세요.`,
+  };
+
   return Response.json(
-    { date: new Date().toISOString().slice(0, 10), hexagram: result, posts: { en, ru, ja } },
+    { date: new Date().toISOString().slice(0, 10), hexagram: result, posts: { en, ru, ja, ko } },
     { headers: { "Cache-Control": "public, max-age=3600, s-maxage=3600" } }
   );
 }

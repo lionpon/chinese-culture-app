@@ -1,0 +1,534 @@
+{
+  "common": {
+    "siteName": "Chinese Culture Studio",
+    "nav": {
+      "name": "이름",
+      "dates": "길일",
+      "iching": "주역",
+      "palmReading": "수상",
+      "createName": "중국식 이름 짓기",
+      "dateSelection": "길일 선택",
+      "ichingDivination": "주역 점술",
+      "palmMenu": "수상 보기"
+    },
+    "footer": {
+      "disclaimer": "문화 체험 및 오락 목적으로만 제공됩니다. 전문적인 조언이 아닙니다.",
+      "paymentNote": "결제는 앱 유지 관리를 위한 자발적 후원금이며 서비스 구매가 아닙니다.",
+      "guides": {
+        "chineseName": "중국식 이름 가이드",
+        "iching": "주역 가이드",
+        "auspiciousDates": "길일 가이드"
+      },
+      "terms": "이용약관",
+      "privacy": "개인정보처리방침",
+      "copyright": "2026 Chinese Culture Studio"
+    },
+    "share": {
+      "button": "공유",
+      "tooltip": "이 사이트 공유하기",
+      "text": "Chinese Culture Studio — 주역 점술, 중국식 이름 & 길일 선택",
+      "title": "Chinese Culture Studio",
+      "copied": "복사됨!"
+    },
+    "cookie": {
+      "text": "이 사이트는 무료 체험 추적 및 분석을 위해 필수 쿠키와 로컬 스토리지를 사용합니다. \"동의\"를 클릭하면 이에 동의하는 것입니다. 자세한 내용은 개인정보처리방침을 참조하세요.",
+      "privacyLink": "개인정보처리방침",
+      "essentialOnly": "필수만 허용",
+      "acceptAll": "모두 동의"
+    },
+    "submit": {
+      "processing": "처리 중...",
+      "free": "{label} — 무료",
+      "paid": "{label} · 후원 ${amount}",
+      "helper": "후원금은 서비스 유지에 도움이 됩니다"
+    },
+    "amount": {
+      "label": "후원 금액 (USD)",
+      "custom": "직접 입력",
+      "placeholder": "금액",
+      "helper": "후원금은 지속적인 개발, API 비용, 서버 유지 관리에 사용됩니다."
+    },
+    "speak": {
+      "listen": "듣기",
+      "tooltip": "발음 듣기"
+    },
+    "loading": "로딩 중...",
+    "freeTier": {
+      "two": "2회 무료 미리보기가 있습니다 — 체험해 보세요!",
+      "one": "1회 무료 미리보기가 남았습니다"
+    },
+    "toggleMenu": "네비게이션 메뉴 열기"
+  },
+  "home": {
+    "title": "Chinese Culture Studio",
+    "subtitle": "이름, 길일, 점술, 수상을 통해 고대 중국 고전의 지혜를 발견하세요",
+    "features": {
+      "naming": {
+        "title": "중국식 이름 짓기",
+        "desc": "오행과 주역 원리를 바탕으로 고전 문헌에서 출처한 정통 중국식 이름을 생성합니다."
+      },
+      "calendar": {
+        "title": "길일 선택",
+        "desc": "전통 역법을 사용하여 결혼, 비즈니스, 여행 등에 가장 좋은 날짜를 찾아드립니다."
+      },
+      "divination": {
+        "title": "주역 점술",
+        "desc": "고대 변화의 책에 질문하고 개인화된 괘상 해석과 명확한 지침을 받아보세요."
+      },
+      "palm": {
+        "title": "수상 보기",
+        "desc": "손바닥 사진을 업로드하면 《마의신상》 등 고전 문헌에 기반한 전통 수상 분석을 제공합니다."
+      }
+    },
+    "cta": {
+      "paid": "$1 후원하기 →",
+      "free": "무료 체험 가능 →"
+    },
+    "dailyHexagram": {
+      "heading": "무료 일일 운세",
+      "cta": "전체 주역 해석 받기 → $1",
+      "helper": "오늘의 괘는 매일 갱신됩니다. 개인 질문에 대한 해석을 원하시면 직접 점을 쳐보세요.",
+      "askOwn": "직접 점치기 →"
+    },
+    "privacy": "개인정보처리방침",
+    "terms": "이용약관"
+  },
+  "naming": {
+    "title": "중국식 이름 짓기",
+    "subtitle": "생년월일 정보와 중국 고전 문헌을 바탕으로",
+    "badge": "$1 후원",
+    "form": {
+      "firstName": "이름 (Given Name)",
+      "firstNamePlaceholder": "예: Michael, 안나",
+      "lastName": "성 (Family Name)",
+      "lastNamePlaceholder": "예: Smith, 김",
+      "gender": "성별",
+      "genderPlaceholder": "선택...",
+      "male": "남성",
+      "female": "여성",
+      "dob": "생년월일",
+      "year": "년",
+      "month": "월",
+      "day": "일",
+      "hour": "출생 시간 (0-23)",
+      "hourPlaceholder": "예: 오전 8시 → 8",
+      "hourHelper": "정확한 시간을 모르시면 대략적으로 입력하셔도 됩니다.",
+      "previewNote": "무료 미리보기 소진 후 후원 금액이 사용됩니다.",
+      "style": "이름 스타일",
+      "stylePlaceholder": "선택...",
+      "styleElegant": "우아하고 세련됨 · 典雅",
+      "styleGrand": "웅장하고 힘참 · 大气",
+      "styleFresh": "신선하고 자연스러움 · 清新",
+      "submit": "이름 생성",
+      "modeLabel": "무엇을 원하시나요?",
+      "modeCreate": "중국식 이름 만들기",
+      "modeAnalyze": "기존 이름 분석하기",
+      "firstNameAnalyze": "이름 (한자)",
+      "firstNameAnalyzePlaceholder": "예: 一郎, 法子",
+      "lastNameAnalyze": "성 (한자)",
+      "lastNameAnalyzePlaceholder": "예: 山本, 李",
+      "submitAnalyze": "이름 분석"
+    },
+    "example": {
+      "summary": "예시 결과 — 받으실 내용을 미리 확인하세요",
+      "meaning": "의미",
+      "elements": "오행",
+      "source": "출전",
+      "meaningText": "밝은 지혜의 숲",
+      "elementsText": "목 + 화",
+      "baziTitle": "사주 분석 (八字分析)",
+      "baziText": "당신의 일간은 甲木 (양목) — 강하고 정직하며 성장 지향적입니다. 희신: 수 + 목. 선택된 이름들은 일간을 생조하고 오행 구성을 조화롭게 합니다.",
+      "footer": "위 양식을 작성하여 개인화된 이름을 받아보세요. 무료 미리보기에서는 1개의 이름을 보여드리며, $1 후원 시 전체 사주 분석과 함께 5개의 이름을 모두 확인할 수 있습니다."
+    },
+    "meta": {
+      "title": "중국식 이름 짓기 | Chinese Culture Studio",
+      "description": "생년월일, 성별, 오행(五行)에 기반한 정통 중국식 이름을 생성합니다. 중국 고전 문헌 기반 AI 작명. 최소 $1 후원.",
+      "ogTitle": "중국식 이름 짓기 | Chinese Culture Studio",
+      "ogDescription": "생년월일, 성별, 오행에 기반한 정통 중국식 이름을 생성합니다. 원하는 만큼 후원하세요.",
+      "twitterTitle": "중국식 이름 짓기 | Chinese Culture Studio",
+      "twitterDescription": "오행 기반 AI 중국식 이름 생성. 원하는 만큼 후원하세요.",
+      "ogSub": "오행 + AI 작명"
+    }
+  },
+  "calendar": {
+    "title": "길일 선택",
+    "subtitle": "전통 중국 역법 원리를 바탕으로",
+    "badge": "$1 후원",
+    "form": {
+      "range": "날짜 범위",
+      "start": "시작",
+      "end": "종료",
+      "rangeHelper": "최대 90일 범위를 선택하시면 최상의 결과를 얻을 수 있습니다.",
+      "previewNote": "무료 미리보기 소진 후 후원 금액이 사용됩니다.",
+      "eventType": "이벤트 유형",
+      "eventPlaceholder": "이벤트 유형 선택...",
+      "submit": "길일 찾기"
+    },
+    "example": {
+      "summary": "예시 결과 — 받으실 내용을 미리 확인하세요",
+      "score": "점수: 92/100",
+      "suitableLabel": "적합 宜",
+      "unsuitableLabel": "부적합 忌",
+      "godsLabel": "길신",
+      "suitableItems": "결혼, 약혼",
+      "unsuitableItems": "소송, 장례",
+      "godsItems": "천덕, 월덕",
+      "footer": "위에서 이벤트 유형과 날짜 범위를 선택하세요. 무료 미리보기에서는 1개의 날짜를 보여드리며, $1 후원 시 길시와 함께 3개의 날짜를 모두 확인할 수 있습니다."
+    },
+    "events": {
+      "wedding": "결혼 · 嫁娶",
+      "engagement": "약혼 · 订婚",
+      "businessOpening": "개업 · 开市",
+      "travel": "여행 · 出行",
+      "movingHouse": "이사 · 搬家",
+      "signingContract": "계약 체결 · 签约",
+      "ancestralCeremony": "제사 · 祭祀",
+      "construction": "건축 · 修造",
+      "medicalTreatment": "치료 · 求医",
+      "funeral": "장례 · 安葬",
+      "education": "입학 · 入学",
+      "meeting": "모임 · 会友",
+      "renovation": "리모델링 · 装修"
+    },
+    "meta": {
+      "title": "길일 선택 | Chinese Culture Studio",
+      "description": "전통 중국 역법(통서)에 기반하여 결혼, 개업, 여행 등에 가장 좋은 날짜를 찾아드립니다. 최소 $1 후원.",
+      "ogTitle": "길일 선택 | Chinese Culture Studio",
+      "ogDescription": "전통 중국 역법에 기반한 길일 선택. 원하는 만큼 후원하세요.",
+      "twitterTitle": "길일 선택 | Chinese Culture Studio",
+      "twitterDescription": "중요한 인생 이벤트를 위한 전통 중국 역법 날짜 선택. 원하는 만큼 후원하세요.",
+      "ogSub": "전통 중국 역법"
+    }
+  },
+  "divination": {
+    "title": "주역 점술",
+    "subtitle": "고대 변화의 책에 질문하세요",
+    "badge": "$1 후원",
+    "form": {
+      "question": "질문 (선택 사항)",
+      "questionPlaceholder": "어떤 것에 대한 지침을 원하시나요?",
+      "method": "점술 방법",
+      "methodTime": "시간 기반 (时间)",
+      "methodRandom": "무작위 (随机)",
+      "methodManual": "수동 (手动)",
+      "numbers": "세 개의 숫자 (1-999)",
+      "firstNum": "첫 번째",
+      "secondNum": "두 번째",
+      "thirdNum": "세 번째",
+      "previewNote": "무료 미리보기 소진 후 후원 금액이 사용됩니다.",
+      "submit": "괘상 뽑기"
+    },
+    "example": {
+      "summary": "예시 결과 — 받으실 내용을 미리 확인하세요",
+      "guidance": "당신을 위한 지침",
+      "guidanceText": "☀️ 판정: 길 吉 — 과감하고 결단력 있는 행동이 필요한 때입니다. 지금 주도권을 잡으세요 — 프로젝트를 시작하고, 첫 걸음을 내딛고, 리더십을 발휘하세요. 당신의 추진력은 보상받을 것입니다.",
+      "judgmentTitle": "원문 판단 (卦辞)",
+      "judgmentText": "성공. 인내가 이롭다. 창조의 원리는 숭고한 성공을 이루며, 인내를 통해 더욱 번영한다.",
+      "footer": "위에서 직접 괘상을 뽑아보세요. 무료 미리보기에서는 핵심 해석을 보여드리며, $1 후원 시 변괘와 호괘를 함께 확인할 수 있습니다."
+    },
+    "meta": {
+      "title": "주역 점술 | Chinese Culture Studio",
+      "description": "고대 변화의 책(주역)에 질문하고 지침과 통찰을 얻으세요. 시간 기반, 무작위, 수동 동전 던지기 세 가지 방법. 최소 $1 후원.",
+      "ogTitle": "주역 점술 | Chinese Culture Studio",
+      "ogDescription": "고대 변화의 책에 질문하세요. 세 가지 점술 방법 제공. 원하는 만큼 후원하세요.",
+      "twitterTitle": "주역 점술 | Chinese Culture Studio",
+      "twitterDescription": "주역 점술 — 세 가지 방법, 즉시 결과 확인. 원하는 만큼 후원하세요.",
+      "ogSub": "변화의 책에 질문하세요"
+    }
+  },
+  "palm": {
+    "title": "수상 보기",
+    "subtitle": "손바닥 사진을 업로드하여 고전 중국 수상 분석을 받아보세요",
+    "badge": "$1 후원",
+    "form": {
+      "photo": "손바닥 사진 *",
+      "uploadText": "여기를 클릭하거나 사진을 드래그하세요",
+      "uploading": "업로드 중...",
+      "helperLines": "손금이 선명하게 보이도록 해주세요",
+      "helperHand": "전통적으로: 남성은 왼손(男左), 여성은 오른손(女右)을 제공합니다",
+      "whichHand": "어느 쪽 손인가요? *",
+      "handPlaceholder": "선택...",
+      "leftHand": "왼손 · 左手 (선천수 · 男左)",
+      "rightHand": "오른손 · 右手 (선천수 · 女右)",
+      "handHelper": "고전 수상학에서 주로 사용하는 손은 타고난 운명을 반영합니다: 남성은 왼손(男左), 여성은 오른손(女右)을 읽습니다. 다른 쪽 손은 후천적 변화를 보여줍니다.",
+      "gender": "성별 (선택 사항)",
+      "preferNot": "밝히지 않음",
+      "male": "남성",
+      "female": "여성",
+      "age": "연령대 (선택 사항)",
+      "under18": "18세 미만",
+      "age18_30": "18-30세",
+      "age30_50": "30-50세",
+      "age50plus": "50세 이상",
+      "question": "무엇을 알고 싶으신가요? (선택 사항)",
+      "questionPlaceholder": "예: 제 직업선은 무엇을 말해주나요?",
+      "consent": "본인은 손바닥 사진이 분석을 위해 처리되며 처리 후 즉시 삭제됨을 이해합니다. 이미지는 디스크에 저장되거나 제3자와 공유되지 않습니다.",
+      "consentLink": "개인정보처리방침",
+      "submit": "수상 분석하기",
+      "processing": "처리 중..."
+    },
+    "errors": {
+      "noImage": "이미지 파일을 선택해 주세요.",
+      "tooBig": "이미지는 8MB 이하여야 합니다.",
+      "uploadFailed": "업로드에 실패했습니다. 다시 시도해 주세요."
+    },
+    "meta": {
+      "title": "수상 보기 | Chinese Culture Studio",
+      "description": "손바닥 사진을 업로드하고 고전 중국 수상학에 기반한 AI 분석을 받아보세요. 이미지는 메모리에서만 처리되며 저장되지 않습니다. 최소 $1 후원.",
+      "ogTitle": "수상 보기 | Chinese Culture Studio",
+      "ogDescription": "고전 중국 수상학 기반 AI 수상 분석. 개인정보 보호 우선 — 이미지 저장 없음. 원하는 만큼 후원하세요.",
+      "twitterTitle": "수상 보기 | Chinese Culture Studio",
+      "twitterDescription": "중국 고전 문헌 기반 AI 수상. 제로 저장, 완전한 개인정보 보호. 원하는 만큼 후원하세요.",
+      "ogSub": "고전 중국 수상학 + AI"
+    }
+  },
+  "result": {
+    "naming": {
+      "title": "당신의 중국식 이름",
+      "meaning": "의미",
+      "elements": "오행",
+      "source": "출전",
+      "recommended": "추천 — 오행 프로필에 가장 잘 맞는 이름",
+      "baziAnalysis": "사주 분석"
+    },
+    "analyze": {
+      "title": "이름 분석",
+      "score": "적합성 점수",
+      "favorableElements": "희신",
+      "surnameElement": "성의 오행",
+      "givenNameElements": "이름의 오행",
+      "suggestion": "사주에 기반한 제안",
+      "suggestionNote": "같은 성, 더 조화로운 이름",
+      "matchExcellent": "매우 좋음",
+      "matchGood": "좋음",
+      "matchFair": "보통",
+      "matchPoor": "낮음"
+    },
+    "calendar": {
+      "title": "길일",
+      "score": "점수: {n}/100",
+      "stemsBranches": "천간지지",
+      "jianchu": "건제 / 성좌",
+      "suitable": "적합 宜",
+      "unsuitable": "부적합 忌",
+      "auspiciousGods": "길신",
+      "auspiciousHours": "길시 吉时",
+      "auspicious": "길함",
+      "inauspicious": "불길함"
+    },
+    "divination": {
+      "title": "주역 해석",
+      "guidance": "당신을 위한 지침",
+      "originalJudgment": "원문 판단 (卦辞)",
+      "interpretation": "해석",
+      "changedHexagram": "변괘 (变卦)",
+      "mutualHexagram": "호괘 (互卦)",
+      "changingLine": "동효 (动爻) — {n}번째 효"
+    },
+    "palm": {
+      "handType": "손 유형 · 五行手型",
+      "threeLines": "삼재문 · 三才纹",
+      "lifeLine": "생명선 · 地纹",
+      "headLine": "두뇌선 · 人纹",
+      "heartLine": "감정선 · 天纹",
+      "health": "건강 및 활력",
+      "wisdom": "지혜 및 직업",
+      "emotion": "감정 및 상태",
+      "excellent": "매우 좋음 上吉",
+      "good": "좋음 吉",
+      "fair": "보통 平",
+      "weak": "약함 弱",
+      "auxiliary": "보조선 · 辅助纹",
+      "fateLine": "운명선 · 玉柱纹",
+      "careerPath": "직업 경로",
+      "marriageLine": "결혼선 · 婚姻线",
+      "relationships": "인간관계",
+      "sunLine": "태양선 · 太阳线",
+      "successFame": "성공 및 명성",
+      "healthLine": "건강선 · 健康线",
+      "wellness": "웰니스",
+      "ninePalaces": "구궁 · 掌中九宫",
+      "overall": "종합 판단 · 综合判断",
+      "career": "직업 · 事业",
+      "love": "연애 · 感情",
+      "healthTitle": "건강 · 健康"
+    }
+  },
+  "guide": {
+    "chineseName": {
+      "title": "정통 중국식 이름 짓는 법",
+      "subtitle": "고전 문헌에서 현대 생활까지 — 중국식 작명의 고대 예술에 대한 가이드.",
+      "why": "중국식 이름이 중요한 이유",
+      "structure": "중국식 이름의 구조",
+      "methods": "중국식 이름 짓는 법: 5가지 고전적 방법",
+      "method1": "오행(五行) 균형 맞추기",
+      "method2": "사주(四柱) 분석",
+      "method3": "획수 수리학",
+      "method4": "소리와 리듬",
+      "method5": "시적·문학적 암시",
+      "mistakes": "피해야 할 흔한 실수",
+      "cta": "중국식 이름 만들기 → $1.00",
+      "disclaimer": "문화 체험 목적으로만 제공됩니다. 전문적인 조언이 아닙니다."
+    },
+    "iching": {
+      "title": "주역 점술: 초보자 가이드",
+      "subtitle": "동전 던지기부터 괘 해석까지 — 3,000년 된 변화의 책 이해하기.",
+      "what": "주역이란?",
+      "how": "주역 점술은 어떻게 작동하나요?",
+      "structure": "괘(卦)의 구조",
+      "bagua": "8괘 (八卦, 팔괘)",
+      "trigramName": "이름",
+      "trigramChinese": "한자",
+      "trigramNature": "자연",
+      "trigramSymbol": "상징",
+      "casting": "괘 뽑는 방법",
+      "interpretation": "해석 이해하기",
+      "cta": "주역 상담하기 → $1.00",
+      "disclaimer": "문화 체험 및 오락 목적으로만 제공됩니다. 전문적인 조언이 아닙니다."
+    },
+    "auspiciousDates": {
+      "title": "길일 선택 방법: 중국 달력 가이드",
+      "subtitle": "결혼식부터 사업 개시까지 — 길한 날짜를 선택하는 기술을 마스터하세요.",
+      "why": "중국 문화에서 날짜가 중요한 이유",
+      "what": "무엇이 날짜를 길하게 만드나요?",
+      "element1": "천간과 지지",
+      "element2": "건제(建除) 십이일 직성",
+      "element3": "길성과 흉성",
+      "element4": "개인 띠와의 충돌",
+      "common": "주요 이벤트별 좋은 날짜",
+      "cta": "길일 찾기 → $1.00",
+      "disclaimer": "문화 체험 목적으로만 제공됩니다. 전문적인 조언이 아닙니다."
+    }
+  },
+  "success": {
+    "preparing": "해석을 준비 중입니다...",
+    "freeReady": "무료 해석이 준비되었습니다.",
+    "paidPreparing": "결제 확인됨. 해석을 준비 중입니다...",
+    "waitSubtitle": "보통 몇 초 정도 소요됩니다.",
+    "missingId": "참조 ID가 누락되었습니다. 다시 시도해 주세요.",
+    "timeoutTitle": "처리 중",
+    "timeoutBody": "결제가 확인되었으나 결과 준비에 예상보다 시간이 걸리고 있습니다.",
+    "timeoutDetail": "PayPal 알림이 지연될 때 발생할 수 있습니다. 결제와 해석은 안전합니다.",
+    "reference": "참조: {id}",
+    "checkAgain": "다시 확인",
+    "backHome": "홈으로 돌아가기",
+    "timeoutFooter": "10분 이내에 결과가 나타나지 않으면 참조 ID와 함께 지원팀에 문의해 주세요.",
+    "failedTitle": "문제가 발생했습니다",
+    "failedBody": "처리에 실패했습니다. 후원금은 안전합니다 — 지원팀에 문의해 주세요.",
+    "returnHome": "홈으로 돌아가기",
+    "freeBanner": "무료 이용 {n}회 남음",
+    "freeLast": "마지막 무료 해석입니다",
+    "freeText": "각 개인화된 해석은 고전 문헌과 전통적 방법에 기반한 연산이 필요합니다. 이후 해석은 $1 후원으로 이용하실 수 있습니다.",
+    "anotherName": "다른 이름 만들기",
+    "anotherDate": "다른 날짜 찾기",
+    "anotherHexagram": "다른 괘 뽑기",
+    "anotherPalm": "다른 손 보기",
+    "unlockTitle": "이것은 미리보기입니다. 전체 결과를 확인하세요:",
+    "unlockNaming1": "상세한 의미가 담긴 4개의 추가 이름 옵션",
+    "unlockNaming2": "오행 프로필의 전체 사주 분석",
+    "unlockDivination1": "변괘 및 호괘 (전체 그림)",
+    "unlockDivination2": "동효 해석 및 구체적 조언",
+    "unlockCalendar1": "점수가 매겨진 2개의 추가 길일",
+    "unlockCalendar2": "각 날짜별 길시와 길신",
+    "unlockNow": "전체 결과 확인하기 — $1부터"
+  },
+  "legal": {
+    "privacy": {
+      "title": "개인정보처리방침",
+      "lastUpdated": "최종 업데이트: 2026년 5월 26일",
+      "section1": "1. 운영자 정보",
+      "section2": "2. 수집하는 데이터",
+      "section3": "3. 손바닥 이미지 처리",
+      "section3a": "3a. 손바닥 이미지 처리",
+      "section4": "4. 결제 처리",
+      "section5": "5. 쿠키 및 로컬 스토리지",
+      "section6": "6. 데이터 보관",
+      "section7": "7. 사용자의 권리 (GDPR)",
+      "section8": "8. 데이터 공유 및 제3자",
+      "section9": "9. 국제 데이터 이전",
+      "section10": "10. 보안",
+      "section11": "11. 아동 개인정보 보호",
+      "section12": "12. 본 방침의 변경",
+      "section13": "13. 문의하기",
+      "contactEmail": "privacy@easternwisdom.app"
+    },
+    "terms": {
+      "title": "이용약관",
+      "lastUpdated": "최종 업데이트: 2026년 5월",
+      "section1": "1. 서비스의 성격",
+      "section2": "2. 보증 없음",
+      "section3": "3. 결제 및 후원",
+      "section4": "4. 생체 데이터 동의",
+      "section5": "5. 개인정보",
+      "section6": "6. 연령 제한",
+      "section7": "7. 지식 재산권",
+      "section8": "8. 책임의 제한",
+      "section9": "9. 변경",
+      "section10": "10. 문의",
+      "contactEmail": "support@easternwisdom.app"
+    }
+  },
+  "admin": {
+    "title": "Chinese Culture Studio — 관리자",
+    "subtitle": "분석 및 일일 리포트 — 방문 시 자동 생성",
+    "refresh": "데이터 새로고침",
+    "visitsToday": "오늘 방문",
+    "countriesToday": "오늘 국가",
+    "revenueToday": "오늘 수익",
+    "freeTrialsToday": "오늘 무료 체험",
+    "visits7Day": "7일 방문",
+    "trend7": "7일 추세",
+    "countries7": "국가별 분포 (7일)",
+    "pagesToday": "오늘 페이지 방문",
+    "revenueService": "서비스별 수익",
+    "noReport": "아직 데이터가 없습니다. 오늘의 리포트를 생성하세요.",
+    "noData": "아직 데이터가 없습니다.",
+    "noPurchases": "오늘 구매가 없습니다.",
+    "freeTrialsTrend7": "7일 무료 체험 추세",
+    "tableDate": "날짜",
+    "tableVisits": "방문",
+    "tableTrials": "체험",
+    "tableCountries": "국가",
+    "tableRevenue": "수익",
+    "footer": "관리자 대시보드 — 토큰으로 보호됩니다. 환경 변수에 ADMIN_TOKEN을 설정하세요.",
+    "freeToday": "오늘의 무료 체험 분포",
+    "total": "합계",
+    "noFreeToday": "오늘 무료 체험 없음",
+    "sevenDays": "7일",
+    "noData7d": "데이터 없음",
+    "total7": "7일 합계",
+    "detail7": "7일 요약 상세",
+    "naming": "작명",
+    "calendar": "길일 선택",
+    "divination": "점술",
+    "palm": "수상"
+  },
+  "payment": {
+    "name": "Chinese Culture Studio 후원 — 작명",
+    "date": "Chinese Culture Studio 후원 — 길일 선택",
+    "iching": "Chinese Culture Studio 후원 — 주역 해석",
+    "palm": "Chinese Culture Studio 후원 — 수상",
+    "error": "문제가 발생했습니다",
+    "failed": "실패했습니다. 다시 시도해 주세요.",
+    "returnApp": "앱으로 돌아가기",
+    "thankYou": "Chinese Culture Studio를 후원해 주셔서 감사합니다!"
+  },
+  "languageSwitcher": {
+    "en": "English",
+    "ru": "Русский",
+    "ja": "日本語",
+    "ko": "한국어"
+  },
+  "contact": {
+    "title": "문의하기",
+    "description": "질문이나 피드백이 있으신가요? 언제든지 연락 주세요.",
+    "email": "이메일",
+    "emailPlaceholder": "you@example.com",
+    "message": "메시지",
+    "messagePlaceholder": "하고 싶은 말을 적어주세요...",
+    "submit": "보내기",
+    "sending": "보내는 중...",
+    "success": "메시지가 전송되었습니다! 곧 답변 드리겠습니다.",
+    "error": "문제가 발생했습니다. 다시 시도해 주세요."
+  }
+}

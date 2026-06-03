@@ -6,7 +6,8 @@ type Props = { params: { locale: string } };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const t = await getTranslations({ locale: params.locale, namespace: "palm" });
   const base = "https://chinese-culture-app.onrender.com";
-  const path = params.locale === "ru" ? "/ru/palm-reading" : "/palm-reading";
+  const path = params.locale === "en" ? "/palm-reading" : `/${params.locale}/palm-reading`;
+  const ogLocales: Record<string, string> = { en: "en_US", ru: "ru_RU", ja: "ja_JP", ko: "ko_KR" };
 
   return {
     title: t("meta.title"),
@@ -16,7 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: t("meta.ogDescription"),
       url: `${base}${path}`,
       siteName: "Chinese Culture Studio",
-      locale: params.locale === "ru" ? "ru_RU" : "en_US",
+      locale: ogLocales[params.locale] || "en_US",
       type: "website",
       images: [{ url: `${base}/api/og?title=${encodeURIComponent(t("meta.ogSub"))}&lang=${params.locale}`, width: 1200, height: 630 }],
     },

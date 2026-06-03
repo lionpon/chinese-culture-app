@@ -43,6 +43,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       twitterDesc: "古典テキストからのAI中国文化リーディング。中国命名、日付選択、易経、手相。お好きな金額で。",
       ogLocale: "ja_JP",
     },
+    ko: {
+      tagline: "중국식 이름, 길일, 주역 & 수상",
+      desc: "정통 중국식 이름을 발견하고, 길일을 찾고, 주역에 질문하거나, 고전 문헌에 기반한 수상 분석을 받아보세요. 원하는 만큼 후원하세요 (최소 $1).",
+      ogDesc: "AI 기반 중국 문화 리딩: 작명, 길일 선택, 주역 점술, 수상. 원하는 만큼 후원하세요.",
+      twitterDesc: "고전 문헌에 기반한 AI 중국 문화 리딩. 작명, 날짜 선택, 주역, 수상. 원하는 만큼 후원하세요.",
+      ogLocale: "ko_KR",
+    },
   };
 
   const meta = localeMeta[locale] || localeMeta.en;
@@ -73,6 +80,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         en: "https://chinese-culture-app.onrender.com",
         ru: "https://chinese-culture-app.onrender.com/ru",
         ja: "https://chinese-culture-app.onrender.com/ja",
+        ko: "https://chinese-culture-app.onrender.com/ko",
       },
       types: {
         "application/rss+xml": "https://chinese-culture-app.onrender.com/api/rss",
@@ -91,6 +99,7 @@ export default async function LocaleLayout({ children, params }: Props) {
     en: ["Chinese Name Guide", "Boy Names", "Girl Names", "I Ching Guide", "I Ching Beginner", "Auspicious Dates", "Wedding Dates 2026", "Chinese Zodiac", "Five Elements", "CNY 2027"],
     ru: ["Гид по Китайским Именам", "Мужские Имена", "Женские Имена", "Гид по И-Цзин", "И-Цзин для Начинающих", "Благоприятные Даты", "Свадебные Даты 2026", "Китайский Зодиак", "Пять Элементов", "КНГ 2027"],
     ja: ["中国名ガイド", "男性の名前", "女性の名前", "易経ガイド", "易経入門", "吉日", "2026年結婚日", "十二支", "五行", "旧正月2027"],
+    ko: ["중국식 이름 가이드", "남자 이름", "여자 이름", "주역 가이드", "주역 입문", "길일", "2026 결혼 날짜", "십이지", "오행", "2027 춘절"],
   };
 
   const guideSlugs = [

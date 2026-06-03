@@ -13,7 +13,12 @@ export default function GuideFaq({ faqs, lang }: { faqs: { q: string; a: string 
     })),
   };
 
-  const inLanguage = lang === "ru" ? "ru" : "en";
+  const inLanguage = lang === "ru" ? "ru" : lang === "ja" ? "ja" : lang === "ko" ? "ko" : "en";
+
+  const heading = lang === "ru" ? "Часто Задаваемые Вопросы" :
+    lang === "ja" ? "よくある質問" :
+    lang === "ko" ? "자주 묻는 질문" :
+    "Frequently Asked Questions";
 
   return (
     <>
@@ -24,9 +29,7 @@ export default function GuideFaq({ faqs, lang }: { faqs: { q: string; a: string 
         }}
       />
       <section className="card-classic p-4 sm:p-6 mt-8">
-        <h2 className="text-xl font-semibold text-stone-800 mb-4">
-          {lang === "ru" ? "Часто Задаваемые Вопросы" : "Frequently Asked Questions"}
-        </h2>
+        <h2 className="text-xl font-semibold text-stone-800 mb-4">{heading}</h2>
         <dl className="space-y-4">
           {faqs.map((faq, i) => (
             <div key={i}>

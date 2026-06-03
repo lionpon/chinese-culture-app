@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { isBadBot, checkRateLimit, checkCsrf } from "@/lib/security";
 
 const intlMiddleware = createMiddleware({
-  locales: ["en", "ru", "ja"],
+  locales: ["en", "ru", "ja", "ko"],
   defaultLocale,
   localePrefix: "as-needed",
 });

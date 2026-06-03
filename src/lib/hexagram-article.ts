@@ -117,6 +117,24 @@ const FRAME: Record<string, {
     closing: (desc) =>
       `${desc} Древние китайцы верили, что небо, земля и человечество образуют единую взаимосвязанную систему — ваш сегодняшний выбор отражается в этой сети. Используйте это чтение как зеркало, а не карту. Оно отражает вашу текущую ситуацию и предлагает мудрейший путь вперёд, но шаги, которые вы делаете — только ваши.`,
   },
+  ko: {
+    opening: (nameZh, pinyin, displayName, desc) =>
+      `오늘의 주역 괘는 ${nameZh}(${pinyin}), 한국어로는 "${displayName}"(으)로 알려져 있습니다. ${desc}`,
+    judgment: (localJudgment) =>
+      `이 괘의 고대 괘사는 이렇게 말합니다: "${localJudgment}" 수천 년 동안 전해져 온 이 지혜는 하늘과 땅의 이치가 우리의 일상 속에도 반영되어 있음을 가르쳐 줍니다.`,
+    judgmentNoLocale: (judgmentEn) =>
+      `이 괘의 고대 괘사는 이렇게 말합니다: "${judgmentEn}"`,
+    interpretation: (displayName, desc, advice) =>
+      `실제적인 의미에서, ${displayName}은(는) 우리에게 깊은 성찰을 촉구합니다. ${desc} 오늘의 실천 팁: ${advice}`,
+    changingLine: (nameZh, displayName, changedDesc, linePos) =>
+      `${linePos}효가 변화하여, 이 해석을 ${nameZh}(${displayName})(으)로 변환시킵니다. 이는 상황이 다음 방향으로 옮겨가고 있음을 보여줍니다: ${changedDesc} 이 변화효는 결정적인 순간을 나타냅니다 — 지금 어떻게 응답하느냐에 따라 일의 방향이 결정됩니다.`,
+    mutual: (nameZh, localName) =>
+      `호괘는 ${nameZh}(${localName})(으)로, 표면적 상황 뒤에 작용하는 내적 역학을 드러냅니다. 이 숨겨진 힘을 이해함으로써 눈에 보이는 과제를 더 깊은 지혜로 극복할 수 있습니다.`,
+    advice: (adviceRaw) =>
+      `오늘의 주역 조언은 분명합니다: ${adviceRaw.replace(/^[⚖️☀️⚠️]+\s*Verdict: [^—]+—\s*/, "")}`,
+    closing: (desc) =>
+      `${desc} 고대 중국의 선현들은 하늘과 땅과 사람이 하나로 연결된 시스템을 형성한다고 믿었습니다 — 오늘의 당신의 선택도 이 그물망을 통해 파급됩니다. 이 해석을 지도가 아닌 거울로 사용하세요. 그것은 당신의 현재 상황을 비추고 가장 현명한 나아갈 길을 제시하지만, 그 길로 내딛는 한 걸음은 오직 당신의 것입니다.`,
+  },
 };
 
 function ordinal(n: number): string {
@@ -132,6 +150,9 @@ function ordinalLocal(n: number, locale: string): string {
   if (locale === "ru") {
     return ["первая", "вторая", "третья", "четвёртая", "пятая", "шестая"][n - 1] || "шестая";
   }
+  if (locale === "ko") {
+    return ["첫째", "둘째", "셋째", "넷째", "다섯째", "여섯째"][n - 1] || "여섯째";
+  }
   return ordinal(n);
 }
 
@@ -139,23 +160,23 @@ export function generateHexagramArticle(r: DivinationResult, locale = "en"): str
   const main = r.mainHexagram;
   const id = main.id;
 
-  const localizedName = locale === "ja" ? hexagramNameJa[id] : locale === "ru" ? hexagramNameRu[id] : main.nameEn;
+  const localizedName = locale === "ja" || locale === "ko" ? hexagramNameJa[id] : locale === "ru" ? hexagramNameRu[id] : main.nameEn;
   const displayName = localizedName || main.nameEn;
-  const localJudgment = locale === "ja" ? judgmentJa[id] : locale === "ru" ? judgmentRu[id] : main.judgmentEn;
-  const localAdvice = locale === "ja" ? adviceJa[id] : locale === "ru" ? adviceRu[id] : main.advice;
-  const localDesc = locale === "ja" ? descriptionJa[id] : locale === "ru" ? descriptionRu[id] : main.descriptionEn;
+  const localJudgment = locale === "ja" || locale === "ko" ? judgmentJa[id] : locale === "ru" ? judgmentRu[id] : main.judgmentEn;
+  const localAdvice = locale === "ja" || locale === "ko" ? adviceJa[id] : locale === "ru" ? adviceRu[id] : main.advice;
+  const localDesc = locale === "ja" || locale === "ko" ? descriptionJa[id] : locale === "ru" ? descriptionRu[id] : main.descriptionEn;
 
   const changedId = r.changedHexagram?.id;
-  const changedLocalName = changedId ? (locale === "ja" ? hexagramNameJa[changedId] : locale === "ru" ? hexagramNameRu[changedId] : r.changedHexagram?.nameEn) : undefined;
+  const changedLocalName = changedId ? (locale === "ja" || locale === "ko" ? hexagramNameJa[changedId] : locale === "ru" ? hexagramNameRu[changedId] : r.changedHexagram?.nameEn) : undefined;
   const changedDisplayName = changedLocalName || r.changedHexagram?.nameEn;
-  const changedLocalDesc = changedId ? (locale === "ja" ? descriptionJa[changedId] : locale === "ru" ? descriptionRu[changedId] : r.changedHexagram?.descriptionEn) : undefined;
+  const changedLocalDesc = changedId ? (locale === "ja" || locale === "ko" ? descriptionJa[changedId] : locale === "ru" ? descriptionRu[changedId] : r.changedHexagram?.descriptionEn) : undefined;
 
   const mutualId = r.mutualHexagram?.id;
-  const mutualLocalName = mutualId ? (locale === "ja" ? hexagramNameJa[mutualId] : locale === "ru" ? hexagramNameRu[mutualId] : r.mutualHexagram?.nameEn) : undefined;
+  const mutualLocalName = mutualId ? (locale === "ja" || locale === "ko" ? hexagramNameJa[mutualId] : locale === "ru" ? hexagramNameRu[mutualId] : r.mutualHexagram?.nameEn) : undefined;
 
   const parts: string[] = [];
 
-  if (locale === "ja" || locale === "ru") {
+  if (locale === "ja" || locale === "ru" || locale === "ko") {
     const f = FRAME[locale];
 
     // Opening — use translated description for context

@@ -47,6 +47,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         en: `${baseUrl}${path}`,
         ru: `${baseUrl}/ru${path}`,
         ja: `${baseUrl}/ja${path}`,
+        ko: `${baseUrl}/ko${path}`,
       },
     },
   }));
@@ -62,6 +63,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         en: `${baseUrl}${path}`,
         ru: `${baseUrl}/ru${path}`,
         ja: `${baseUrl}/ja${path}`,
+        ko: `${baseUrl}/ko${path}`,
       },
     },
   }));
@@ -81,5 +83,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   }));
 
-  return [...enEntries, ...ruEntries, ...jaEntries];
+  // Korean URLs
+  const koEntries = allPages.map(({ path, priority, changeFreq }) => ({
+    url: `${baseUrl}/ko${path}`,
+    lastModified: new Date(),
+    changeFrequency: changeFreq,
+    priority: path === "" ? 0.9 : priority - 0.1,
+    alternates: {
+      languages: {
+        en: `${baseUrl}${path}`,
+        ru: `${baseUrl}/ru${path}`,
+        ja: `${baseUrl}/ja${path}`,
+        ko: `${baseUrl}/ko${path}`,
+      },
+    },
+  }));
+
+  return [...enEntries, ...ruEntries, ...jaEntries, ...koEntries];
 }

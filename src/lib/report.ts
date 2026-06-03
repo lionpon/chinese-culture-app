@@ -41,9 +41,11 @@ export async function generateReport(date: string, locale?: string): Promise<Rep
   let filtered = visits;
   if (locale === "ru") filtered = visits.filter(v => v.page.startsWith("/ru/") || v.page === "/ru");
   else if (locale === "ja") filtered = visits.filter(v => v.page.startsWith("/ja/") || v.page === "/ja");
+  else if (locale === "ko") filtered = visits.filter(v => v.page.startsWith("/ko/") || v.page === "/ko");
   else if (locale === "en") filtered = visits.filter(v =>
     !v.page.startsWith("/ru/") && v.page !== "/ru" &&
-    !v.page.startsWith("/ja/") && v.page !== "/ja"
+    !v.page.startsWith("/ja/") && v.page !== "/ja" &&
+    !v.page.startsWith("/ko/") && v.page !== "/ko"
   );
 
   const countries: Record<string, number> = {};

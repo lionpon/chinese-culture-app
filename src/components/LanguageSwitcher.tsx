@@ -42,6 +42,14 @@ export default function LanguageSwitcher() {
       >
         JA
       </button>
+      <span className="text-stone-300">|</span>
+      <button
+        onClick={() => switchTo("ko")}
+        className={`hover:text-stone-800 transition-colors ${locale === "ko" ? "text-stone-800 font-bold" : "text-stone-400"}`}
+        aria-label="한국어로 전환"
+      >
+        KO
+      </button>
     </span>
   );
 }

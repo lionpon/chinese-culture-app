@@ -47,6 +47,7 @@ function buildIndexNowUrls(): string[] {
     urls.push(`https://${HOST}${path}`);
     urls.push(`https://${HOST}/ru${path}`);
     urls.push(`https://${HOST}/ja${path}`);
+    urls.push(`https://${HOST}/ko${path}`);
   }
   return urls;
 }

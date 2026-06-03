@@ -177,6 +177,7 @@ export default function AdminDashboard() {
           ["en", "EN"],
           ["ru", "RU"],
           ["ja", "JA"],
+          ["ko", "KO"],
         ].map(([val, label]) => (
           <button
             key={val}
