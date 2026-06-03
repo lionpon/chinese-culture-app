@@ -124,12 +124,16 @@ export default function AdminDashboard() {
     setLoading(true);
     setAuthError(false);
     try {
-      const res = await fetch(`/api/report?token=${t}`, { method: "POST" });
-      if (res.status === 401) { setAuthError(true); setLoading(false); return; }
+      const todayStr = new Date().toISOString().slice(0, 10);
       const [todayRes, reportsRes] = await Promise.all([
-        fetch(`/api/report?token=${t}&date=${new Date().toISOString().slice(0, 10)}`),
+        fetch(`/api/report?token=${t}&date=${todayStr}`),
         fetch(`/api/report?token=${t}&days=7`),
       ]);
+      if (todayRes.status === 401 || reportsRes.status === 401) {
+        setAuthError(true);
+        setLoading(false);
+        return;
+      }
       if (todayRes.ok) setToday(await todayRes.json());
       if (reportsRes.ok) setReports(await reportsRes.json());
     } catch {}

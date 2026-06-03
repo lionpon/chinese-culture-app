@@ -17,9 +17,14 @@ export async function GET(req: NextRequest) {
   const days = parseInt(searchParams.get("days") || "7");
 
   if (date) {
+    // Auto-generate if not exists, then return
     const report = await generateReport(date);
     return NextResponse.json(report);
   }
+
+  // Auto-generate today's report first, then return recent days
+  const today = new Date().toISOString().slice(0, 10);
+  await generateReport(today);
 
   const reports = await getReports(days);
   return NextResponse.json(reports);
