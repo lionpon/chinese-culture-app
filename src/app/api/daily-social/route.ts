@@ -1,4 +1,9 @@
 import { performDivination } from "@/lib/divination";
+import { hexagramNameJa, hexagramNameRu } from "@/data/hexagram-names";
+import {
+  judgmentJa, judgmentRu,
+  adviceJa, adviceRu,
+} from "@/data/hexagram-content";
 
 const SITE_URL = "https://chinese-culture-app.onrender.com";
 
@@ -19,23 +24,54 @@ const HASHTAGS_RU = "#ИЦзин #КнигаПеремен #КитайскаяМ
 const HASHTAGS_JA = "#易経 #今日の卦 #中国の知恵 #易占い #陰陽五行";
 const HASHTAGS_KO = "#주역 #오늘의괘 #중국의지혜 #역경 #점술";
 
+function truncate(text: string, max: number): string {
+  return text.length > max
+    ? text.slice(0, max - 3).replace(/\s+\S*$/, "") + "..."
+    : text;
+}
+
 export async function GET() {
   const hex = getTodayNumbers();
   const result = performDivination({ method: "manual", numbers: hex });
-  const { mainHexagram: h, changedHexagram: ch } = result;
 
-  const adviceBrief = h.advice.length > 300
-    ? h.advice.slice(0, 297).replace(/\s+\S*$/, "") + "..."
-    : h.advice;
+  // Enrich with localized content
+  const id = result.mainHexagram.id;
+  result.mainHexagram = {
+    ...result.mainHexagram,
+    nameJa: hexagramNameJa[id] || result.mainHexagram.nameEn,
+    nameRu: hexagramNameRu[id] || result.mainHexagram.nameEn,
+    judgmentJa: judgmentJa[id] || "",
+    judgmentRu: judgmentRu[id] || "",
+    adviceJa: adviceJa[id] || "",
+    adviceRu: adviceRu[id] || "",
+  };
+
+  if (result.changedHexagram) {
+    const cid = result.changedHexagram.id;
+    result.changedHexagram = {
+      ...result.changedHexagram,
+      nameJa: hexagramNameJa[cid] || result.changedHexagram.nameEn,
+      nameRu: hexagramNameRu[cid] || result.changedHexagram.nameEn,
+      judgmentJa: judgmentJa[cid] || "",
+      judgmentRu: judgmentRu[cid] || "",
+    };
+  }
+
+  const h = result.mainHexagram;
+  const ch = result.changedHexagram;
+
+  const adviceBriefEn = truncate(h.advice, 300);
+  const adviceBriefRu = truncate(h.adviceRu || h.advice, 300);
+  const adviceBriefJa = truncate(h.adviceJa || h.advice, 300);
 
   const en = {
-    twitter: `Today's I Ching: ${h.nameZh} (${h.pinyin}) — ${h.nameEn}\n\n${adviceBrief}\n\nRead your own: ${SITE_URL}/divination\n\n${HASHTAGS_EN}`,
-    telegram: `☯️ Today's I Ching: ${h.nameZh} — ${h.nameEn} (${h.pinyin})\n\n${h.judgmentEn}\n\n${adviceBrief}\n\n${
+    twitter: `Today's I Ching: ${h.nameZh} (${h.pinyin}) — ${h.nameEn}\n\n${adviceBriefEn}\n\nRead your own: ${SITE_URL}/divination\n\n${HASHTAGS_EN}`,
+    telegram: `☯️ Today's I Ching: ${h.nameZh} — ${h.nameEn} (${h.pinyin})\n\n${h.judgmentEn}\n\n${adviceBriefEn}\n\n${
       ch && ch.id !== h.id
         ? `The hexagram is evolving toward: ${ch.nameZh} — ${ch.nameEn}\n\n`
         : ""
     }Cast your own hexagram: ${SITE_URL}/divination\n\n${HASHTAGS_EN}`,
-    reddit: `☯️ Daily I Ching — ${h.nameZh} (${h.nameEn}) [r/iching]\n\n**Judgment:** ${h.judgmentEn}\n\n**Advice:** ${adviceBrief}\n\n${
+    reddit: `☯️ Daily I Ching — ${h.nameZh} (${h.nameEn}) [r/iching]\n\n**Judgment:** ${h.judgmentEn}\n\n**Advice:** ${adviceBriefEn}\n\n${
       ch && ch.id !== h.id
         ? `**Evolving toward:** ${ch.nameZh} — ${ch.nameEn}\n\n`
         : ""
@@ -43,41 +79,42 @@ export async function GET() {
   };
 
   const ru = {
-    twitter: `И-Цзин дня: ${h.nameZh} (${h.pinyin}) — ${h.nameEn}\n\n${adviceBrief}\n\nПопробуйте сами: ${SITE_URL}/ru/divination\n\n${HASHTAGS_RU}`,
-    telegram: `☯️ И-Цзин дня: ${h.nameZh} — ${h.nameEn} (${h.pinyin})\n\n${h.judgmentEn}\n\n${adviceBrief}\n\n${
+    twitter: `И-Цзин дня: ${h.nameZh} (${h.pinyin}) — ${h.nameRu || h.nameEn}\n\n${adviceBriefRu}\n\nПопробуйте сами: ${SITE_URL}/ru/divination\n\n${HASHTAGS_RU}`,
+    telegram: `☯️ И-Цзин дня: ${h.nameZh} — ${h.nameRu || h.nameEn} (${h.pinyin})\n\n${h.judgmentRu || h.judgmentEn}\n\n${adviceBriefRu}\n\n${
       ch && ch.id !== h.id
-        ? `Гексаграмма развивается в: ${ch.nameZh} — ${ch.nameEn}\n\n`
+        ? `Гексаграмма развивается в: ${ch.nameZh} — ${ch.nameRu || ch.nameEn}\n\n`
         : ""
     }Задайте свой вопрос И-Цзин: ${SITE_URL}/ru/divination\n\n${HASHTAGS_RU}`,
-    reddit: `☯️ И-Цзин дня — ${h.nameZh} (${h.nameEn})\n\n**Суждение:** ${h.judgmentEn}\n\n**Совет:** ${adviceBrief}\n\n${
+    reddit: `☯️ И-Цзин дня — ${h.nameZh} (${h.nameRu || h.nameEn})\n\n**Суждение:** ${h.judgmentRu || h.judgmentEn}\n\n**Совет:** ${adviceBriefRu}\n\n${
       ch && ch.id !== h.id
-        ? `**Развитие к:** ${ch.nameZh} — ${ch.nameEn}\n\n`
+        ? `**Развитие к:** ${ch.nameZh} — ${ch.nameRu || ch.nameEn}\n\n`
         : ""
     }---\n\nЕжедневная гексаграмма от Chinese Culture Studio. Задайте свой вопрос: ${SITE_URL}/ru/divination`,
   };
 
   const ja = {
-    twitter: `今日の易経: ${h.nameZh} (${h.pinyin}) — ${h.nameJa || h.nameEn}\n\n${adviceBrief}\n\nあなたも占ってみる: ${SITE_URL}/ja/divination\n\n${HASHTAGS_JA}`,
-    telegram: `☯️ 今日の易経: ${h.nameZh} — ${h.nameJa || h.nameEn} (${h.pinyin})\n\n${h.judgmentJa || h.judgmentEn}\n\n${adviceBrief}\n\n${
+    twitter: `今日の易経: ${h.nameZh} (${h.pinyin}) — ${h.nameJa || h.nameEn}\n\n${adviceBriefJa}\n\nあなたも占ってみる: ${SITE_URL}/ja/divination\n\n${HASHTAGS_JA}`,
+    telegram: `☯️ 今日の易経: ${h.nameZh} — ${h.nameJa || h.nameEn} (${h.pinyin})\n\n${h.judgmentJa || h.judgmentEn}\n\n${adviceBriefJa}\n\n${
       ch && ch.id !== h.id
         ? `卦は次のように変化しています: ${ch.nameZh} — ${ch.nameJa || ch.nameEn}\n\n`
         : ""
     }あなたの卦を立てる: ${SITE_URL}/ja/divination\n\n${HASHTAGS_JA}`,
-    reddit: `☯️ 今日の易経 — ${h.nameZh} (${h.nameJa || h.nameEn}) [r/iching]\n\n**判断:** ${h.judgmentJa || h.judgmentEn}\n\n**アドバイス:** ${adviceBrief}\n\n${
+    reddit: `☯️ 今日の易経 — ${h.nameZh} (${h.nameJa || h.nameEn}) [r/iching]\n\n**判断:** ${h.judgmentJa || h.judgmentEn}\n\n**アドバイス:** ${adviceBriefJa}\n\n${
       ch && ch.id !== h.id
         ? `**変化:** ${ch.nameZh} — ${ch.nameJa || ch.nameEn}\n\n`
         : ""
     }---\n\n今日の卦は Chinese Culture Studio の易経占いツールからお届けします。あなた自身の質問で試してみてください: ${SITE_URL}/ja/divination\n\n今日の卦はあなたの状況にどう響きますか？コメントで共有してください。`,
   };
 
+  // ko uses ja data as content source (no independent Korean hexagram data)
   const ko = {
-    twitter: `오늘의 주역: ${h.nameZh} (${h.pinyin}) — ${h.nameJa || h.nameEn}\n\n${adviceBrief}\n\n당신도 점쳐보기: ${SITE_URL}/ko/divination\n\n${HASHTAGS_KO}`,
-    telegram: `☯️ 오늘의 주역: ${h.nameZh} — ${h.nameJa || h.nameEn} (${h.pinyin})\n\n${h.judgmentJa || h.judgmentEn}\n\n${adviceBrief}\n\n${
+    twitter: `오늘의 주역: ${h.nameZh} (${h.pinyin}) — ${h.nameJa || h.nameEn}\n\n${adviceBriefJa}\n\n당신도 점쳐보기: ${SITE_URL}/ko/divination\n\n${HASHTAGS_KO}`,
+    telegram: `☯️ 오늘의 주역: ${h.nameZh} — ${h.nameJa || h.nameEn} (${h.pinyin})\n\n${h.judgmentJa || h.judgmentEn}\n\n${adviceBriefJa}\n\n${
       ch && ch.id !== h.id
         ? `괘가 다음으로 변화하고 있습니다: ${ch.nameZh} — ${ch.nameJa || ch.nameEn}\n\n`
         : ""
     }당신의 괘를 세우기: ${SITE_URL}/ko/divination\n\n${HASHTAGS_KO}`,
-    reddit: `☯️ 오늘의 주역 — ${h.nameZh} (${h.nameJa || h.nameEn}) [r/iching]\n\n**판단:** ${h.judgmentJa || h.judgmentEn}\n\n**조언:** ${adviceBrief}\n\n${
+    reddit: `☯️ 오늘의 주역 — ${h.nameZh} (${h.nameJa || h.nameEn}) [r/iching]\n\n**판단:** ${h.judgmentJa || h.judgmentEn}\n\n**조언:** ${adviceBriefJa}\n\n${
       ch && ch.id !== h.id
         ? `**변화:** ${ch.nameZh} — ${ch.nameJa || ch.nameEn}\n\n`
         : ""
