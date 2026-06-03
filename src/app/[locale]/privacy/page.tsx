@@ -2,7 +2,7 @@ export default function PrivacyPage() {
   return (
     <div className="max-w-2xl mx-auto prose prose-sm prose-stone">
       <h1 className="text-2xl font-bold text-accent">Privacy Policy</h1>
-      <p className="text-xs text-stone-400">Last updated: 26 May 2026</p>
+      <p className="text-xs text-stone-400">Last updated: 3 June 2026</p>
 
       <h2>1. Who We Are</h2>
       <p>
@@ -12,7 +12,10 @@ export default function PrivacyPage() {
       </p>
       <p>
         For the purposes of the EU General Data Protection Regulation (GDPR), we act as the
-        <strong> Data Controller</strong>. Our hosting infrastructure is located in the United States
+        <strong> Data Controller</strong>. For users in Japan, this policy complies with the
+        <strong>Act on Protection of Personal Information (APPI)</strong>. For users in the Republic of Korea,
+        this policy complies with the <strong>Personal Information Protection Act (PIPA)</strong>.
+        Our hosting infrastructure is located in the United States
         (Render, Oregon) with database services (Neon, US-East).
       </p>
 
@@ -33,7 +36,8 @@ export default function PrivacyPage() {
       <h2>3a. Palm Image Processing (Biometric Data)</h2>
       <p>
         The Palm Reading service requires you to upload a photograph of your palm. Palm images may
-        be considered biometric data under certain privacy laws including GDPR Article 9 and the
+        be considered biometric data under certain privacy laws including GDPR Article 9,
+        Korea&apos;s PIPA Article 23 (Sensitive Information), and the
         Illinois Biometric Information Privacy Act (BIPA). We take the following measures:
       </p>
       <ul>
@@ -61,11 +65,13 @@ export default function PrivacyPage() {
         the image has already been deleted — there is nothing retained to revoke consent for.
       </p>
 
-      <h2>3. Legal Basis for Processing (GDPR)</h2>
+      <h2>3. Legal Basis for Processing</h2>
+      <p>Depending on your jurisdiction, we rely on the following legal bases:</p>
       <ul>
-        <li><strong>Performance of a Contract (Art. 6(1)(b)):</strong> Processing your input data to generate the service result you requested.</li>
-        <li><strong>Legitimate Interest (Art. 6(1)(f)):</strong> Basic visit analytics (page path, country) to understand service usage and maintain security.</li>
-        <li><strong>Legitimate Interest (Art. 6(1)(f)):</strong> Server-side anonymous fingerprint (SHA-256 hash of IP + User-Agent) to enforce free-tier limits and prevent abuse. The hash cannot be reversed to identify you.</li>
+        <li><strong>Performance of a Contract (GDPR Art. 6(1)(b); APPI Art. 16(1); PIPA Art. 15):</strong> Processing your input data to generate the service result you requested.</li>
+        <li><strong>Legitimate Interest (GDPR Art. 6(1)(f); APPI Art. 16(3)):</strong> Basic visit analytics (page path, country) to understand service usage and maintain security. No IP addresses are retained.</li>
+        <li><strong>Legitimate Interest — Abuse Prevention (GDPR Art. 6(1)(f); APPI Art. 16(3); PIPA Art. 15(1)(vi)):</strong> Server-side anonymous fingerprint (SHA-256 hash of IP + User-Agent) to enforce free-tier limits and prevent abuse. The hash is irreversible and contains no personal data.</li>
+        <li><strong>Explicit Consent (GDPR Art. 9(2)(a); PIPA Art. 23(1)):</strong> Palm image processing for the Palm Reading service. You provide this consent via an explicit checkbox before submission. The image is held in memory for a maximum of 5 minutes and never stored.</li>
       </ul>
 
       <h2>4. Payment Processing</h2>
@@ -118,6 +124,38 @@ export default function PrivacyPage() {
         <strong> Data Protection Authority (Supervisory Authority)</strong>.
       </p>
 
+      <h2>7a. Your Rights (Japan — APPI)</h2>
+      <p>If you are located in Japan, you have the following rights under the Act on Protection of Personal Information (APPI):</p>
+      <ul>
+        <li><strong>Right to Disclosure (Art. 28):</strong> Request disclosure of the personal data we hold about you and the purpose of its use.</li>
+        <li><strong>Right to Correction (Art. 29):</strong> Request correction, addition, or deletion of personal data that is inaccurate.</li>
+        <li><strong>Right to Suspension of Use (Art. 30):</strong> Request suspension of use or deletion of personal data that has been handled in violation of APPI or that is no longer necessary.</li>
+        <li><strong>Right to Suspension of Transfer (Art. 30(5)):</strong> Request suspension of transfer to third parties where such transfer violates APPI.</li>
+        <li><strong>Purpose-of-Use Notification (Art. 27):</strong> Request notification of the purpose of use of your retained personal data.</li>
+      </ul>
+      <p>
+        To exercise any of these rights, contact us at the email in Section 13. We will respond within
+        2 weeks as required by APPI. You may also file a complaint with the{" "}
+        <strong>Personal Information Protection Commission (PPC)</strong> of Japan.
+      </p>
+
+      <h2>7b. Your Rights (Republic of Korea — PIPA)</h2>
+      <p>If you are located in the Republic of Korea, you have the following rights under the Personal Information Protection Act (PIPA):</p>
+      <ul>
+        <li><strong>Right to Access (Art. 35):</strong> Request access to and disclosure of your personal information.</li>
+        <li><strong>Right to Rectification (Art. 36):</strong> Request correction or deletion of inaccurate personal information.</li>
+        <li><strong>Right to Erasure (Art. 37):</strong> Request deletion of your personal information where retention is no longer necessary or lawful.</li>
+        <li><strong>Right to Suspension (Art. 37):</strong> Request suspension of processing of your personal information.</li>
+        <li><strong>Right to Data Portability (Art. 35-2):</strong> Request transfer of your personal information to you or a designated third party in a structured, machine-readable format.</li>
+        <li><strong>Right to Withdraw Consent (Art. 37(2)):</strong> Withdraw your consent to processing at any time. Clear your browser&apos;s localStorage or contact us.</li>
+      </ul>
+      <p>
+        To exercise any of these rights, contact us at the email in Section 13. We will respond within
+        10 days as required by PIPA. You may also file a complaint with the{" "}
+        <strong>Personal Information Protection Commission (PIPC)</strong> of Korea or the{" "}
+        <strong>Korea Internet &amp; Security Agency (KISA)</strong>.
+      </p>
+
       <h2>8. Data Sharing &amp; Third Parties</h2>
       <p>
         We do <strong>not</strong> sell, rent, trade, or share your data with any third parties.
@@ -137,9 +175,17 @@ export default function PrivacyPage() {
       <h2>9. International Data Transfers</h2>
       <p>
         Our servers are located in the United States. If you access our service from outside the US
-        (including the EEA), your data will be transferred to and processed in the US.
-        We ensure appropriate safeguards are in place, including reliance on DPF certifications
-        and/or Standard Contractual Clauses, to protect your data in accordance with GDPR requirements.
+        (including the EEA, Japan, or the Republic of Korea), your data will be transferred to and
+        processed in the US. We ensure appropriate safeguards are in place:
+      </p>
+      <ul>
+        <li><strong>EEA, UK, Switzerland:</strong> We rely on DPF certifications and/or Standard Contractual Clauses (SCCs) for lawful data transfers under GDPR.</li>
+        <li><strong>Japan:</strong> We inform you that your data will be transferred to servers in the United States. The US has been designated by the PPC as a country with a data protection framework meeting APPI standards for cross-border transfers. We implement organizational and technical safeguards to ensure equivalent protection.</li>
+        <li><strong>Republic of Korea:</strong> By using this service, you consent to the transfer of your personal information to the United States for processing as described in this policy, in accordance with PIPA Art. 28-8. We implement equivalent safeguards to those required under PIPA and ensure the recipient (our US-based infrastructure) meets the data protection standards required by Korean law.</li>
+      </ul>
+      <p>
+        By using our service, you acknowledge and agree to these international transfers.
+        You may withdraw consent at any time by ceasing use of the service and contacting us.
       </p>
 
       <h2>10. Security</h2>
@@ -169,7 +215,7 @@ export default function PrivacyPage() {
       </p>
       <p>
         <strong>Email:</strong> privacy@easternwisdom.app<br />
-        <strong>Response time:</strong> Within 30 days (as required by GDPR)
+        <strong>Response time:</strong> Within 10 days for users in Korea (PIPA), 2 weeks for users in Japan (APPI), 30 days for all other users (GDPR).
       </p>
       <p className="text-xs text-stone-400 mt-6 border-t border-stone-200 pt-4">
         Chinese Culture Studio — Data Controller. Hosted on Render (Oregon, US) with Neon PostgreSQL (US-East).
