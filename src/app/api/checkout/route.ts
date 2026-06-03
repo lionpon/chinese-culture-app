@@ -17,7 +17,25 @@ export async function POST(req: NextRequest) {
     }
 
     if (free && type !== "palm-reading") {
-      // Free tier — preview only, unlock full result with contribution
+      // Generate anonymous fingerprint from IP + User-Agent
+      const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+      const ua = req.headers.get("user-agent") || "";
+      const raw = ip + "|" + ua;
+      const hashBuffer = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(raw));
+      const fingerprint = Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, "0")).join("");
+
+      // Count existing free uses for this fingerprint
+      const freeCount = await prisma.purchase.count({
+        where: { fingerprint, paid: false, status: "completed" },
+      });
+
+      if (freeCount >= 2) {
+        return NextResponse.json(
+          { error: "free_limit_reached", remaining: 0 },
+          { status: 403 }
+        );
+      }
+
       let result: unknown;
       switch (type) {
         case "naming": result = (input.mode === "analyze") ? analyzeName(input as unknown as NamingInput) : generateNames(input as unknown as NamingInput, true); break;
@@ -32,11 +50,13 @@ export async function POST(req: NextRequest) {
           input: JSON.stringify(input),
           status: "completed",
           paid: false,
+          fingerprint,
           result: JSON.stringify(result),
         },
       });
 
-      return NextResponse.json({ purchase_id: purchase.id, free: true });
+      const remaining = 2 - freeCount - 1;
+      return NextResponse.json({ purchase_id: purchase.id, free: true, remaining });
     }
 
     // Paid flow — create pending purchase, return payment URL

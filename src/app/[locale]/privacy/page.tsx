@@ -65,7 +65,7 @@ export default function PrivacyPage() {
       <ul>
         <li><strong>Performance of a Contract (Art. 6(1)(b)):</strong> Processing your input data to generate the service result you requested.</li>
         <li><strong>Legitimate Interest (Art. 6(1)(f)):</strong> Basic visit analytics (page path, country) to understand service usage and maintain security.</li>
-        <li><strong>Consent (Art. 6(1)(a)):</strong> Local storage for free-tier tracking. You may decline via the cookie banner without affecting core service functionality.</li>
+        <li><strong>Legitimate Interest (Art. 6(1)(f)):</strong> Server-side anonymous fingerprint (SHA-256 hash of IP + User-Agent) to enforce free-tier limits and prevent abuse. The hash cannot be reversed to identify you.</li>
       </ul>
 
       <h2>4. Payment Processing</h2>
@@ -80,20 +80,22 @@ export default function PrivacyPage() {
 
       <h2>5. Cookies &amp; Local Storage</h2>
       <ul>
-        <li><strong>Essential — Free Tier Tracking:</strong> One localStorage key (<code>cc-free-tier</code>) stores your remaining free readings count (a number, 0–2). No personal data.</li>
+        <li><strong>Essential — Free Tier Tracking:</strong> One localStorage key (<code>cc-free-tier</code>) stores your remaining free readings count for UX display. The authoritative limit is enforced server-side via anonymous fingerprint (SHA-256 hash of IP + User-Agent), with no personal data stored.</li>
         <li><strong>Essential — Consent Record:</strong> One localStorage key (<code>cc-cookie-consent</code>) records your cookie preference (&ldquo;accepted&rdquo; or &ldquo;declined&rdquo;).</li>
         <li><strong>Session:</strong> Next.js sets a minimal server-side session cookie required for the payment redirect flow. This contains no personal data.</li>
       </ul>
       <p>
         We do <strong>not</strong> use advertising cookies, tracking cookies, third-party analytics
-        (Google Analytics, Facebook Pixel, etc.), fingerprinting, or cross-site trackers of any kind.
+        (Google Analytics, Facebook Pixel, etc.), or cross-site trackers of any kind.
+        The server-side free-tier fingerprint is a one-way hash used solely to enforce usage limits — it cannot be reversed to identify you or shared with third parties.
       </p>
 
       <h2>6. Data Retention</h2>
       <ul>
         <li><strong>Contribution records (input + result):</strong> Stored in our database. These records are kept to provide the service and support revenue reporting. They contain only the input you provided and the algorithmically generated result — no personal identifiers.</li>
         <li><strong>Visit analytics:</strong> Stored in our database. Country-level data only. No IP addresses are retained.</li>
-        <li><strong>Local storage:</strong> Managed entirely in your browser. Clearing browser data removes free-tier count and consent preference immediately.</li>
+        <li><strong>Free-tier fingerprint:</strong> A one-way SHA-256 hash of your IP and User-Agent, stored with your free-trial record to enforce the 2-use limit. The original IP is never stored — only the hash, which is irreversible.</li>
+        <li><strong>Local storage:</strong> Managed entirely in your browser. Clearing browser data removes free-tier display count and consent preference immediately (the server-side limit persists to prevent abuse).</li>
       </ul>
       <p>
         You may request deletion of your data at any time (see Section 7).

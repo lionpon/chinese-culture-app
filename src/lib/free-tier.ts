@@ -37,6 +37,17 @@ export function consumeFreeUse(): FreeTier {
   return next;
 }
 
+export function updateRemaining(n: number): void {
+  if (typeof window === "undefined") return;
+  const current = getFreeTier();
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      remaining: Math.max(0, n),
+      used: current.used,
+    }));
+  } catch { /* storage unavailable */ }
+}
+
 export function hasFreeUses(): boolean {
   return getFreeTier().remaining > 0;
 }

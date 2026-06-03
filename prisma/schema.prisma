@@ -13,9 +13,10 @@ model Purchase {
   type      String
   input     String   @db.Text
   result    String?  @db.Text
-  status    String   @default("pending")
-  paid      Boolean  @default(false)
-  createdAt DateTime @default(now())
+  status      String   @default("pending")
+  paid        Boolean  @default(false)
+  fingerprint String?
+  createdAt   DateTime @default(now())
 }
 
 model Visit {
