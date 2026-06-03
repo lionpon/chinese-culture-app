@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import DailyHexagram from "@/components/DailyHexagram";
 import FreeTierBadge from "@/components/FreeTierBadge";
 import FeatureCard from "@/components/FeatureCard";
+import ContactForm from "@/components/ContactForm";
 import { Link } from "@/navigation";
 
 export default function HomePage() {
@@ -49,6 +50,8 @@ export default function HomePage() {
           hideFree
         />
       </div>
+
+      <ContactForm />
 
       <section className="mt-12 sm:mt-20 text-center">
         <p className="text-xs text-stone-400 max-w-md mx-auto leading-relaxed">

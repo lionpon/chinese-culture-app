@@ -517,5 +517,17 @@
     "en": "English",
     "ru": "Русский",
     "ja": "日本語"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "description": "Have a question or feedback? We'd love to hear from you.",
+    "email": "Your email",
+    "emailPlaceholder": "you@example.com",
+    "message": "Message",
+    "messagePlaceholder": "Tell us what's on your mind...",
+    "submit": "Send",
+    "sending": "Sending...",
+    "success": "Message sent! We'll get back to you soon.",
+    "error": "Something went wrong. Please try again."
   }
 }
