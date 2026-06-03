@@ -110,18 +110,22 @@ export default function AdminDashboard() {
   const [today, setToday] = useState<ReportData | null>(null);
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState("");
+  const [authError, setAuthError] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const t = params.get("token") || "";
     setToken(t);
-    fetchData(t);
+    if (t) fetchData(t);
+    else { setLoading(false); setAuthError(true); }
   }, []);
 
   async function fetchData(t: string) {
     setLoading(true);
+    setAuthError(false);
     try {
-      await fetch(`/api/report?token=${t}`, { method: "POST" });
+      const res = await fetch(`/api/report?token=${t}`, { method: "POST" });
+      if (res.status === 401) { setAuthError(true); setLoading(false); return; }
       const [todayRes, reportsRes] = await Promise.all([
         fetch(`/api/report?token=${t}&date=${new Date().toISOString().slice(0, 10)}`),
         fetch(`/api/report?token=${t}&days=7`),
@@ -145,10 +149,26 @@ export default function AdminDashboard() {
           <h1 className="text-xl sm:text-2xl font-bold" style={{ color: "var(--accent)" }}>Chinese Culture Studio — Admin</h1>
           <p className="text-stone-500 text-sm">Analytics & Daily Report — auto-generates on visit</p>
         </div>
-        <button onClick={() => fetchData(token)} className="px-4 py-2 rounded-lg text-sm btn-primary">
-          Refresh Data
-        </button>
+        <div className="flex items-center gap-2">
+          <input
+            type="password"
+            placeholder="Admin token"
+            value={token}
+            onChange={(e) => { setToken(e.target.value); setAuthError(false); }}
+            onKeyDown={(e) => e.key === "Enter" && fetchData(token)}
+            className="px-3 py-1.5 text-sm border border-stone-300 rounded-lg w-48"
+          />
+          <button onClick={() => fetchData(token)} className="px-4 py-2 rounded-lg text-sm btn-primary">
+            Refresh
+          </button>
+        </div>
       </div>
+
+      {authError && (
+        <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">
+          Invalid or missing admin token. Enter the correct token above or add <code className="bg-red-100 px-1 rounded">?token=...</code> to the URL.
+        </div>
+      )}
 
       {/* Summary Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 sm:gap-4 mb-6 sm:mb-8">
