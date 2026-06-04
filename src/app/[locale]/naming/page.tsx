@@ -1,7 +1,7 @@
 "use client";
 
 import { FormEvent, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { useCheckout } from "@/lib/useCheckout";
 import SubmitButton from "@/components/SubmitButton";
 import AmountPicker from "@/components/AmountPicker";
@@ -11,6 +11,8 @@ import { hasFreeUses } from "@/lib/free-tier";
 
 export default function NamingPage() {
   const t = useTranslations("naming");
+  const locale = useLocale();
+  const isJaKo = locale === "ja" || locale === "ko";
   const { loading, checkout } = useCheckout("naming");
   const [amount, setAmount] = useState(1);
   const [mode, setMode] = useState<"create" | "analyze">("create");
@@ -80,34 +82,36 @@ export default function NamingPage() {
       <ExampleResult />
 
       <form onSubmit={handleSubmit} className="space-y-5 card-classic p-4 sm:p-6">
-        {/* Mode toggle */}
-        <div>
-          <label className="block text-sm font-medium text-stone-700 mb-2">{t("form.modeLabel")}</label>
-          <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={() => setMode("create")}
-              className={`flex-1 py-2 px-3 rounded-lg text-sm border transition-colors ${
-                mode === "create"
-                  ? "bg-accent text-white border-accent"
-                  : "bg-white text-stone-600 border-stone-300 hover:border-stone-400"
-              }`}
-            >
-              {t("form.modeCreate")}
-            </button>
-            <button
-              type="button"
-              onClick={() => setMode("analyze")}
-              className={`flex-1 py-2 px-3 rounded-lg text-sm border transition-colors ${
-                mode === "analyze"
-                  ? "bg-accent text-white border-accent"
-                  : "bg-white text-stone-600 border-stone-300 hover:border-stone-400"
-              }`}
-            >
-              {t("form.modeAnalyze")}
-            </button>
+        {/* Mode toggle — only for ja/ko users who may already have a Chinese name */}
+        {isJaKo && (
+          <div>
+            <label className="block text-sm font-medium text-stone-700 mb-2">{t("form.modeLabel")}</label>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => setMode("create")}
+                className={`flex-1 py-2 px-3 rounded-lg text-sm border transition-colors ${
+                  mode === "create"
+                    ? "bg-accent text-white border-accent"
+                    : "bg-white text-stone-600 border-stone-300 hover:border-stone-400"
+                }`}
+              >
+                {t("form.modeCreate")}
+              </button>
+              <button
+                type="button"
+                onClick={() => setMode("analyze")}
+                className={`flex-1 py-2 px-3 rounded-lg text-sm border transition-colors ${
+                  mode === "analyze"
+                    ? "bg-accent text-white border-accent"
+                    : "bg-white text-stone-600 border-stone-300 hover:border-stone-400"
+                }`}
+              >
+                {t("form.modeAnalyze")}
+              </button>
+            </div>
           </div>
-        </div>
+        )}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div>
