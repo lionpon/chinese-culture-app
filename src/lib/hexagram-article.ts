@@ -1,3 +1,5 @@
+import { getCitation } from "@/data/hexagram-citations";
+
 // Generates a unique SEO article for each daily hexagram page
 import type { DivinationResult } from "@/types";
 import { judgmentJa, judgmentRu, descriptionJa, descriptionRu, adviceJa, adviceRu } from "@/data/hexagram-content";
@@ -156,6 +158,23 @@ function ordinalLocal(n: number, locale: string): string {
   return ordinal(n);
 }
 
+function citationBlock(id: number, locale: string): string | null {
+  const c = getCitation(id);
+  if (!c) return null;
+
+  if (locale === "ja") {
+    return `【典拠】「${c.tuanZhuan.slice(0, 80)}…」— 『周易・彖伝』。${c.xiangZhuanEn.slice(0, 120)}`;
+  }
+  if (locale === "ru") {
+    return `【Источник】«${c.tuanZhuan.slice(0, 100)}…» — «Чжоу И. Туань Чжуань» (Комментарий к Суждению). ${c.xiangZhuanEn}`;
+  }
+  if (locale === "ko") {
+    return `【전거】"${c.tuanZhuan.slice(0, 80)}…" — 『주역·단전』. ${c.xiangZhuanEn.slice(0, 120)}`;
+  }
+  // English
+  return `**Classical Source:** "${c.tuanZhuanEn.slice(0, 200)}" — *Zhouyi · Tuan Zhuan* (Commentary on the Judgment, ca. 6th century BCE). The Great Image says: "${c.xiangZhuanEn}"`;
+}
+
 export function generateHexagramArticle(r: DivinationResult, locale = "en"): string {
   const main = r.mainHexagram;
   const id = main.id;
@@ -188,6 +207,8 @@ export function generateHexagramArticle(r: DivinationResult, locale = "en"): str
     } else {
       parts.push(f.judgmentNoLocale(main.judgmentEn));
     }
+    const cite = citationBlock(id, locale);
+    if (cite) parts.push(cite);
 
     // Practical interpretation — use description + advice snippet
     const shortAdvice = (localAdvice || main.advice).replace(/^[⚖️☀️⚠️]+\s*Verdict:\s*[^—]+—\s*/, "").trim();
@@ -222,6 +243,9 @@ export function generateHexagramArticle(r: DivinationResult, locale = "en"): str
     parts.push(`Today's I Ching hexagram is ${main.nameZh} (${main.pinyin}), known as "${displayName}". This hexagram speaks to ${guide.theme}, offering guidance for those seeking clarity in ${guide.lifeAreas}.`);
 
     parts.push(`The ancient judgment for this hexagram reads: "${localJudgment || main.judgmentEn}" This wisdom, passed down through millennia, reminds us that the patterns of heaven and earth are reflected in our daily affairs.`);
+
+    const citeEn = citationBlock(main.id, locale);
+    if (citeEn) parts.push(citeEn);
 
     parts.push(`In practical terms, ${displayName} appears when we are being called to focus on ${guide.theme}. ${guide.practicalTip} The hexagram's energy is particularly relevant for matters of ${guide.lifeAreas}.`);
 

@@ -41,6 +41,10 @@ const CONTENT: Record<string, { title: string; desc: string; ogTitle: string; og
     faqs: [
       { q: "What is the I Ching?", a: "The I Ching (Book of Changes) is an ancient Chinese text over 3,000 years old. It's a system of 64 hexagrams, each describing a specific life situation with wise counsel." },
       { q: "How does I Ching divination work?", a: "You ask a question, the system generates a hexagram, and you receive an interpretation. The I Ching doesn't predict the future — it reveals the dynamics of your situation and suggests the wisest path." },
+      { q: "What do the 64 hexagrams mean?", a: "Each hexagram represents a fundamental life situation or pattern of change. For example, Hexagram 1 (Qian) represents creativity and initiative, while Hexagram 2 (Kun) represents receptivity and patience. The hexagram you receive reflects the underlying dynamics of your question." },
+      { q: "Can the I Ching predict the future?", a: "The I Ching does not predict the future like a fortune-telling tool. Instead, it analyzes the present dynamics of your situation and suggests how events may unfold based on current patterns — giving you wisdom to make better choices." },
+      { q: "How do I interpret a changing line?", a: "Changing lines (old yang or old yin) indicate a transformation point. The line's text provides specific advice for your situation, and the resulting hexagram shows where the situation is heading. Pay special attention to changing lines — they reveal the pivot point." },
+      { q: "What's the difference between I Ching and Tao Te Ching?", a: "Both are foundational Chinese classics, but they serve different purposes. The I Ching (Yijing) is a divination text and philosophical work about change. The Tao Te Ching (Daodejing) is a philosophical poem about the Tao (Way) and virtue. They complement each other in Chinese thought." },
       { q: "Is it paid?", a: "You choose the contribution amount — from $1. First 2 readings are free (preview mode). It's a voluntary contribution, not a purchase." },
     ],
     cta: "Consult the I Ching — from $1",
@@ -82,6 +86,10 @@ const CONTENT: Record<string, { title: string; desc: string; ogTitle: string; og
     faqs: [
       { q: "Что такое И-Цзин?", a: "И-Цзин (Книга Перемен) — древний китайский текст возрастом более 3000 лет. Это система из 64 гексаграмм, каждая из которых описывает определённую жизненную ситуацию и даёт мудрый совет." },
       { q: "Как работает гадание И-Цзин?", a: "Вы задаёте вопрос, система генерирует гексаграмму, и вы получаете толкование. И-Цзин не предсказывает будущее — он раскрывает динамику вашей ситуации и предлагает наилучший путь." },
+      { q: "Что означают 64 гексаграммы?", a: "Каждая гексаграмма представляет фундаментальную жизненную ситуацию или паттерн изменений. Например, Гексаграмма 1 (Цянь) представляет творчество и инициативу, а Гексаграмма 2 (Кунь) — восприимчивость и терпение." },
+      { q: "Может ли И-Цзин предсказывать будущее?", a: "И-Цзин не предсказывает будущее как инструмент гадания. Вместо этого он анализирует текущую динамику вашей ситуации и предполагает, как события могут развиваться, основываясь на текущих паттернах." },
+      { q: "Как толковать меняющуюся линию?", a: "Меняющиеся линии (старый ян или старая инь) указывают на точку трансформации. Текст линии даёт конкретный совет для вашей ситуации, а результирующая гексаграмма показывает, куда движется ситуация." },
+      { q: "В чём разница между И-Цзин и Дао Дэ Цзин?", a: "Оба являются основополагающими китайскими классическими текстами. И-Цзин — это текст для гадания и философский труд о переменах. Дао Дэ Цзин — философская поэма о Дао (Пути) и добродетели. Они дополняют друг друга в китайской мысли." },
       { q: "Это платно?", a: "Вы сами выбираете сумму взноса — от $1. Первые 2 чтения бесплатны (в режиме предпросмотра). Это добровольный вклад, а не покупка." },
     ],
     cta: "Задать Вопрос И-Цзин — от $1",
@@ -123,6 +131,10 @@ const CONTENT: Record<string, { title: string; desc: string; ogTitle: string; og
     faqs: [
       { q: "易経とは何ですか？", a: "易経（変化の書）は3000年以上前の古代中国テキストです。64の卦からなる体系で、それぞれが特定の人生の状況を説明し、賢明な助言を与えます。" },
       { q: "易経占いはどのように機能しますか？", a: "質問をすると、システムが卦を生成し、解釈を受け取ります。易経は未来を予言するのではなく、状況の力学を明らかにし、最も賢明な道を提案します。" },
+      { q: "64卦は何を意味しますか？", a: "各卦は人生の根本的な状況や変化のパターンを表します。例えば、第1卦（乾）は創造性と率先力を、第2卦（坤）は受容性と忍耐を表します。得られた卦はあなたの質問の背後にある力学を反映しています。" },
+      { q: "易経は未来を予言できますか？", a: "易経は占い道具のように未来を予言するのではなく、現在の状況の力学を分析し、現在のパターンに基づいてどのように展開するかを示唆します。より良い選択をするための知恵を与えるものです。" },
+      { q: "変爻はどう解釈すればよいですか？", a: "変爻（老陽または老陰）は変容のポイントを示します。その爻のテキストは具体的なアドバイスを与え、結果として生じる卦は状況の向かう方向を示します。変爻は転機を明らかにするため、特に注意を払ってください。" },
+      { q: "易経と老子道徳経の違いは？", a: "両方とも中国の重要な古典ですが、目的が異なります。易経は占いの書であり変化についての哲学書です。道徳経は道と徳についての哲学詩です。中国思想において両者は補完し合います。" },
       { q: "有料ですか？", a: "支援額は$1からご自身で選べます。最初の2回は無料（プレビューモード）です。これは購入ではなく任意のご支援です。" },
     ],
     cta: "易経に問いかける — $1から",

@@ -99,13 +99,15 @@ export function DailyArticleSchema({
   description,
   date,
   url,
+  hexagramId,
 }: {
   title: string;
   description: string;
   date: string;
   url: string;
+  hexagramId?: number;
 }) {
-  const schema = {
+  const schema: Record<string, unknown> = {
     "@context": "https://schema.org",
     "@type": "Article",
     headline: title,
@@ -116,7 +118,24 @@ export function DailyArticleSchema({
     publisher: { "@type": "Organization", name: "Chinese Culture Studio", url: BASE_URL },
     url,
     mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    about: { "@type": "Thing", name: "I Ching (Book of Changes)", description: "Ancient Chinese divination text dating back over 3,000 years" },
+    isBasedOn: {
+      "@type": "Book",
+      name: "Zhouyi (周易) — The Book of Changes",
+      author: "Traditionally attributed to King Wen of Zhou and the Duke of Zhou",
+      dateCreated: "ca. 1000 BCE",
+    },
   };
+
+  if (hexagramId) {
+    schema.citation = [
+      {
+        "@type": "CreativeWork",
+        name: `Hexagram ${hexagramId} — Tuan Zhuan (Commentary on the Judgment)`,
+        creator: { "@type": "Person", name: "Confucius (traditionally attributed)" },
+      },
+    ];
+  }
 
   return (
     <script

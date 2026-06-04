@@ -123,6 +123,7 @@ export default async function DailyHexagramPage({ params }: Props) {
         description={h.descriptionEn}
         date={params.date}
         url={pageUrl}
+        hexagramId={h.id}
       />
       <BreadcrumbListSchema
         items={[
