@@ -6,7 +6,7 @@ import { judgmentJa, judgmentRu, descriptionJa, descriptionRu, adviceJa, adviceR
 import { Link } from "@/navigation";
 import { notFound } from "next/navigation";
 import SpeakButton from "@/components/SpeakButton";
-import { DailyArticleSchema } from "@/components/JsonLd";
+import { DailyArticleSchema, BreadcrumbListSchema } from "@/components/JsonLd";
 
 type Props = {
   params: { locale: string; date: string };
@@ -123,6 +123,12 @@ export default async function DailyHexagramPage({ params }: Props) {
         description={h.descriptionEn}
         date={params.date}
         url={pageUrl}
+      />
+      <BreadcrumbListSchema
+        items={[
+          { name: "Chinese Culture Studio", url: `https://chinese-culture-app.onrender.com${localePrefix}` },
+          { name: params.locale === "ru" ? "И-Цзин дня" : params.locale === "ja" ? "今日の易経" : params.locale === "ko" ? "오늘의 주역" : "Daily I Ching", url: pageUrl },
+        ]}
       />
       <p className="text-center text-xs text-stone-400 mb-2">
         {formatter.format(new Date(params.date + "T00:00:00Z"))}

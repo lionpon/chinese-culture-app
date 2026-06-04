@@ -9,6 +9,7 @@ const LIMITS: Record<string, { max: number; windowSec: number }> = {
   "/api/webhook": { max: 30, windowSec: 60 },
   "/api/track": { max: 60, windowSec: 60 },
   "/api/report": { max: 5, windowSec: 60 },
+  "/api/cron": { max: 3, windowSec: 3600 },
   default: { max: 100, windowSec: 60 },
 };
 
