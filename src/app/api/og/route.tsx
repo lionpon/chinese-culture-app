@@ -5,8 +5,8 @@ export const runtime = "edge";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-  const title = searchParams.get("title") || "Chinese Culture Studio";
-  const sub = searchParams.get("sub") || "Chinese Name • Auspicious Dates • I Ching • Palm Reading";
+  const title = (searchParams.get("title") || "Chinese Culture Studio").slice(0, 100);
+  const sub = (searchParams.get("sub") || "Chinese Name • Auspicious Dates • I Ching • Palm Reading").slice(0, 100);
 
   return new ImageResponse(
     <div

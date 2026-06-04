@@ -70,12 +70,11 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    const host = req.headers.get("host") || undefined;
     const amount = typeof input.amount === "number" && input.amount >= 1 ? input.amount : 1;
 
     // PayPal legacy fallback
     if (method === "paypal") {
-      const url = buildPayPalCheckoutUrl(purchase.id, type, host, amount);
+      const url = buildPayPalCheckoutUrl(purchase.id, type, amount);
       return NextResponse.json({ url });
     }
 

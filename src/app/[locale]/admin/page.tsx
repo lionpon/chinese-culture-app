@@ -128,8 +128,8 @@ export default function AdminDashboard() {
       const localeParam = loc !== "all" ? `&locale=${loc}` : "";
       const todayStr = new Date().toISOString().slice(0, 10);
       const [todayRes, reportsRes] = await Promise.all([
-        fetch(`/api/report?token=${t}&date=${todayStr}${localeParam}`),
-        fetch(`/api/report?token=${t}&days=7${localeParam}`),
+        fetch(`/api/report?date=${todayStr}${localeParam}`, { headers: { "x-admin-token": t } }),
+        fetch(`/api/report?days=7${localeParam}`, { headers: { "x-admin-token": t } }),
       ]);
       if (todayRes.status === 401 || reportsRes.status === 401) {
         setAuthError(true);
@@ -195,7 +195,7 @@ export default function AdminDashboard() {
 
       {authError && (
         <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">
-          Invalid or missing admin token. Enter the correct token above or add <code className="bg-red-100 px-1 rounded">?token=...</code> to the URL.
+          Invalid or missing admin token. Enter the correct token above to access the dashboard.
         </div>
       )}
 

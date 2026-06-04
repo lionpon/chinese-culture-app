@@ -10,17 +10,12 @@ import type { NamingInput, CalendarInput, DivinationInput, PalmReadingInput } fr
 export async function POST(req: NextRequest) {
   const rawBody = await req.text();
 
-  const isSandbox = process.env.PAYPAL_SANDBOX === "true";
-  const params = new URLSearchParams(rawBody);
-  const sandboxBypass = isSandbox && params.get("sandbox_bypass") === "true";
-
-  if (!sandboxBypass) {
-    const ok = await verifyIPN(rawBody);
-    if (!ok) {
-      return NextResponse.json({ error: "Invalid IPN" }, { status: 400 });
-    }
+  const ok = await verifyIPN(rawBody);
+  if (!ok) {
+    return NextResponse.json({ error: "Invalid IPN" }, { status: 400 });
   }
 
+  const params = new URLSearchParams(rawBody);
   const purchaseId = params.get("custom");
   const paymentStatus = params.get("payment_status");
 

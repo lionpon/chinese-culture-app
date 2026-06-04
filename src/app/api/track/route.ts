@@ -3,7 +3,7 @@ import { prisma } from "@/lib/db";
 
 async function lookupGeo(ip: string): Promise<{ country: string; city: string; region: string }> {
   try {
-    const res = await fetch(`http://ip-api.com/json/${ip}?fields=countryCode,city,regionName`, {
+    const res = await fetch(`https://ip-api.com/json/${ip}?fields=countryCode,city,regionName`, {
       signal: AbortSignal.timeout(3000),
     });
     if (!res.ok) throw new Error("geo lookup failed");

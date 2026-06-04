@@ -8,7 +8,7 @@ const LIMITS: Record<string, { max: number; windowSec: number }> = {
   "/api/checkout": { max: 10, windowSec: 60 },
   "/api/webhook": { max: 30, windowSec: 60 },
   "/api/track": { max: 60, windowSec: 60 },
-  "/api/report": { max: 30, windowSec: 60 },
+  "/api/report": { max: 5, windowSec: 60 },
   default: { max: 100, windowSec: 60 },
 };
 
@@ -53,7 +53,13 @@ export function checkCsrf(req: NextRequest): NextResponse | null {
     "localhost:3000",
   ];
 
-  const isAllowed = allowedHosts.some((h) => origin.includes(h));
+  let originHost: string;
+  try {
+    originHost = new URL(origin).hostname;
+  } catch {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+  const isAllowed = allowedHosts.some((h) => originHost === h);
   if (!isAllowed) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }

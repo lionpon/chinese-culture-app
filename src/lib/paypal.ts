@@ -5,12 +5,8 @@ const PAYPAL_URL =
     ? "https://www.sandbox.paypal.com/cgi-bin/webscr"
     : "https://www.paypal.com/cgi-bin/webscr";
 
-export function getAppUrl(host?: string) {
-  if (process.env.NEXT_PUBLIC_APP_URL && process.env.NEXT_PUBLIC_APP_URL !== "http://localhost:3000") {
-    return process.env.NEXT_PUBLIC_APP_URL;
-  }
-  if (host) return `https://${host}`;
-  return "http://localhost:3000";
+export function getAppUrl(): string {
+  return process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 }
 
 export const PRODUCT_NAMES: Record<string, string> = {
@@ -20,8 +16,8 @@ export const PRODUCT_NAMES: Record<string, string> = {
   "palm-reading": "Support Chinese Culture Studio — Palm Reading",
 };
 
-export function buildPayPalCheckoutUrl(purchaseId: string, type: string, host?: string, amount = 1): string {
-  const appUrl = getAppUrl(host);
+export function buildPayPalCheckoutUrl(purchaseId: string, type: string, amount = 1): string {
+  const appUrl = getAppUrl();
   const itemName = PRODUCT_NAMES[type] || "Chinese Culture Reading";
 
   const params = new URLSearchParams({

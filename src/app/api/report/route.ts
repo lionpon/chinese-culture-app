@@ -2,9 +2,16 @@ import { NextRequest, NextResponse } from "next/server";
 import { generateReport, getReports } from "@/lib/report";
 
 function checkAuth(req: NextRequest): boolean {
-  const token = req.nextUrl.searchParams.get("token") || req.headers.get("x-admin-token") || "";
+  const token = req.headers.get("x-admin-token") || "";
   const expected = process.env.ADMIN_TOKEN || "";
-  return token === expected;
+  if (!expected) return false;
+  // constant-time-ish comparison via length check + per-char fail
+  if (token.length !== expected.length) return false;
+  let ok = true;
+  for (let i = 0; i < token.length; i++) {
+    if (token[i] !== expected[i]) ok = false;
+  }
+  return ok;
 }
 
 export async function GET(req: NextRequest) {

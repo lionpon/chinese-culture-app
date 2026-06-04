@@ -1,12 +1,4 @@
 {
-  "functions": {
-    "src/app/api/stripe/webhook/route.ts": {
-      "maxDuration": 30
-    },
-    "src/app/api/test/route.ts": {
-      "maxDuration": 30
-    }
-  },
   "headers": [
     {
       "source": "/(.*)",
