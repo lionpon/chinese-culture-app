@@ -1,9 +1,42 @@
 import { BASE_URL } from "@/lib/config";
+import { performDivination } from "@/lib/divination";
+import { hexagramNameJa, hexagramNameRu } from "@/data/hexagram-names";
+import {
+  judgmentJa, judgmentRu,
+  adviceJa, adviceRu,
+} from "@/data/hexagram-content";
+
+function getDailyHexagram() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1;
+  const day = now.getDate();
+
+  const num1 = ((year + month + day) % 8) || 8;
+  const num2 = ((year * month + day) % 8) || 8;
+  const num3 = ((year + month * day) % 6) || 6;
+
+  const result = performDivination({ method: "manual", numbers: [num1, num2, num3] });
+  const id = result.mainHexagram.id;
+
+  return {
+    nameZh: result.mainHexagram.nameZh,
+    nameEn: result.mainHexagram.nameEn,
+    pinyin: result.mainHexagram.pinyin,
+    nameJa: hexagramNameJa[id] || result.mainHexagram.nameEn,
+    nameRu: hexagramNameRu[id] || result.mainHexagram.nameEn,
+    judgmentEn: result.mainHexagram.judgmentEn,
+    judgmentJa: judgmentJa[id] || "",
+    judgmentRu: judgmentRu[id] || "",
+    advice: result.mainHexagram.advice,
+    adviceJa: adviceJa[id] || "",
+    adviceRu: adviceRu[id] || "",
+  };
+}
 
 /**
  * Sends a daily I Ching hexagram digest email via Resend.
- * One email contains all 4 locale summaries and links.
- * Falls back silently if RESEND_API_KEY or CONTACT_EMAIL is not configured.
+ * Computes hexagram data locally — no self-referencing fetch (Render blocks it).
  */
 export async function sendDailyHexagramEmail(): Promise<boolean> {
   const apiKey = process.env.RESEND_API_KEY;
@@ -15,9 +48,7 @@ export async function sendDailyHexagramEmail(): Promise<boolean> {
   }
 
   try {
-    const dailyRes = await fetch(`${BASE_URL}/api/daily`);
-    const daily = await dailyRes.json();
-    const h = daily.mainHexagram;
+    const h = getDailyHexagram();
     const dateStr = new Date().toISOString().slice(0, 10);
 
     const langLabels: Record<string, string> = {
@@ -29,22 +60,22 @@ export async function sendDailyHexagramEmail(): Promise<boolean> {
 
     const langData: Record<string, { name: string; judgment: string; advice: string }> = {
       en: {
-        name: h.nameEn || h.nameZh,
+        name: h.nameEn,
         judgment: h.judgmentEn || "",
         advice: h.advice || "",
       },
       ru: {
-        name: h.nameRu || h.nameEn || h.nameZh,
+        name: h.nameRu || h.nameEn,
         judgment: h.judgmentRu || h.judgmentEn || "",
         advice: h.adviceRu || h.advice || "",
       },
       ja: {
-        name: h.nameJa || h.nameEn || h.nameZh,
+        name: h.nameJa || h.nameEn,
         judgment: h.judgmentJa || h.judgmentEn || "",
         advice: h.adviceJa || h.advice || "",
       },
       ko: {
-        name: h.nameJa || h.nameEn || h.nameZh,
+        name: h.nameJa || h.nameEn,
         judgment: h.judgmentJa || h.judgmentEn || "",
         advice: h.adviceJa || h.advice || "",
       },
