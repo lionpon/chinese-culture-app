@@ -3,10 +3,14 @@ name: Keep Alive
 on:
   schedule:
     - cron: '*/7 * * * *'
+    - cron: '*/11 * * * *'
     - cron: '*/13 * * * *'
+    - cron: '*/17 * * * *'
   push:
     branches: [master]
   workflow_dispatch:
+
+concurrency: keepalive
 
 jobs:
   ping:
