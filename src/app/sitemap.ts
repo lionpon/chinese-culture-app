@@ -1,7 +1,8 @@
 import type { MetadataRoute } from "next";
+import { BASE_URL } from "@/lib/config";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://chinese-culture-app.onrender.com";
+  const baseUrl = BASE_URL;
 
   const pages = [
     { path: "", priority: 1, changeFreq: "weekly" as const },
@@ -20,6 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/guide/five-elements", priority: 0.6, changeFreq: "monthly" as const },
     { path: "/guide/chinese-new-year-2027", priority: 0.6, changeFreq: "monthly" as const },
     { path: "/guide/lucky-numbers", priority: 0.6, changeFreq: "monthly" as const },
+    { path: "/about", priority: 0.5, changeFreq: "monthly" as const },
     { path: "/privacy", priority: 0.3, changeFreq: "yearly" as const },
     { path: "/terms", priority: 0.3, changeFreq: "yearly" as const },
   ];

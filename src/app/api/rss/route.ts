@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { performDivination } from "@/lib/divination";
-
-const BASE_URL = "https://chinese-culture-app.onrender.com";
+import { BASE_URL } from "@/lib/config";
 
 export async function GET() {
   // Get the last 14 days of hexagram data

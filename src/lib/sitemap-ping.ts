@@ -1,6 +1,8 @@
-const SITEMAP_URL = "https://chinese-culture-app.onrender.com/sitemap.xml";
+import { BASE_URL, BASE_HOST } from "@/lib/config";
+
+const SITEMAP_URL = `${BASE_URL}/sitemap.xml`;
 const INDEXNOW_KEY = "b8f3a2d1c7e4569f0a1234b5678c9d0e";
-const HOST = "chinese-culture-app.onrender.com";
+const HOST = BASE_HOST;
 
 const ENGINES: { name: string; url: string; method?: string; body?: string }[] = [
   {

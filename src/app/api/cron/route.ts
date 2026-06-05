@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { generateReport } from "@/lib/report";
 import { pingSitemaps } from "@/lib/sitemap-ping";
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://chinese-culture-app.onrender.com";
+import { sendDailyHexagramEmail } from "@/lib/email";
+import { BASE_URL } from "@/lib/config";
 
 export const runtime = "nodejs";
 
@@ -26,7 +26,15 @@ export async function GET(req: NextRequest) {
     results.sitemaps = { error: String(err) };
   }
 
-  // 3. Telegram push (needs auth via token)
+  // 3. Send daily email digest via Resend
+  try {
+    const emailOk = await sendDailyHexagramEmail();
+    results.email = emailOk ? "sent" : "skipped (not configured)";
+  } catch (err) {
+    results.email = { error: String(err) };
+  }
+
+  // 4. Telegram push (needs auth via token)
   const token = req.nextUrl.searchParams.get("token");
   const expected = process.env.ADMIN_TOKEN || process.env.CRON_SECRET || "";
   const telegramResults: Record<string, string> = {};
@@ -49,7 +57,7 @@ export async function GET(req: NextRequest) {
     results.telegram = "skipped (no auth token)";
   }
 
-  // 4. Warm all 4 locale homepages
+  // 5. Warm all 4 locale homepages
   const warmResults: Record<string, string> = {};
   for (const lang of ["", "ru", "ja", "ko"]) {
     const path = lang ? `/${lang}` : "";

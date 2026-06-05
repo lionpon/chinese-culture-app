@@ -11,6 +11,7 @@ import NavMenu from "@/components/NavMenu";
 import CookieConsent from "@/components/CookieConsent";
 import ShareButton from "@/components/ShareButton";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { BASE_URL } from "@/lib/config";
 
 type Props = {
   children: React.ReactNode;
@@ -62,28 +63,28 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: `Chinese Culture Studio — ${meta.tagline}`,
       description: meta.ogDesc,
-      url: `https://chinese-culture-app.onrender.com${urlPath}`,
+      url: `${BASE_URL}${urlPath}`,
       siteName: "Chinese Culture Studio",
       locale: meta.ogLocale,
       type: "website",
-      images: [{ url: `https://chinese-culture-app.onrender.com/api/og?lang=${params.locale}`, width: 1200, height: 630 }],
+      images: [{ url: `${BASE_URL}/api/og?lang=${params.locale}`, width: 1200, height: 630 }],
     },
     twitter: {
       card: "summary_large_image",
       title: `Chinese Culture Studio — ${meta.tagline}`,
       description: meta.twitterDesc,
-      images: [`https://chinese-culture-app.onrender.com/api/og?lang=${locale}`],
+      images: [`${BASE_URL}/api/og?lang=${locale}`],
     },
     robots: { index: true, follow: true },
     alternates: {
       languages: {
-        en: "https://chinese-culture-app.onrender.com",
-        ru: "https://chinese-culture-app.onrender.com/ru",
-        ja: "https://chinese-culture-app.onrender.com/ja",
-        ko: "https://chinese-culture-app.onrender.com/ko",
+        en: `${BASE_URL}`,
+        ru: `${BASE_URL}/ru`,
+        ja: `${BASE_URL}/ja`,
+        ko: `${BASE_URL}/ko`,
       },
       types: {
-        "application/rss+xml": "https://chinese-culture-app.onrender.com/api/rss",
+        "application/rss+xml": `${BASE_URL}/api/rss`,
       },
     },
   };
@@ -154,6 +155,7 @@ export default async function LocaleLayout({ children, params }: Props) {
                   ))}
                 </p>
                 <p className="flex justify-center gap-4 flex-wrap">
+                  <a href={`${pathname}/about`} className="hover:text-stone-500 underline">{t("footer.about")}</a>
                   <a href={`${pathname}/terms`} className="hover:text-stone-500 underline">{t("footer.terms")}</a>
                   <a href={`${pathname}/privacy`} className="hover:text-stone-500 underline">{t("footer.privacy")}</a>
                 </p>

@@ -1,4 +1,4 @@
-const BASE_URL = "https://chinese-culture-app.onrender.com";
+import { BASE_URL } from "@/lib/config";
 
 export default function JsonLd() {
   const schemas = [
@@ -7,6 +7,7 @@ export default function JsonLd() {
       "@type": "Organization",
       name: "Chinese Culture Studio",
       url: BASE_URL,
+      sameAs: [BASE_URL],
       description:
         "Free I Ching divination, Chinese name reading, auspicious date selection, and palm reading. Discover ancient Chinese wisdom online.",
     },
@@ -131,7 +132,9 @@ export function DailyArticleSchema({
     schema.citation = [
       {
         "@type": "CreativeWork",
+        "@id": `${url}#citation`,
         name: `Hexagram ${hexagramId} — Tuan Zhuan (Commentary on the Judgment)`,
+        url,
         creator: { "@type": "Person", name: "Confucius (traditionally attributed)" },
       },
     ];

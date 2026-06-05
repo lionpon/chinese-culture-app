@@ -163,16 +163,16 @@ function citationBlock(id: number, locale: string): string | null {
   if (!c) return null;
 
   if (locale === "ja") {
-    return `【典拠】「${c.tuanZhuan.slice(0, 80)}…」— 『周易・彖伝』。${c.xiangZhuanEn.slice(0, 120)}`;
+    return `【典拠】「${c.tuanZhuan}」— 『周易・彖伝』。${c.xiangZhuanEn}`;
   }
   if (locale === "ru") {
-    return `【Источник】«${c.tuanZhuan.slice(0, 100)}…» — «Чжоу И. Туань Чжуань» (Комментарий к Суждению). ${c.xiangZhuanEn}`;
+    return `【Источник】«${c.tuanZhuan}» — «Чжоу И. Туань Чжуань» (Комментарий к Суждению). ${c.xiangZhuanEn}`;
   }
   if (locale === "ko") {
-    return `【전거】"${c.tuanZhuan.slice(0, 80)}…" — 『주역·단전』. ${c.xiangZhuanEn.slice(0, 120)}`;
+    return `【전거】"${c.tuanZhuan}" — 『주역·단전』. ${c.xiangZhuanEn}`;
   }
   // English
-  return `**Classical Source:** "${c.tuanZhuanEn.slice(0, 200)}" — *Zhouyi · Tuan Zhuan* (Commentary on the Judgment, ca. 6th century BCE). The Great Image says: "${c.xiangZhuanEn}"`;
+  return `**Classical Source:** "${c.tuanZhuanEn}" — *Zhouyi · Tuan Zhuan* (Commentary on the Judgment, ca. 6th century BCE). The Great Image says: "${c.xiangZhuanEn}"`;
 }
 
 export function generateHexagramArticle(r: DivinationResult, locale = "en"): string {

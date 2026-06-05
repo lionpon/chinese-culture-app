@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sendTelegramMessage } from "@/lib/telegram";
+import { BASE_URL } from "@/lib/config";
 
 // POST /api/telegram-post — send a custom message to Telegram
 // GET /api/telegram-post — send today's daily hexagram automatically
@@ -12,11 +13,11 @@ export async function GET(req: NextRequest) {
   const lang = req.nextUrl.searchParams.get("lang") || "en";
 
   try {
-    const dailyRes = await fetch("https://chinese-culture-app.onrender.com/api/daily");
+    const dailyRes = await fetch(`${BASE_URL}/api/daily`);
     const daily = await dailyRes.json();
     const h = daily.mainHexagram;
 
-    const baseUrl = "https://chinese-culture-app.onrender.com";
+    const baseUrl = BASE_URL;
     const dateStr = new Date().toISOString().slice(0, 10);
     const path = lang === "en" ? "" : `/${lang}`;
     const advice = (lang === "ja" || lang === "ko" ? h.adviceJa : lang === "ru" ? h.adviceRu : h.advice) || h.advice;

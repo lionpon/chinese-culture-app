@@ -16,7 +16,7 @@ const securityHeaders = [
       "style-src 'self' 'unsafe-inline'",
       "img-src 'self' data: blob: https:",
       "font-src 'self'",
-      "connect-src 'self' https://www.paypal.com https://api.openrouter.ai https://chinese-culture-app.onrender.com",
+      "connect-src 'self' https://www.paypal.com https://api.openrouter.ai",
       "frame-src https://www.paypal.com",
       "object-src 'none'",
       "base-uri 'self'",

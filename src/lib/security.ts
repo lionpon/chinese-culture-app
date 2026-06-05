@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { BASE_HOST } from "@/lib/config";
 
 // ── In-memory rate limiter (per-IP, resets on restart) ──
 
@@ -50,7 +51,7 @@ export function checkCsrf(req: NextRequest): NextResponse | null {
 
   const allowedHosts = [
     "chinese-culture.app",
-    "chinese-culture-app.onrender.com",
+    BASE_HOST,
     "localhost:3000",
   ];
 

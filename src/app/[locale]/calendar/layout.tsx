@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import { BASE_URL } from "@/lib/config";
 
 type Props = { params: { locale: string } };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const t = await getTranslations({ locale: params.locale, namespace: "calendar" });
-  const base = "https://chinese-culture-app.onrender.com";
+  const base = BASE_URL;
   const path = params.locale === "en" ? "/calendar" : `/${params.locale}/calendar`;
   const ogLocales: Record<string, string> = { en: "en_US", ru: "ru_RU", ja: "ja_JP", ko: "ko_KR" };
 

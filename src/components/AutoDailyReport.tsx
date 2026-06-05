@@ -1,8 +1,8 @@
 import { generateReport } from "@/lib/report";
 import { pingSitemaps } from "@/lib/sitemap-ping";
+import { sendDailyHexagramEmail } from "@/lib/email";
 import { prisma } from "@/lib/db";
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://chinese-culture-app.onrender.com";
+import { BASE_URL } from "@/lib/config";
 
 export default async function AutoDailyReport() {
   const today = new Date().toISOString().slice(0, 10);
@@ -15,7 +15,10 @@ export default async function AutoDailyReport() {
   if (!existed) {
     pingSitemaps().catch(() => {});
 
-    // Auto-post daily hexagram to Telegram (all 4 locales)
+    // Send daily email digest via Resend
+    sendDailyHexagramEmail().catch(() => {});
+
+    // Auto-post daily hexagram to Telegram (all 4 locales, if configured)
     const secret = process.env.TELEGRAM_POST_SECRET;
     if (secret) {
       for (const lang of ["en", "ru", "ja", "ko"]) {

@@ -1,3 +1,5 @@
+import { BASE_URL } from "@/lib/config";
+
 const TELEGRAM_TOKEN = process.env.TELEGRAM_BOT_TOKEN || "";
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || "";
 
@@ -47,16 +49,16 @@ export function buildSitePromoPost(): string {
 Discover the wisdom of ancient Chinese classics:
 
 <b>🎋 Chinese Name</b> — Get your authentic name based on Five Elements
-https://chinese-culture-app.onrender.com/naming
+${BASE_URL}/naming
 
 <b>☯️ I Ching Divination</b> — Consult the Book of Changes
-https://chinese-culture-app.onrender.com/divination
+${BASE_URL}/divination
 
 <b>📅 Auspicious Dates</b> — Find the best dates for important events
-https://chinese-culture-app.onrender.com/calendar
+${BASE_URL}/calendar
 
 <b>✋ Palm Reading</b> — Classical palmistry analysis
-https://chinese-culture-app.onrender.com/palm-reading
+${BASE_URL}/palm-reading
 
 <i>Voluntary contributions welcome (from $1). For cultural appreciation.</i>`;
 }

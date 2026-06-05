@@ -19,6 +19,7 @@
         "iching": "I Ching Guide",
         "auspiciousDates": "Auspicious Dates Guide"
       },
+      "about": "About",
       "terms": "Terms of Service",
       "privacy": "Privacy Policy",
       "copyright": "2026 Chinese Culture Studio"
@@ -529,5 +530,37 @@
     "sending": "Sending...",
     "success": "Message sent! We'll get back to you soon.",
     "error": "Something went wrong. Please try again."
+  },
+  "about": {
+    "meta": {
+      "title": "About Chinese Culture Studio",
+      "description": "Learn about Chinese Culture Studio — our sources, methodology, and mission to make classical Chinese wisdom accessible."
+    },
+    "title": "About Chinese Culture Studio",
+    "whoWeAre": {
+      "heading": "Who We Are",
+      "body": "Chinese Culture Studio is a digital platform dedicated to making classical Chinese wisdom accessible to everyone. We combine algorithmic precision with authentic classical texts to provide Chinese naming, I Ching divination, auspicious date selection, and palm reading — available in English, Russian, Japanese, and Korean."
+    },
+    "sources": {
+      "heading": "Sources & Methodology",
+      "body1": "All our I Ching readings are grounded in the Zhouyi (周易), the Book of Changes, a text dating back over 3,000 years to the Western Zhou dynasty. Each hexagram's judgment draws directly from the classical commentaries: the Tuan Zhuan (彖传, Commentary on the Judgment) and the Xiang Zhuan (象传, Great Image commentary), traditionally attributed to Confucius.",
+      "body2": "Our Chinese naming system applies Five Elements (Wu Xing) theory and classical naming conventions drawn from historical texts. The auspicious date selection uses traditional almanac (Tong Shu) methodology, and our palm reading draws from classical Chinese palmistry traditions."
+    },
+    "expertise": {
+      "heading": "Expertise & Transparency",
+      "body": "We believe in transparency about our methods. Every daily hexagram includes its full classical citation so you can verify the source. Our algorithms are based on documented traditional formulas, not opaque machine learning models. You can verify any reading against the original texts."
+    },
+    "languages": {
+      "heading": "Available Languages",
+      "body": "We currently support English, Russian, Japanese, and Korean, with each language offering culturally appropriate translations of classical terms and concepts."
+    },
+    "technology": {
+      "heading": "Technology",
+      "body": "Built with modern web technology (Next.js, TypeScript, Prisma ORM) and hosted on Render with a Neon PostgreSQL database. No personal data is sold or shared. Our privacy policy details our data handling practices."
+    },
+    "contact": {
+      "heading": "Contact",
+      "body": "For questions, feedback, or privacy concerns, reach us at privacy@easternwisdom.app."
+    }
   }
 }

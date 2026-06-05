@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
 import { NextRequest } from "next/server";
+import { BASE_HOST } from "@/lib/config";
 
 export const runtime = "edge";
 
@@ -52,7 +53,7 @@ export async function GET(req: NextRequest) {
           color: "#8b7355",
         }}
       >
-        chinese-culture-app.onrender.com
+        {BASE_HOST}
       </div>
     </div>,
     {

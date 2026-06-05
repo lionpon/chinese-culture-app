@@ -2,13 +2,14 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { BASE_URL } from "@/lib/config";
 
 export default function ShareButton() {
   const t = useTranslations("common");
   const [copied, setCopied] = useState(false);
 
   async function handleShare() {
-    const url = "https://chinese-culture-app.onrender.com";
+    const url = BASE_URL;
     const text = t("share.text");
 
     if (navigator.share) {

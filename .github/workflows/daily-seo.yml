@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Run daily SEO tasks (sitemap ping + report + warm all locales)
         run: |
+          # Uses the Render-provided URL — always online regardless of custom domain.
+
           curl -sS --retry 3 --retry-delay 15 --retry-max-time 90 \
             --max-time 60 \
             "https://chinese-culture-app.onrender.com/api/cron" | \

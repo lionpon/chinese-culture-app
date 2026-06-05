@@ -7,6 +7,7 @@ import { Link } from "@/navigation";
 import { notFound } from "next/navigation";
 import SpeakButton from "@/components/SpeakButton";
 import { DailyArticleSchema, BreadcrumbListSchema } from "@/components/JsonLd";
+import { BASE_URL } from "@/lib/config";
 
 type Props = {
   params: { locale: string; date: string };
@@ -82,8 +83,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title,
       description: desc,
-      url: `https://chinese-culture-app.onrender.com${localePrefix}/daily/${params.date}`,
-      images: [{ url: `https://chinese-culture-app.onrender.com/api/og?title=${encodeURIComponent(h.nameZh)}&sub=${encodeURIComponent(displayName)}&lang=${params.locale}`, width: 1200, height: 630 }],
+      url: `${BASE_URL}${localePrefix}/daily/${params.date}`,
+      images: [{ url: `${BASE_URL}/api/og?title=${encodeURIComponent(h.nameZh)}&sub=${encodeURIComponent(displayName)}&lang=${params.locale}`, width: 1200, height: 630 }],
     },
     twitter: { card: "summary_large_image", title, description: desc },
     robots: "index, follow",
@@ -110,7 +111,7 @@ export default async function DailyHexagramPage({ params }: Props) {
   const changedJudgment = localizedChanged?.judgment || (ch?.judgmentEn || "");
 
   const localePrefix = params.locale === "en" ? "" : `/${params.locale}`;
-  const pageUrl = `https://chinese-culture-app.onrender.com${localePrefix}/daily/${params.date}`;
+  const pageUrl = `${BASE_URL}${localePrefix}/daily/${params.date}`;
 
   return (
     <div className="max-w-2xl mx-auto">
@@ -127,7 +128,7 @@ export default async function DailyHexagramPage({ params }: Props) {
       />
       <BreadcrumbListSchema
         items={[
-          { name: "Chinese Culture Studio", url: `https://chinese-culture-app.onrender.com${localePrefix}` },
+          { name: "Chinese Culture Studio", url: `${BASE_URL}${localePrefix}` },
           { name: params.locale === "ru" ? "И-Цзин дня" : params.locale === "ja" ? "今日の易経" : params.locale === "ko" ? "오늘의 주역" : "Daily I Ching", url: pageUrl },
         ]}
       />

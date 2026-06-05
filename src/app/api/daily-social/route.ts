@@ -4,8 +4,9 @@ import {
   judgmentJa, judgmentRu,
   adviceJa, adviceRu,
 } from "@/data/hexagram-content";
+import { BASE_URL } from "@/lib/config";
 
-const SITE_URL = "https://chinese-culture-app.onrender.com";
+const SITE_URL = BASE_URL;
 
 function getTodayNumbers(): [number, number, number] {
   const now = new Date();
