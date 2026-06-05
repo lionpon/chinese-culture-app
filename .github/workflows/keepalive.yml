@@ -2,7 +2,10 @@ name: Keep Alive
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '*/7 * * * *'
+    - cron: '*/13 * * * *'
+  push:
+    branches: [master]
   workflow_dispatch:
 
 jobs:
@@ -11,6 +14,14 @@ jobs:
     steps:
       - name: Ping Render app (keep alive)
         run: |
-          curl -sS --retry 3 --retry-delay 10 --retry-max-time 60 \
-            -o /dev/null -w "HTTP %{http_code} | %{time_total}s\n" \
-            --max-time 30 https://chinese-culture-app.onrender.com
+          for i in 1 2 3; do
+            echo "[Attempt $i] $(date -u '+%Y-%m-%dT%H:%M:%SZ')"
+            STATUS=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 45 https://chinese-culture-app.onrender.com)
+            echo "HTTP $STATUS"
+            if [ "$STATUS" = "200" ]; then
+              echo "OK - app is alive"
+              break
+            fi
+            echo "Retry in 15s..."
+            sleep 15
+          done
