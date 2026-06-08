@@ -48,11 +48,13 @@ export async function generateReport(date: string, locale?: string): Promise<Rep
     !v.page.startsWith("/ko/") && v.page !== "/ko"
   );
 
+  // Exclude admin pages from all counts
+  filtered = filtered.filter(v => !v.page.startsWith("/admin") && !v.page.startsWith("/ru/admin"));
+
   const countries: Record<string, number> = {};
   const cities: Record<string, number> = {};
   const pages: Record<string, number> = {};
   for (const v of filtered) {
-    if (v.page.startsWith("/admin") || v.page.startsWith("/ru/admin")) continue;
     countries[v.country] = (countries[v.country] || 0) + 1;
     const cityKey = [v.city, v.region, v.country].filter(Boolean).join(", ");
     if (cityKey !== "Unknown") {
