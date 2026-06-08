@@ -2,21 +2,42 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 
 async function lookupGeo(ip: string): Promise<{ country: string; city: string; region: string }> {
+  // Primary: ipapi.co (HTTPS, 1000/day free, no key required)
   try {
-    // ip-api free tier does NOT support HTTPS — returns 403. Keep HTTP.
+    const res = await fetch(`https://ipapi.co/${ip}/json/`, {
+      signal: AbortSignal.timeout(3000),
+      headers: { "User-Agent": "ChineseCultureStudio/1.0" },
+    });
+    if (res.ok) {
+      const data = await res.json();
+      if (data.country_code && !data.error) {
+        return {
+          country: data.country_code || "Unknown",
+          city: data.city || "",
+          region: data.region || "",
+        };
+      }
+    }
+  } catch { /* fall through to backup */ }
+
+  // Backup: ip-api.com (HTTP only on free tier, may be blocked by some hosts)
+  try {
     const res = await fetch(`http://ip-api.com/json/${ip}?fields=countryCode,city,regionName`, {
       signal: AbortSignal.timeout(3000),
     });
-    if (!res.ok) throw new Error("geo lookup failed");
-    const data = await res.json();
-    return {
-      country: data.countryCode || "Unknown",
-      city: data.city || "",
-      region: data.regionName || "",
-    };
-  } catch {
-    return { country: "Unknown", city: "", region: "" };
-  }
+    if (res.ok) {
+      const data = await res.json();
+      if (data.countryCode) {
+        return {
+          country: data.countryCode,
+          city: data.city || "",
+          region: data.regionName || "",
+        };
+      }
+    }
+  } catch { /* fall through */ }
+
+  return { country: "Unknown", city: "", region: "" };
 }
 
 export async function POST(req: NextRequest) {
