@@ -28,6 +28,10 @@ const ENGINES: { name: string; url: string; method?: string; body?: string }[] =
     name: "Naver",
     url: `https://apis.naver.com/searchadvisor/ping?sitemap=${encodeURIComponent(SITEMAP_URL)}`,
   },
+  {
+    name: "Yandex",
+    url: `https://webmaster.yandex.ru/ping?sitemap=${encodeURIComponent(SITEMAP_URL)}`,
+  },
 ];
 
 function buildIndexNowUrls(): string[] {
@@ -37,6 +41,7 @@ function buildIndexNowUrls(): string[] {
     "/guide/iching", "/guide/iching-beginner", "/guide/auspicious-dates",
     "/guide/wedding-dates-2026", "/guide/chinese-zodiac", "/guide/five-elements",
     "/guide/chinese-new-year-2027",
+    "/guide/feng-shui", "/guide/face-reading", "/guide/dream-meaning",
   ];
 
   // Last 30 daily pages
