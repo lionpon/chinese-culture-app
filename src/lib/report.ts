@@ -48,8 +48,8 @@ export async function generateReport(date: string, locale?: string): Promise<Rep
     !v.page.startsWith("/ko/") && v.page !== "/ko"
   );
 
-  // Exclude admin pages from all counts
-  filtered = filtered.filter(v => !v.page.startsWith("/admin") && !v.page.startsWith("/ru/admin"));
+  // Exclude admin pages from all counts (all locales)
+  filtered = filtered.filter(v => !v.page.includes("/admin"));
 
   const countries: Record<string, number> = {};
   const cities: Record<string, number> = {};
