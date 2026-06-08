@@ -5,7 +5,7 @@ function checkAuth(req: NextRequest): boolean {
   const token = req.headers.get("x-admin-token") || "";
   const expected = process.env.ADMIN_TOKEN || "";
   // Fallback: accept hardcoded token if ADMIN_TOKEN not configured
-  const fallback = "admin888";
+  const fallback = "ccs-admin-2026-0603-secure";
   if (token === fallback) return true;
   if (!expected) return false;
   // constant-time-ish comparison
