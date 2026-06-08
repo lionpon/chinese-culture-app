@@ -1,4 +1,4 @@
-import { hexagrams, type Hexagram } from "@/data/hexagrams";
+import { allHexagrams, type Hexagram } from "@/data/hexagrams";
 import { type WCMatch, MATCHES } from "@/data/world-cup-2026";
 
 function hashMatch(match: WCMatch): number {
@@ -85,7 +85,7 @@ const FOOTBALL_THEMES: Record<number, string> = {
 
 export function predictMatch(match: WCMatch): MatchPrediction {
   const hexagramIndex = hashMatch(match);
-  const hexagram = hexagrams[hexagramIndex];
+  const hexagram = allHexagrams[hexagramIndex];
   const footballInterpretation = FOOTBALL_THEMES[hexagram.id] || "The I Ching offers no clear answer — this match is truly unpredictable.";
 
   return { match, hexagram, footballInterpretation };
