@@ -40,7 +40,7 @@ function buildIndexNowUrls(): string[] {
     "/guide/chinese-name", "/guide/chinese-name-boy", "/guide/chinese-name-girl",
     "/guide/iching", "/guide/iching-beginner", "/guide/auspicious-dates",
     "/guide/wedding-dates-2026", "/guide/chinese-zodiac", "/guide/five-elements",
-    "/guide/chinese-new-year-2027",
+    "/guide/chinese-new-year-2027", "/guide/lucky-numbers",
     "/guide/feng-shui", "/guide/face-reading", "/guide/dream-meaning",
   ];
 

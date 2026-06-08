@@ -97,15 +97,16 @@ export default async function LocaleLayout({ children, params }: Props) {
   const pathname = params.locale === "en" ? "" : `/${params.locale}`;
 
   const footerGuideLabels: Record<string, string[]> = {
-    en: ["Chinese Name Guide", "Boy Names", "Girl Names", "I Ching Guide", "I Ching Beginner", "Auspicious Dates", "Wedding Dates 2026", "Chinese Zodiac", "Five Elements", "CNY 2027"],
-    ru: ["Гид по Китайским Именам", "Мужские Имена", "Женские Имена", "Гид по И-Цзин", "И-Цзин для Начинающих", "Благоприятные Даты", "Свадебные Даты 2026", "Китайский Зодиак", "Пять Элементов", "КНГ 2027"],
-    ja: ["中国名ガイド", "男性の名前", "女性の名前", "易経ガイド", "易経入門", "吉日", "2026年結婚日", "十二支", "五行", "旧正月2027"],
-    ko: ["중국식 이름 가이드", "남자 이름", "여자 이름", "주역 가이드", "주역 입문", "길일", "2026 결혼 날짜", "십이지", "오행", "2027 춘절"],
+    en: ["Chinese Name Guide", "Boy Names", "Girl Names", "I Ching Guide", "I Ching Beginner", "Auspicious Dates", "Wedding Dates 2026", "Chinese Zodiac", "Five Elements", "CNY 2027", "Lucky Numbers", "Feng Shui", "Face Reading", "Dream Meaning"],
+    ru: ["Гид по Китайским Именам", "Мужские Имена", "Женские Имена", "Гид по И-Цзин", "И-Цзин для Начинающих", "Благоприятные Даты", "Свадебные Даты 2026", "Китайский Зодиак", "Пять Элементов", "КНГ 2027", "Счастливые числа", "Фэн-шуй", "Чтение лица", "Толкование снов"],
+    ja: ["中国名ガイド", "男性の名前", "女性の名前", "易経ガイド", "易経入門", "吉日", "2026年結婚日", "十二支", "五行", "旧正月2027", "縁起の良い数字", "風水", "人相学", "夢占い"],
+    ko: ["중국식 이름 가이드", "남자 이름", "여자 이름", "주역 가이드", "주역 입문", "길일", "2026 결혼 날짜", "십이지", "오행", "2027 춘절", "행운의 숫자", "풍수", "관상", "꿈 해몽"],
   };
 
   const guideSlugs = [
     "chinese-name", "chinese-name-boy", "chinese-name-girl", "iching", "iching-beginner",
     "auspicious-dates", "wedding-dates-2026", "chinese-zodiac", "five-elements", "chinese-new-year-2027",
+    "lucky-numbers", "feng-shui", "face-reading", "dream-meaning",
   ];
 
   const labels = footerGuideLabels[params.locale] || footerGuideLabels.en;
