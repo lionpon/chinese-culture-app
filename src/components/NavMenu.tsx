@@ -27,6 +27,9 @@ export default function NavMenu() {
       {open && (
         <div className="absolute top-14 left-0 right-0 bg-white/95 backdrop-blur-md border-b border-stone-200 shadow-lg">
           <div className="flex flex-col p-4 space-y-3">
+            <Link href="/world-cup" className="text-sm font-semibold py-1" style={{ color: "var(--accent)" }} onClick={() => setOpen(false)}>
+              ⚽ World Cup
+            </Link>
             <Link href="/naming" className="text-sm text-stone-600 hover:text-stone-900 py-1" onClick={() => setOpen(false)}>
               {t("nav.createName")}
             </Link>

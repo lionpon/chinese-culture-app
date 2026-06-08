@@ -41,6 +41,7 @@ function buildIndexNowUrls(): string[] {
     "/guide/iching", "/guide/iching-beginner", "/guide/auspicious-dates",
     "/guide/wedding-dates-2026", "/guide/chinese-zodiac", "/guide/five-elements",
     "/guide/chinese-new-year-2027", "/guide/lucky-numbers",
+    "/world-cup",
     "/guide/feng-shui", "/guide/face-reading", "/guide/dream-meaning",
   ];
 

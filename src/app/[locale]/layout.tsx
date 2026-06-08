@@ -131,6 +131,8 @@ export default async function LocaleLayout({ children, params }: Props) {
                   Chinese Culture Studio
                 </a>
                 <nav className="hidden sm:flex gap-4 text-sm text-stone-500 items-center">
+                  <a href={`${pathname}/world-cup`} className="font-semibold hover:opacity-80 transition-opacity" style={{ color: "var(--accent)" }}>⚽ World Cup</a>
+                  <span className="text-stone-300">|</span>
                   <a href={`${pathname}/naming`} className="hover:text-stone-800 transition-colors">{t("nav.name")}</a>
                   <a href={`${pathname}/calendar`} className="hover:text-stone-800 transition-colors">{t("nav.dates")}</a>
                   <a href={`${pathname}/divination`} className="hover:text-stone-800 transition-colors">{t("nav.iching")}</a>
