@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
         where: { fingerprint, paid: false, status: "completed" },
       });
 
-      if (freeCount >= 2) {
+      if (freeCount >= 1) {
         return NextResponse.json(
           { error: "free_limit_reached", remaining: 0 },
           { status: 403 }
@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
         },
       });
 
-      const remaining = 2 - freeCount - 1;
+      const remaining = 0;
       return NextResponse.json({ purchase_id: purchase.id, free: true, remaining });
     }
 

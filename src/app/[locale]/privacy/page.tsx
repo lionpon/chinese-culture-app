@@ -100,7 +100,7 @@ export default function PrivacyPage() {
       <ul>
         <li><strong>Contribution records (input + result):</strong> Stored in our database. These records are kept to provide the service and support revenue reporting. They contain only the input you provided and the algorithmically generated result — no personal identifiers.</li>
         <li><strong>Visit analytics:</strong> Stored in our database. Country-level data only. No IP addresses are retained.</li>
-        <li><strong>Free-tier fingerprint:</strong> A one-way SHA-256 hash of your IP and User-Agent, stored with your free-trial record to enforce the 2-use limit. The original IP is never stored — only the hash, which is irreversible.</li>
+        <li><strong>Free-tier fingerprint:</strong> A one-way SHA-256 hash of your IP and User-Agent, stored with your free-trial record to enforce the 1-use limit. The original IP is never stored — only the hash, which is irreversible.</li>
         <li><strong>Local storage:</strong> Managed entirely in your browser. Clearing browser data removes free-tier display count and consent preference immediately (the server-side limit persists to prevent abuse).</li>
       </ul>
       <p>
