@@ -24,7 +24,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/guide/feng-shui", priority: 0.7, changeFreq: "monthly" as const },
     { path: "/guide/face-reading", priority: 0.7, changeFreq: "monthly" as const },
     { path: "/guide/dream-meaning", priority: 0.7, changeFreq: "monthly" as const },
-    { path: "/world-cup", priority: 0.8, changeFreq: "daily" as const },
+    { path: "/world-cup", priority: 0.9, changeFreq: "daily" as const },
     { path: "/about", priority: 0.5, changeFreq: "monthly" as const },
     { path: "/privacy", priority: 0.3, changeFreq: "yearly" as const },
     { path: "/terms", priority: 0.3, changeFreq: "yearly" as const },
@@ -40,7 +40,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
     dailyPages.push({ path: `/daily/${dateStr}`, priority, changeFreq: "daily" as const });
   }
 
-  const allPages = [...pages, ...dailyPages];
+  // World Cup daily prediction pages (June 11 - July 19, 2026 + 7 days after for cache)
+  const worldCupPages: { path: string; priority: number; changeFreq: "daily" | "weekly" | "monthly" | "yearly" }[] = [];
+  const wcStart = new Date("2026-06-11");
+  const wcEnd = new Date("2026-07-26"); // final + 1 week
+  for (let d = new Date(wcStart); d <= wcEnd; d.setDate(d.getDate() + 1)) {
+    const dateStr = d.toISOString().slice(0, 10);
+    const todayStr = new Date().toISOString().slice(0, 10);
+    const p = dateStr === todayStr ? 0.8 : 0.6;
+    worldCupPages.push({ path: `/daily/world-cup/${dateStr}`, priority: p, changeFreq: "daily" as const });
+  }
+
+  const allPages = [...pages, ...dailyPages, ...worldCupPages];
 
   // English URLs
   const enEntries = allPages.map(({ path, priority, changeFreq }) => ({

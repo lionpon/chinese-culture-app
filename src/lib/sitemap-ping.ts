@@ -53,7 +53,18 @@ function buildIndexNowUrls(): string[] {
     dailyPaths.push(`/daily/${d.toISOString().slice(0, 10)}`);
   }
 
-  const allPaths = [...staticPaths, ...dailyPaths];
+  // World Cup daily prediction pages (today + next 3 match days)
+  const wcPaths: string[] = [];
+  const today = new Date().toISOString().slice(0, 10);
+  const wcStart = new Date("2026-06-11");
+  const wcEnd = new Date("2026-07-19");
+  const now = new Date();
+  for (let d = new Date(wcStart); d <= wcEnd; d.setDate(d.getDate() + 1)) {
+    const dateStr = d.toISOString().slice(0, 10);
+    wcPaths.push(`/daily/world-cup/${dateStr}`);
+  }
+
+  const allPaths = [...staticPaths, ...dailyPaths, ...wcPaths];
   const urls: string[] = [];
   for (const path of allPaths) {
     urls.push(`https://${HOST}${path}`);

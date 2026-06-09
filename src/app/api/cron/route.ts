@@ -62,7 +62,7 @@ export async function GET(req: NextRequest) {
     results.telegram = "skipped (no auth token)";
   }
 
-  // 5. Warm all 4 locale homepages
+  // 5. Warm all 4 locale homepages + world-cup
   const warmResults: Record<string, string> = {};
   for (const lang of ["", "ru", "ja", "ko"]) {
     const path = lang ? `/${lang}` : "";
@@ -71,6 +71,16 @@ export async function GET(req: NextRequest) {
       warmResults[lang || "en"] = `HTTP ${res.status}`;
     } catch (err) {
       warmResults[lang || "en"] = `error: ${String(err)}`;
+    }
+  }
+  // Warm world-cup page (high-traffic during tournament)
+  for (const lang of ["", "ru", "ja", "ko"]) {
+    const path = lang ? `/${lang}/world-cup` : "/world-cup";
+    try {
+      const res = await fetch(`${BASE_URL}${path}`, { signal: AbortSignal.timeout(15_000) });
+      warmResults[`wc/${lang || "en"}`] = `HTTP ${res.status}`;
+    } catch (err) {
+      warmResults[`wc/${lang || "en"}`] = `error: ${String(err)}`;
     }
   }
   results.warmup = warmResults;
