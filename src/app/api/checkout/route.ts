@@ -17,6 +17,15 @@ export async function POST(req: NextRequest) {
     }
 
     if (free && type !== "palm-reading") {
+      // Check persistent cookie first — survives localStorage clear
+      const cookieFreeUsed = req.cookies.get("cc_free_used");
+      if (cookieFreeUsed?.value === "1") {
+        return NextResponse.json(
+          { error: "free_limit_reached", remaining: 0 },
+          { status: 403 }
+        );
+      }
+
       // Generate anonymous fingerprint from IP + User-Agent
       const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
       const ua = req.headers.get("user-agent") || "";
@@ -24,7 +33,7 @@ export async function POST(req: NextRequest) {
       const hashBuffer = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(raw));
       const fingerprint = Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, "0")).join("");
 
-      // Count existing free uses for this fingerprint
+      // Count existing free uses for this fingerprint (catches IP changes)
       const freeCount = await prisma.purchase.count({
         where: { fingerprint, paid: false, status: "completed" },
       });
@@ -55,8 +64,16 @@ export async function POST(req: NextRequest) {
         },
       });
 
-      const remaining = 0;
-      return NextResponse.json({ purchase_id: purchase.id, free: true, remaining });
+      const response = NextResponse.json({ purchase_id: purchase.id, free: true, remaining: 0 });
+      // Persistent HTTP-only cookie — survives localStorage/cache clear
+      response.cookies.set("cc_free_used", "1", {
+        httpOnly: true,
+        secure: true,
+        sameSite: "lax",
+        maxAge: 365 * 24 * 60 * 60, // 1 year
+        path: "/",
+      });
+      return response;
     }
 
     // Paid flow — create pending purchase, return payment URL
