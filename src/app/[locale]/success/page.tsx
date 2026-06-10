@@ -4,7 +4,6 @@ import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useResults } from "@/lib/result-store";
-import { getFreeTier } from "@/lib/free-tier";
 import type { NamingResult, CalendarResult, DivinationResult, PalmReadingResult } from "@/types";
 import NamingResultView from "@/components/NamingResultView";
 import CalendarResultView from "@/components/CalendarResultView";
@@ -26,7 +25,6 @@ function SuccessContent() {
   const [type, setType] = useState<string>("");
   const [result, setResult] = useState<NamingResult | CalendarResult | DivinationResult | PalmReadingResult | null>(null);
   const [error, setError] = useState("");
-  const [remaining, setRemaining] = useState(0);
 
   const { setNamingResult, setCalendarResult, setDivinationResult, setPalmReadingResult } = useResults();
 
@@ -35,11 +33,6 @@ function SuccessContent() {
       setError(t("missingId"));
       setState("failed");
       return;
-    }
-
-    if (isFree) {
-      const tier = getFreeTier();
-      setRemaining(tier.remaining);
     }
 
     const showResult = (data: { status: string; type?: string; result?: unknown; error?: string }) => {
@@ -205,52 +198,18 @@ function SuccessContent() {
 
   return (
     <div className="max-w-2xl mx-auto">
-      {type === "naming" && result && <NamingResultView result={result as NamingResult} />}
-      {type === "calendar" && result && <CalendarResultView result={result as CalendarResult} />}
-      {type === "divination" && result && <DivinationResultView result={result as DivinationResult} />}
+      {type === "naming" && result && <NamingResultView result={result as NamingResult} isFree={isFree} purchaseId={purchaseId ?? undefined} />}
+      {type === "calendar" && result && <CalendarResultView result={result as CalendarResult} isFree={isFree} purchaseId={purchaseId ?? undefined} />}
+      {type === "divination" && result && <DivinationResultView result={result as DivinationResult} isFree={isFree} purchaseId={purchaseId ?? undefined} />}
       {type === "palm-reading" && result && <PalmReadingResultView result={result as PalmReadingResult} />}
 
       {isFree && (
-        <div className="mt-8 card-classic p-5 sm:p-6 text-center" style={{ borderColor: "rgba(155,74,58,0.3)", borderWidth: 2 }}>
-          <p className="text-lg font-bold mb-2" style={{ color: "var(--accent)" }}>
-            {remaining > 0
-              ? t("freeBanner", { n: remaining })
-              : t("freeLast")}
-          </p>
-          <p className="text-sm text-stone-500 mb-4">{t("freeText")}</p>
-          <div className="mb-5 p-4 rounded-xl" style={{ background: "linear-gradient(135deg, #FFF9F5 0%, #FFF5F0 100%)", border: "1px solid rgba(155,74,58,0.15)" }}>
-            <p className="text-sm font-medium text-stone-700 mb-2">{t("unlockTitle")}</p>
-            <ul className="text-xs text-stone-500 text-left space-y-1 max-w-xs mx-auto">
-              {type === "naming" && (
-                <>
-                  <li>+ {t("unlockNaming1")}</li>
-                  <li>+ {t("unlockNaming2")}</li>
-                </>
-              )}
-              {type === "divination" && (
-                <>
-                  <li>+ {t("unlockDivination1")}</li>
-                  <li>+ {t("unlockDivination2")}</li>
-                </>
-              )}
-              {type === "calendar" && (
-                <>
-                  <li>+ {t("unlockCalendar1")}</li>
-                  <li>+ {t("unlockCalendar2")}</li>
-                </>
-              )}
-            </ul>
-          </div>
-          <div className="flex gap-3 justify-center flex-wrap">
-            <Link href={`/${type}`} className="px-5 py-2.5 rounded-xl text-sm font-medium btn-primary">
-              {t("unlockNow")}
+        <div className="mt-8 text-center">
+          {serviceLink && (
+            <Link href={serviceLink.href} className="inline-block px-5 py-2.5 rounded-xl text-sm border border-stone-300 text-stone-500 hover:bg-stone-50 transition-colors">
+              {serviceLink.label}
             </Link>
-            {serviceLink && (
-              <Link href={serviceLink.href} className="px-5 py-2.5 rounded-xl text-sm border border-stone-300 text-stone-500 hover:bg-stone-50 transition-colors">
-                {serviceLink.label}
-              </Link>
-            )}
-          </div>
+          )}
         </div>
       )}
     </div>
