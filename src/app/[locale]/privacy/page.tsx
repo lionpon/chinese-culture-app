@@ -7,7 +7,7 @@ export default function PrivacyPage() {
       <h2>1. Who We Are</h2>
       <p>
         Chinese Culture Studio (&ldquo;we&rdquo;, &ldquo;us&rdquo;, &ldquo;our&rdquo;) operates the website
-        at <strong>chinese-culture-app.onrender.com</strong>. We provide algorithmically generated
+        at <strong>www.chineseculture.app</strong>. We provide algorithmically generated
         Chinese cultural interpretations — naming, auspicious date selection, and I Ching divination.
       </p>
       <p>
