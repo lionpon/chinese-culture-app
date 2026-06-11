@@ -10,6 +10,11 @@ const intlMiddleware = createMiddleware({
 });
 
 export default function middleware(req: NextRequest) {
+  // Skip static file requests (llms.txt, robots.txt, sitemap.xml, etc.)
+  if (/\.(txt|ico|png|svg|xml|json)$/.test(req.nextUrl.pathname)) {
+    return NextResponse.next();
+  }
+
   // Block known aggressive bots
   const ua = req.headers.get("user-agent");
   if (isBadBot(ua)) {
