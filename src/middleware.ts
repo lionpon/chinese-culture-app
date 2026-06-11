@@ -13,32 +13,33 @@ const intlMiddleware = createMiddleware({
 export default function middleware(req: NextRequest) {
   // ── llms.txt — AI discoverability ──
   if (req.nextUrl.pathname === "/llms.txt") {
-    const content = `# Chinese Culture Studio
-> Discover ancient Chinese wisdom — I Ching divination, Chinese name creation, auspicious date selection, and palm reading.
-
-## Core Tools
-- [I Ching Divination](${BASE_URL}/divination): Traditional 3-coin method with hexagram interpretations.
-- [Chinese Name Creation](${BASE_URL}/naming): Authentic names based on Bazi and Five Elements.
-- [Auspicious Date Selection](${BASE_URL}/calendar): Favorable dates from the Chinese almanac.
-- [Palm Reading](${BASE_URL}/palm-reading): AI-powered palm line analysis.
-
-## Guides
-- [I Ching Beginner's Guide](${BASE_URL}/guide/iching-beginner)
-- [Complete I Ching Guide](${BASE_URL}/guide/iching)
-- [Five Elements](${BASE_URL}/guide/five-elements) · [Chinese Zodiac](${BASE_URL}/guide/chinese-zodiac)
-- [Feng Shui](${BASE_URL}/guide/feng-shui) · [Face Reading](${BASE_URL}/guide/face-reading)
-- [Dream Interpretation](${BASE_URL}/guide/dream-meaning) · [Lucky Numbers](${BASE_URL}/guide/lucky-numbers)
-
-## Daily Content
-- [Daily I Ching](${BASE_URL}/daily) · [World Cup Predictions](${BASE_URL}/world-cup)
-
-## Languages
-English, Russian, Japanese, Korean.
-
-## About
-Algorithmic cultural interpretations from classical Chinese texts (Zhouyi, Tong Shu). Entertainment purposes.
-RSS: ${BASE_URL}/api/rss`;
-    return new NextResponse(content, {
+    const txt = [
+      "# Chinese Culture Studio",
+      "> Discover ancient Chinese wisdom — I Ching divination, Chinese name creation, auspicious date selection, and palm reading.",
+      "",
+      "## Core Tools",
+      `- [I Ching Divination](${BASE_URL}/divination): Traditional 3-coin method with hexagram interpretations.`,
+      `- [Chinese Name Creation](${BASE_URL}/naming): Authentic names based on Bazi and Five Elements.`,
+      `- [Auspicious Date Selection](${BASE_URL}/calendar): Favorable dates from the Chinese almanac.`,
+      `- [Palm Reading](${BASE_URL}/palm-reading): AI-powered palm line analysis.`,
+      "",
+      "## Guides",
+      `- [I Ching Beginner](${BASE_URL}/guide/iching-beginner) · [Full Guide](${BASE_URL}/guide/iching)`,
+      `- [Five Elements](${BASE_URL}/guide/five-elements) · [Chinese Zodiac](${BASE_URL}/guide/chinese-zodiac)`,
+      `- [Feng Shui](${BASE_URL}/guide/feng-shui) · [Face Reading](${BASE_URL}/guide/face-reading)`,
+      `- [Dream Interpretation](${BASE_URL}/guide/dream-meaning) · [Lucky Numbers](${BASE_URL}/guide/lucky-numbers)`,
+      "",
+      "## Daily",
+      `- [Daily I Ching](${BASE_URL}/daily) · [World Cup Predictions](${BASE_URL}/world-cup)`,
+      "",
+      "## Languages",
+      "English, Russian, Japanese, Korean.",
+      "",
+      "## About",
+      "Algorithmic cultural interpretations from classical Chinese texts (Zhouyi, Tong Shu). Entertainment purposes.",
+      `RSS: ${BASE_URL}/api/rss`,
+    ].join("\n");
+    return new NextResponse(txt, {
       headers: { "Content-Type": "text/plain; charset=utf-8" },
     });
   }
@@ -65,6 +66,7 @@ RSS: ${BASE_URL}/api/rss`;
 
 export const config = {
   matcher: [
+    "/llms.txt",
     "/((?!_next|_vercel|favicon.ico|fonts|.*\\..*).*)",
     "/api/(.*)",
   ],
