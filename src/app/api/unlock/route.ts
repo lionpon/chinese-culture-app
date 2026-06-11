@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error("Unlock error:", error);
     return NextResponse.json(
-      { error: error instanceof Error ? error.message : "Failed" },
+      { error: "Unlock failed — please try again" },
       { status: 500 }
     );
   }

@@ -30,11 +30,6 @@ export async function GET(req: NextRequest) {
   try {
     const emailOk = await sendDailyHexagramEmail();
     results.email = emailOk ? "sent" : "skipped (not configured)";
-    results.emailDebug = {
-      hasKey: Boolean(process.env.RESEND_API_KEY),
-      hasContact: Boolean(process.env.CONTACT_EMAIL),
-      keyLen: (process.env.RESEND_API_KEY || "").length,
-    };
   } catch (err) {
     results.email = { error: String(err) };
   }

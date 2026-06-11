@@ -111,6 +111,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ url: lemonResult.url });
   } catch (error) {
     console.error("Checkout error:", error);
-    return NextResponse.json({ error: error instanceof Error ? error.message : "Failed to create checkout" }, { status: 500 });
+    return NextResponse.json({ error: "Payment service temporarily unavailable" }, { status: 500 });
   }
 }
