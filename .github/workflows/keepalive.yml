@@ -20,7 +20,7 @@ jobs:
         run: |
           for i in 1 2 3; do
             echo "[Attempt $i] $(date -u '+%Y-%m-%dT%H:%M:%SZ')"
-            STATUS=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 45 https://www.chineseculture.app)
+            STATUS=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 45 https://www.culture-of-china.com)
             echo "HTTP $STATUS"
             if [ "$STATUS" = "200" ]; then
               echo "OK - app is alive"

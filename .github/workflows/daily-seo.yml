@@ -14,13 +14,13 @@ jobs:
         run: |
           curl -sS --retry 3 --retry-delay 15 --retry-max-time 90 \
             --max-time 60 \
-            "https://www.chineseculture.app/api/cron" | \
+            "https://www.culture-of-china.com/api/cron" | \
             python3 -m json.tool 2>/dev/null || cat
 
       - name: Warm locale homepages
         run: |
           for lang in "" "/ru" "/ja" "/ko"; do
             STATUS=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 30 \
-              "https://www.chineseculture.app${lang}")
+              "https://www.culture-of-china.com${lang}")
             echo "${lang:-/} → HTTP ${STATUS}"
           done

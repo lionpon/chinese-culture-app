@@ -16,7 +16,7 @@ export const BASE_URL: string = (() => {
   if (typeof process !== "undefined" && process.env.RENDER_EXTERNAL_URL) {
     return process.env.RENDER_EXTERNAL_URL.replace(/\/$/, "");
   }
-  return "https://www.chineseculture.app";
+  return "https://www.culture-of-china.com";
 })();
 
 export const BASE_HOST = new URL(BASE_URL).hostname;

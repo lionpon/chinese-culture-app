@@ -50,7 +50,8 @@ export function checkCsrf(req: NextRequest): NextResponse | null {
   if (!origin) return null; // same-origin requests or non-browser clients
 
   const allowedHosts = [
-    "chinese-culture.app",
+    "culture-of-china.com",
+    "chineseculture.app",
     BASE_HOST,
     "localhost:3000",
   ];
