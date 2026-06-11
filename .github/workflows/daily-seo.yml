@@ -12,17 +12,15 @@ jobs:
     steps:
       - name: Run daily SEO tasks (sitemap ping + report + warm all locales)
         run: |
-          # Uses the Render-provided URL — always online regardless of custom domain.
-
           curl -sS --retry 3 --retry-delay 15 --retry-max-time 90 \
             --max-time 60 \
-            "https://chinese-culture-app.onrender.com/api/cron" | \
+            "https://www.chineseculture.app/api/cron" | \
             python3 -m json.tool 2>/dev/null || cat
 
       - name: Warm locale homepages
         run: |
           for lang in "" "/ru" "/ja" "/ko"; do
             STATUS=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 30 \
-              "https://chinese-culture-app.onrender.com${lang}")
+              "https://www.chineseculture.app${lang}")
             echo "${lang:-/} → HTTP ${STATUS}"
           done

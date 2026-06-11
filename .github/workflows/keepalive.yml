@@ -18,11 +18,9 @@ jobs:
     steps:
       - name: Ping Render app (keep alive)
         run: |
-          # Uses the Render-provided *.onrender.com URL — always available
-          # regardless of custom domain (chinese-culture.app) DNS status.
           for i in 1 2 3; do
             echo "[Attempt $i] $(date -u '+%Y-%m-%dT%H:%M:%SZ')"
-            STATUS=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 45 https://chinese-culture-app.onrender.com)
+            STATUS=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 45 https://www.chineseculture.app)
             echo "HTTP $STATUS"
             if [ "$STATUS" = "200" ]; then
               echo "OK - app is alive"
