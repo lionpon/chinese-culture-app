@@ -22,8 +22,8 @@
 | 项目 | 详情 |
 |---|---|
 | 代码仓库 | https://github.com/lionpon/chinese-culture-app |
-| 生产地址 | https://chinese-culture-app.onrender.com |
-| 管理后台 | https://chinese-culture-app.onrender.com/admin?token=chinese-culture-admin-2024 |
+| 生产地址 | https://www.culture-of-china.com |
+| 管理后台 | https://www.culture-of-china.com/admin?token=chinese-culture-admin-2024 |
 | 托管平台 | Render（oregon, free tier） |
 | 数据库 | Neon PostgreSQL（us-east-1, ep-lucky-dust-aqcxp3j7） |
 | 支付网关 | Lemon Squeezy |
@@ -109,5 +109,5 @@
 
 - **本地推送代码**：需开 VPN，使用 SSH 认证（git@github.com:lionpon/...）
 - **修改环境变量**：需开 VPN，登录 https://dashboard.render.com
-- **查看管理后台**：无需 VPN，直接访问 https://chinese-culture-app.onrender.com/admin?token=chinese-culture-admin-2024
+- **查看管理后台**：无需 VPN，直接访问 https://www.culture-of-china.com/admin?token=chinese-culture-admin-2024
 - **首次访问慢**：Render free tier 休眠后首次访问需等待 30-60 秒唤醒

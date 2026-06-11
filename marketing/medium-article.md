@@ -84,7 +84,7 @@ It's not a startup. It's not going to make me rich. But seven people in four cou
 
 ## Try It Yourself
 
-[Chinese Culture Studio](https://chinese-culture-app.onrender.com) — 2 free readings, $1 after that.
+[Chinese Culture Studio](https://www.culture-of-china.com) — 2 free readings, $1 after that.
 
 If you try it, I'd love feedback. Building something that bridges cultures is harder than it looks, and I'm sure there are things I'm getting wrong.
 

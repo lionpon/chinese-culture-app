@@ -5,7 +5,7 @@
 | 字段 | 内容 |
 |------|------|
 | **Name** | Chinese Culture Studio |
-| **Website** | https://chinese-culture-app.onrender.com |
+| **Website** | https://www.culture-of-china.com |
 | **Pricing** | $1 per reading (pay per use) |
 | **Launch date** | 待定 (建议周二/周三 PT 时间 00:01 AM) |
 

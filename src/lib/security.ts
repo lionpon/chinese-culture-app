@@ -73,23 +73,23 @@ export function checkCsrf(req: NextRequest): NextResponse | null {
 // ── Bot / crawler detection ──
 
 const BOT_PATTERNS = [
+  // ── AI training data scrapers (blocked) ──
   /bytespider/i,        // ByteDance / Toutiao
   /petalbot/i,          // Huawei
   /sogou/i,             // Sogou
   /yisouspider/i,       // Shenma
-  /claudebot/i,         // Anthropic Claude
-  /gptbot/i,            // OpenAI GPT
+  /anthropic-ai/i,      // Anthropic AI training
+  /cohere-ai/i,         // Cohere AI training
+  // ── Aggressive SEO / non-search crawlers (blocked) ──
   /ccbot/i,             // Common Crawl (too aggressive)
   /ahrefsbot/i,         // Ahrefs SEO
   /semrushbot/i,        // Semrush
   /mj12bot/i,           // Majestic
   /dotbot/i,            // Moz
-  /anthropic-ai/i,      // Anthropic AI training
-  /cohere-ai/i,         // Cohere AI training
-  /perplexity/i,        // Perplexity AI
   /amazonbot/i,         // Amazon crawler
   /googleother/i,       // Google non-search crawler
   /blexbot/i,           // WebMeUp crawler
+  // ── AI search/indexing bots allowed: ClaudeBot, GPTBot, PerplexityBot ──
 ];
 
 export function isBadBot(userAgent: string | null): boolean {

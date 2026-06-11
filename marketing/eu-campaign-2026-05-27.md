@@ -1,7 +1,7 @@
 # Chinese Culture Studio — 欧洲推广执行包
 
 > 执行日期：2026-05-27
-> UTM 基础链接：https://chinese-culture-app.onrender.com/?utm_source=XXX&utm_medium=social&utm_campaign=eu_launch
+> UTM 基础链接：https://www.culture-of-china.com/?utm_source=XXX&utm_medium=social&utm_campaign=eu_launch
 
 ---
 
@@ -22,7 +22,7 @@ How it works:
 
 You get 2 free readings, so no commitment needed. I'm not a native Chinese speaker, so I'd especially appreciate feedback from the community on the name quality and cultural authenticity.
 
-Link: https://chinese-culture-app.onrender.com/?utm_source=reddit&utm_medium=social&utm_campaign=eu_launch
+Link: https://www.culture-of-china.com/?utm_source=reddit&utm_medium=social&utm_campaign=eu_launch
 
 Also has an I Ching divination tool and auspicious date selector if you're curious. Would love any honest thoughts — I built this to make Chinese culture more accessible.
 
@@ -46,7 +46,7 @@ My goal was to make the I Ching accessible to people who don't have a physical b
 
 2 free readings, then $1 after that (just to cover server costs). I'd really appreciate feedback from people who actually practice I Ching — especially on the interpretation quality.
 
-https://chinese-culture-app.onrender.com/divination?utm_source=reddit&utm_medium=social&utm_campaign=eu_launch
+https://www.culture-of-china.com/divination?utm_source=reddit&utm_medium=social&utm_campaign=eu_launch
 
 ---
 
@@ -67,7 +67,7 @@ Everything is built with respect for the source material. The divination uses th
 
 No ads, no data collection. 2 free uses, then $1 per reading.
 
-https://chinese-culture-app.onrender.com/?utm_source=reddit&utm_medium=social&utm_campaign=eu_launch
+https://www.culture-of-china.com/?utm_source=reddit&utm_medium=social&utm_campaign=eu_launch
 
 I'd love to hear what fellow practitioners think — especially if anything feels misaligned with the tradition. Building this has been my way of engaging with the material more deeply.
 
@@ -91,7 +91,7 @@ I built a web tool to make it more approachable for people coming from Western d
 If you've only done tarot or runes, the I Ching is a fascinating complementary system. The hexagrams are surprisingly deep — 64 archetypal situations vs tarot's 78 cards, but with moving lines that create rich combinatorial meanings.
 
 2 free readings to try it out:
-https://chinese-culture-app.onrender.com/divination?utm_source=reddit&utm_medium=social&utm_campaign=eu_launch
+https://www.culture-of-china.com/divination?utm_source=reddit&utm_medium=social&utm_campaign=eu_launch
 
 Curious how other divination practitioners feel about the I Ching compared to Western systems!
 
@@ -114,7 +114,7 @@ How it works:
 It's not a full Ba Zi or Feng Shui consultation — just a practical date-picking tool for everyday decisions. Useful for people planning events who want to consider auspicious timing but don't have access to a traditional almanac.
 
 2 free uses, then $1 per reading:
-https://chinese-culture-app.onrender.com/calendar?utm_source=reddit&utm_medium=social&utm_campaign=eu_launch
+https://www.culture-of-china.com/calendar?utm_source=reddit&utm_medium=social&utm_campaign=eu_launch
 
 Also has I Ching divination and Chinese naming tools on the same site. Would appreciate any feedback from practitioners!
 
@@ -229,7 +229,7 @@ A proper Chinese name isn't just a random combination of characters — it's typ
 
 I actually built a free tool that does this analysis automatically — you enter your gender and birth info, and it generates authentic Chinese names from classical texts with full explanations of the Five Elements reasoning.
 
-You can try it here (2 free readings): https://chinese-culture-app.onrender.com/naming?utm_source=quora&utm_medium=social&utm_campaign=eu_launch
+You can try it here (2 free readings): https://www.culture-of-china.com/naming?utm_source=quora&utm_medium=social&utm_campaign=eu_launch
 
 Even if you don't use the tool, the key thing to understand is that a Chinese name is a carefully crafted piece of poetry, not just a label.
 
@@ -249,7 +249,7 @@ What makes it "accurate" in my experience:
 - **Changing lines add nuance:** Each moving line is like a sub-commentary on the specific aspect of the situation that's in flux
 - **The text is timeless:** The judgments and images in the Book of Changes deal with universal human situations that haven't changed in 3000 years
 
-I built a web-based I Ching tool that uses the traditional 3-coin method if you want to try it yourself — 2 free readings: https://chinese-culture-app.onrender.com/divination?utm_source=quora&utm_medium=social&utm_campaign=eu_launch
+I built a web-based I Ching tool that uses the traditional 3-coin method if you want to try it yourself — 2 free readings: https://www.culture-of-china.com/divination?utm_source=quora&utm_medium=social&utm_campaign=eu_launch
 
 The real test is to ask a genuine question you're wrestling with, and see whether the hexagram's guidance resonates. More often than not, it does.
 
@@ -273,7 +273,7 @@ For weddings specifically, families often consult a specialist or the almanac to
 - Favorable for "marriage" and "celebration" activities
 - On even-numbered lunar dates (even numbers = pairs = harmony)
 
-I created a digital tool that does a simplified version of this analysis — you pick the purpose (wedding, business, travel, etc.) and it evaluates dates for you: https://chinese-culture-app.onrender.com/calendar?utm_source=quora&utm_medium=social&utm_campaign=eu_launch
+I created a digital tool that does a simplified version of this analysis — you pick the purpose (wedding, business, travel, etc.) and it evaluates dates for you: https://www.culture-of-china.com/calendar?utm_source=quora&utm_medium=social&utm_campaign=eu_launch
 
 It's worth noting that even in modern China, wedding venues get booked up YEARS in advance for the most auspicious dates. This tradition is alive and well!
 
@@ -293,7 +293,7 @@ If you're starting from zero, here's a practical path that worked for me:
 - Try I Ching divination — it's the foundation of Chinese philosophy. Confucius wrote commentaries on it. Daoists study it. It influenced everything from Sun Tzu's Art of War to modern business strategy in China
 - Learn about the Chinese calendar — it's lunisolar (not just lunar) and understanding how auspicious dates work opens up feng shui, Chinese medicine, and traditional festivals
 
-**Use tools, not just textbooks.** I built Chinese Culture Studio (https://chinese-culture-app.onrender.com/?utm_source=quora&utm_medium=social&utm_campaign=eu_launch) specifically for this — it gives you hands-on experience with naming, I Ching, and date selection, each with cultural explanations.
+**Use tools, not just textbooks.** I built Chinese Culture Studio (https://www.culture-of-china.com/?utm_source=quora&utm_medium=social&utm_campaign=eu_launch) specifically for this — it gives you hands-on experience with naming, I Ching, and date selection, each with cultural explanations.
 
 **Follow the festivals.** Chinese New Year, Mid-Autumn Festival, Dragon Boat Festival — each one is packed with food, stories, and rituals that teach you cultural values (family, harmony, respect for nature).
 
@@ -321,7 +321,7 @@ The Tong Shu (通书) is the almanac reference that evaluates each day on multip
 - Lunar mansion (28 mansions)
 - Suitable vs. unsuitable activities for each day
 
-I built a simplified online version for everyday date selection — it's not a full professional consultation, but it's useful for picking wedding dates, travel days, or business opening dates: https://chinese-culture-app.onrender.com/calendar?utm_source=quora&utm_medium=social&utm_campaign=eu_launch
+I built a simplified online version for everyday date selection — it's not a full professional consultation, but it's useful for picking wedding dates, travel days, or business opening dates: https://www.culture-of-china.com/calendar?utm_source=quora&utm_medium=social&utm_campaign=eu_launch
 
 TL;DR: Feng shui = space. Date selection = time. Professional Chinese metaphysics uses both.
 

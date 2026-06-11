@@ -20,7 +20,7 @@ How it works:
 
 It's $1 per reading. I'd love feedback from this community — does the output look culturally authentic? Any suggestions?
 
-https://chinese-culture-app.onrender.com
+https://www.culture-of-china.com
 
 ---
 
@@ -38,7 +38,7 @@ Each reading gives you the main hexagram with judgment, changing line, transform
 
 $1 per reading. Try it and let me know if the interpretations resonate.
 
-https://chinese-culture-app.onrender.com/divination
+https://www.culture-of-china.com/divination
 
 ---
 
@@ -56,7 +56,7 @@ I respectfully built three small tools rooted in classical Chinese traditions:
 
 These are for cultural appreciation, not professional advice. Each tool costs $1. I hope they help people connect with these beautiful traditions.
 
-https://chinese-culture-app.onrender.com
+https://www.culture-of-china.com
 
 ---
 
@@ -75,7 +75,7 @@ Three tools:
 
 I just launched after 2 days of work. Would love feedback on the UX, pricing, and whether this niche has legs. Also open to any SEO/marketing advice.
 
-https://chinese-culture-app.onrender.com
+https://www.culture-of-china.com
 
 ---
 
@@ -85,7 +85,7 @@ https://chinese-culture-app.onrender.com
 **Body:**
 Three beautifully simple tools for exploring Chinese culture. No ads, no subscriptions, no data harvesting. Just pay $1 per reading and get instant results.
 
-https://chinese-culture-app.onrender.com
+https://www.culture-of-china.com
 
 ---
 
@@ -97,7 +97,7 @@ Online I Ching tool supporting three casting methods: time-based (梅易), rando
 
 Clean, ad-free interface. $1 per reading.
 
-https://chinese-culture-app.onrender.com/divination
+https://www.culture-of-china.com/divination
 
 ---
 
@@ -151,14 +151,14 @@ Just launched: Chinese Culture Studio 🇨🇳
 → Discover auspicious dates for life events  
 → Consult the I Ching (Book of Changes)
 
-https://chinese-culture-app.onrender.com
+https://www.culture-of-china.com
 
 ### Twitter/X Post 2
 Your Chinese name isn't just a translation — it's crafted from your birth elements, classical poetry, and 3000 years of tradition.
 
 I built a tool that does this automatically. $1.
 
-https://chinese-culture-app.onrender.com/naming
+https://www.culture-of-china.com/naming
 
 ### Twitter/X Post 3
 The I Ching has been consulted for 3000+ years. Now you can cast a hexagram in 30 seconds.
@@ -166,14 +166,14 @@ The I Ching has been consulted for 3000+ years. Now you can cast a hexagram in 3
 ⏱ Time-based • 🎲 Random • ✋ Manual numbers
 Full interpretation with changing lines. $1/reading.
 
-https://chinese-culture-app.onrender.com/divination
+https://www.culture-of-china.com/divination
 
 ### Twitter/X Post 4
 Choosing a wedding date? Opening a business? Moving house?
 
 Find the most auspicious days using traditional Chinese almanac methods. 13 event types, scored 0-100 with detailed analysis. $1.
 
-https://chinese-culture-app.onrender.com/calendar
+https://www.culture-of-china.com/calendar
 
 ### Facebook / LinkedIn Post
 I built Chinese Culture Studio — a simple web app offering three traditional Chinese culture experiences:
@@ -184,7 +184,7 @@ I built Chinese Culture Studio — a simple web app offering three traditional C
 
 $1 per reading. No subscriptions. For cultural appreciation and entertainment.
 
-👉 https://chinese-culture-app.onrender.com
+👉 https://www.culture-of-china.com
 
 ---
 

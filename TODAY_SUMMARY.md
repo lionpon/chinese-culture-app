@@ -6,8 +6,8 @@
 |---|---|
 | 数据库 | Neon PostgreSQL `ep-lucky-dust-aqcxp3j7` (us-east-1) |
 | 托管 | Render `srv-d88ks0jbc2fs73eb6shg` (oregon, free) |
-| 地址 | https://chinese-culture-app.onrender.com |
-| 管理后台 | https://chinese-culture-app.onrender.com/admin?token=chinese-culture-admin-2024 |
+| 地址 | https://www.culture-of-china.com |
+| 管理后台 | https://www.culture-of-china.com/admin?token=chinese-culture-admin-2024 |
 | GitHub | https://github.com/lionpon/chinese-culture-app |
 | 自动部署 | Render 监听 master 分支 |
 | 保活 | cron-job.org 每 10 分钟 ping |
