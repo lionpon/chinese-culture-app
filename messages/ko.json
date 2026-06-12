@@ -92,7 +92,11 @@
       "askOwn": "직접 점치기 →"
     },
     "privacy": "개인정보처리방침",
-    "terms": "이용약관"
+    "terms": "이용약관",
+    "trust": {
+      "countries": "서비스 국가",
+      "readings": "완료된 해석"
+    }
   },
   "naming": {
     "title": "중국식 이름 짓기",

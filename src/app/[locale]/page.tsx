@@ -6,6 +6,7 @@ import DailyHexagram from "@/components/DailyHexagram";
 import FreeTierBadge from "@/components/FreeTierBadge";
 import FeatureCard from "@/components/FeatureCard";
 import ContactForm from "@/components/ContactForm";
+import TrustSignals from "@/components/TrustSignals";
 import { Link } from "@/navigation";
 
 const WC_BANNER: Record<string, { text: string; cta: string }> = {
@@ -38,6 +39,8 @@ export default function HomePage() {
           {t("subtitle")}
         </p>
       </section>
+
+      <TrustSignals />
 
       {showWorldCupBanner() && (
         <div className="max-w-2xl mx-auto mb-6">

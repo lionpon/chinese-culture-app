@@ -92,7 +92,11 @@
       "askOwn": "Cast Your Own →"
     },
     "privacy": "Privacy Policy",
-    "terms": "Terms of Service"
+    "terms": "Terms of Service",
+    "trust": {
+      "countries": "Countries Served",
+      "readings": "Readings Completed"
+    }
   },
   "naming": {
     "title": "Create a Chinese Name",

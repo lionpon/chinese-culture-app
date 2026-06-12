@@ -92,7 +92,11 @@
       "askOwn": "自分の卦を立てる →"
     },
     "privacy": "プライバシーポリシー",
-    "terms": "利用規約"
+    "terms": "利用規約",
+    "trust": {
+      "countries": "対応国数",
+      "readings": "鑑定実績"
+    }
   },
   "naming": {
     "title": "中国名を作る",
