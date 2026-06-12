@@ -563,5 +563,47 @@
       "heading": "연락처",
       "body": "질문, 피드백 또는 개인정보 관련 문의는 privacy@easternwisdom.app으로 연락 주세요."
     }
+  },
+  "tools": {
+    "emailTitle": "전체 레포트를 이메일로 받기",
+    "emailPlaceholder": "you@example.com",
+    "emailSubmit": "레포트 보내기",
+    "emailSuccess": "레포트가 전송되었습니다! 받은 편지함을 확인하세요.",
+    "emailError": "문제가 발생했습니다. 다시 시도해 주세요.",
+    "disclaimer": "문화적 감상을 위한 것입니다.",
+    "zodiacCalculator": {
+      "title": "무료 중국 십이지 계산기",
+      "subtitle": "태어난 연도를 입력하여 십이지 동물, 오행, 성격 특성, 궁합을 알아보세요",
+      "yearLabel": "태어난 해",
+      "yearPlaceholder": "예: 1990",
+      "submit": "내 띠 찾기",
+      "another": "다른 연도 시도",
+      "yourAnimal": "당신의 띠",
+      "element": "오행",
+      "personality": "성격 특성",
+      "luckyNumbers": "행운의 숫자",
+      "luckyColors": "행운의 색",
+      "compatible": "가장 잘 맞는 띠",
+      "incompatible": "가장 안 맞는 띠",
+      "note": "중국 설날은 매년 다른 날짜(1월 말 ~ 2월 초)입니다. 1월이나 2월 초에 태어난 경우 전년도 띠에 해당할 수 있습니다.",
+      "ctaNaming": "당신의 띠에 기반한 중국식 이름을 원하시나요?",
+      "ctaLink": "작명 서비스 이용하기"
+    },
+    "fiveElements": {
+      "title": "오행 성격 테스트",
+      "subtitle": "당신이 어떤 오행(목, 화, 토, 금, 수)인지 알아보세요",
+      "question": "질문",
+      "of": "/",
+      "prev": "뒤로",
+      "next": "다음",
+      "seeResult": "결과 보기",
+      "yourElement": "당신의 요소는",
+      "description": "성격",
+      "career": "진로 방향",
+      "compatible": "가장 잘 맞는 요소",
+      "restart": "다시 테스트하기",
+      "ctaDivination": "주역 운명 발견하기",
+      "ctaCalendar": "이번 달 길일 찾기"
+    }
   }
 }

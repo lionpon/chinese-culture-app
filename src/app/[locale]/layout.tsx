@@ -97,10 +97,10 @@ export default async function LocaleLayout({ children, params }: Props) {
   const pathname = params.locale === "en" ? "" : `/${params.locale}`;
 
   const footerGuideLabels: Record<string, string[]> = {
-    en: ["Chinese Name Guide", "Boy Names", "Girl Names", "I Ching Guide", "I Ching Beginner", "Auspicious Dates", "Wedding Dates 2026", "Chinese Zodiac", "Five Elements", "CNY 2027", "Lucky Numbers", "Feng Shui", "Face Reading", "Dream Meaning"],
-    ru: ["Гид по Китайским Именам", "Мужские Имена", "Женские Имена", "Гид по И-Цзин", "И-Цзин для Начинающих", "Благоприятные Даты", "Свадебные Даты 2026", "Китайский Зодиак", "Пять Элементов", "КНГ 2027", "Счастливые числа", "Фэн-шуй", "Чтение лица", "Толкование снов"],
-    ja: ["中国名ガイド", "男性の名前", "女性の名前", "易経ガイド", "易経入門", "吉日", "2026年結婚日", "十二支", "五行", "旧正月2027", "縁起の良い数字", "風水", "人相学", "夢占い"],
-    ko: ["중국식 이름 가이드", "남자 이름", "여자 이름", "주역 가이드", "주역 입문", "길일", "2026 결혼 날짜", "십이지", "오행", "2027 춘절", "행운의 숫자", "풍수", "관상", "꿈 해몽"],
+    en: ["Chinese Name Guide", "Boy Names", "Girl Names", "I Ching Guide", "I Ching Beginner", "Auspicious Dates", "Wedding Dates 2026", "Chinese Zodiac", "Five Elements", "CNY 2027", "Lucky Numbers", "Feng Shui", "Face Reading", "Dream Meaning", "Free Zodiac Calculator", "Five Elements Test"],
+    ru: ["Гид по Китайским Именам", "Мужские Имена", "Женские Имена", "Гид по И-Цзин", "И-Цзин для Начинающих", "Благоприятные Даты", "Свадебные Даты 2026", "Китайский Зодиак", "Пять Элементов", "КНГ 2027", "Счастливые числа", "Фэн-шуй", "Чтение лица", "Толкование снов", "Калькулятор Зодиака", "Тест Пяти Элементов"],
+    ja: ["中国名ガイド", "男性の名前", "女性の名前", "易経ガイド", "易経入門", "吉日", "2026年結婚日", "十二支", "五行", "旧正月2027", "縁起の良い数字", "風水", "人相学", "夢占い", "無料十二支計算", "五行診断"],
+    ko: ["중국식 이름 가이드", "남자 이름", "여자 이름", "주역 가이드", "주역 입문", "길일", "2026 결혼 날짜", "십이지", "오행", "2027 춘절", "행운의 숫자", "풍수", "관상", "꿈 해몽", "무료 띠 계산기", "오행 테스트"],
   };
 
   const guideSlugs = [
@@ -109,10 +109,20 @@ export default async function LocaleLayout({ children, params }: Props) {
     "lucky-numbers", "feng-shui", "face-reading", "dream-meaning",
   ];
 
-  const labels = footerGuideLabels[params.locale] || footerGuideLabels.en;
+  const toolSlugs = ["zodiac-calculator", "five-elements-test"];
+
+  const allLabels = footerGuideLabels[params.locale] || footerGuideLabels.en;
+  const guideLabels = allLabels.slice(0, 14);
+  const toolLabels = allLabels.slice(14);
+
   const footerGuides = guideSlugs.map((slug, i) => ({
     href: `/guide/${slug}`,
-    label: labels[i],
+    label: guideLabels[i],
+  }));
+
+  const footerTools = toolSlugs.map((slug, i) => ({
+    href: `/tools/${slug}`,
+    label: toolLabels[i],
   }));
 
   return (
@@ -154,6 +164,11 @@ export default async function LocaleLayout({ children, params }: Props) {
                 <p>{t("footer.paymentNote")}</p>
                 <p className="flex justify-center gap-4 flex-wrap">
                   {footerGuides.map((g) => (
+                    <a key={g.href} href={`${pathname}${g.href}`} className="hover:text-stone-500 underline">{g.label}</a>
+                  ))}
+                </p>
+                <p className="flex justify-center gap-4 flex-wrap font-medium">
+                  {footerTools.map((g) => (
                     <a key={g.href} href={`${pathname}${g.href}`} className="hover:text-stone-500 underline">{g.label}</a>
                   ))}
                 </p>

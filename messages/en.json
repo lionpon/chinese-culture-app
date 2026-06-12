@@ -562,5 +562,47 @@
       "heading": "Contact",
       "body": "For questions, feedback, or privacy concerns, reach us at privacy@easternwisdom.app."
     }
+  },
+  "tools": {
+    "emailTitle": "Get Your Full Report by Email",
+    "emailPlaceholder": "you@example.com",
+    "emailSubmit": "Send My Report",
+    "emailSuccess": "Report sent! Check your inbox.",
+    "emailError": "Something went wrong. Please try again.",
+    "disclaimer": "For cultural appreciation only.",
+    "zodiacCalculator": {
+      "title": "Free Chinese Zodiac Calculator",
+      "subtitle": "Enter your birth year to discover your zodiac animal, element, personality traits, and compatibility",
+      "yearLabel": "Your Birth Year",
+      "yearPlaceholder": "e.g. 1990",
+      "submit": "Find My Zodiac Sign",
+      "another": "Try Another Year",
+      "yourAnimal": "Your Zodiac Animal",
+      "element": "Element",
+      "personality": "Personality Traits",
+      "luckyNumbers": "Lucky Numbers",
+      "luckyColors": "Lucky Colors",
+      "compatible": "Most Compatible With",
+      "incompatible": "Least Compatible With",
+      "note": "Chinese New Year falls on different dates each year (late January to early February). If you were born in January or early February, your zodiac sign may be the previous year's animal.",
+      "ctaNaming": "Want a personalized Chinese name based on your zodiac?",
+      "ctaLink": "Try Our Naming Service"
+    },
+    "fiveElements": {
+      "title": "Five Elements Personality Test",
+      "subtitle": "Discover which Wu Xing element you are — Wood, Fire, Earth, Metal, or Water",
+      "question": "Question",
+      "of": "of",
+      "prev": "Back",
+      "next": "Next",
+      "seeResult": "See My Result",
+      "yourElement": "Your Element Is",
+      "description": "Personality",
+      "career": "Career Direction",
+      "compatible": "You Work Best With",
+      "restart": "Take the Quiz Again",
+      "ctaDivination": "Discover your I Ching destiny",
+      "ctaCalendar": "Find your lucky dates this month"
+    }
   }
 }

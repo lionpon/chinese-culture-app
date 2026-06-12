@@ -38,3 +38,10 @@ model DailyReport {
   details         String   @default("{}") @db.Text
   createdAt       DateTime @default(now())
 }
+
+model Subscriber {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  source    String
+  createdAt DateTime @default(now())
+}

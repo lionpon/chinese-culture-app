@@ -562,5 +562,47 @@
       "heading": "お問い合わせ",
       "body": "ご質問、フィードバック、プライバシーに関するお問い合わせは privacy@easternwisdom.app までご連絡ください。"
     }
+  },
+  "tools": {
+    "emailTitle": "完全なレポートをメールで受け取る",
+    "emailPlaceholder": "you@example.com",
+    "emailSubmit": "レポートを送信",
+    "emailSuccess": "レポートを送信しました！メールをご確認ください。",
+    "emailError": "エラーが発生しました。もう一度お試しください。",
+    "disclaimer": "文化的鑑賞のみを目的としています。",
+    "zodiacCalculator": {
+      "title": "無料中国十二支計算機",
+      "subtitle": "生まれた年を入力して、十二支、五行、性格、相性を発見しましょう",
+      "yearLabel": "生まれた年",
+      "yearPlaceholder": "例: 1990",
+      "submit": "十二支を調べる",
+      "another": "別の年を試す",
+      "yourAnimal": "あなたの十二支",
+      "element": "五行",
+      "personality": "性格の特徴",
+      "luckyNumbers": "ラッキーナンバー",
+      "luckyColors": "ラッキーカラー",
+      "compatible": "最も相性の良い干支",
+      "incompatible": "最も相性の悪い干支",
+      "note": "旧正月は毎年異なる日付（1月下旬から2月上旬）です。1月または2月上旬生まれの場合、前の年の干支になることがあります。",
+      "ctaNaming": "あなたの干支に基づいた中国名を作りませんか？",
+      "ctaLink": "命名サービスを試す"
+    },
+    "fiveElements": {
+      "title": "五行パーソナリティ診断",
+      "subtitle": "あなたがどの五行（木・火・土・金・水）タイプかを見つけましょう",
+      "question": "質問",
+      "of": "/",
+      "prev": "戻る",
+      "next": "次へ",
+      "seeResult": "結果を見る",
+      "yourElement": "あなたの元素は",
+      "description": "性格",
+      "career": "キャリアの方向性",
+      "compatible": "最も相性の良い元素",
+      "restart": "もう一度診断する",
+      "ctaDivination": "易経の運命を発見する",
+      "ctaCalendar": "今月の吉日を見つける"
+    }
   }
 }

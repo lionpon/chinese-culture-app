@@ -24,6 +24,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/guide/feng-shui", priority: 0.7, changeFreq: "monthly" as const },
     { path: "/guide/face-reading", priority: 0.7, changeFreq: "monthly" as const },
     { path: "/guide/dream-meaning", priority: 0.7, changeFreq: "monthly" as const },
+    { path: "/tools/zodiac-calculator", priority: 0.7, changeFreq: "monthly" as const },
+    { path: "/tools/five-elements-test", priority: 0.7, changeFreq: "monthly" as const },
     { path: "/world-cup", priority: 0.9, changeFreq: "daily" as const },
     { path: "/about", priority: 0.5, changeFreq: "monthly" as const },
     { path: "/privacy", priority: 0.3, changeFreq: "yearly" as const },
