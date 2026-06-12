@@ -151,6 +151,9 @@ export default async function LocaleLayout({ children, params }: Props) {
                   <LanguageSwitcher />
                 </nav>
                 <div className="flex items-center gap-2 sm:gap-4">
+                  <a href={`${pathname}/world-cup`} className="sm:hidden text-xs font-bold px-2.5 py-1 rounded-full animate-pulse" style={{ backgroundColor: "var(--accent)", color: "white" }}>
+                    ⚽ WC
+                  </a>
                   <span className="sm:hidden"><LanguageSwitcher /></span>
                   <ShareButton />
                   <NavMenu />

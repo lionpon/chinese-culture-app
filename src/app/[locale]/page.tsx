@@ -43,9 +43,9 @@ export default function HomePage() {
       <TrustSignals />
 
       {showWorldCupBanner() && (
-        <div className="max-w-2xl mx-auto mb-6">
+        <div className="max-w-2xl mx-auto mb-6 animate-pulse">
           <Link href="/world-cup" className="block">
-            <div className="rounded-2xl p-4 sm:p-5 text-center transition-all hover:shadow-md"
+            <div className="rounded-2xl p-4 sm:p-5 text-center transition-all hover:shadow-md hover:scale-[1.02] active:scale-95"
               style={{ background: "linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 70%, #f59e0b))" }}>
               <p className="text-white/90 text-xs sm:text-sm font-medium mb-1">⚽ {wc.text}</p>
               <p className="text-white font-bold text-sm sm:text-base">{wc.cta}</p>
