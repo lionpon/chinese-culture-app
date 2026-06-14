@@ -11,13 +11,15 @@ export interface ReportData {
   byType: Record<string, { count: number; revenue: number }>;
   freeTrials: number;
   freeTrialsByType: Record<string, number>;
+  subscribers: number;
+  subscribersBySource: Record<string, number>;
 }
 
 export async function generateReport(date: string, locale?: string): Promise<ReportData> {
   const dayStart = new Date(date + "T00:00:00.000Z");
   const dayEnd = new Date(date + "T23:59:59.999Z");
 
-  const [visits, purchases, freePurchases] = await Promise.all([
+  const [visits, purchases, freePurchases, subscribers] = await Promise.all([
     prisma.visit.findMany({
       where: { createdAt: { gte: dayStart, lte: dayEnd } },
     }),
@@ -34,6 +36,9 @@ export async function generateReport(date: string, locale?: string): Promise<Rep
         status: "completed",
         paid: false,
       },
+    }),
+    prisma.subscriber.findMany({
+      where: { createdAt: { gte: dayStart, lte: dayEnd } },
     }),
   ]);
 
@@ -78,20 +83,25 @@ export async function generateReport(date: string, locale?: string): Promise<Rep
   const freeTrials = freePurchases.length;
   const revenue = purchases.length;
 
+  const subscribersBySource: Record<string, number> = {};
+  for (const s of subscribers) {
+    subscribersBySource[s.source] = (subscribersBySource[s.source] || 0) + 1;
+  }
+
   await prisma.dailyReport.upsert({
     where: { date },
     update: {
       visits: filtered.length,
       uniqueCountries: Object.keys(countries).length,
       revenue,
-      details: JSON.stringify({ countries, cities, pages, byType, freeTrials, freeTrialsByType }),
+      details: JSON.stringify({ countries, cities, pages, byType, freeTrials, freeTrialsByType, subscribers: subscribers.length, subscribersBySource }),
     },
     create: {
       date,
       visits: filtered.length,
       uniqueCountries: Object.keys(countries).length,
       revenue,
-      details: JSON.stringify({ countries, cities, pages, byType, freeTrials, freeTrialsByType }),
+      details: JSON.stringify({ countries, cities, pages, byType, freeTrials, freeTrialsByType, subscribers: subscribers.length, subscribersBySource }),
     },
   });
 
@@ -106,6 +116,8 @@ export async function generateReport(date: string, locale?: string): Promise<Rep
     byType,
     freeTrials,
     freeTrialsByType,
+    subscribers: subscribers.length,
+    subscribersBySource,
   };
 }
 
@@ -136,6 +148,8 @@ export async function getReports(days: number = 7, locale?: string): Promise<Rep
       revenue: r.revenue,
       freeTrials: details.freeTrials ?? Object.values(details.freeTrialsByType ?? {}).reduce((a: number, b) => a + (b as number), 0),
       freeTrialsByType: details.freeTrialsByType ?? {},
+      subscribers: details.subscribers ?? 0,
+      subscribersBySource: details.subscribersBySource ?? {},
       ...details,
     };
   });

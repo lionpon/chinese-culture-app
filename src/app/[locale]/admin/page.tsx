@@ -12,6 +12,8 @@ interface ReportData {
   byType: Record<string, { count: number; revenue: number }>;
   freeTrials: number;
   freeTrialsByType: Record<string, number>;
+  subscribers: number;
+  subscribersBySource: Record<string, number>;
 }
 
 const COUNTRY_NAMES: Record<string, string> = {
@@ -200,7 +202,7 @@ export default function AdminDashboard() {
       )}
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 sm:gap-4 mb-6 sm:mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mb-6 sm:mb-8">
         <div className="card-classic p-3 sm:p-5 text-center">
           <p className="text-2xl sm:text-3xl font-bold" style={{ color: "var(--accent)" }}>{today?.visits ?? "-"}</p>
           <p className="text-[10px] sm:text-xs text-stone-500 mt-1">Visits Today</p>
@@ -216,6 +218,10 @@ export default function AdminDashboard() {
         <div className="card-classic p-3 sm:p-5 text-center">
           <p className="text-2xl sm:text-3xl font-bold text-purple-600">{today?.freeTrials ?? "-"}</p>
           <p className="text-[10px] sm:text-xs text-stone-500 mt-1">Free Trials Today</p>
+        </div>
+        <div className="card-classic p-3 sm:p-5 text-center">
+          <p className="text-2xl sm:text-3xl font-bold text-indigo-600">{today?.subscribers ?? "-"}</p>
+          <p className="text-[10px] sm:text-xs text-stone-500 mt-1">Subscribers Today</p>
         </div>
         <div className="card-classic p-3 sm:p-5 text-center">
           <p className="text-2xl sm:text-3xl font-bold text-stone-700">{loading ? "..." : totalVisits}</p>
@@ -394,6 +400,69 @@ export default function AdminDashboard() {
         </div>
       </div>
 
+      {/* Subscribers Detail */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
+        <div className="card-classic p-4 sm:p-6">
+          <h2 className="text-sm font-semibold text-stone-700 mb-4">今日订阅来源分布</h2>
+          {today?.subscribersBySource && Object.keys(today.subscribersBySource).length > 0 ? (
+            <div className="space-y-3">
+              {Object.entries(today.subscribersBySource)
+                .sort(([, a], [, b]) => b - a)
+                .map(([source, count]) => (
+                  <div key={source}>
+                    <div className="flex items-center justify-between text-xs mb-1">
+                      <span className="text-stone-700 font-medium capitalize">{source.replace(/-/g, " ")}</span>
+                      <span className="font-medium text-indigo-600">{count} 人</span>
+                    </div>
+                    <div className="w-full h-2 bg-stone-100 rounded-full overflow-hidden">
+                      <div
+                        className="h-full rounded-full transition-all bg-indigo-500"
+                        style={{ width: `${today.subscribers > 0 ? (count / today.subscribers) * 100 : 0}%` }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              <div className="border-t border-stone-100 pt-2 mt-2 flex justify-between text-xs">
+                <span className="text-stone-500">合计</span>
+                <span className="text-indigo-600 font-bold">{today.subscribers} 人</span>
+              </div>
+            </div>
+          ) : (
+            <p className="text-xs text-stone-400">今日尚无邮件订阅。</p>
+          )}
+        </div>
+
+        {/* 7-Day Subscribers Trend */}
+        <div className="card-classic p-4 sm:p-6">
+          <h2 className="text-sm font-semibold text-stone-700 mb-4">7日订阅趋势</h2>
+          {reports.length > 0 ? (
+            <div className="space-y-4">
+              <div className="flex items-end gap-1 sm:gap-1.5 h-32 sm:h-40">
+                {reports.map((r) => {
+                  const total = r.subscribers ?? 0;
+                  const maxSubs = Math.max(1, ...reports.map((x) => (x.subscribers ?? 0)));
+                  return (
+                    <div key={r.date} className="flex-1 flex flex-col items-center gap-0.5 h-full justify-end">
+                      <span className="text-[10px] text-stone-500">{total || ""}</span>
+                      <div
+                        className="w-full rounded-t transition-all bg-indigo-400"
+                        style={{ height: `${Math.max(4, (total / maxSubs) * 100)}%`, opacity: total > 0 ? 1 : 0.3 }}
+                      />
+                      <span className="text-[10px] text-stone-400">{r.date.slice(5)}</span>
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="text-center text-xs text-stone-400">
+                7日合计：{reports.reduce((s, r) => s + (r.subscribers ?? 0), 0)} 人订阅
+              </div>
+            </div>
+          ) : (
+            <p className="text-xs text-stone-400">暂无数据。</p>
+          )}
+        </div>
+      </div>
+
       {/* 7-Day Summary Table */}
       <div className="card-classic p-4 sm:p-6">
         <h2 className="text-sm font-semibold text-stone-700 mb-4">7日汇总明细</h2>
@@ -404,6 +473,7 @@ export default function AdminDashboard() {
                 <th className="text-left py-2 font-medium">Date</th>
                 <th className="text-right py-2 font-medium">Visits</th>
                 <th className="text-right py-2 font-medium">Trials</th>
+                <th className="text-right py-2 font-medium">Subs</th>
                 <th className="text-right py-2 font-medium">取名</th>
                 <th className="text-right py-2 font-medium">择日</th>
                 <th className="text-right py-2 font-medium">占卜</th>
@@ -418,6 +488,7 @@ export default function AdminDashboard() {
                     <td className="py-2 text-stone-700">{r.date}</td>
                     <td className="py-2 text-right" style={{ color: "var(--accent)" }}>{r.visits}</td>
                     <td className="py-2 text-right text-purple-600 font-medium">{r.freeTrials ?? 0}</td>
+                    <td className="py-2 text-right text-indigo-600 font-medium">{r.subscribers ?? 0}</td>
                     {ALL_MODULES.map((m) => (
                       <td key={m} className="py-2 text-right text-stone-500">
                         {r.freeTrialsByType?.[m] || 0}
