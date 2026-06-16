@@ -55,6 +55,7 @@
     },
     "loading": "로딩 중...",
     "freeTier": {
+      "three": "3회 무료 미리보기가 있습니다 — 체험해 보세요!",
       "two": "2회 무료 미리보기가 있습니다 — 체험해 보세요!",
       "one": "1회 무료 미리보기가 남았습니다"
     },
@@ -63,6 +64,11 @@
   "home": {
     "title": "Chinese Culture Studio",
     "subtitle": "이름, 길일, 점술, 수상을 통해 고대 중국 고전의 지혜를 발견하세요",
+    "quickStart": {
+      "naming": "중국식 이름 받기",
+      "divination": "주역 점치기",
+      "calendar": "길일 찾기"
+    },
     "features": {
       "naming": {
         "title": "중국식 이름 짓기",
@@ -435,7 +441,9 @@
     "unlockDivination2": "동효 해석 및 구체적 조언",
     "unlockCalendar1": "점수가 매겨진 2개의 추가 길일",
     "unlockCalendar2": "각 날짜별 길시와 길신",
-    "unlockNow": "전체 결과 확인하기 — $1부터"
+    "unlockNow": "전체 결과 확인하기 — $1부터",
+    "seeFreePreview": "무료 미리보기 보기",
+    "unlockFullCta": "전체 결과 — $1"
   },
   "legal": {
     "privacy": {

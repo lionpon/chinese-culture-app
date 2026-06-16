@@ -2,6 +2,7 @@
 
 import type { CalendarResult } from "@/types";
 import PaywallOverlay from "./PaywallOverlay";
+import EmailCaptureForm from "./EmailCaptureForm";
 
 function DayCard({ day }: { day: CalendarResult["auspiciousDays"][0] }) {
   return (
@@ -85,6 +86,8 @@ export default function CalendarResultView({
           ))
         )}
       </div>
+      <EmailCaptureForm source="calendar" />
     </div>
   );
 }
+

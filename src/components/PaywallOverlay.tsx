@@ -14,6 +14,7 @@ export default function PaywallOverlay({
 }) {
   const t = useTranslations("success");
   const [loading, setLoading] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
 
   async function unlock() {
     setLoading(true);
@@ -36,6 +37,8 @@ export default function PaywallOverlay({
     }
   }
 
+  if (dismissed) return null;
+
   return (
     <div className="relative">
       <div className="blur-sm select-none opacity-30 pointer-events-none">
@@ -54,14 +57,23 @@ export default function PaywallOverlay({
             <li>+ {t(featureKey1)}</li>
             <li>+ {t(featureKey2)}</li>
           </ul>
-          <button
-            onClick={unlock}
-            disabled={loading}
-            className="px-5 py-2.5 rounded-xl text-sm font-medium text-white transition-opacity disabled:opacity-60"
-            style={{ backgroundColor: "var(--accent)" }}
-          >
-            {loading ? "..." : t("unlockNow")}
-          </button>
+          <div className="flex flex-col gap-2">
+            <button
+              onClick={() => setDismissed(true)}
+              className="px-5 py-2.5 rounded-xl text-sm font-medium text-white transition-opacity"
+              style={{ backgroundColor: "var(--accent)" }}
+            >
+              {t("seeFreePreview")}
+            </button>
+            <button
+              onClick={unlock}
+              disabled={loading}
+              className="px-5 py-2 rounded-xl text-sm font-medium transition-opacity disabled:opacity-60"
+              style={{ border: "2px solid rgba(155,74,58,0.25)", color: "var(--accent)", background: "transparent" }}
+            >
+              {loading ? "..." : t("unlockFullCta")}
+            </button>
+          </div>
         </div>
       </div>
     </div>

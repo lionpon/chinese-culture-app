@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 
 interface EmailCaptureFormProps {
-  source: "zodiac-calculator" | "five-elements-test";
+  source: "zodiac-calculator" | "five-elements-test" | "divination" | "naming" | "calendar" | "palm-reading";
 }
 
 export default function EmailCaptureForm({ source }: EmailCaptureFormProps) {

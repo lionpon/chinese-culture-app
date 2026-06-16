@@ -31,30 +31,30 @@ export const GROUPS: WCGroup[] = [
 
 export const MATCHES: WCMatch[] = [
   // ===== June 11 =====
-  { id: "A1", date: "2026-06-11", home: "Mexico", away: "South Africa", group: "A", venue: "Mexico City", stage: "group" },
-  { id: "A2", date: "2026-06-11", home: "Korea Republic", away: "Czechia", group: "A", venue: "Guadalajara", stage: "group" },
+  { id: "A1", date: "2026-06-11", home: "Mexico", away: "South Africa", group: "A", venue: "Mexico City", stage: "group", result: { home: 2, away: 0 } },
+  { id: "A2", date: "2026-06-11", home: "Korea Republic", away: "Czechia", group: "A", venue: "Guadalajara", stage: "group", result: { home: 2, away: 1 } },
 
   // ===== June 12 =====
-  { id: "B1", date: "2026-06-12", home: "Canada", away: "Bosnia & Herzegovina", group: "B", venue: "Toronto", stage: "group" },
-  { id: "D1", date: "2026-06-12", home: "USA", away: "Paraguay", group: "D", venue: "Los Angeles", stage: "group" },
+  { id: "B1", date: "2026-06-12", home: "Canada", away: "Bosnia & Herzegovina", group: "B", venue: "Toronto", stage: "group", result: { home: 1, away: 1 } },
+  { id: "D1", date: "2026-06-12", home: "USA", away: "Paraguay", group: "D", venue: "Los Angeles", stage: "group", result: { home: 4, away: 1 } },
 
   // ===== June 13 =====
-  { id: "C1", date: "2026-06-13", home: "Haiti", away: "Scotland", group: "C", venue: "Boston", stage: "group" },
-  { id: "D2", date: "2026-06-13", home: "Australia", away: "Türkiye", group: "D", venue: "Vancouver", stage: "group" },
-  { id: "C2", date: "2026-06-13", home: "Brazil", away: "Morocco", group: "C", venue: "New York/New Jersey", stage: "group" },
-  { id: "B2", date: "2026-06-13", home: "Qatar", away: "Switzerland", group: "B", venue: "San Francisco Bay Area", stage: "group" },
+  { id: "C1", date: "2026-06-13", home: "Haiti", away: "Scotland", group: "C", venue: "Boston", stage: "group", result: { home: 0, away: 1 } },
+  { id: "D2", date: "2026-06-13", home: "Australia", away: "Türkiye", group: "D", venue: "Vancouver", stage: "group", result: { home: 2, away: 0 } },
+  { id: "C2", date: "2026-06-13", home: "Brazil", away: "Morocco", group: "C", venue: "New York/New Jersey", stage: "group", result: { home: 1, away: 1 } },
+  { id: "B2", date: "2026-06-13", home: "Qatar", away: "Switzerland", group: "B", venue: "San Francisco Bay Area", stage: "group", result: { home: 1, away: 1 } },
 
   // ===== June 14 =====
-  { id: "E1", date: "2026-06-14", home: "Côte d'Ivoire", away: "Ecuador", group: "E", venue: "Philadelphia", stage: "group" },
-  { id: "E2", date: "2026-06-14", home: "Germany", away: "Curaçao", group: "E", venue: "Houston", stage: "group" },
-  { id: "F1", date: "2026-06-14", home: "Netherlands", away: "Japan", group: "F", venue: "Dallas", stage: "group" },
-  { id: "F2", date: "2026-06-14", home: "Sweden", away: "Tunisia", group: "F", venue: "Monterrey", stage: "group" },
+  { id: "E1", date: "2026-06-14", home: "Côte d'Ivoire", away: "Ecuador", group: "E", venue: "Philadelphia", stage: "group", result: { home: 1, away: 0 } },
+  { id: "E2", date: "2026-06-14", home: "Germany", away: "Curaçao", group: "E", venue: "Houston", stage: "group", result: { home: 7, away: 1 } },
+  { id: "F1", date: "2026-06-14", home: "Netherlands", away: "Japan", group: "F", venue: "Dallas", stage: "group", result: { home: 2, away: 2 } },
+  { id: "F2", date: "2026-06-14", home: "Sweden", away: "Tunisia", group: "F", venue: "Monterrey", stage: "group", result: { home: 5, away: 1 } },
 
   // ===== June 15 =====
-  { id: "H1", date: "2026-06-15", home: "Saudi Arabia", away: "Uruguay", group: "H", venue: "Miami", stage: "group" },
-  { id: "H2", date: "2026-06-15", home: "Spain", away: "Cabo Verde", group: "H", venue: "Atlanta", stage: "group" },
-  { id: "G1", date: "2026-06-15", home: "IR Iran", away: "New Zealand", group: "G", venue: "Los Angeles", stage: "group" },
-  { id: "G2", date: "2026-06-15", home: "Belgium", away: "Egypt", group: "G", venue: "Seattle", stage: "group" },
+  { id: "H1", date: "2026-06-15", home: "Saudi Arabia", away: "Uruguay", group: "H", venue: "Miami", stage: "group", result: { home: 1, away: 1 } },
+  { id: "H2", date: "2026-06-15", home: "Spain", away: "Cabo Verde", group: "H", venue: "Atlanta", stage: "group", result: { home: 0, away: 0 } },
+  { id: "G1", date: "2026-06-15", home: "IR Iran", away: "New Zealand", group: "G", venue: "Los Angeles", stage: "group", result: { home: 2, away: 2 } },
+  { id: "G2", date: "2026-06-15", home: "Belgium", away: "Egypt", group: "G", venue: "Seattle", stage: "group", result: { home: 1, away: 1 } },
 
   // ===== June 16 =====
   { id: "I1", date: "2026-06-16", home: "France", away: "Senegal", group: "I", venue: "New York/New Jersey", stage: "group" },

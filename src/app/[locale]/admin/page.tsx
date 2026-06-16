@@ -7,6 +7,7 @@ interface ReportData {
   visits: number;
   uniqueCountries: number;
   revenue: number;
+  datacenterVisits: number;
   countries: Record<string, number>;
   pages: Record<string, number>;
   byType: Record<string, { count: number; revenue: number }>;
@@ -202,10 +203,14 @@ export default function AdminDashboard() {
       )}
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4 mb-6 sm:mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3 sm:gap-4 mb-6 sm:mb-8">
         <div className="card-classic p-3 sm:p-5 text-center">
           <p className="text-2xl sm:text-3xl font-bold" style={{ color: "var(--accent)" }}>{today?.visits ?? "-"}</p>
           <p className="text-[10px] sm:text-xs text-stone-500 mt-1">Visits Today</p>
+        </div>
+        <div className="card-classic p-3 sm:p-5 text-center">
+          <p className="text-2xl sm:text-3xl font-bold" style={{ color: "var(--jade)" }}>{today ? Math.max(0, today.visits - (today.datacenterVisits || 0)) : "-"}</p>
+          <p className="text-[10px] sm:text-xs text-stone-500 mt-1">Real Visits (est.)</p>
         </div>
         <div className="card-classic p-3 sm:p-5 text-center">
           <p className="text-2xl sm:text-3xl font-bold" style={{ color: "var(--gold)" }}>{today?.uniqueCountries ?? "-"}</p>

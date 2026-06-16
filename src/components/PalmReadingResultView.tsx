@@ -1,6 +1,7 @@
 "use client";
 
 import type { PalmReadingResult, LineAnalysis, MountAnalysis } from "@/types";
+import EmailCaptureForm from "./EmailCaptureForm";
 
 const QUALITY_COLORS: Record<string, string> = {
   excellent: "#2D6A4F",
@@ -176,6 +177,7 @@ export default function PalmReadingResultView({ result }: { result: PalmReadingR
           </div>
         ))}
       </div>
+      <EmailCaptureForm source="palm-reading" />
     </div>
   );
 }

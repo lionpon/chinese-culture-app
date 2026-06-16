@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "invalid_email" }, { status: 400 });
     }
 
-    const validSources = ["zodiac-calculator", "five-elements-test"];
+    const validSources = ["zodiac-calculator", "five-elements-test", "divination", "naming", "calendar", "palm-reading"];
     if (!source || !validSources.includes(source)) {
       return NextResponse.json({ error: "invalid_source" }, { status: 400 });
     }
@@ -36,7 +36,15 @@ export async function POST(req: NextRequest) {
 
     const resendApiKey = process.env.RESEND_API_KEY;
     if (resendApiKey) {
-      const sourceLabel = source === "zodiac-calculator" ? "Zodiac Calculator" : "Five Elements Test";
+      const sourceLabels: Record<string, string> = {
+        "zodiac-calculator": "Zodiac Calculator",
+        "five-elements-test": "Five Elements Test",
+        "divination": "I Ching Divination",
+        "naming": "Chinese Name",
+        "calendar": "Auspicious Dates",
+        "palm-reading": "Palm Reading",
+      };
+      const sourceLabel = sourceLabels[source] || source;
       await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: {

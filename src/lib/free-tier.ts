@@ -1,5 +1,5 @@
 const STORAGE_KEY = "cc-free-tier";
-const MAX_FREE = 1;
+const MAX_FREE = 3;
 
 interface FreeTier {
   remaining: number;

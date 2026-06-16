@@ -3,6 +3,7 @@
 import type { NamingResult, NameAnalysisResult } from "@/types";
 import SpeakButton from "./SpeakButton";
 import PaywallOverlay from "./PaywallOverlay";
+import EmailCaptureForm from "./EmailCaptureForm";
 
 function ResultCard({ opt, i, recommended }: { opt: { characters: string; pinyin: string; meaning: string; wuxing: string; source: string; sourceText?: string }; i: number; recommended: boolean }) {
   return (
@@ -96,6 +97,7 @@ export default function NamingResultView({
             </div>
           </>
         )}
+      <EmailCaptureForm source="naming" />
       </div>
     );
   }
@@ -131,6 +133,7 @@ export default function NamingResultView({
           </>
         )}
       </div>
+      <EmailCaptureForm source="naming" />
     </div>
   );
 }

@@ -16,7 +16,7 @@ export default function FreeTierBadge() {
 
   return (
     <div className="text-center mb-4 rounded-xl px-4 py-3 text-sm font-medium" style={{ backgroundColor: "#F0F7F0", border: "1px solid rgba(91,123,107,0.2)", color: "#5B7B6B" }}>
-      {remaining === 2 ? t("freeTier.two") : t("freeTier.one")}
+      {remaining >= 3 ? t("freeTier.three") : remaining === 2 ? t("freeTier.two") : t("freeTier.one")}
     </div>
   );
 }

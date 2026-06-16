@@ -55,6 +55,7 @@
     },
     "loading": "読み込み中...",
     "freeTier": {
+      "three": "無料プレビューが3回あります — お試しください！",
       "two": "無料プレビューが2回あります — お試しください！",
       "one": "無料プレビューが残り1回です"
     },
@@ -63,6 +64,11 @@
   "home": {
     "title": "Chinese Culture Studio",
     "subtitle": "名前、吉日、占い、手相を通じて古代中国の知恵を発見しましょう",
+    "quickStart": {
+      "naming": "中国名を作る",
+      "divination": "易経を占う",
+      "calendar": "吉日を探す"
+    },
     "features": {
       "naming": {
         "title": "中国名を作る",
@@ -435,7 +441,9 @@
     "unlockDivination2": "動爻の解釈と具体的なアドバイス",
     "unlockCalendar1": "スコア付きの追加の吉日2件",
     "unlockCalendar2": "各日付の吉時と吉神",
-    "unlockNow": "完全な結果をアンロック — $1から"
+    "unlockNow": "完全な結果をアンロック — $1から",
+    "seeFreePreview": "無料プレビューを見る",
+    "unlockFullCta": "完全な結果 — $1"
   },
   "legal": {
     "privacy": {

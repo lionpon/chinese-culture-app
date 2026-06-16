@@ -20,13 +20,14 @@ model Purchase {
 }
 
 model Visit {
-  id        String   @id @default(cuid())
-  page      String
-  country   String   @default("Unknown")
-  city      String   @default("")
-  region    String   @default("")
-  referrer  String   @default("")
-  createdAt DateTime @default(now())
+  id            String   @id @default(cuid())
+  page          String
+  country       String   @default("Unknown")
+  city          String   @default("")
+  region        String   @default("")
+  referrer      String   @default("")
+  isDatacenter  Boolean  @default(false)
+  createdAt     DateTime @default(now())
 }
 
 model DailyReport {

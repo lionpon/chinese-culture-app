@@ -3,6 +3,7 @@
 import type { DivinationResult } from "@/types";
 import SpeakButton from "./SpeakButton";
 import PaywallOverlay from "./PaywallOverlay";
+import EmailCaptureForm from "./EmailCaptureForm";
 
 export default function DivinationResultView({
   result,
@@ -83,6 +84,7 @@ export default function DivinationResultView({
           </>
         )}
       </div>
+      <EmailCaptureForm source="divination" />
     </div>
   );
 }

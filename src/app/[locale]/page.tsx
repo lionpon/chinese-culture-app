@@ -38,6 +38,21 @@ export default function HomePage() {
         <p className="text-base sm:text-lg text-stone-500 max-w-lg mx-auto leading-relaxed">
           {t("subtitle")}
         </p>
+
+        <div className="flex justify-center gap-3 mt-8 flex-wrap">
+          <Link href="/naming" className="group flex items-center gap-2 px-4 py-3 rounded-xl border-2 border-stone-200 bg-white hover:border-accent hover:shadow-md transition-all text-sm font-medium text-stone-700 hover:text-accent">
+            <span className="text-lg">名</span>
+            {t("quickStart.naming")}
+          </Link>
+          <Link href="/divination" className="group flex items-center gap-2 px-4 py-3 rounded-xl border-2 border-stone-200 bg-white hover:border-accent hover:shadow-md transition-all text-sm font-medium text-stone-700 hover:text-accent">
+            <span className="text-lg">卦</span>
+            {t("quickStart.divination")}
+          </Link>
+          <Link href="/calendar" className="group flex items-center gap-2 px-4 py-3 rounded-xl border-2 border-stone-200 bg-white hover:border-accent hover:shadow-md transition-all text-sm font-medium text-stone-700 hover:text-accent">
+            <span className="text-lg">曆</span>
+            {t("quickStart.calendar")}
+          </Link>
+        </div>
       </section>
 
       <TrustSignals />

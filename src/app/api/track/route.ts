@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
+import { isDatacenterIp } from "@/lib/bot-filter";
 
 async function lookupGeo(ip: string): Promise<{ country: string; city: string; region: string }> {
   // Primary: ipapi.co (HTTPS, 1000/day free, no key required)
@@ -69,7 +70,7 @@ export async function POST(req: NextRequest) {
     const referrer = req.headers.get("referer") || "";
 
     await prisma.visit.create({
-      data: { page, country, city, region, referrer },
+      data: { page, country, city, region, referrer, isDatacenter: isDatacenterIp(ip) },
     });
 
     return NextResponse.json({ ok: true });

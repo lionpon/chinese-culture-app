@@ -55,6 +55,7 @@
     },
     "loading": "Loading...",
     "freeTier": {
+      "three": "You have 3 free previews — try them out!",
       "two": "You have 2 free previews — try it out!",
       "one": "You have 1 free preview remaining"
     },
@@ -63,6 +64,11 @@
   "home": {
     "title": "Chinese Culture Studio",
     "subtitle": "Discover the wisdom of ancient Chinese classics through names, dates, divination, and palm reading",
+    "quickStart": {
+      "naming": "Get Your Chinese Name",
+      "divination": "Cast I Ching",
+      "calendar": "Find Auspicious Date"
+    },
     "features": {
       "naming": {
         "title": "Create a Chinese Name",
@@ -435,7 +441,9 @@
     "unlockDivination2": "Changing line interpretation and specific advice",
     "unlockCalendar1": "2 more auspicious dates with scores",
     "unlockCalendar2": "Auspicious hours & gods for each date",
-    "unlockNow": "Unlock Full Result — from $1"
+    "unlockNow": "Unlock Full Result — from $1",
+    "seeFreePreview": "See Free Preview",
+    "unlockFullCta": "Unlock Full Result — $1"
   },
   "legal": {
     "privacy": {

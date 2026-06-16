@@ -10,10 +10,61 @@ function hashMatch(match: WCMatch): number {
   return Math.abs(h) % 64;
 }
 
+export type Prediction = "home" | "away" | "draw";
+
+export function predictWinner(hexagramId: number): Prediction {
+  // hexagram 1-64: odd → home, even → away, every 3rd → draw
+  if (hexagramId % 3 === 0) return "draw";
+  return hexagramId % 2 === 1 ? "home" : "away";
+}
+
 export interface MatchPrediction {
   match: WCMatch;
   hexagram: Hexagram;
   footballInterpretation: string;
+  prediction: Prediction;
+  correct?: boolean;
+}
+
+export interface AccuracyStats {
+  total: number;
+  correct: number;
+  percentage: number;
+  byPrediction: Record<Prediction, { total: number; correct: number }>;
+}
+
+export function getAccuracyStats(): AccuracyStats {
+  const today = new Date().toISOString().slice(0, 10);
+  const playedMatches = MATCHES.filter(m => m.date < today && m.result && m.home !== "TBD");
+  const predictions = playedMatches.map(predictMatch);
+
+  let correct = 0;
+  const byPrediction: AccuracyStats["byPrediction"] = {
+    home: { total: 0, correct: 0 },
+    away: { total: 0, correct: 0 },
+    draw: { total: 0, correct: 0 },
+  };
+
+  for (const p of predictions) {
+    const actual = p.match.result!;
+    let actualOutcome: Prediction;
+    if (actual.home > actual.away) actualOutcome = "home";
+    else if (actual.away > actual.home) actualOutcome = "away";
+    else actualOutcome = "draw";
+
+    byPrediction[p.prediction].total++;
+    if (p.prediction === actualOutcome) {
+      byPrediction[p.prediction].correct++;
+      correct++;
+    }
+  }
+
+  return {
+    total: predictions.length,
+    correct,
+    percentage: predictions.length > 0 ? Math.round((correct / predictions.length) * 100) : 0,
+    byPrediction,
+  };
 }
 
 const FOOTBALL_THEMES: Record<number, string> = {
@@ -87,8 +138,19 @@ export function predictMatch(match: WCMatch): MatchPrediction {
   const hexagramIndex = hashMatch(match);
   const hexagram = allHexagrams[hexagramIndex];
   const footballInterpretation = FOOTBALL_THEMES[hexagram.id] || "The I Ching offers no clear answer — this match is truly unpredictable.";
+  const prediction = predictWinner(hexagram.id);
 
-  return { match, hexagram, footballInterpretation };
+  let correct: boolean | undefined;
+  if (match.result) {
+    const r = match.result;
+    let actual: Prediction;
+    if (r.home > r.away) actual = "home";
+    else if (r.away > r.home) actual = "away";
+    else actual = "draw";
+    correct = prediction === actual;
+  }
+
+  return { match, hexagram, footballInterpretation, prediction, correct };
 }
 
 export function getDailyPredictions(): MatchPrediction[] {

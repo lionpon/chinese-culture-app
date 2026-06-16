@@ -5,6 +5,7 @@ export interface ReportData {
   visits: number;
   uniqueCountries: number;
   revenue: number;
+  datacenterVisits: number;
   countries: Record<string, number>;
   cities: Record<string, number>;
   pages: Record<string, number>;
@@ -82,6 +83,7 @@ export async function generateReport(date: string, locale?: string): Promise<Rep
 
   const freeTrials = freePurchases.length;
   const revenue = purchases.length;
+  const datacenterVisits = filtered.filter(v => v.isDatacenter).length;
 
   const subscribersBySource: Record<string, number> = {};
   for (const s of subscribers) {
@@ -94,14 +96,14 @@ export async function generateReport(date: string, locale?: string): Promise<Rep
       visits: filtered.length,
       uniqueCountries: Object.keys(countries).length,
       revenue,
-      details: JSON.stringify({ countries, cities, pages, byType, freeTrials, freeTrialsByType, subscribers: subscribers.length, subscribersBySource }),
+      details: JSON.stringify({ countries, cities, pages, byType, freeTrials, freeTrialsByType, subscribers: subscribers.length, subscribersBySource, datacenterVisits }),
     },
     create: {
       date,
       visits: filtered.length,
       uniqueCountries: Object.keys(countries).length,
       revenue,
-      details: JSON.stringify({ countries, cities, pages, byType, freeTrials, freeTrialsByType, subscribers: subscribers.length, subscribersBySource }),
+      details: JSON.stringify({ countries, cities, pages, byType, freeTrials, freeTrialsByType, subscribers: subscribers.length, subscribersBySource, datacenterVisits }),
     },
   });
 
@@ -110,6 +112,7 @@ export async function generateReport(date: string, locale?: string): Promise<Rep
     visits: filtered.length,
     uniqueCountries: Object.keys(countries).length,
     revenue,
+    datacenterVisits,
     countries,
     cities,
     pages,
@@ -150,6 +153,7 @@ export async function getReports(days: number = 7, locale?: string): Promise<Rep
       freeTrialsByType: details.freeTrialsByType ?? {},
       subscribers: details.subscribers ?? 0,
       subscribersBySource: details.subscribersBySource ?? {},
+      datacenterVisits: details.datacenterVisits ?? 0,
       ...details,
     };
   });
