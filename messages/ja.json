@@ -6,10 +6,12 @@
       "dates": "吉日",
       "iching": "易経",
       "palmReading": "手相",
+      "dreamInterpretation": "夢占い",
       "createName": "中国名を作る",
       "dateSelection": "吉日選択",
       "ichingDivination": "易経占い",
-      "palmMenu": "手相鑑定"
+      "palmMenu": "手相鑑定",
+      "dreamMenu": "夢占い"
     },
     "footer": {
       "disclaimer": "娯楽と文化理解のためのものです。専門的なアドバイスではありません。",
@@ -85,6 +87,10 @@
       "palm": {
         "title": "手相鑑定",
         "desc": "手のひらの写真をアップロードして、麻衣神相などの古典テキストに基づく本格的な手相分析を受けましょう。"
+      },
+      "dream": {
+        "title": "夢占い",
+        "desc": "夢を記述すると、周公の古代中国夢辞典とフロイト精神分析を組み合わせた2つの視点からの解釈が得られます。"
       }
     },
     "cta": {
@@ -303,6 +309,44 @@
       "ogSub": "古典中国手相術 + AI"
     }
   },
+  "dream": {
+    "title": "夢占い",
+    "subtitle": "夢を記述すると、周公の古代中国夢辞典とフロイト精神分析を組み合わせた2つの視点からの解釈が得られます",
+    "badge": "$1 支援",
+    "learnMore": "中国の夢シンボルについてもっと学ぶ →",
+    "form": {
+      "dreamLabel": "夢を説明してください *",
+      "dreamPlaceholder": "私は古い森を歩いていると、川に出ました。水は透き通っていて、流れに逆らって泳ぐ魚が見えました。突然、木々の上を飛び始めました...",
+      "dreamTypeLabel": "夢のタイプ（任意）",
+      "dreamTypeDefault": "夢のタイプを選択...",
+      "normal": "通常の夢",
+      "nightmare": "悪夢",
+      "recurring": "繰り返す夢",
+      "lucid": "明晰夢",
+      "focusLabel": "解釈の焦点",
+      "focusBoth": "中国と西洋の両方（推奨）",
+      "focusChinese": "中国の伝統（周公）を重視",
+      "focusFreudian": "西洋精神分析（フロイト）を重視",
+      "focusHelper": "どちらの伝統を強調するか選択してください。両方は常に含まれます。",
+      "consent": "夢の説明がAIによって処理され、この解釈が生成されることを理解しました。",
+      "consentLink": "プライバシーポリシー",
+      "submit": "夢を解釈する",
+      "processing": "夢を分析中..."
+    },
+    "result": {
+      "dreamType": "夢の分類 · 梦境分类",
+      "zhouGongTitle": "周公の解釈",
+      "zhouGongSubtitle": "周公解梦 · 中国の伝統",
+      "freudianTitle": "フロイト分析",
+      "freudianSubtitle": "弗洛伊德 · 西洋精神分析",
+      "latentMeaning": "潜在的意味 · 隐意",
+      "wishFulfillment": "願望充足 · 愿望满足",
+      "jungianTitle": "ユングの洞察 · 荣格分析",
+      "overview": "総合的概要 · 综合判断",
+      "practicalAdvice": "実践的アドバイス · 处世建议",
+      "psychologicalAdvice": "心理的洞察 · 心理洞见"
+    }
+  },
   "result": {
     "naming": {
       "title": "あなたの中国名",
@@ -444,6 +488,7 @@
     "anotherDate": "別の日付を検索",
     "anotherHexagram": "別の卦を立てる",
     "anotherPalm": "別の手相を鑑定",
+    "anotherDream": "別の夢を解釈",
     "unlockTitle": "これはプレビューです。完全な結果をアンロック：",
     "unlockNaming1": "詳細な意味付きの追加の名前候補4件",
     "unlockNaming2": "五行プロファイルの完全な八字分析",
@@ -531,6 +576,7 @@
     "date": "Chinese Culture Studioを支援 — 日付選択",
     "iching": "Chinese Culture Studioを支援 — 易経リーディング",
     "palm": "Chinese Culture Studioを支援 — 手相鑑定",
+    "dream": "Chinese Culture Studioを支援 — 夢占い",
     "error": "問題が発生しました",
     "failed": "失敗しました。もう一度お試しください。",
     "returnApp": "アプリに戻る",

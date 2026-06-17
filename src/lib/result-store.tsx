@@ -1,13 +1,14 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from "react";
-import type { NamingResult, CalendarResult, DivinationResult, PalmReadingResult } from "@/types";
+import type { NamingResult, CalendarResult, DivinationResult, PalmReadingResult, DreamInterpretationResult } from "@/types";
 
 interface StoredResults {
   naming: NamingResult | null;
   calendar: CalendarResult | null;
   divination: DivinationResult | null;
   palmReading: PalmReadingResult | null;
+  dreamInterpretation: DreamInterpretationResult | null;
   updatedAt: Partial<Record<keyof StoredResults, number>>;
 }
 
@@ -17,6 +18,7 @@ interface ResultContextValue {
   setCalendarResult: (r: CalendarResult | null) => void;
   setDivinationResult: (r: DivinationResult | null) => void;
   setPalmReadingResult: (r: PalmReadingResult | null) => void;
+  setDreamInterpretationResult: (r: DreamInterpretationResult | null) => void;
   clearAll: () => void;
 }
 
@@ -27,6 +29,7 @@ const emptyResults: StoredResults = {
   calendar: null,
   divination: null,
   palmReading: null,
+  dreamInterpretation: null,
   updatedAt: {},
 };
 
@@ -71,6 +74,7 @@ export function ResultProvider({ children }: { children: ReactNode }) {
   const setCalendarResult = useCallback((r: CalendarResult | null) => update("calendar", r), [update]);
   const setDivinationResult = useCallback((r: DivinationResult | null) => update("divination", r), [update]);
   const setPalmReadingResult = useCallback((r: PalmReadingResult | null) => update("palmReading", r), [update]);
+  const setDreamInterpretationResult = useCallback((r: DreamInterpretationResult | null) => update("dreamInterpretation", r), [update]);
 
   const clearAll = useCallback(() => {
     setResults({ ...emptyResults });
@@ -78,7 +82,7 @@ export function ResultProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <ResultContext.Provider value={{ results, setNamingResult, setCalendarResult, setDivinationResult, setPalmReadingResult, clearAll }}>
+    <ResultContext.Provider value={{ results, setNamingResult, setCalendarResult, setDivinationResult, setPalmReadingResult, setDreamInterpretationResult, clearAll }}>
       {children}
     </ResultContext.Provider>
   );

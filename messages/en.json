@@ -6,10 +6,12 @@
       "dates": "Dates",
       "iching": "I Ching",
       "palmReading": "Palm Reading",
+      "dreamInterpretation": "Dream Interpretation",
       "createName": "Create a Chinese Name",
       "dateSelection": "Auspicious Date Selection",
       "ichingDivination": "I Ching Divination",
-      "palmMenu": "Palm Reading"
+      "palmMenu": "Palm Reading",
+      "dreamMenu": "Dream Interpretation"
     },
     "footer": {
       "disclaimer": "For entertainment and cultural appreciation only. Not professional advice.",
@@ -85,6 +87,10 @@
       "palm": {
         "title": "Palm Reading",
         "desc": "Upload a photo of your palm for a classical palmistry analysis based on Ma Yi Shen Xiang and other ancient texts."
+      },
+      "dream": {
+        "title": "Dream Interpretation",
+        "desc": "Describe your dream and receive a dual-perspective analysis from Zhou Gong's ancient dream dictionary and Freudian psychoanalysis."
       }
     },
     "cta": {
@@ -303,6 +309,44 @@
       "ogSub": "Classical Chinese Palmistry + AI"
     }
   },
+  "dream": {
+    "title": "Dream Interpretation",
+    "subtitle": "Describe your dream and get a dual-perspective interpretation combining Zhou Gong's ancient dream dictionary with Freudian psychoanalysis",
+    "badge": "$1 contribution",
+    "learnMore": "Learn more about Chinese dream symbols →",
+    "form": {
+      "dreamLabel": "Describe Your Dream *",
+      "dreamPlaceholder": "I was walking through an ancient forest when I came across a river. The water was crystal clear, and I could see fish swimming against the current. Suddenly, I started flying above the trees...",
+      "dreamTypeLabel": "Dream Type (optional)",
+      "dreamTypeDefault": "Select dream type...",
+      "normal": "Normal Dream",
+      "nightmare": "Nightmare",
+      "recurring": "Recurring Dream",
+      "lucid": "Lucid Dream",
+      "focusLabel": "Interpretation Focus",
+      "focusBoth": "Both Chinese & Western (Recommended)",
+      "focusChinese": "Chinese Tradition (Zhou Gong) emphasis",
+      "focusFreudian": "Western Psychoanalysis (Freud) emphasis",
+      "focusHelper": "Choose which tradition to emphasize. Both will always be included.",
+      "consent": "I understand that my dream description will be processed by AI to generate this interpretation.",
+      "consentLink": "Privacy Policy",
+      "submit": "Interpret My Dream",
+      "processing": "Analyzing your dream..."
+    },
+    "result": {
+      "dreamType": "Dream Classification · 梦境分类",
+      "zhouGongTitle": "Zhou Gong's Interpretation",
+      "zhouGongSubtitle": "周公解梦 · Chinese Tradition",
+      "freudianTitle": "Freudian Analysis",
+      "freudianSubtitle": "弗洛伊德 · Western Psychoanalysis",
+      "latentMeaning": "Latent Meaning · 隐意",
+      "wishFulfillment": "Wish Fulfillment · 愿望满足",
+      "jungianTitle": "Jungian Insights · 荣格分析",
+      "overview": "Comprehensive Overview · 综合判断",
+      "practicalAdvice": "Practical Advice · 处世建议",
+      "psychologicalAdvice": "Psychological Insight · 心理洞见"
+    }
+  },
   "result": {
     "naming": {
       "title": "Your Chinese Name",
@@ -444,6 +488,7 @@
     "anotherDate": "Find Another Date",
     "anotherHexagram": "Cast Another Hexagram",
     "anotherPalm": "Read Another Palm",
+    "anotherDream": "Interpret Another Dream",
     "unlockTitle": "This is a preview. Unlock the full result:",
     "unlockNaming1": "4 more name options with detailed meanings",
     "unlockNaming2": "Full Bazi analysis of your elemental profile",
@@ -531,6 +576,7 @@
     "date": "Support Chinese Culture Studio — Date Selection",
     "iching": "Support Chinese Culture Studio — I Ching Reading",
     "palm": "Support Chinese Culture Studio — Palm Reading",
+    "dream": "Support Chinese Culture Studio — Dream Interpretation",
     "error": "Something went wrong",
     "failed": "Failed. Please try again.",
     "returnApp": "Return to App",

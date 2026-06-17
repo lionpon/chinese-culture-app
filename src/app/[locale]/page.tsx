@@ -76,7 +76,7 @@ export default function HomePage() {
 
       <DailyHexagram />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 max-w-6xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 max-w-6xl mx-auto">
         <FeatureCard
           href="/naming"
           title={t("features.naming.title")}
@@ -101,6 +101,12 @@ export default function HomePage() {
           desc={t("features.palm.desc")}
           hideFree
           onClick={() => trackClick("feature_palm")}
+        />
+        <FeatureCard
+          href="/dream-interpretation"
+          title={t("features.dream.title")}
+          desc={t("features.dream.desc")}
+          onClick={() => trackClick("feature_dream")}
         />
       </div>
 

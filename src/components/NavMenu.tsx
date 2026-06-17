@@ -42,6 +42,9 @@ export default function NavMenu() {
             <Link href="/palm-reading" className="text-sm text-stone-600 hover:text-stone-900 py-1" onClick={() => setOpen(false)}>
               {t("nav.palmMenu")}
             </Link>
+            <Link href="/dream-interpretation" className="text-sm text-stone-600 hover:text-stone-900 py-1" onClick={() => setOpen(false)}>
+              {t("nav.dreamMenu")}
+            </Link>
             <div className="pt-2 border-t border-stone-100">
               <LanguageSwitcher />
             </div>

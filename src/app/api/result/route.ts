@@ -46,6 +46,37 @@ function truncateForFreePreview(type: string, result: Record<string, unknown>): 
         // Exclude: remaining days
       };
     }
+    case "dream-interpretation": {
+      const r = result as Record<string, unknown>;
+      const symbols = (r.zhouGong as Record<string, unknown>)?.symbols as Array<Record<string, unknown>> | undefined;
+      return {
+        dreamType: r.dreamType,
+        zhouGong: {
+          symbols: symbols?.slice(0, 1) ?? [],
+          overallInterpretation: "",
+          overallInterpretationEn: "Unlock the full reading for Zhou Gong dream analysis...",
+          classicalRef: "",
+        },
+        freudian: {
+          latentMeaning: "Unlock full reading...",
+          latentMeaningEn: "Unlock full reading...",
+          wishFulfillment: "",
+          wishFulfillmentEn: "",
+          keySymbols: [],
+        },
+        overview: {
+          text: "Unlock the full reading...",
+          textEn: "Unlock the full reading...",
+          classicalRef: "",
+        },
+        advice: {
+          practical: "",
+          practicalEn: "",
+          psychological: "Unlock the full reading for psychological advice...",
+          psychologicalEn: "Unlock the full reading for psychological advice...",
+        },
+      };
+    }
     default:
       return result;
   }

@@ -10,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/calendar", priority: 0.9, changeFreq: "weekly" as const },
     { path: "/divination", priority: 0.9, changeFreq: "weekly" as const },
     { path: "/palm-reading", priority: 0.9, changeFreq: "weekly" as const },
+    { path: "/dream-interpretation", priority: 0.9, changeFreq: "weekly" as const },
     { path: "/guide/chinese-name", priority: 0.7, changeFreq: "monthly" as const },
     { path: "/guide/chinese-name-boy", priority: 0.6, changeFreq: "monthly" as const },
     { path: "/guide/chinese-name-girl", priority: 0.6, changeFreq: "monthly" as const },

@@ -4,11 +4,12 @@ import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useResults } from "@/lib/result-store";
-import type { NamingResult, CalendarResult, DivinationResult, PalmReadingResult } from "@/types";
+import type { NamingResult, CalendarResult, DivinationResult, PalmReadingResult, DreamInterpretationResult } from "@/types";
 import NamingResultView from "@/components/NamingResultView";
 import CalendarResultView from "@/components/CalendarResultView";
 import DivinationResultView from "@/components/DivinationResultView";
 import PalmReadingResultView from "@/components/PalmReadingResultView";
+import DreamInterpretationResultView from "@/components/DreamInterpretationResultView";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { Link } from "@/navigation";
 
@@ -23,10 +24,10 @@ function SuccessContent() {
 
   const [state, setState] = useState<ResultState>("loading");
   const [type, setType] = useState<string>("");
-  const [result, setResult] = useState<NamingResult | CalendarResult | DivinationResult | PalmReadingResult | null>(null);
+  const [result, setResult] = useState<NamingResult | CalendarResult | DivinationResult | PalmReadingResult | DreamInterpretationResult | null>(null);
   const [error, setError] = useState("");
 
-  const { setNamingResult, setCalendarResult, setDivinationResult, setPalmReadingResult } = useResults();
+  const { setNamingResult, setCalendarResult, setDivinationResult, setPalmReadingResult, setDreamInterpretationResult } = useResults();
 
   useEffect(() => {
     if (!purchaseId) {
@@ -39,11 +40,12 @@ function SuccessContent() {
       if (data.status === "completed" && data.type && data.result) {
         setState("completed");
         setType(data.type);
-        setResult(data.result as NamingResult | CalendarResult | DivinationResult);
+        setResult(data.result as NamingResult | CalendarResult | DivinationResult | DreamInterpretationResult);
         if (data.type === "naming") setNamingResult(data.result as NamingResult);
         else if (data.type === "calendar") setCalendarResult(data.result as CalendarResult);
         else if (data.type === "divination") setDivinationResult(data.result as DivinationResult);
         else if (data.type === "palm-reading") setPalmReadingResult(data.result as PalmReadingResult);
+        else if (data.type === "dream-interpretation") setDreamInterpretationResult(data.result as DreamInterpretationResult);
         return true;
       } else if (data.status === "failed") {
         setState("failed");
@@ -97,7 +99,7 @@ function SuccessContent() {
         return () => clearInterval(poll);
       });
     }
-  }, [purchaseId, isFree, tx, setNamingResult, setCalendarResult, setDivinationResult, setPalmReadingResult, t]);
+  }, [purchaseId, isFree, tx, setNamingResult, setCalendarResult, setDivinationResult, setPalmReadingResult, setDreamInterpretationResult, t]);
 
   function retry() {
     setState("loading");
@@ -116,6 +118,7 @@ function SuccessContent() {
           else if (data.type === "calendar") setCalendarResult(data.result);
           else if (data.type === "divination") setDivinationResult(data.result);
           else if (data.type === "palm-reading") setPalmReadingResult(data.result);
+          else if (data.type === "dream-interpretation") setDreamInterpretationResult(data.result);
           return true;
         } else if (data.status === "failed") {
           setState("failed");
@@ -145,6 +148,7 @@ function SuccessContent() {
     calendar: { label: t("anotherDate"), href: "/calendar" },
     divination: { label: t("anotherHexagram"), href: "/divination" },
     "palm-reading": { label: t("anotherPalm"), href: "/palm-reading" },
+    "dream-interpretation": { label: t("anotherDream"), href: "/dream-interpretation" },
   };
 
   if (!purchaseId) {
@@ -202,6 +206,7 @@ function SuccessContent() {
       {type === "calendar" && result && <CalendarResultView result={result as CalendarResult} isFree={isFree} purchaseId={purchaseId ?? undefined} />}
       {type === "divination" && result && <DivinationResultView result={result as DivinationResult} isFree={isFree} purchaseId={purchaseId ?? undefined} />}
       {type === "palm-reading" && result && <PalmReadingResultView result={result as PalmReadingResult} />}
+      {type === "dream-interpretation" && result && <DreamInterpretationResultView result={result as DreamInterpretationResult} />}
 
       {isFree && (
         <div className="mt-8 text-center">

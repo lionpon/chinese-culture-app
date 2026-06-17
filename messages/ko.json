@@ -6,10 +6,12 @@
       "dates": "길일",
       "iching": "주역",
       "palmReading": "수상",
+      "dreamInterpretation": "꿈 해몽",
       "createName": "중국식 이름 짓기",
       "dateSelection": "길일 선택",
       "ichingDivination": "주역 점술",
-      "palmMenu": "수상 보기"
+      "palmMenu": "수상 보기",
+      "dreamMenu": "꿈 해몽"
     },
     "footer": {
       "disclaimer": "문화 체험 및 오락 목적으로만 제공됩니다. 전문적인 조언이 아닙니다.",
@@ -85,6 +87,10 @@
       "palm": {
         "title": "수상 보기",
         "desc": "손바닥 사진을 업로드하면 《마의신상》 등 고전 문헌에 기반한 전통 수상 분석을 제공합니다."
+      },
+      "dream": {
+        "title": "꿈 해몽",
+        "desc": "꿈을 설명하면 주공의 고대 중국 꿈 사전과 프로이트 정신분석을 결합한 이중 관점 해석을 받을 수 있습니다."
       }
     },
     "cta": {
@@ -303,6 +309,44 @@
       "ogSub": "고전 중국 수상학 + AI"
     }
   },
+  "dream": {
+    "title": "꿈 해몽",
+    "subtitle": "꿈을 설명하면 주공의 고대 중국 꿈 사전과 프로이트 정신분석을 결합한 이중 관점 해석을 받을 수 있습니다",
+    "badge": "$1 후원",
+    "learnMore": "중국 꿈 상징에 대해 더 알아보기 →",
+    "form": {
+      "dreamLabel": "꿈을 설명해주세요 *",
+      "dreamPlaceholder": "나는 고대 숲을 걷다가 강에 도착했습니다. 물은 수정처럼 맑았고, 물살을 거슬러 헤엄치는 물고기들이 보였습니다. 갑자기 나는 나무 위로 날아오르기 시작했습니다...",
+      "dreamTypeLabel": "꿈 유형 (선택사항)",
+      "dreamTypeDefault": "꿈 유형 선택...",
+      "normal": "일반 꿈",
+      "nightmare": "악몽",
+      "recurring": "반복되는 꿈",
+      "lucid": "자각몽",
+      "focusLabel": "해석 초점",
+      "focusBoth": "중국과 서양 모두 (권장)",
+      "focusChinese": "중국 전통 (주공) 강조",
+      "focusFreudian": "서양 정신분석 (프로이트) 강조",
+      "focusHelper": "어느 전통을 강조할지 선택하세요. 둘 다 항상 포함됩니다.",
+      "consent": "꿈 설명이 AI에 의해 처리되어 이 해석이 생성된다는 것을 이해합니다.",
+      "consentLink": "개인정보처리방침",
+      "submit": "꿈 해석하기",
+      "processing": "꿈 분석 중..."
+    },
+    "result": {
+      "dreamType": "꿈 분류 · 梦境分类",
+      "zhouGongTitle": "주공의 해석",
+      "zhouGongSubtitle": "周公解梦 · 중국 전통",
+      "freudianTitle": "프로이트 분석",
+      "freudianSubtitle": "弗洛伊德 · 서양 정신분석",
+      "latentMeaning": "잠재적 의미 · 隐意",
+      "wishFulfillment": "소망 충족 · 愿望满足",
+      "jungianTitle": "융의 통찰 · 荣格分析",
+      "overview": "종합 개요 · 综合判断",
+      "practicalAdvice": "실용적 조언 · 处世建议",
+      "psychologicalAdvice": "심리적 통찰 · 心理洞见"
+    }
+  },
   "result": {
     "naming": {
       "title": "당신의 중국식 이름",
@@ -444,6 +488,7 @@
     "anotherDate": "다른 날짜 찾기",
     "anotherHexagram": "다른 괘 뽑기",
     "anotherPalm": "다른 손 보기",
+    "anotherDream": "다른 꿈 해석하기",
     "unlockTitle": "이것은 미리보기입니다. 전체 결과를 확인하세요:",
     "unlockNaming1": "상세한 의미가 담긴 4개의 추가 이름 옵션",
     "unlockNaming2": "오행 프로필의 전체 사주 분석",
@@ -531,6 +576,7 @@
     "date": "Chinese Culture Studio 후원 — 길일 선택",
     "iching": "Chinese Culture Studio 후원 — 주역 해석",
     "palm": "Chinese Culture Studio 후원 — 수상",
+    "dream": "Chinese Culture Studio 후원 — 꿈 해몽",
     "error": "문제가 발생했습니다",
     "failed": "실패했습니다. 다시 시도해 주세요.",
     "returnApp": "앱으로 돌아가기",

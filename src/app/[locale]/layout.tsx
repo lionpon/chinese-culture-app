@@ -24,31 +24,31 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const localeMeta: Record<string, { tagline: string; desc: string; ogDesc: string; twitterDesc: string; ogLocale: string }> = {
     en: {
-      tagline: "Chinese Name, Auspicious Dates, I Ching & Palm Reading",
-      desc: "Discover your authentic Chinese name, find auspicious dates, consult the I Ching, or get a palm reading based on classical Chinese texts. Pay what you want (min $1).",
-      ogDesc: "AI-powered Chinese cultural readings: names, auspicious dates, I Ching divination, and palm reading. Pay what you want (min $1).",
-      twitterDesc: "AI-powered Chinese cultural readings from classical texts. Chinese naming, date selection, I Ching, palm reading. Pay what you want.",
+      tagline: "Chinese Name, Auspicious Dates, I Ching, Palm & Dream Reading",
+      desc: "Discover your authentic Chinese name, find auspicious dates, consult the I Ching, get a palm reading, or interpret your dreams based on classical Chinese texts. Pay what you want (min $1).",
+      ogDesc: "AI-powered Chinese cultural readings: names, auspicious dates, I Ching divination, palm reading, and dream interpretation. Pay what you want (min $1).",
+      twitterDesc: "AI-powered Chinese cultural readings from classical texts. Chinese naming, date selection, I Ching, palm reading, dream interpretation. Pay what you want.",
       ogLocale: "en_US",
     },
     ru: {
-      tagline: "Китайское Имя, Даты, И-Цзин и Хиромантия",
-      desc: "Откройте для себя подлинное китайское имя, найдите благоприятные даты, обратитесь к И-Цзин или получите чтение ладони на основе классических китайских текстов. Платите сколько хотите (мин. $1).",
-      ogDesc: "Культурные чтения с ИИ: китайские имена, благоприятные даты, гадание И-Цзин и хиромантия. Платите сколько хотите.",
-      twitterDesc: "Культурные чтения с ИИ из классических китайских текстов. Именование, выбор дат, И-Цзин, хиромантия. Платите сколько хотите.",
+      tagline: "Китайское Имя, Даты, И-Цзин, Хиромантия и Толкование снов",
+      desc: "Откройте для себя подлинное китайское имя, найдите благоприятные даты, обратитесь к И-Цзин, получите чтение ладони или толкование сна на основе классических китайских текстов. Платите сколько хотите (мин. $1).",
+      ogDesc: "Культурные чтения с ИИ: китайские имена, благоприятные даты, гадание И-Цзин, хиромантия и толкование снов. Платите сколько хотите.",
+      twitterDesc: "Культурные чтения с ИИ из классических китайских текстов. Именование, выбор дат, И-Цзин, хиромантия, толкование снов. Платите сколько хотите.",
       ogLocale: "ru_RU",
     },
     ja: {
-      tagline: "中国名、吉日、易経、手相",
-      desc: "本格的な中国名を見つけ、縁起の良い日を選び、易経に問いかけ、古典テキストに基づいた手相鑑定を受けましょう。お好きな金額で（最低$1）。",
-      ogDesc: "AI搭載の中国文化リーディング：命名、吉日選択、易経占い、手相鑑定。お好きな金額で。",
-      twitterDesc: "古典テキストからのAI中国文化リーディング。中国命名、日付選択、易経、手相。お好きな金額で。",
+      tagline: "中国名、吉日、易経、手相、夢占い",
+      desc: "本格的な中国名を見つけ、縁起の良い日を選び、易経に問いかけ、古典テキストに基づいた手相鑑定や夢占いを受けましょう。お好きな金額で（最低$1）。",
+      ogDesc: "AI搭載の中国文化リーディング：命名、吉日選択、易経占い、手相鑑定、夢占い。お好きな金額で。",
+      twitterDesc: "古典テキストからのAI中国文化リーディング。中国命名、日付選択、易経、手相、夢占い。お好きな金額で。",
       ogLocale: "ja_JP",
     },
     ko: {
-      tagline: "중국식 이름, 길일, 주역 & 수상",
-      desc: "정통 중국식 이름을 발견하고, 길일을 찾고, 주역에 질문하거나, 고전 문헌에 기반한 수상 분석을 받아보세요. 원하는 만큼 후원하세요 (최소 $1).",
-      ogDesc: "AI 기반 중국 문화 리딩: 작명, 길일 선택, 주역 점술, 수상. 원하는 만큼 후원하세요.",
-      twitterDesc: "고전 문헌에 기반한 AI 중국 문화 리딩. 작명, 날짜 선택, 주역, 수상. 원하는 만큼 후원하세요.",
+      tagline: "중국식 이름, 길일, 주역, 수상 & 꿈 해몽",
+      desc: "정통 중국식 이름을 발견하고, 길일을 찾고, 주역에 질문하거나, 고전 문헌에 기반한 수상 분석과 꿈 해몽을 받아보세요. 원하는 만큼 후원하세요 (최소 $1).",
+      ogDesc: "AI 기반 중국 문화 리딩: 작명, 길일 선택, 주역 점술, 수상, 꿈 해몽. 원하는 만큼 후원하세요.",
+      twitterDesc: "고전 문헌에 기반한 AI 중국 문화 리딩. 작명, 날짜 선택, 주역, 수상, 꿈 해몽. 원하는 만큼 후원하세요.",
       ogLocale: "ko_KR",
     },
   };
@@ -147,6 +147,7 @@ export default async function LocaleLayout({ children, params }: Props) {
                   <a href={`${pathname}/calendar`} className="hover:text-stone-800 transition-colors">{t("nav.dates")}</a>
                   <a href={`${pathname}/divination`} className="hover:text-stone-800 transition-colors">{t("nav.iching")}</a>
                   <a href={`${pathname}/palm-reading`} className="hover:text-stone-800 transition-colors">{t("nav.palmReading")}</a>
+                  <a href={`${pathname}/dream-interpretation`} className="hover:text-stone-800 transition-colors">{t("nav.dreamInterpretation")}</a>
                   <span className="text-stone-300 mx-1">|</span>
                   <LanguageSwitcher />
                 </nav>

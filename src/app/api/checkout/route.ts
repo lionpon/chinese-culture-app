@@ -5,14 +5,15 @@ import { prisma } from "@/lib/db";
 import { generateNames, analyzeName } from "@/lib/naming";
 import { selectAuspiciousDays } from "@/lib/calendar";
 import { performDivination } from "@/lib/divination";
-import type { NamingInput, CalendarInput, DivinationInput } from "@/types";
+import { interpretDream } from "@/lib/dream-interpretation";
+import type { NamingInput, CalendarInput, DivinationInput, DreamInterpretationInput } from "@/types";
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { type, input, free, method = "paypal" } = body as { type: string; input: Record<string, unknown>; free?: boolean; method?: "paypal" | "lemon" };
 
-    if (!["naming", "calendar", "divination", "palm-reading"].includes(type)) {
+    if (!["naming", "calendar", "divination", "palm-reading", "dream-interpretation"].includes(type)) {
       return NextResponse.json({ error: "Invalid request type" }, { status: 400 });
     }
 
@@ -50,6 +51,7 @@ export async function POST(req: NextRequest) {
         case "naming": result = (input.mode === "analyze") ? analyzeName(input as unknown as NamingInput) : generateNames(input as unknown as NamingInput, true); break;
         case "calendar": result = selectAuspiciousDays(input as unknown as CalendarInput, true); break;
         case "divination": result = performDivination(input as unknown as DivinationInput, true); break;
+        case "dream-interpretation": result = await interpretDream(input as unknown as DreamInterpretationInput, true); break;
       }
 
       const purchase = await prisma.purchase.create({

@@ -244,3 +244,65 @@ export interface BaziResult {
   analysis: string;
   analysisEn: string;
 }
+
+// Dream Interpretation types
+export interface DreamInterpretationInput {
+  dreamText: string;
+  dreamType?: "normal" | "nightmare" | "recurring" | "lucid";
+  focus?: "chinese" | "freudian" | "both";
+}
+
+export interface DreamSymbol {
+  symbol: string;
+  symbolEn: string;
+  meaning: string;
+  meaningEn: string;
+  classicalRef?: string;
+}
+
+export interface FreudianSymbol {
+  symbol: string;
+  symbolEn: string;
+  analysis: string;
+  analysisEn: string;
+}
+
+export interface DreamInterpretationResult {
+  dreamType: {
+    chineseCategory: string;
+    chineseCategoryEn: string;
+    freudianType: string;
+    freudianTypeEn: string;
+    description: string;
+    descriptionEn: string;
+  };
+  zhouGong: {
+    symbols: DreamSymbol[];
+    overallInterpretation: string;
+    overallInterpretationEn: string;
+    classicalRef: string;
+  };
+  freudian: {
+    latentMeaning: string;
+    latentMeaningEn: string;
+    wishFulfillment: string;
+    wishFulfillmentEn: string;
+    keySymbols: FreudianSymbol[];
+  };
+  jungian?: {
+    archetypes: string[];
+    compensation: string;
+    compensationEn: string;
+  };
+  overview: {
+    text: string;
+    textEn: string;
+    classicalRef: string;
+  };
+  advice: {
+    practical: string;
+    practicalEn: string;
+    psychological: string;
+    psychologicalEn: string;
+  };
+}
