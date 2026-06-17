@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/navigation";
 import SpeakButton from "./SpeakButton";
+import { trackClick } from "@/lib/track";
 
 interface DailyData {
   mainHexagram: {
@@ -69,12 +70,14 @@ export default function DailyHexagram() {
         <div className="flex flex-col sm:flex-row gap-2 justify-center">
           <Link
             href={`/daily/${new Date().toISOString().slice(0, 10)}`}
+            onClick={() => trackClick("daily_cta")}
             className="inline-block px-5 py-2.5 rounded-xl text-sm font-medium btn-primary"
           >
             {t("dailyHexagram.cta")}
           </Link>
           <Link
             href="/divination"
+            onClick={() => trackClick("daily_divination_link")}
             className="inline-block px-5 py-2.5 rounded-xl text-sm font-medium text-stone-600 hover:text-stone-800 transition-colors"
           >
             {t("dailyHexagram.askOwn")}

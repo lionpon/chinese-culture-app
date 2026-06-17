@@ -102,6 +102,16 @@
     "trust": {
       "countries": "서비스 국가",
       "readings": "완료된 해석"
+    },
+    "guides": {
+      "heading": "중국 문화 탐험하기",
+      "iching": "주역 입문 가이드",
+      "fiveElements": "오행 해설",
+      "zodiac": "중국 십이지",
+      "lucky": "행운의 숫자",
+      "fengshui": "풍수 기초",
+      "dreams": "꿈 해몽",
+      "names": "중국 이름 가이드"
     }
   },
   "naming": {

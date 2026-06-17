@@ -102,6 +102,16 @@
     "trust": {
       "countries": "対応国数",
       "readings": "鑑定実績"
+    },
+    "guides": {
+      "heading": "中国文化を探る",
+      "iching": "易経初心者ガイド",
+      "fiveElements": "五行解説",
+      "zodiac": "中国十二支",
+      "lucky": "ラッキーナンバー",
+      "fengshui": "風水の基本",
+      "dreams": "夢占い",
+      "names": "中国名ガイド"
     }
   },
   "naming": {

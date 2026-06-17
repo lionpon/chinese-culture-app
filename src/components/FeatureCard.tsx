@@ -10,11 +10,13 @@ export default function FeatureCard({
   title,
   desc,
   hideFree,
+  onClick,
 }: {
   href: string;
   title: string;
   desc: string;
   hideFree?: boolean;
+  onClick?: () => void;
 }) {
   const t = useTranslations("home");
   const [remaining, setRemaining] = useState(0);
@@ -26,6 +28,7 @@ export default function FeatureCard({
   return (
     <Link
       href={href}
+      onClick={onClick}
       className="group block p-4 sm:p-6 rounded-xl border border-stone-200 bg-white hover:border-stone-300 hover:shadow-md transition-all"
     >
       <h2 className="text-lg font-semibold text-stone-800 mb-2 group-hover:text-stone-900 transition-colors">

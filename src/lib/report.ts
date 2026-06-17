@@ -9,6 +9,7 @@ export interface ReportData {
   countries: Record<string, number>;
   cities: Record<string, number>;
   pages: Record<string, number>;
+  clicks: Record<string, number>;
   byType: Record<string, { count: number; revenue: number }>;
   freeTrials: number;
   freeTrialsByType: Record<string, number>;
@@ -57,6 +58,17 @@ export async function generateReport(date: string, locale?: string): Promise<Rep
   // Exclude admin pages from all counts (all locales)
   filtered = filtered.filter(v => !v.page.includes("/admin"));
 
+  // Separate click events from page views
+  const clicks: Record<string, number> = {};
+  filtered = filtered.filter(v => {
+    if (v.page.startsWith("__click__:")) {
+      const event = v.page.slice(10);
+      clicks[event] = (clicks[event] || 0) + 1;
+      return false;
+    }
+    return true;
+  });
+
   const countries: Record<string, number> = {};
   const cities: Record<string, number> = {};
   const pages: Record<string, number> = {};
@@ -96,14 +108,14 @@ export async function generateReport(date: string, locale?: string): Promise<Rep
       visits: filtered.length,
       uniqueCountries: Object.keys(countries).length,
       revenue,
-      details: JSON.stringify({ countries, cities, pages, byType, freeTrials, freeTrialsByType, subscribers: subscribers.length, subscribersBySource, datacenterVisits }),
+      details: JSON.stringify({ countries, cities, pages, clicks, byType, freeTrials, freeTrialsByType, subscribers: subscribers.length, subscribersBySource, datacenterVisits }),
     },
     create: {
       date,
       visits: filtered.length,
       uniqueCountries: Object.keys(countries).length,
       revenue,
-      details: JSON.stringify({ countries, cities, pages, byType, freeTrials, freeTrialsByType, subscribers: subscribers.length, subscribersBySource, datacenterVisits }),
+      details: JSON.stringify({ countries, cities, pages, clicks, byType, freeTrials, freeTrialsByType, subscribers: subscribers.length, subscribersBySource, datacenterVisits }),
     },
   });
 
@@ -116,6 +128,7 @@ export async function generateReport(date: string, locale?: string): Promise<Rep
     countries,
     cities,
     pages,
+    clicks,
     byType,
     freeTrials,
     freeTrialsByType,
@@ -154,6 +167,7 @@ export async function getReports(days: number = 7, locale?: string): Promise<Rep
       subscribers: details.subscribers ?? 0,
       subscribersBySource: details.subscribersBySource ?? {},
       datacenterVisits: details.datacenterVisits ?? 0,
+      clicks: details.clicks ?? {},
       ...details,
     };
   });

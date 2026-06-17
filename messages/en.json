@@ -102,6 +102,16 @@
     "trust": {
       "countries": "Countries Served",
       "readings": "Readings Completed"
+    },
+    "guides": {
+      "heading": "Explore Chinese Culture",
+      "iching": "I Ching Beginner's Guide",
+      "fiveElements": "Five Elements Explained",
+      "zodiac": "Chinese Zodiac Signs",
+      "lucky": "Lucky Numbers Guide",
+      "fengshui": "Feng Shui Basics",
+      "dreams": "Dream Interpretation",
+      "names": "Chinese Names Guide"
     }
   },
   "naming": {

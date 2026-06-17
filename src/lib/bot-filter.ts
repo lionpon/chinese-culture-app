@@ -13,6 +13,22 @@ const DC_PREFIXES = [
   "45.32.0.0/16",
 ];
 
+// Cities dominated by data centers (negligible residential population relative to DC traffic)
+const DC_CITIES = new Set([
+  "ashburn",       // AWS us-east-1 — 70% of global internet traffic
+  "council bluffs", // Google DC hub
+  "boardman",      // Amazon DC, pop ~3k
+  "the dalles",    // Google DC, pop ~16k
+  "boydton",       // Microsoft DC, pop ~500
+  "lenoir",        // Google DC, pop ~18k
+  "prineville",    // Facebook DC, pop ~10k
+]);
+
+const DC_REGIONS = new Set([
+  "iowa",          // Council Bluffs cluster
+  "oregon",        // Boardman / The Dalles / Prineville cluster
+]);
+
 function ipToInt(ip: string): number {
   return ip.split(".").reduce((acc, oct) => (acc << 8) + parseInt(oct, 10), 0) >>> 0;
 }
@@ -32,5 +48,15 @@ export function isDatacenterIp(ip: string): boolean {
     if ((ipInt & mask) === (prefixInt & mask)) return true;
   }
 
+  return false;
+}
+
+export function isDatacenterCity(city: string, region: string): boolean {
+  const c = city.toLowerCase().trim();
+  const r = region.toLowerCase().trim();
+  if (DC_CITIES.has(c)) return true;
+  if (DC_REGIONS.has(r)) return true;
+  // Ashburn in Virginia: dead giveaway (AWS us-east-1)
+  if (c === "ashburn" && r === "virginia") return true;
   return false;
 }

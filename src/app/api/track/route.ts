@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
-import { isDatacenterIp } from "@/lib/bot-filter";
+import { isDatacenterIp, isDatacenterCity } from "@/lib/bot-filter";
 
 async function lookupGeo(ip: string): Promise<{ country: string; city: string; region: string }> {
   // Primary: ipapi.co (HTTPS, 1000/day free, no key required)
@@ -43,7 +43,7 @@ async function lookupGeo(ip: string): Promise<{ country: string; city: string; r
 
 export async function POST(req: NextRequest) {
   try {
-    const { page } = await req.json();
+    const { page, event } = await req.json();
 
     const ip =
       req.headers.get("cf-connecting-ip") ||
@@ -69,8 +69,13 @@ export async function POST(req: NextRequest) {
 
     const referrer = req.headers.get("referer") || "";
 
+    // Click events use __click__: prefix so report can separate them from page views
+    const storedPage = event ? `__click__:${event}` : page;
+
+    const isDC = isDatacenterIp(ip) || isDatacenterCity(city, region);
+
     await prisma.visit.create({
-      data: { page, country, city, region, referrer, isDatacenter: isDatacenterIp(ip) },
+      data: { page: storedPage, country, city, region, referrer, isDatacenter: isDC },
     });
 
     return NextResponse.json({ ok: true });
