@@ -297,38 +297,94 @@ const SYMBOLS: Record<string, { symbol: string; keyword: string; meaning: string
 ],
 };
 
+const TYPE_GROUPS = [
+  { type: "auspicious", color: "green", icon: "🟢", border: "border-l-green-400", bg: "bg-green-50/50" },
+  { type: "mixed", color: "purple", icon: "🟣", border: "border-l-purple-400", bg: "bg-purple-50/50" },
+  { type: "warning", color: "orange", icon: "🟠", border: "border-l-orange-400", bg: "bg-orange-50/50" },
+  { type: "neutral", color: "stone", icon: "⚪", border: "border-l-stone-300", bg: "bg-stone-50/50" },
+] as const;
+
+const GROUP_LABELS: Record<string, Record<string, string>> = {
+  auspicious: {
+    en: "🟢 Auspicious Signs", ru: "🟢 Благоприятные знаки",
+    ja: "🟢 吉兆", ko: "🟢 길조",
+  },
+  mixed: {
+    en: "🟣 Mixed Meanings", ru: "🟣 Смешанные значения",
+    ja: "🟣 混合的な意味", ko: "🟣 혼합된 의미",
+  },
+  warning: {
+    en: "🟠 Warnings & Cautions", ru: "🟠 Предупреждения",
+    ja: "🟠 警告サイン", ko: "🟠 경고 신호",
+  },
+  neutral: {
+    en: "⚪ Neutral Symbols", ru: "⚪ Нейтральные символы",
+    ja: "⚪ 中立的なシンボル", ko: "⚪ 중립적 상징",
+  },
+};
+
+function SymbolCard({ s }: { s: { symbol: string; keyword: string; meaning: string; type: string } }) {
+  const borderColor =
+    s.type === "auspicious" ? "border-l-green-400" :
+    s.type === "warning" ? "border-l-orange-400" :
+    s.type === "mixed" ? "border-l-purple-400" : "border-l-stone-300";
+  const emoji = s.symbol.split(" ")[0];
+  const name = s.symbol.split(" ").slice(1).join(" ");
+  return (
+    <div className={`card-classic p-2.5 sm:p-3 border-l-2 ${borderColor} hover:shadow-md transition-shadow`}>
+      <div className="flex items-center gap-1.5 mb-1">
+        <span className="text-lg sm:text-xl leading-none">{emoji}</span>
+        <span className="text-xs sm:text-sm font-medium text-stone-700 truncate">{name}</span>
+        <span className="text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded-full bg-stone-100 text-stone-500 shrink-0">{s.keyword}</span>
+      </div>
+      <p className="text-[11px] sm:text-xs text-stone-500 leading-relaxed">{s.meaning}</p>
+    </div>
+  );
+}
+
 export default function DreamMeaningPage({ params }: Props) {
   const c = CONTENT[params.locale] || CONTENT.en;
   const symbols = SYMBOLS[params.locale] || SYMBOLS.en;
+  const lang = params.locale;
+
+  const grouped = TYPE_GROUPS.map(g => ({
+    ...g,
+    label: (GROUP_LABELS[g.type] || GROUP_LABELS.auspicious)[lang] || GROUP_LABELS[g.type].en,
+    items: symbols.filter((s: { type: string }) => s.type === g.type),
+  })).filter(g => g.items.length > 0);
 
   return (
     <div className="max-w-2xl mx-auto">
-      <h1 className="text-2xl sm:text-3xl font-bold mb-3 text-center" style={{ color: "var(--accent)" }}>
+      <h1 className="text-xl sm:text-3xl font-bold mb-2 sm:mb-3 text-center" style={{ color: "var(--accent)" }}>
         {c.heading}
       </h1>
-      <p className="text-sm text-stone-500 text-center mb-8">{c.subtitle}</p>
+      <p className="text-xs sm:text-sm text-stone-500 text-center mb-6 sm:mb-8 leading-relaxed">{c.subtitle}</p>
 
-      <section className="card-classic p-4 sm:p-6 mb-6">
-        <h2 className="text-lg font-semibold text-stone-700 mb-3">{c.whatTitle}</h2>
-        <p className="text-sm text-stone-600 leading-relaxed">{c.whatBody}</p>
+      <section className="card-classic p-3 sm:p-6 mb-6">
+        <h2 className="text-base sm:text-lg font-semibold text-stone-700 mb-2 sm:mb-3">{c.whatTitle}</h2>
+        <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">{c.whatBody}</p>
       </section>
 
       <section className="mb-6">
-        <h2 className="text-lg font-semibold text-stone-700 mb-4">{c.symbolsTitle}</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {symbols.map((s) => (
-            <div key={s.symbol} className={`card-classic p-3 sm:p-4 border-l-2 ${
-              s.type === "auspicious" ? "border-l-green-400" :
-              s.type === "warning" ? "border-l-orange-400" :
-              s.type === "mixed" ? "border-l-purple-400" : "border-l-stone-300"
-            }`}>
-              <div className="flex items-center gap-2 mb-1">
-                <span className="text-xl">{s.symbol.split(" ")[0]}</span>
-                <span className="text-sm font-medium text-stone-700">{s.symbol.split(" ").slice(1).join(" ")}</span>
-                <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-stone-100 text-stone-500">{s.keyword}</span>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-base sm:text-lg font-semibold text-stone-700">{c.symbolsTitle}</h2>
+          <span className="text-[11px] sm:text-xs text-stone-400">{symbols.length} symbols</span>
+        </div>
+
+        <div className="space-y-4">
+          {grouped.map((group) => (
+            <details key={group.type} open className="group">
+              <summary className={`flex items-center gap-2 cursor-pointer px-3 py-2 rounded-lg -ml-1 hover:bg-stone-50 text-stone-600 marker:hidden`}>
+                <span className="text-[10px] sm:text-xs font-medium uppercase tracking-wide opacity-60 transition-transform group-open:rotate-90">▶</span>
+                <span className="text-xs sm:text-sm font-semibold">{group.label}</span>
+                <span className="text-[10px] sm:text-xs text-stone-400 ml-auto">{group.items.length}</span>
+              </summary>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 mt-3">
+                {group.items.map((s: { symbol: string; keyword: string; meaning: string; type: string }) => (
+                  <SymbolCard key={s.symbol} s={s} />
+                ))}
               </div>
-              <p className="text-xs text-stone-500">{s.meaning}</p>
-            </div>
+            </details>
           ))}
         </div>
       </section>
