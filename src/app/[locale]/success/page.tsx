@@ -205,8 +205,8 @@ function SuccessContent() {
       {type === "naming" && result && <NamingResultView result={result as NamingResult} isFree={isFree} purchaseId={purchaseId ?? undefined} />}
       {type === "calendar" && result && <CalendarResultView result={result as CalendarResult} isFree={isFree} purchaseId={purchaseId ?? undefined} />}
       {type === "divination" && result && <DivinationResultView result={result as DivinationResult} isFree={isFree} purchaseId={purchaseId ?? undefined} />}
-      {type === "palm-reading" && result && <PalmReadingResultView result={result as PalmReadingResult} />}
-      {type === "dream-interpretation" && result && <DreamInterpretationResultView result={result as DreamInterpretationResult} />}
+      {type === "palm-reading" && result && <PalmReadingResultView result={result as PalmReadingResult} isFree={isFree} purchaseId={purchaseId ?? undefined} />}
+      {type === "dream-interpretation" && result && <DreamInterpretationResultView result={result as DreamInterpretationResult} isFree={isFree} purchaseId={purchaseId ?? undefined} />}
 
       {isFree && (
         <div className="mt-8 text-center">

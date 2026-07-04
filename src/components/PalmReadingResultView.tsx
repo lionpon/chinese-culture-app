@@ -62,7 +62,8 @@ function MountBadge({ mount }: { mount: MountAnalysis }) {
   );
 }
 
-export default function PalmReadingResultView({ result }: { result: PalmReadingResult }) {
+export default function PalmReadingResultView({ result, isFree: _isFree, purchaseId: _purchaseId }: { result: PalmReadingResult; isFree?: boolean; purchaseId?: string }) {
+  void _isFree; void _purchaseId;
   const h = result.handType;
   const bg = ELEMENT_COLORS[h.element] || "#F5F0E8";
 
