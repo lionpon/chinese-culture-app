@@ -6,7 +6,10 @@ const PAYPAL_URL =
     : "https://www.paypal.com/cgi-bin/webscr";
 
 export function getAppUrl(): string {
-  return process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
+  // Match config.ts priority chain — critical for PayPal return/IPN URLs
+  if (process.env.NEXT_PUBLIC_APP_URL) return process.env.NEXT_PUBLIC_APP_URL.replace(/\/$/, "");
+  if (typeof process !== "undefined" && process.env.RENDER_EXTERNAL_URL) return process.env.RENDER_EXTERNAL_URL.replace(/\/$/, "");
+  return "https://www.culture-of-china.com";
 }
 
 export const PRODUCT_NAMES: Record<string, string> = {

@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { buildPayPalCheckoutUrl } from "@/lib/paypal";
-import { createLemonCheckout } from "@/lib/lemon";
 import { prisma } from "@/lib/db";
 
 export async function POST(req: NextRequest) {
@@ -32,21 +31,7 @@ export async function POST(req: NextRequest) {
 
     const payAmount = Math.max(amount ?? 1, 1);
 
-    // Prefer Lemon Squeezy, fall back to PayPal
-    const storeId = process.env.LEMON_SQUEEZY_STORE_ID;
-    const variantId = process.env.LEMON_SQUEEZY_VARIANT_ID;
-
-    if (storeId && variantId) {
-      const result = await createLemonCheckout({
-        storeId,
-        variantId,
-        purchaseId: pending.id,
-        type: pending.type,
-        amount: payAmount,
-      });
-      return NextResponse.json({ url: result.url });
-    }
-
+    // PayPal (LS dropped support for Chinese merchants)
     const url = buildPayPalCheckoutUrl(pending.id, pending.type, payAmount);
     return NextResponse.json({ url });
   } catch (error) {

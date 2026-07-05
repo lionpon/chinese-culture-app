@@ -10,17 +10,17 @@ services:
     envVars:
       - key: DATABASE_URL
         sync: false
-      - key: LEMON_SQUEEZY_API_KEY
-        sync: false
-      - key: LEMON_SQUEEZY_WEBHOOK_SECRET
-        sync: false
-      - key: LEMON_SQUEEZY_STORE_ID
-        sync: false
-      - key: LEMON_SQUEEZY_VARIANT_ID
-        sync: false
       - key: ADMIN_TOKEN
         sync: false
       - key: NEXT_PUBLIC_APP_URL
+        sync: false
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: PAYPAL_EMAIL
+        sync: false
+      - key: PAYPAL_SANDBOX
+        sync: false
+      - key: PAYPAL_PDT_TOKEN
         sync: false
       - key: TELEGRAM_BOT_TOKEN
         sync: false
@@ -33,15 +33,5 @@ services:
       - key: RESEND_API_KEY
         sync: false
       - key: CONTACT_EMAIL
-        sync: false
-      - key: PAYPAL_CLIENT_ID
-        sync: false
-      - key: PAYPAL_CLIENT_SECRET
-        sync: false
-      - key: OPENROUTER_API_KEY
-        sync: false
-      - key: PAYPAL_EMAIL
-        sync: false
-      - key: PAYPAL_PDT_TOKEN
         sync: false
     healthCheckPath: /api/health

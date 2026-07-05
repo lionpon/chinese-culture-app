@@ -5,7 +5,8 @@ import { generateNames, analyzeName } from "@/lib/naming";
 import { selectAuspiciousDays } from "@/lib/calendar";
 import { performDivination } from "@/lib/divination";
 import { readPalm } from "@/lib/palm-reading";
-import type { NamingInput, CalendarInput, DivinationInput, PalmReadingInput } from "@/types";
+import { interpretDream } from "@/lib/dream-interpretation";
+import type { NamingInput, CalendarInput, DivinationInput, PalmReadingInput, DreamInterpretationInput } from "@/types";
 
 export async function POST(req: NextRequest) {
   const rawBody = await req.text();
@@ -44,6 +45,9 @@ export async function POST(req: NextRequest) {
         break;
       case "palm-reading":
         result = await readPalm(input as PalmReadingInput);
+        break;
+      case "dream-interpretation":
+        result = await interpretDream(input as DreamInterpretationInput);
         break;
       default:
         return NextResponse.json({ error: "Unknown type" }, { status: 400 });

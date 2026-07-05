@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { buildPayPalCheckoutUrl } from "@/lib/paypal";
-import { createLemonCheckout } from "@/lib/lemon";
 import { prisma } from "@/lib/db";
 import { generateNames, analyzeName } from "@/lib/naming";
 import { selectAuspiciousDays } from "@/lib/calendar";
@@ -91,26 +90,9 @@ export async function POST(req: NextRequest) {
 
     const amount = typeof input.amount === "number" && input.amount >= 1 ? input.amount : 1;
 
-    // PayPal legacy fallback
-    if (method === "paypal") {
-      const url = buildPayPalCheckoutUrl(purchase.id, type, amount);
-      return NextResponse.json({ url });
-    }
-
-    // Default: Lemon Squeezy (supports Alipay, WeChat Pay, PayPal, cards)
-    const storeId = process.env.LEMON_SQUEEZY_STORE_ID;
-    const variantId = process.env.LEMON_SQUEEZY_VARIANT_ID;
-    if (!storeId || !variantId) {
-      return NextResponse.json({ error: "Payment configuration missing" }, { status: 500 });
-    }
-    const lemonResult = await createLemonCheckout({
-      storeId,
-      variantId,
-      purchaseId: purchase.id,
-      type,
-      amount,
-    });
-    return NextResponse.json({ url: lemonResult.url });
+    // PayPal — LS dropped support for Chinese merchants (2025-06-17)
+    const url = buildPayPalCheckoutUrl(purchase.id, type, amount);
+    return NextResponse.json({ url });
   } catch (error) {
     console.error("Checkout error:", error);
     return NextResponse.json({ error: "Payment service temporarily unavailable" }, { status: 500 });
