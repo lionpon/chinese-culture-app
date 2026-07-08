@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Chinese Culture Studio
+
+> Discover ancient Chinese wisdom — I Ching divination, Chinese name creation, auspicious date selection, palm reading, and dream interpretation.
+
+**[culture-of-china.com](https://www.culture-of-china.com)** — $1 per reading, no subscriptions.
+
+## Features
+
+- **I Ching Divination** — Cast hexagrams by time, random generation, or manual numbers. Full interpretation with changing lines, trigrams, and mutual hexagram.
+- **Chinese Name Creation** — Generate authentic Chinese names based on Bazi (八字), Five Elements (五行), and classical texts.
+- **Auspicious Date Selection** — Traditional Chinese almanac (黄历) date finder for weddings, business, travel, and 10+ event types.
+- **Palm Reading** — AI-powered palm line analysis from uploaded hand photos.
+- **Dream Interpretation** — Zhou Gong (周公解梦) classic dream dictionary with Freudian analysis.
+- **Daily I Ching** — A new hexagram every day, in 4 languages.
+- **Guides** — I Ching, Five Elements, Chinese Zodiac, Feng Shui, Face Reading, Lucky Numbers, and more.
+
+## Tech Stack
+
+Next.js 14 · TypeScript · Prisma · Neon PostgreSQL · Tailwind CSS · next-intl (en/ru/ja/ko) · PayPal Payments Standard · OpenRouter AI
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
+npx prisma generate
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Environment variables required:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Variable | Description |
+|----------|-------------|
+| `DATABASE_URL` | PostgreSQL connection string (Neon) |
+| `NEXT_PUBLIC_APP_URL` | Site URL for PayPal callbacks |
+| `PAYPAL_EMAIL` | PayPal merchant email |
+| `PAYPAL_SANDBOX` | `true` for sandbox, `false` for live |
+| `PAYPAL_PDT_TOKEN` | PayPal PDT identity token |
+| `OPENROUTER_API_KEY` | OpenRouter API key for AI features |
+| `ADMIN_TOKEN` | Admin dashboard access token |
