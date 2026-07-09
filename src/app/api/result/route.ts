@@ -31,11 +31,12 @@ function truncateForFreePreview(type: string, result: Record<string, unknown>): 
           // Exclude: elementBreakdown, full baziCompatibility, suggestion, baziAnalysis
         };
       }
-      // Create mode
+      // Create mode — strip free name to bare hook: characters + pinyin + meaning only
       const options = r.options as Array<Record<string, unknown>> | undefined;
+      const first = options?.[0];
       return {
-        options: options?.slice(0, 1) ?? [],
-        // Exclude: remaining options, baziAnalysis
+        options: first ? [{ characters: first.characters, pinyin: first.pinyin, meaning: first.meaning }] : [],
+        // Removed: wuxing, source, sourceText, Recommended badge, baziAnalysis
       };
     }
     case "calendar": {
@@ -48,32 +49,35 @@ function truncateForFreePreview(type: string, result: Record<string, unknown>): 
     }
     case "dream-interpretation": {
       const r = result as Record<string, unknown>;
-      const symbols = (r.zhouGong as Record<string, unknown>)?.symbols as Array<Record<string, unknown>> | undefined;
+      const zhouGong = r.zhouGong as Record<string, unknown>;
+      const symbols = zhouGong?.symbols as Array<Record<string, unknown>> | undefined;
+      const overallZh = (zhouGong?.overallInterpretation as string) || "";
+      const overallEn = (zhouGong?.overallInterpretationEn as string) || "";
       return {
         dreamType: r.dreamType,
         zhouGong: {
           symbols: symbols?.slice(0, 1) ?? [],
-          overallInterpretation: "",
-          overallInterpretationEn: "Unlock the full reading for Zhou Gong dream analysis...",
+          overallInterpretation: overallZh.slice(0, 250),
+          overallInterpretationEn: overallEn.slice(0, 250),
           classicalRef: "",
         },
         freudian: {
-          latentMeaning: "Unlock full reading...",
-          latentMeaningEn: "Unlock full reading...",
+          latentMeaning: "",
+          latentMeaningEn: "",
           wishFulfillment: "",
           wishFulfillmentEn: "",
           keySymbols: [],
         },
         overview: {
-          text: "Unlock the full reading...",
-          textEn: "Unlock the full reading...",
+          text: "",
+          textEn: "",
           classicalRef: "",
         },
         advice: {
           practical: "",
           practicalEn: "",
-          psychological: "Unlock the full reading for psychological advice...",
-          psychologicalEn: "Unlock the full reading for psychological advice...",
+          psychological: "",
+          psychologicalEn: "",
         },
       };
     }

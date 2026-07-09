@@ -89,13 +89,46 @@ export default function DreamInterpretationResultView({
         <p className="text-xs text-stone-500">{dt.descriptionEn}</p>
       </div>
 
-      {/* Gated content: interpretation details */}
+      {/* Free preview: 1 Zhou Gong symbol + partial interpretation, then paywall */}
       {isFree && purchaseId ? (
-        <PaywallOverlay
-          purchaseId={purchaseId}
-          featureKey1="unlockDream1"
-          featureKey2="unlockDream2"
-        />
+        <>
+          {zg.symbols.length > 0 && zg.symbols[0].symbol && (
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <span className="text-2xl">🏮</span>
+                <h3 className="text-lg font-semibold text-stone-800">
+                  {t("result.zhouGongTitle")}
+                </h3>
+                <span className="text-xs text-stone-400">
+                  {t("result.zhouGongSubtitle")}
+                </span>
+              </div>
+
+              <div className="space-y-3 mb-4">
+                <SymbolCard
+                  {...zg.symbols[0]}
+                  borderColor="#2D6A4F"
+                />
+              </div>
+
+              {(zg.overallInterpretation || zg.overallInterpretationEn) && (
+                <div className="card-classic p-4 mb-6">
+                  {zg.overallInterpretation && (
+                    <p className="text-sm text-stone-700 mb-2">{zg.overallInterpretation}</p>
+                  )}
+                  {zg.overallInterpretationEn && (
+                    <p className="text-xs text-stone-500">{zg.overallInterpretationEn}</p>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
+          <PaywallOverlay
+            purchaseId={purchaseId}
+            featureKey1="unlockDream1"
+            featureKey2="unlockDream2"
+          />
+        </>
       ) : (
         <>
           {/* Dual Perspective */}

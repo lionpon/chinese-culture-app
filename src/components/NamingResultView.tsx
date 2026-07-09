@@ -5,7 +5,7 @@ import SpeakButton from "./SpeakButton";
 import PaywallOverlay from "./PaywallOverlay";
 import EmailCaptureForm from "./EmailCaptureForm";
 
-function ResultCard({ opt, i, recommended }: { opt: { characters: string; pinyin: string; meaning: string; wuxing: string; source: string; sourceText?: string }; i: number; recommended: boolean }) {
+function ResultCard({ opt, i, recommended, isFree }: { opt: { characters: string; pinyin: string; meaning: string; wuxing?: string; source?: string; sourceText?: string }; i: number; recommended: boolean; isFree?: boolean }) {
   return (
     <div key={i} className="card-classic p-4 sm:p-6">
       <div className="text-center mb-3">
@@ -17,11 +17,11 @@ function ResultCard({ opt, i, recommended }: { opt: { characters: string; pinyin
       </div>
       <div className="space-y-2 text-sm">
         <p><span className="text-stone-400">Meaning:</span> {opt.meaning}</p>
-        <p><span className="text-stone-400">Elements:</span> {opt.wuxing}</p>
-        <p><span className="text-stone-400">Source:</span> {opt.source}</p>
+        {opt.wuxing && <p><span className="text-stone-400">Elements:</span> {opt.wuxing}</p>}
+        {opt.source && <p><span className="text-stone-400">Source:</span> {opt.source}</p>}
         {opt.sourceText && <p className="text-stone-500 italic">{opt.sourceText}</p>}
       </div>
-      {recommended && (
+      {!isFree && recommended && (
         <div className="mt-4 pt-4 border-t border-stone-100 text-xs text-stone-400">
           <strong>Recommended</strong> — Best match for your elemental profile
         </div>
@@ -110,7 +110,7 @@ export default function NamingResultView({
       <div className="space-y-4">
         {/* Always show first recommended name */}
         {r.options.length > 0 && (
-          <ResultCard opt={r.options[0]} i={0} recommended={true} />
+          <ResultCard opt={r.options[0]} i={0} recommended={true} isFree={!!(isFree && purchaseId)} />
         )}
 
         {/* Gate remaining names + bazi analysis behind paywall */}
