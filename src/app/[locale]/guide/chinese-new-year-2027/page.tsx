@@ -180,7 +180,16 @@ const CONTENT: Record<string, {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const c = CONTENT[params.locale] || CONTENT.en;
-  return { title: c.title, description: c.desc, openGraph: { title: c.ogTitle, description: c.ogDesc }, robots: "index, follow" };
+  return { title: c.title, description: c.desc, openGraph: { title: c.ogTitle, description: c.ogDesc },
+    alternates: {
+      languages: {
+        en: "https://www.culture-of-china.com/guide/chinese-new-year-2027",
+        ru: "https://www.culture-of-china.com/ru/guide/chinese-new-year-2027",
+        ja: "https://www.culture-of-china.com/ja/guide/chinese-new-year-2027"
+      },
+    },
+    robots: "index, follow"
+  };
 }
 
 export default function ChineseNewYear2027Guide({ params: { locale } }: Props) {

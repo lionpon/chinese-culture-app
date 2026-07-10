@@ -156,7 +156,16 @@ const CONTENT: Record<string, {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const c = CONTENT[params.locale] || CONTENT.en;
-  return { title: c.title, description: c.desc, openGraph: { title: c.ogTitle, description: c.ogDesc }, robots: "index, follow" };
+  return { title: c.title, description: c.desc, openGraph: { title: c.ogTitle, description: c.ogDesc },
+    alternates: {
+      languages: {
+        en: "https://www.culture-of-china.com/guide/auspicious-dates",
+        ru: "https://www.culture-of-china.com/ru/guide/auspicious-dates",
+        ja: "https://www.culture-of-china.com/ja/guide/auspicious-dates"
+      },
+    },
+    robots: "index, follow"
+  };
 }
 
 export default function AuspiciousDatesGuide({ params: { locale } }: Props) {

@@ -151,7 +151,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: c.title,
     description: c.desc,
     openGraph: { title: c.ogTitle, description: c.ogDesc },
-    robots: "index, follow",
+        alternates: {
+      languages: {
+        en: "https://www.culture-of-china.com/guide/iching",
+        ru: "https://www.culture-of-china.com/ru/guide/iching",
+        ja: "https://www.culture-of-china.com/ja/guide/iching",
+      },
+    },
+      robots: "index, follow",
   };
 }
 

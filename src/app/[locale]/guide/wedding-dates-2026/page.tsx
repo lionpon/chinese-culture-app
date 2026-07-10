@@ -101,7 +101,16 @@ const CONTENT: Record<string, { title: string; desc: string; ogTitle: string; og
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const c = CONTENT[params.locale] || CONTENT.en;
-  return { title: c.title, description: c.desc, openGraph: { title: c.ogTitle, description: c.ogDesc }, robots: "index, follow" };
+  return { title: c.title, description: c.desc, openGraph: { title: c.ogTitle, description: c.ogDesc },
+    alternates: {
+      languages: {
+        en: "https://www.culture-of-china.com/guide/wedding-dates-2026",
+        ru: "https://www.culture-of-china.com/ru/guide/wedding-dates-2026",
+        ja: "https://www.culture-of-china.com/ja/guide/wedding-dates-2026"
+      },
+    },
+    robots: "index, follow"
+  };
 }
 
 export default function WeddingDatesGuide({ params: { locale } }: Props) {

@@ -164,7 +164,16 @@ const NAMES: Record<string, { title: string; desc: string; ogTitle: string; ogDe
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const c = NAMES[params.locale] || NAMES.en;
-  return { title: c.title, description: c.desc, openGraph: { title: c.ogTitle, description: c.ogDesc }, robots: "index, follow" };
+  return { title: c.title, description: c.desc, openGraph: { title: c.ogTitle, description: c.ogDesc },
+    alternates: {
+      languages: {
+        en: "https://www.culture-of-china.com/guide/chinese-name-boy",
+        ru: "https://www.culture-of-china.com/ru/guide/chinese-name-boy",
+        ja: "https://www.culture-of-china.com/ja/guide/chinese-name-boy"
+      },
+    },
+    robots: "index, follow"
+  };
 }
 
 export default function ChineseNameBoyGuide({ params: { locale } }: Props) {

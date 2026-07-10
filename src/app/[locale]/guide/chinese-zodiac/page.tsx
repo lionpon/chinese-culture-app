@@ -120,7 +120,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: c.title,
     description: c.desc,
     openGraph: { title: c.ogTitle, description: c.ogDesc },
-    robots: "index, follow",
+        alternates: {
+      languages: {
+        en: "https://www.culture-of-china.com/guide/chinese-zodiac",
+        ru: "https://www.culture-of-china.com/ru/guide/chinese-zodiac",
+        ja: "https://www.culture-of-china.com/ja/guide/chinese-zodiac",
+      },
+    },
+      robots: "index, follow",
   };
 }
 

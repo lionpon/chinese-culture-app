@@ -156,7 +156,16 @@ const CONTENT: Record<string, {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const c = CONTENT[params.locale] || CONTENT.en;
-  return { title: c.title, description: c.desc, openGraph: { title: c.ogTitle, description: c.ogDesc }, robots: "index, follow" };
+  return { title: c.title, description: c.desc, openGraph: { title: c.ogTitle, description: c.ogDesc },
+    alternates: {
+      languages: {
+        en: "https://www.culture-of-china.com/guide/five-elements",
+        ru: "https://www.culture-of-china.com/ru/guide/five-elements",
+        ja: "https://www.culture-of-china.com/ja/guide/five-elements"
+      },
+    },
+    robots: "index, follow"
+  };
 }
 
 export default function FiveElementsGuide({ params: { locale } }: Props) {
