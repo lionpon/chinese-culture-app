@@ -31,12 +31,12 @@ function truncateForFreePreview(type: string, result: Record<string, unknown>): 
           // Exclude: elementBreakdown, full baziCompatibility, suggestion, baziAnalysis
         };
       }
-      // Create mode — strip free name to bare hook: characters + pinyin + meaning only
+      // Create mode — free hook: name + pinyin + meaning + wuxing (enough to intrigue, not enough to satisfy)
       const options = r.options as Array<Record<string, unknown>> | undefined;
       const first = options?.[0];
       return {
-        options: first ? [{ characters: first.characters, pinyin: first.pinyin, meaning: first.meaning }] : [],
-        // Removed: wuxing, source, sourceText, Recommended badge, baziAnalysis
+        options: first ? [{ characters: first.characters, pinyin: first.pinyin, meaning: first.meaning, wuxing: first.wuxing }] : [],
+        // Locked: source, sourceText, Recommended badge, baziAnalysis
       };
     }
     case "calendar": {
