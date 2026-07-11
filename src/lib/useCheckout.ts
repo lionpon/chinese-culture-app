@@ -24,10 +24,12 @@ export function useCheckout(type: string) {
       }
 
       if (result.url) {
-        // Card payment opens in new tab; PayPal Standard redirects current page
+        // Card payment via paypal.me — opens in new tab, no auto-callback.
+        // User pays, closes tab, comes back. No pending order to poll.
         if (result.method === "card") {
           window.open(result.url, "_blank");
-          window.location.href = "/success?purchase_id=" + result.purchase_id + "&method=card";
+          alert("Payment page opened. After completing payment, close the new tab and refresh this page. Your result will appear once payment is confirmed (usually within 1-2 minutes).");
+          setLoading(false);
           return;
         }
         window.location.href = result.url;

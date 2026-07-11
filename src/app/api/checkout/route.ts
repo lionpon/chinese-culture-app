@@ -92,10 +92,12 @@ export async function POST(req: NextRequest) {
 
     // Card payment via PayPal China (paypal.me) — supports Visa/MC/Apple Pay, no PayPal account needed
     if (method === "card") {
+      // Don't create a pending purchase for card payments — no auto-callback available.
+      // User pays on paypal.me, then returns to site. Manual verification needed.
       return NextResponse.json({
         url: "https://paypal.me/lionpon/" + amount,
-        purchase_id: purchase.id,
         method: "card",
+        amount,
       });
     }
 
