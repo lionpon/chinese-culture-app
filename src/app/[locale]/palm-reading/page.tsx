@@ -70,7 +70,6 @@ export default function PalmReadingPage() {
  e.preventDefault();
  if (!imageKey) return;
  const form = e.currentTarget;
- const pmethod = form.dataset.paymentMethod as "paypal" | "card" | undefined;
  await checkout({
  imageKey,
  handSide: form.handSide.value,
@@ -78,7 +77,7 @@ export default function PalmReadingPage() {
  ageRange: form.ageRange.value || undefined,
  question: form.question?.value || undefined,
  amount,
- }, pmethod);
+ });
  }
 
  return (
@@ -188,12 +187,7 @@ export default function PalmReadingPage() {
  </div>
 
  <AmountPicker value={amount} onChange={setAmount} />
- <SubmitButton
- loading={loading || uploading}
- label={uploading ? t("form.uploading") : loading ? t("form.processing") : t("form.submit")}
- hasFree={false}
- 
- />
+ <SubmitButton loading={loading || uploading} label={uploading ? t("form.uploading") : loading ? t("form.processing") : t("form.submit")} hasFree={false} />
  </form>
  </div>
  );

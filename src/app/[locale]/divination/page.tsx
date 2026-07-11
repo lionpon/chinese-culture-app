@@ -51,7 +51,6 @@ export default function DivinationPage() {
  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
  e.preventDefault();
  const form = e.currentTarget;
- const pmethod = form.dataset.paymentMethod as "paypal" | "card" | undefined;
  const data: Record<string, unknown> = {
  method,
  question: form.question?.value || null,
@@ -64,7 +63,7 @@ export default function DivinationPage() {
  ];
  }
  data.amount = amount;
- await checkout(data, pmethod);
+ await checkout(data);
  }
 
  const methodLabels: Record<string, string> = {
@@ -118,7 +117,7 @@ export default function DivinationPage() {
  {hasFreeUses() && (
  <p className="text-xs text-stone-400 text-center">{t("form.previewNote")}</p>
  )}
- <SubmitButton loading={loading} label={t("form.submit")} hasFree={hasFreeUses()} onPayPal={() => { const f = document.querySelector("form"); if (f) { f.dataset.paymentMethod = "paypal"; f.requestSubmit(); } }} onCard={() => { const f = document.querySelector("form"); if (f) { f.dataset.paymentMethod = "card"; f.requestSubmit(); } }} />
+ <SubmitButton loading={loading} label={t("form.submit")} hasFree={hasFreeUses()} />
  </form>
  </div>
  );

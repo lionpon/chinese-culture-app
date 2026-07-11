@@ -54,13 +54,12 @@ export default function CalendarPage() {
  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
  e.preventDefault();
  const form = e.currentTarget;
- const pmethod = form.dataset.paymentMethod as "paypal" | "card" | undefined;
  await checkout({
  startDate: form.startDate.value,
  endDate: form.endDate.value,
  eventType: form.eventType.value,
  amount,
- }, pmethod);
+ });
  }
 
  return (
@@ -111,7 +110,7 @@ export default function CalendarPage() {
  {hasFreeUses() && (
  <p className="text-xs text-stone-400 text-center">{t("form.previewNote")}</p>
  )}
- <SubmitButton loading={loading} label={t("form.submit")} hasFree={hasFreeUses()} onPayPal={() => { const f = document.querySelector("form"); if (f) { f.dataset.paymentMethod = "paypal"; f.requestSubmit(); } }} onCard={() => { const f = document.querySelector("form"); if (f) { f.dataset.paymentMethod = "card"; f.requestSubmit(); } }} />
+ <SubmitButton loading={loading} label={t("form.submit")} hasFree={hasFreeUses()} />
  </form>
  </div>
  );

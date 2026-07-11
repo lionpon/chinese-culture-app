@@ -6,6 +6,7 @@ import { useCheckout } from "@/lib/useCheckout";
 import SubmitButton from "@/components/SubmitButton";
 import AmountPicker from "@/components/AmountPicker";
 import { Link } from "@/navigation";
+import { hasFreeUses } from "@/lib/free-tier";
 
 export default function DreamInterpretationPage() {
  const t = useTranslations("dream");
@@ -17,13 +18,12 @@ export default function DreamInterpretationPage() {
  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
  e.preventDefault();
  const form = e.currentTarget;
- const pmethod = form.dataset.paymentMethod as "paypal" | "card" | undefined;
  await checkout({
  dreamText: form.dreamText.value,
  dreamType: form.dreamType.value || undefined,
  focus: form.interpretFocus.value || undefined,
  amount,
- }, pmethod);
+ });
  }
 
  return (
@@ -120,14 +120,7 @@ export default function DreamInterpretationPage() {
  </div>
 
  <AmountPicker value={amount} onChange={setAmount} />
- <SubmitButton
- loading={loading}
- label={
- loading ? t("form.processing") : t("form.submit")
- }
- hasFree
- 
- />
+ <SubmitButton loading={loading} label={loading ? t("form.processing") : t("form.submit")} hasFree={hasFreeUses()} />
  </form>
 
  {/* Link to dream meaning guide */}

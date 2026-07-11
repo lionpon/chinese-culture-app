@@ -44,9 +44,8 @@
       "free": "{label} — Бесплатно",
       "paid": "{label} · Поддержать ${amount}",
       "helper": "Ваш вклад помогает поддерживать сервис",
-      "choosePayment": "Выберите способ оплаты:",
-      "payWithPayPal": "Оплатить через PayPal",
-      "payWithCard": "Банковская карта"
+      "paidSimple": "Получить результат · ${amount}",
+      "cardNote": "PayPal или банковская карта — аккаунт PayPal не нужен"
     },
     "amount": {
       "label": "Сумма Поддержки (USD)",

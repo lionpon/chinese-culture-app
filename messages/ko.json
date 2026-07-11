@@ -44,9 +44,8 @@
       "free": "{label} — 무료",
       "paid": "{label} · 후원 ${amount}",
       "helper": "후원금은 서비스 유지에 도움이 됩니다",
-      "choosePayment": "결제 방법 선택:",
-      "payWithPayPal": "PayPal로 결제",
-      "payWithCard": "신용카드"
+      "paidSimple": "결과 보기 · ${amount}",
+      "cardNote": "PayPal 또는 신용카드 — PayPal 계정 불필요"
     },
     "amount": {
       "label": "후원 금액 (USD)",

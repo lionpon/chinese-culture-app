@@ -54,7 +54,6 @@ export default function NamingPage() {
  e.preventDefault();
  const form = e.currentTarget;
  const styleEl = form.elements.namedItem("style") as HTMLSelectElement | null;
- const method = form.dataset.paymentMethod as "paypal" | "card" | undefined;
  await checkout({
  firstName: form.firstName.value,
  lastName: form.lastName.value,
@@ -66,7 +65,7 @@ export default function NamingPage() {
  style: styleEl ? styleEl.value as "elegant" | "grand" | "fresh" : "elegant",
  mode,
  amount,
- }, method);
+ });
  }
 
  return (
@@ -170,7 +169,7 @@ export default function NamingPage() {
  {hasFreeUses() && (
  <p className="text-xs text-stone-400 text-center">{t("form.previewNote")}</p>
  )}
- <SubmitButton loading={loading} label={mode === "analyze" ? t("form.submitAnalyze") : t("form.submit")} hasFree={hasFreeUses()} onPayPal={() => { const f = document.querySelector("form"); if (f) { f.dataset.paymentMethod = "paypal"; f.requestSubmit(); } }} onCard={() => { const f = document.querySelector("form"); if (f) { f.dataset.paymentMethod = "card"; f.requestSubmit(); } }} />
+ <SubmitButton loading={loading} label={mode === "analyze" ? t("form.submitAnalyze") : t("form.submit")} hasFree={hasFreeUses()} />
  </form>
  </div>
  );
