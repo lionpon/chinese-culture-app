@@ -60,7 +60,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${t("siteName")} — ${meta.tagline}`,
     description: meta.desc,
     keywords: {
-      en: ["Chinese name", "I Ching", "divination", "auspicious date", "palm reading", "palmistry", "Chinese zodiac", "five elements", "feng shui", "Chinese culture", "Book of Changes", "Chinese naming"],
+      en: ["Chinese name", "Chinese female names", "Chinese girl names", "Chinese boy names", "I Ching", "divination", "auspicious date", "wedding dates 2026", "palm reading", "palmistry", "Chinese zodiac", "five elements", "feng shui", "Chinese culture", "Book of Changes", "Chinese naming", "dream interpretation", "dream meaning"],
       ru: ["И-Цзин", "Книга Перемен", "китайское имя", "гадание", "благоприятные даты", "хиромантия", "китайский календарь", "фэн-шуй", "китайская культура", "выбор дат"],
       ja: ["易経", "占い", "中国名", "吉日", "手相", "夢占い", "陰陽五行", "風水", "中国の知恵", "命名"],
       ko: ["주역", "점술", "중국식 이름", "길일", "수상", "꿈 해몽", "오행", "풍수", "중국 문화", "작명"],

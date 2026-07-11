@@ -8,11 +8,11 @@ type Name = { name: string; meaning: string; style: string };
 
 const CONTENT: Record<string, { title: string; desc: string; ogTitle: string; ogDesc: string; heading: string; subtitle: string; tableTitle: string; nameH: string; meaningH: string; styleH: string; names: Name[]; personalizedTitle: string; personalizedBody: string; faqs: { q: string; a: string }[]; cta: string; disclaimer: string }> = {
   en: {
-    title: "Chinese Names for Girls: 50+ Beautiful Meanings | Chinese Culture Studio",
-    desc: "A collection of Chinese girl names with translations. From floral names to elegant classical picks — choose a name with deep meaning.",
-    ogTitle: "Chinese Names for Girls",
+    title: "Chinese Female Names for Girls: 50+ Beautiful Names with Meanings | Chinese Culture Studio",
+    desc: "Chinese female names and girl names with deep meanings. From floral names to elegant classical picks — choose a name with deep meaning.",
+    ogTitle: "Chinese Female Names for Girls",
     ogDesc: "50+ beautiful names: flowers, beauty, virtues.",
-    heading: "Chinese Names for Girls: 25+ Beautiful Meanings",
+    heading: "Chinese Female Names for Girls: 25+ Beautiful Meanings",
     subtitle: "A curated collection of Chinese girl names — flowers, beauty, virtues, and classical elegance.",
     tableTitle: "Names with Meanings",
     nameH: "Name", meaningH: "Meaning", styleH: "Style",
