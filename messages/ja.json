@@ -43,7 +43,10 @@
       "processing": "処理中...",
       "free": "{label} — 無料",
       "paid": "{label} · ${amount} 支援",
-      "helper": "ご支援がサービスの維持に役立ちます"
+      "helper": "ご支援がサービスの維持に役立ちます",
+      "choosePayment": "お支払い方法を選択:",
+      "payWithPayPal": "PayPalで支払う",
+      "payWithCard": "クレジットカード"
     },
     "amount": {
       "label": "支援額 (USD)",

@@ -6,7 +6,7 @@ import { hasFreeUses, consumeFreeUse, updateRemaining } from "./free-tier";
 export function useCheckout(type: string) {
   const [loading, setLoading] = useState(false);
 
-  async function checkout(data: Record<string, unknown>, method?: "paypal" | "lemon") {
+  async function checkout(data: Record<string, unknown>, method?: "paypal" | "card") {
     setLoading(true);
     const free = hasFreeUses();
     try {
@@ -24,6 +24,12 @@ export function useCheckout(type: string) {
       }
 
       if (result.url) {
+        // Card payment opens in new tab; PayPal Standard redirects current page
+        if (result.method === "card") {
+          window.open(result.url, "_blank");
+          window.location.href = "/success?purchase_id=" + result.purchase_id + "&method=card";
+          return;
+        }
         window.location.href = result.url;
       } else if (result.purchase_id) {
         if (free) consumeFreeUse();

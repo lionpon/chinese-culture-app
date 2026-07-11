@@ -10,7 +10,7 @@ import type { NamingInput, CalendarInput, DivinationInput, DreamInterpretationIn
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { type, input, free } = body as { type: string; input: Record<string, unknown>; free?: boolean };
+    const { type, input, free, method } = body as { type: string; input: Record<string, unknown>; free?: boolean; method?: string };
 
     if (!["naming", "calendar", "divination", "palm-reading", "dream-interpretation"].includes(type)) {
       return NextResponse.json({ error: "Invalid request type" }, { status: 400 });
@@ -90,7 +90,16 @@ export async function POST(req: NextRequest) {
 
     const amount = typeof input.amount === "number" && input.amount >= 1 ? input.amount : 1;
 
-    // PayPal — LS dropped support for Chinese merchants (2025-06-17)
+    // Card payment via PayPal China (paypal.me) — supports Visa/MC/Apple Pay, no PayPal account needed
+    if (method === "card") {
+      return NextResponse.json({
+        url: "https://paypal.me/lionpon/" + amount,
+        purchase_id: purchase.id,
+        method: "card",
+      });
+    }
+
+    // PayPal Standard — existing PayPal account holders
     const url = buildPayPalCheckoutUrl(purchase.id, type, amount);
     return NextResponse.json({ url });
   } catch (error) {

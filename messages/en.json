@@ -43,7 +43,10 @@
       "processing": "Processing...",
       "free": "{label} — Free",
       "paid": "{label} · Support ${amount}",
-      "helper": "Your contribution helps maintain the service"
+      "helper": "Your contribution helps maintain the service",
+      "choosePayment": "Choose payment method:",
+      "payWithPayPal": "Pay with PayPal",
+      "payWithCard": "Credit Card"
     },
     "amount": {
       "label": "Support Amount (USD)",
