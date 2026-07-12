@@ -53,10 +53,10 @@ const SIGNS: Record<string, Sign[]> = {
 
 const CONTENT: Record<string, { title: string; desc: string; ogTitle: string; ogDesc: string; heading: string; subtitle: string; howItWorks: string; howBody: string; signsHeading: string; yearsLabel: string; elementLabel: string; note: string; faqs: { q: string; a: string }[]; cta: string; disclaimer: string }> = {
   en: {
-    title: "Chinese Zodiac: 12 Animal Signs & Their Meanings | Chinese Culture Studio",
-    desc: "Discover the 12 Chinese zodiac signs: Rat, Ox, Tiger & more. Personality, compatibility, and element for each animal sign.",
-    ogTitle: "Chinese Zodiac: 12 Animal Signs",
-    ogDesc: "Personality and compatibility of all 12 Chinese zodiac signs.",
+    title: "Chinese Zodiac Signs: 12 Animals — Which One Are You? | Chinese Culture Studio",
+    desc: "Chinese zodiac signs explained: Rat, Ox, Tiger, Rabbit, Dragon, Snake, Horse, Goat, Monkey, Rooster, Dog, Pig. Find your sign, personality, love match & lucky element.",
+    ogTitle: "Chinese Zodiac Signs: 12 Animals — Find Your Sign",
+    ogDesc: "12 Chinese zodiac signs: find your animal by birth year. Personality, compatibility & lucky elements for all 12 animals.",
     heading: "Chinese Zodiac: 12 Animal Signs & Their Meanings",
     subtitle: "A complete guide to the 12 Chinese zodiac signs — personality, elements, and compatibility.",
     howItWorks: "How the Chinese Zodiac Works",

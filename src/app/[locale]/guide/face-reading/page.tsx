@@ -14,10 +14,10 @@ const CONTENT: Record<string, {
   cta: string;
 }> = {
   en: {
-    title: "Face Reading (Mian Xiang): Forehead, Eyes, Nose Meaning | Chinese Culture Studio",
-    desc: "Discover the ancient Chinese art of face reading (面相 Mian Xiang). Learn what your forehead, eyes, nose, mouth, ears and chin reveal about your personality and destiny.",
-    ogTitle: "Face Reading (Mian Xiang): Face Features Meaning",
-    ogDesc: "Ancient Chinese face reading — what your facial features say about your character, career, and fortune.",
+    title: "Mian Xiang Face Reading: What Your Facial Features Reveal (7 Features) | Chinese Culture Studio",
+    desc: "Mian Xiang (face reading): what do your forehead, eyes, nose, mouth, ears & chin say about your personality, career & fortune? 7 facial features decoded.",
+    ogTitle: "Mian Xiang Face Reading: 7 Facial Features & Their Meanings",
+    ogDesc: "Mian Xiang face reading guide — 7 features: forehead, eyes, nose, mouth, ears, chin. What do yours reveal about your destiny?",
     heading: "Face Reading (Mian Xiang): Read Faces Like the Ancients",
     subtitle: "Mian Xiang (面相) is the 3,000-year-old Chinese practice of understanding a person's character, fortune, and destiny through their facial features. Alongside palm reading and I Ching, it forms one of the three pillars of Chinese metaphysical arts. Emperors used it to select officials; today, it's used for self-understanding and relationship insight.",
     whatTitle: "What Is Mian Xiang?",
