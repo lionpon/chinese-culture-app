@@ -8,6 +8,7 @@ import AmountPicker from "@/components/AmountPicker";
 import FreeTierBadge from "@/components/FreeTierBadge";
 import SpeakButton from "@/components/SpeakButton";
 import { hasFreeUses } from "@/lib/free-tier";
+import { trackClick } from "@/lib/track";
 
 export default function DivinationPage() {
  const t = useTranslations("divination");
@@ -64,6 +65,7 @@ export default function DivinationPage() {
  }
  data.amount = amount;
  await checkout(data);
+ trackClick("form_submit_divination");
  }
 
  const methodLabels: Record<string, string> = {

@@ -12,6 +12,7 @@ import PalmReadingResultView from "@/components/PalmReadingResultView";
 import DreamInterpretationResultView from "@/components/DreamInterpretationResultView";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { Link } from "@/navigation";
+import { trackClick } from "@/lib/track";
 
 type ResultState = "loading" | "completed" | "failed" | "timeout";
 
@@ -36,8 +37,14 @@ function SuccessContent() {
       return;
     }
 
+    // Paid user landed on success page — track funnel entry
+    if (!isFree) {
+      trackClick("pay_landed");
+    }
+
     const showResult = (data: { status: string; type?: string; result?: unknown; error?: string }) => {
       if (data.status === "completed" && data.type && data.result) {
+        if (!isFree) trackClick("pay_completed");
         setState("completed");
         setType(data.type);
         setResult(data.result as NamingResult | CalendarResult | DivinationResult | DreamInterpretationResult);
@@ -48,6 +55,7 @@ function SuccessContent() {
         else if (data.type === "dream-interpretation") setDreamInterpretationResult(data.result as DreamInterpretationResult);
         return true;
       } else if (data.status === "failed") {
+        if (!isFree) trackClick("pay_failed");
         setState("failed");
         setError(data.error || t("failedBody"));
         return true;
@@ -84,6 +92,7 @@ function SuccessContent() {
           if (showResult(data)) return true;
         } catch {}
         if (attempts >= maxAttempts) {
+          if (!isFree) trackClick("pay_timeout");
           setState("timeout");
           return true;
         }

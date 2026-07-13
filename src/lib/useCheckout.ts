@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { hasFreeUses, consumeFreeUse, updateRemaining } from "./free-tier";
+import { trackClick } from "./track";
 
 export function useCheckout(type: string) {
   const [loading, setLoading] = useState(false);
@@ -24,6 +25,8 @@ export function useCheckout(type: string) {
       }
 
       if (result.url) {
+        // Paid checkout — track before redirecting to PayPal
+        trackClick("pay_click");
         window.location.href = result.url;
       } else if (result.purchase_id) {
         if (free) consumeFreeUse();
