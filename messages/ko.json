@@ -491,7 +491,7 @@
     "anotherHexagram": "다른 괘 뽑기",
     "anotherPalm": "다른 손 보기",
     "anotherDream": "다른 꿈 해석하기",
-    "unlockTitle": "이것은 미리보기입니다. 전체 결과를 확인하세요:",
+    "unlockTitle": "약 30%만 보고 있습니다. 전체 결과 보기：",
     "unlockNaming1": "상세한 의미가 담긴 4개의 추가 이름 옵션",
     "unlockNaming2": "오행 프로필의 전체 사주 분석",
     "unlockDivination1": "변괘 및 호괘 (전체 그림)",
@@ -501,7 +501,9 @@
     "unlockDream1": "모든 꿈 상징에 대한 완전한 주공 해석",
     "unlockDream2": "완전한 프로이트・융 심리학 분석",
     "unlockNow": "전체 결과 확인하기 — $1부터",
-    "seeFreePreview": "무료 미리보기 보기",
+    "seeFreePreview": "아니요, 닫기",
+    "lockedContent": "잠김 — $1로 해제",
+    "andMore": "+ 더 많은 세부 정보",
     "unlockFullCta": "전체 결과 — $1"
   },
   "legal": {

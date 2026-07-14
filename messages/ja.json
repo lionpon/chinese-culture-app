@@ -491,7 +491,7 @@
     "anotherHexagram": "別の卦を立てる",
     "anotherPalm": "別の手相を鑑定",
     "anotherDream": "別の夢を解釈",
-    "unlockTitle": "これはプレビューです。完全な結果をアンロック：",
+    "unlockTitle": "約30%を表示中。完全な結果をアンロック：",
     "unlockNaming1": "詳細な意味付きの追加の名前候補4件",
     "unlockNaming2": "五行プロファイルの完全な八字分析",
     "unlockDivination1": "変卦と互卦（全体像）",
@@ -501,7 +501,9 @@
     "unlockDream1": "すべての夢シンボルの完全な周公解釈",
     "unlockDream2": "完全なフロイト・ユング心理学分析",
     "unlockNow": "完全な結果をアンロック — $1から",
-    "seeFreePreview": "無料プレビューを見る",
+    "seeFreePreview": "閉じる",
+    "lockedContent": "ロック中 — $1で解除",
+    "andMore": "+ さらに詳細を見る",
     "unlockFullCta": "完全な結果 — $1"
   },
   "legal": {
