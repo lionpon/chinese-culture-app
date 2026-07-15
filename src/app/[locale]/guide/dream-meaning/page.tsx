@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { Link } from "@/navigation";
 import GuideFaq from "@/components/GuideFaq";
+import GuideCTA from "@/components/GuideCTA";
 import { BASE_URL } from "@/lib/config";
 
 type Props = { params: { locale: string } };
@@ -391,9 +391,7 @@ export default function DreamMeaningPage({ params }: Props) {
 
       <section className="card-classic p-4 sm:p-6 mb-8 text-center">
         <p className="text-sm text-stone-600 mb-4">Dreams and divination both speak the language of symbols.</p>
-        <Link href="/divination" className="inline-block px-5 py-2.5 rounded-xl text-sm font-medium btn-primary">
-          {c.cta} →
-        </Link>
+        <GuideCTA href="/dream-interpretation" service="dream-interpretation" />
       </section>
 
       <GuideFaq faqs={c.faqs} lang={params.locale} />

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { Link } from "@/navigation";
 import GuideFaq from "@/components/GuideFaq";
 import { BASE_URL } from "@/lib/config";
+import GuideCTA from "@/components/GuideCTA";
 
 type Props = { params: { locale: string } };
 
@@ -182,9 +182,7 @@ export default function FaceReadingPage({ params }: Props) {
 
       <section className="card-classic p-4 sm:p-6 mb-8 text-center">
         <p className="text-sm text-stone-600 mb-4">Face reading and palm reading are complementary arts.</p>
-        <Link href="/palm-reading" className="inline-block px-5 py-2.5 rounded-xl text-sm font-medium btn-primary">
-          {c.cta} →
-        </Link>
+        <GuideCTA href="/palm-reading" service="palm-reading" />
       </section>
 
       <GuideFaq faqs={c.faqs} lang={params.locale} />

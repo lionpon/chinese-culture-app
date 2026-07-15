@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { Link } from "@/navigation";
 import GuideFaq from "@/components/GuideFaq";
+import GuideCTA from "@/components/GuideCTA";
 
 type Props = { params: { locale: string } };
 
@@ -175,7 +175,7 @@ export default function ChineseNameGirlGuide({ params: { locale } }: Props) {
       <h2>{c.personalizedTitle}</h2><p>{c.personalizedBody}</p>
       <GuideFaq lang={locale} faqs={c.faqs} />
       <div className="not-prose my-8 text-center">
-        <Link href="/naming" className="inline-block px-6 py-3 rounded-xl text-white font-medium" style={{ backgroundColor: "var(--accent)" }}>{c.cta}</Link>
+        <GuideCTA href="/naming" service="naming" />
       </div>
       <hr className="my-6 border-stone-200" /><p className="text-xs text-stone-400">{c.disclaimer}</p>
     </article>
