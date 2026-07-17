@@ -15,11 +15,27 @@ function checkAuth(req: NextRequest): boolean {
 }
 
 export async function GET(req: NextRequest) {
-  if (!checkAuth(req)) {
+  const { searchParams } = req.nextUrl;
+  const isPublic = searchParams.get("public") === "stats7d";
+
+  if (!isPublic && !checkAuth(req)) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const { searchParams } = req.nextUrl;
+  if (isPublic) {
+    const locale = searchParams.get("locale") || undefined;
+    const reports = await getReports(7, locale);
+    const summary = reports.map(r => ({
+      date: r.date,
+      visits: r.visits,
+      uniqueCountries: r.uniqueCountries,
+      revenue: r.revenue,
+      freeTrials: r.freeTrials,
+      freeTrialsByType: r.freeTrialsByType,
+      subscribers: r.subscribers,
+    }));
+    return NextResponse.json(summary);
+  }
   const date = searchParams.get("date");
   const days = parseInt(searchParams.get("days") || "7");
   const locale = searchParams.get("locale") || undefined;
