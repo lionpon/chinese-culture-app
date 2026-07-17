@@ -1,5 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
+import { generateNames, analyzeName } from "@/lib/naming";
+import { selectAuspiciousDays } from "@/lib/calendar";
+import { performDivination } from "@/lib/divination";
+import { readPalm } from "@/lib/palm-reading";
+import { interpretDream } from "@/lib/dream-interpretation";
+import type { NamingInput, CalendarInput, DivinationInput, PalmReadingInput, DreamInterpretationInput } from "@/types";
 
 async function computeFingerprint(req: NextRequest): Promise<string> {
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
@@ -110,6 +116,30 @@ export async function GET(req: NextRequest) {
   }
 
   if (purchase.status === "pending") {
+    // Paid purchase — proactively generate result immediately instead of waiting for IPN
+    // This ensures the success page shows results instantly, not after a delay
+    // IPN will later confirm payment but won't regenerate the result (idempotent)
+    if (!purchase.fingerprint) {
+      try {
+        const input = JSON.parse(purchase.input);
+        let result: unknown;
+        switch (purchase.type) {
+          case "naming": result = (input.mode === "analyze") ? analyzeName(input as NamingInput) : generateNames(input as NamingInput); break;
+          case "calendar": result = selectAuspiciousDays(input as CalendarInput); break;
+          case "divination": result = performDivination(input as DivinationInput); break;
+          case "palm-reading": result = await readPalm(input as PalmReadingInput); break;
+          case "dream-interpretation": result = await interpretDream(input as DreamInterpretationInput); break;
+        }
+        await prisma.purchase.update({
+          where: { id: purchaseId },
+          data: { status: "completed", paid: true, result: JSON.stringify(result) },
+        });
+        return NextResponse.json({ status: "completed", type: purchase.type, result });
+      } catch (err) {
+        console.error("Proactive result generation failed:", err);
+        return NextResponse.json({ status: "pending" });
+      }
+    }
     return NextResponse.json({ status: "pending" });
   }
 

@@ -1,4 +1,4 @@
-export const PAYPAL_EMAIL = process.env.PAYPAL_EMAIL || "lionpon@sina.com";
+export const PAYPAL_EMAIL = process.env.PAYPAL_EMAIL || "22728717@qq.com";
 
 const PAYPAL_URL =
   process.env.PAYPAL_SANDBOX === "true"
