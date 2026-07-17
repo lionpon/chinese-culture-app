@@ -1,3 +1,5 @@
+// ⚠️ DEPRECATED — Lemon Squeezy integration (replaced by PayPal in src/lib/paypal.ts)
+// Kept for reference only; not actively used since 2026-05-23 migration
 import crypto from "crypto";
 
 export function getAppUrl() {

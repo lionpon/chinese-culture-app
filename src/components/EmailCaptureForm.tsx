@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { trackClick } from "@/lib/track";
 
 interface EmailCaptureFormProps {
   source: "zodiac-calculator" | "five-elements-test" | "divination" | "naming" | "calendar" | "palm-reading" | "dream-interpretation";
@@ -17,6 +18,7 @@ export default function EmailCaptureForm({ source }: EmailCaptureFormProps) {
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return;
 
     setStatus("loading");
+    trackClick(`subscribe_${source}`);
     try {
       const res = await fetch("/api/subscribe", {
         method: "POST",

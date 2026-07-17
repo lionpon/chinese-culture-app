@@ -23,10 +23,10 @@
 |---|---|
 | 代码仓库 | https://github.com/lionpon/chinese-culture-app |
 | 生产地址 | https://www.culture-of-china.com |
-| 管理后台 | https://www.culture-of-china.com/admin?token=chinese-culture-admin-2024 |
+| 管理后台 | https://www.culture-of-china.com/admin?token=(见 Render 环境变量 ADMIN_TOKEN) |
 | 托管平台 | Render（oregon, free tier） |
 | 数据库 | Neon PostgreSQL（us-east-1, ep-lucky-dust-aqcxp3j7） |
-| 支付网关 | Lemon Squeezy |
+| 支付网关 | PayPal Standard Checkout |
 | 保活服务 | cron-job.org（每 10 分钟） |
 
 ## 环境变量
@@ -36,10 +36,14 @@
 | DATABASE_URL | Neon PostgreSQL 连接字符串 |
 | ADMIN_TOKEN | 管理后台访问令牌 |
 | NEXT_PUBLIC_APP_URL | 应用公开地址 |
-| LEMON_SQUEEZY_API_KEY | Lemon Squeezy API 密钥 |
-| LEMON_SQUEEZY_WEBHOOK_SECRET | Webhook 验签密钥 |
-| LEMON_SQUEEZY_STORE_ID | 商店 ID（383990） |
-| LEMON_SQUEEZY_VARIANT_ID | 产品变体 ID（1690365） |
+| LEMON_SQUEEZY_API_KEY | (已废弃，项目已迁移至 PayPal) |
+| LEMON_SQUEEZY_WEBHOOK_SECRET | (已废弃) |
+| LEMON_SQUEEZY_STORE_ID | (已废弃) |
+| LEMON_SQUEEZY_VARIANT_ID | (已废弃) |
+| PAYPAL_EMAIL | PayPal 商户邮箱 |
+| PAYPAL_SANDBOX | true=沙箱, false=正式 |
+| PAYPAL_PDT_TOKEN | PayPal PDT 验证令牌 |
+| OPENROUTER_API_KEY | AI 功能 API 密钥 |
 
 ## GitHub 信息
 
@@ -73,13 +77,14 @@
 | 数据库表 | Purchase, Visit, DailyReport |
 | ORM | Prisma（postgresql provider） |
 
-## Lemon Squeezy
+## Lemon Squeezy（已废弃）
 
 | 项目 | 内容 |
 |---|---|
-| Store ID | 383990 |
-| Variant ID | 1690365 |
-| 模式 | 付费模式（Test Mode 已关闭） |
+| Store ID | 383990（历史记录） |
+| Variant ID | 1690365（历史记录） |
+| 状态 | ⚠️ 已迁移至 PayPal Standard Checkout |
+| 原因 | Lemon Squeezy 不支持中国商家（Stripe Connect 不支持中国大陆） |
 
 ## 文件结构
 
@@ -109,5 +114,5 @@
 
 - **本地推送代码**：需开 VPN，使用 SSH 认证（git@github.com:lionpon/...）
 - **修改环境变量**：需开 VPN，登录 https://dashboard.render.com
-- **查看管理后台**：无需 VPN，直接访问 https://www.culture-of-china.com/admin?token=chinese-culture-admin-2024
+- **查看管理后台**：无需 VPN，直接访问 https://www.culture-of-china.com/admin?token=(见 Render 环境变量)
 - **首次访问慢**：Render free tier 休眠后首次访问需等待 30-60 秒唤醒

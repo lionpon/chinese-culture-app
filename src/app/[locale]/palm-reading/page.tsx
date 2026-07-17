@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useCheckout } from "@/lib/useCheckout";
 import SubmitButton from "@/components/SubmitButton";
+import { trackClick } from "@/lib/track";
 import AmountPicker from "@/components/AmountPicker";
 import { Link } from "@/navigation";
 
@@ -78,6 +79,7 @@ export default function PalmReadingPage() {
  question: form.question?.value || undefined,
  amount,
  });
+ trackClick("form_submit_palm_reading");
  }
 
  return (

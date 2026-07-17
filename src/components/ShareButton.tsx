@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { BASE_URL } from "@/lib/config";
+import { trackClick } from "@/lib/track";
 
 export default function ShareButton() {
   const t = useTranslations("common");
@@ -12,6 +13,7 @@ export default function ShareButton() {
     const url = BASE_URL;
     const text = t("share.text");
 
+    trackClick("share");
     if (navigator.share) {
       try {
         await navigator.share({ title: t("share.title"), text, url });

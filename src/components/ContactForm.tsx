@@ -2,6 +2,7 @@
 
 import { useState, FormEvent } from "react";
 import { useTranslations } from "next-intl";
+import { trackClick } from "@/lib/track";
 
 export default function ContactForm() {
   const t = useTranslations("contact");
@@ -28,6 +29,7 @@ export default function ContactForm() {
       return;
     }
 
+    trackClick("form_submit_contact");
     try {
       const res = await fetch("/api/contact", {
         method: "POST",

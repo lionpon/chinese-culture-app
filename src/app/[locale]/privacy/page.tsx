@@ -76,12 +76,12 @@ export default function PrivacyPage() {
 
       <h2>4. Payment Processing</h2>
       <p>
-        All payments are processed by <strong>Lemon Squeezy</strong>, a PCI-DSS compliant payment processor
-        (which supports PayPal, Alipay, WeChat Pay, and major credit cards as checkout options).
+        All payments are processed by <strong>PayPal</strong>, a global payment platform
+        that supports PayPal accounts and major credit/debit cards (Visa, Mastercard, Amex, etc.).
         We never receive, store, or transmit your payment details.
-        Lemon Squeezy provides us only with an order ID and payment status to confirm completion.
-        Lemon Squeezy&apos;s privacy policy applies to all payment-related data:{" "}
-        <a href="https://www.lemonsqueezy.com/privacy" target="_blank" rel="noopener noreferrer" className="underline">lemonsqueezy.com/privacy</a>.
+        PayPal provides us only with a transaction ID and payment status to confirm completion.
+        PayPal&apos;s privacy policy applies to all payment-related data:{" "}
+        <a href="https://www.paypal.com/us/legalhub/privacy-full" target="_blank" rel="noopener noreferrer" className="underline">paypal.com/privacy</a>.
       </p>
 
       <h2>5. Cookies &amp; Local Storage</h2>
@@ -162,7 +162,7 @@ export default function PrivacyPage() {
         The only external services involved are:
       </p>
       <ul>
-        <li><strong>Lemon Squeezy</strong> — Payment processing (supports PayPal, Alipay, WeChat Pay, and cards). Receives only your payment instrument details (not your cultural input data).</li>
+        <li><strong>PayPal</strong> — Payment processing (supports PayPal accounts and major credit/debit cards). Receives only your payment instrument details (not your cultural input data).</li>
         <li><strong>OpenRouter (OpenRouter, Inc.)</strong> — AI API gateway routing Palm Reading requests. Receives only your palm image (transmitted over encrypted TLS). Underlying model inference is performed by <strong>Qwen (Alibaba Cloud)</strong>. Neither OpenRouter nor Alibaba Cloud store API-submitted images or use them for model training.</li>
         <li><strong>Render (Render Services, Inc.)</strong> — US-based cloud hosting. Our application code and database queries run on Render infrastructure.</li>
         <li><strong>Neon, Inc.</strong> — US-based managed PostgreSQL database. All stored data resides in Neon&apos;s us-east-1 region.</li>

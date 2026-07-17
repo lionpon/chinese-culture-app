@@ -7,6 +7,7 @@ import SubmitButton from "@/components/SubmitButton";
 import AmountPicker from "@/components/AmountPicker";
 import FreeTierBadge from "@/components/FreeTierBadge";
 import { hasFreeUses } from "@/lib/free-tier";
+import { trackClick } from "@/lib/track";
 
 export default function CalendarPage() {
  const t = useTranslations("calendar");
@@ -60,6 +61,7 @@ export default function CalendarPage() {
  eventType: form.eventType.value,
  amount,
  });
+ trackClick("form_submit_calendar");
  }
 
  return (

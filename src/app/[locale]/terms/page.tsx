@@ -25,8 +25,8 @@ export default function TermsPage() {
 
       <h2>3. Payment &amp; Contributions</h2>
       <p>
-        Each reading requires a contribution of USD $1.00, processed securely through Lemon Squeezy
-        (which supports PayPal, Alipay, WeChat Pay, and major credit cards as payment methods).
+        Each reading requires a contribution of USD $1.00, processed securely through PayPal
+        (which supports PayPal accounts and major credit/debit cards such as Visa, Mastercard, and Amex).
         <strong>This payment is a voluntary contribution toward the hosting, development, API costs,
         and ongoing maintenance of this application.</strong> It is not a purchase of advice, a consultation
         fee, or compensation for any particular outcome, and it does not create any advisory, fiduciary,
@@ -55,7 +55,7 @@ export default function TermsPage() {
       <p>
         We collect minimal data necessary to provide the service. Birth information is used
         solely for algorithm calculations and is automatically deleted 7 days after processing.
-        Payment information is handled entirely by Lemon Squeezy and never touches our servers.
+        Payment information is handled entirely by PayPal and never touches our servers.
         Please see our Privacy Policy for full details.
       </p>
 

@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { useCheckout } from "@/lib/useCheckout";
 import SubmitButton from "@/components/SubmitButton";
 import AmountPicker from "@/components/AmountPicker";
+import { trackClick } from "@/lib/track";
 import { Link } from "@/navigation";
 import { hasFreeUses } from "@/lib/free-tier";
 
@@ -24,6 +25,7 @@ export default function DreamInterpretationPage() {
  focus: form.interpretFocus.value || undefined,
  amount,
  });
+ trackClick("form_submit_dream_interpretation");
  }
 
  return (

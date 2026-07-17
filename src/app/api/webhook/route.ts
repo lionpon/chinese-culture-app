@@ -1,3 +1,5 @@
+// ⚠️ DEPRECATED — Lemon Squeezy webhook (replaced by PayPal IPN at /api/webhook/paypal)
+// Kept for reference only; not actively used since 2026-05-23 migration
 import { NextRequest, NextResponse } from "next/server";
 import { verifyLemonWebhook } from "@/lib/lemon";
 import { prisma } from "@/lib/db";
