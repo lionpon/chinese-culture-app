@@ -34,6 +34,7 @@ export function buildPayPalCheckoutUrl(purchaseId: string, type: string, amount 
     return: `${appUrl}/success?purchase_id=${purchaseId}`,
     cancel_return: `${appUrl}/`,
     notify_url: `${appUrl}/api/webhook/paypal`,
+    rm: "2",  // POST with tx param → enables PDT instant verification
     no_note: "1",
     no_shipping: "1",
   });
