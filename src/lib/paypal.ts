@@ -60,7 +60,7 @@ export async function verifyPDT(tx: string): Promise<{ ok: boolean; paymentStatu
 
   const body = new URLSearchParams({ cmd: "_notify-synch", tx, at: token });
 
-  const res = await fetch("https://www.paypal.com/cgi-bin/webscr", {
+  const res = await fetch(PAYPAL_URL, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: body.toString(),
