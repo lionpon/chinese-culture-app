@@ -1,1 +1,0 @@
-I built an I Ching divination tool with 3 casting methods - time-based, random, and manual
