@@ -53,10 +53,10 @@ const SIGNS: Record<string, Sign[]> = {
 
 const CONTENT: Record<string, { title: string; desc: string; ogTitle: string; ogDesc: string; heading: string; subtitle: string; howItWorks: string; howBody: string; signsHeading: string; yearsLabel: string; elementLabel: string; note: string; faqs: { q: string; a: string }[]; cta: string; disclaimer: string }> = {
   en: {
-    title: "Chinese Zodiac Signs: 12 Animals — Which One Are You? | Chinese Culture Studio",
-    desc: "Chinese zodiac signs explained: Rat, Ox, Tiger, Rabbit, Dragon, Snake, Horse, Goat, Monkey, Rooster, Dog, Pig. Find your sign, personality, love match & lucky element.",
-    ogTitle: "Chinese Zodiac Signs: 12 Animals — Find Your Sign",
-    ogDesc: "12 Chinese zodiac signs: find your animal by birth year. Personality, compatibility & lucky elements for all 12 animals.",
+    title: "12 Chinese Zodiac Signs 2026: Which Animal Are You? (Free Calculator) | Chinese Culture Studio",
+    desc: "Find your Chinese zodiac animal by birth year. Discover personality traits, love compatibility, and lucky elements for all 12 signs. Try our free zodiac calculator.",
+    ogTitle: "2026 Chinese Zodiac: Which Animal Are You? (Free Calculator)",
+    ogDesc: "Discover your Chinese zodiac sign in seconds. 12 animals, personality traits, compatibility & lucky elements. Free zodiac calculator included.",
     heading: "Chinese Zodiac: 12 Animal Signs & Their Meanings",
     subtitle: "A complete guide to the 12 Chinese zodiac signs — personality, elements, and compatibility.",
     howItWorks: "How the Chinese Zodiac Works",
@@ -66,8 +66,11 @@ const CONTENT: Record<string, { title: string; desc: string; ogTitle: string; og
     elementLabel: "Element",
     note: "2026 is the Year of the Horse (Fire). 2027 will be the Year of the Goat (Earth).",
     faqs: [
-      { q: "What is my Chinese zodiac sign?", a: "Find your birth year in the table above. Important: Chinese New Year falls on different dates (late Jan — early Feb). If born in January, check the exact date." },
+      { q: "What is my Chinese zodiac sign?", a: "Find your birth year in the table above. Important: Chinese New Year falls on different dates (late Jan — early Feb). If born in January, check the exact date. For a quick answer, try our free zodiac calculator." },
       { q: "Are Chinese zodiac signs compatible?", a: "Yes! Some signs are considered especially compatible: Rat + Dragon, Ox + Snake, Tiger + Horse. Others may clash — but compatibility is nuanced and depends on elements too." },
+      { q: "What are the 12 Chinese zodiac animals in order?", a: "The 12 Chinese zodiac animals are: Rat, Ox, Tiger, Rabbit, Dragon, Snake, Horse, Goat, Monkey, Rooster, Dog, Pig. The cycle repeats every 12 years, and each animal is associated with one of the Five Elements (Wood, Fire, Earth, Metal, Water) for a full 60-year cycle." },
+      { q: "What is the Chinese zodiac for 2026?", a: "2026 is the Year of the Horse (Fire Horse). The Horse represents energy, independence, and warmth. People born in 2026 will be Fire Horses — known for being passionate, adventurous, and charismatic with strong leadership qualities." },
+      { q: "How do I find my Chinese element?", a: "Your Chinese element is determined by the last digit of your birth year: 0-1 = Metal, 2-3 = Water, 4-5 = Wood, 6-7 = Fire, 8-9 = Earth. But this is simplified — the full calculation includes heavenly stems and earthly branches for a complete Bazi (Eight Characters) reading." },
     ],
     cta: "Get a Personal I Ching Reading — from $1",
     disclaimer: "For cultural appreciation only.",

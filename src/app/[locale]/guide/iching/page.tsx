@@ -6,10 +6,10 @@ type Props = { params: { locale: string } };
 
 const CONTENT: Record<string, { title: string; desc: string; ogTitle: string; ogDesc: string; heading: string; subtitle: string; whatTitle: string; whatBody1: string; whatBody2: string; howTitle: string; howBody: string; structureTitle: string; lineIntro: string; lineYang: string; lineYin: string; trigramIntro: string; trigramNature: string; judgmentTitle: string; judgmentDesc: string; lineStatementsTitle: string; lineStatementsDesc: string; baguaTitle: string; baguaNameH: string; baguaChinese: string; baguaNatureH: string; baguaSymbolH: string; baguaNames: string[]; baguaNature: string[]; castTitle: string; castSteps: string[]; tryTitle: string; tryBody: string; faqs: { q: string; a: string }[]; cta: string; disclaimer: string }> = {
   en: {
-    title: "I Ching Divination: A Beginner's Guide to the Book of Changes",
-    desc: "What is the I Ching (Yijing) and how does divination work? Learn about hexagrams, changing lines, and how to interpret your reading.",
-    ogTitle: "I Ching Divination: A Beginner's Guide",
-    ogDesc: "What is the I Ching and how do hexagrams work. Complete guide.",
+    title: "I Ching for Beginners: How to Consult the Book of Changes (3 Methods) | Chinese Culture Studio",
+    desc: "Learn I Ching divination step-by-step: toss coins, interpret hexagrams, understand changing lines. 3 methods explained simply. Try a free reading now.",
+    ogTitle: "I Ching for Beginners: How to Consult the Book of Changes",
+    ogDesc: "Learn I Ching step-by-step: 3 coin methods, 64 hexagrams explained, changing lines decoded. Try a free reading in 30 seconds.",
     heading: "I Ching Divination: A Beginner's Guide",
     subtitle: "Understanding the 3,000-year-old Book of Changes — from tossing coins to interpreting hexagrams.",
     whatTitle: "What is the I Ching?",

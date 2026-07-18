@@ -23,10 +23,10 @@ const CONTENT: Record<string, {
   cta: string; disclaimer: string;
 }> = {
   en: {
-    title: "How to Choose an Authentic Chinese Name — A Complete Guide | Chinese Culture Studio",
-    desc: "Learn the art of Chinese naming based on Five Elements, I Ching, and classical poetry. Discover how to find a name that balances sound, meaning, and destiny.",
-    ogTitle: "How to Choose an Authentic Chinese Name",
-    ogDesc: "Learn Chinese naming based on Five Elements, I Ching, and classical poetry.",
+    title: "How to Choose a Chinese Name: 5 Elements, Bazi & Classical Poetry Guide | Chinese Culture Studio",
+    desc: "Step-by-step guide to Chinese naming traditions. Learn how Five Elements, Bazi astrology, and classical poetry create names that balance meaning, sound & destiny. Try our free name generator.",
+    ogTitle: "How to Choose a Chinese Name (2026 Complete Guide)",
+    ogDesc: "Learn Chinese naming: Five Elements, Bazi, classical poetry. How to pick a name that balances meaning and destiny. Free name generator.",
     heading: "How to Choose an Authentic Chinese Name",
     subtitle: "A guide to the ancient art of Chinese naming — from classical texts to modern life.",
     whyTitle: "Why Chinese Names Matter",

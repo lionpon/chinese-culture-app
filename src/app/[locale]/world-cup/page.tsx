@@ -20,10 +20,11 @@ const UI: Record<string, {
   correctBadge: string; wrongBadge: string; pendingLabel: string;
 }> = {
   en: {
-    title: "I Ching Predicts World Cup 2026 — Who Will Win? | Chinese Culture Studio",
-    desc: "I Ching hexagram predictions for every 2026 FIFA World Cup match. Who does the ancient oracle say will win? Track the I Ching's prediction accuracy throughout the tournament.",
-    ogTitle: "I Ching Predicts World Cup 2026 — Who Will Win?", ogDesc: "The ancient Chinese oracle predicts every World Cup match. Track its accuracy — for entertainment only.",
-    hero: "I Ching x World Cup 2026", subtitle: "The 3,000-year-old Book of Changes predicts every match. Who will win?",
+    title: "I Ching Predicts World Cup 2026 Final: Argentina vs Spain — Who Will Win? | Chinese Culture Studio",
+    desc: "I Ching hexagram prediction for the 2026 FIFA World Cup Final: Argentina vs Spain (July 19, New York). Full knockout bracket, 64 predictions, track the oracle's accuracy.",
+    ogTitle: "I Ching Predicts World Cup 2026 Final: Argentina vs Spain",
+    ogDesc: "The ancient Chinese oracle predicts Argentina vs Spain in the World Cup Final. Full bracket, all knockout predictions & accuracy tracker.",
+    hero: "I Ching x World Cup 2026: Argentina vs Spain Final", subtitle: "The 3,000-year-old Book of Changes predicts every World Cup match. Who will lift the trophy?",
     intro: "Each match gets one hexagram, deterministically generated from match date and teams. The hexagram's nature determines the predicted winner — home, away, or draw. Track the oracle's accuracy below.",
     todayLabel: "Today's Predictions", upcomingLabel: "Upcoming Matches", fullScheduleLabel: "Full Schedule",
     noMatches: "No matches scheduled for this date.", groupLabel: "Group", vs: "vs",

@@ -8,10 +8,10 @@ type Name = { name: string; meaning: string; style: string };
 
 const CONTENT: Record<string, { title: string; desc: string; ogTitle: string; ogDesc: string; heading: string; subtitle: string; tableTitle: string; nameH: string; meaningH: string; styleH: string; names: Name[]; personalizedTitle: string; personalizedBody: string; faqs: { q: string; a: string }[]; cta: string; disclaimer: string }> = {
   en: {
-    title: "100 Chinese Female Names & Girl Names with Beautiful Meanings (2026) | Chinese Culture Studio",
-    desc: "100 Chinese girl names and female names with meanings — elegant, floral, modern & classical. Find the perfect Chinese name for a girl or learn what yours means.",
-    ogTitle: "100 Chinese Female Names & Girl Names with Meanings",
-    ogDesc: "100 beautiful Chinese girl names with meanings. Floral, elegant, modern & classical picks for every style.",
+    title: "100+ Chinese Girl Names & Meanings: Elegant, Cute & Unique (2026) | Chinese Culture Studio",
+    desc: "100+ beautiful Chinese girl names with meanings — floral, elegant, modern & classical. Find the perfect Chinese name for your baby girl or character. Free naming tool included.",
+    ogTitle: "100+ Chinese Girl Names & Meanings (2026)",
+    ogDesc: "Discover 100+ beautiful Chinese girl names with meanings. Floral names, elegant classics, modern picks & virtue names. Free Chinese name generator.",
     heading: "Chinese Female Names for Girls: 25+ Beautiful Meanings",
     subtitle: "A curated collection of Chinese girl names — flowers, beauty, virtues, and classical elegance.",
     tableTitle: "Names with Meanings",

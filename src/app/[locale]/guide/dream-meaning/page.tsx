@@ -14,10 +14,10 @@ const CONTENT: Record<string, {
   cta: string;
 }> = {
   en: {
-    title: "Chinese Dream Interpretation (Zhou Gong Jie Meng): Dream Symbols Meaning | Chinese Culture Studio",
-    desc: "Discover the ancient Chinese art of dream interpretation (周公解梦). Learn what common dream symbols — water, snakes, teeth, flying, death — mean in the Zhou Gong tradition.",
-    ogTitle: "Chinese Dream Meaning: Zhou Gong's Dream Dictionary",
-    ogDesc: "Ancient Chinese dream interpretation — what water, snakes, flying, death, and teeth falling out mean in your dreams.",
+    title: "Chinese Dream Dictionary: What Do Snakes, Water, Teeth & Death Mean in Dreams? | Chinese Culture Studio",
+    desc: "Zhou Gong's 3,000-year dream dictionary decoded. Find out what your dreams about snakes, water, teeth falling out, flying, death & fish really mean in Chinese tradition.",
+    ogTitle: "Chinese Dream Dictionary: Snakes, Water, Teeth & More Explained",
+    ogDesc: "What do snakes, water, teeth falling out, flying & death mean in your dreams? Zhou Gong's ancient Chinese dream dictionary reveals all.",
     heading: "Zhou Gong Jie Meng: Ancient Chinese Dream Interpretation",
     subtitle: "Zhou Gong Jie Meng (周公解梦, \"Duke of Zhou Explains Dreams\") is China's oldest dream interpretation system, dating back over 3,000 years. The Duke of Zhou — revered as the Sage of Dreams — categorized thousands of dream symbols and their meanings. To this day, when Chinese people have a vivid dream, they say \"I visited the Duke of Zhou\" (去见周公).",
     whatTitle: "The Duke of Zhou's Dream Theory",

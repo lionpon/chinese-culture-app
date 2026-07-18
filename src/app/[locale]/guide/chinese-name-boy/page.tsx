@@ -8,10 +8,10 @@ type Name = { name: string; meaning: string; style: string };
 
 const NAMES: Record<string, { title: string; desc: string; ogTitle: string; ogDesc: string; heading: string; subtitle: string; howTitle: string; howBody1: string; howBullets: string[]; tableTitle: string; nameH: string; meaningH: string; styleH: string; names: Name[]; categoriesTitle: string; categories: string[]; personalizedTitle: string; personalizedBody: string; faqs: { q: string; a: string }[]; cta: string; disclaimer: string }> = {
   en: {
-    title: "Chinese Names for Boys: 50+ Meanings & Characters | Chinese Culture Studio",
-    desc: "A curated list of Chinese boy names with translations and meanings. From classic virtues to modern picks — find the perfect name for your son.",
-    ogTitle: "Chinese Names for Boys",
-    ogDesc: "50+ names with meanings, including virtues, nature, and modern picks.",
+    title: "50+ Chinese Boy Names & Meanings: Strong, Cool & Traditional (2026) | Chinese Culture Studio",
+    desc: "50+ authentic Chinese boy names with meanings & characters. Strong virtue names, nature-inspired picks, and modern choices. Free personalized Chinese name generator.",
+    ogTitle: "50+ Chinese Boy Names & Meanings (2026)",
+    ogDesc: "50+ authentic Chinese boy names with meanings — strong, cool & traditional picks. Virtue names, nature names & mythology names. Free name generator.",
     heading: "Chinese Names for Boys: 25+ Meanings",
     subtitle: "Curated Chinese boy names with deep meaning — virtues, nature, mythology, and modern picks.",
     howTitle: "How Chinese Names Are Chosen",

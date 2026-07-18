@@ -25,9 +25,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const localeMeta: Record<string, { tagline: string; desc: string; ogDesc: string; twitterDesc: string; ogLocale: string }> = {
     en: {
       tagline: "Chinese Name, Auspicious Dates, I Ching, Palm & Dream Reading",
-      desc: "Discover your authentic Chinese name, find auspicious dates, consult the I Ching, get a palm reading, or interpret your dreams based on classical Chinese texts. Pay what you want (min $1).",
-      ogDesc: "AI-powered Chinese cultural readings: names, auspicious dates, I Ching divination, palm reading, and dream interpretation. Pay what you want (min $1).",
-      twitterDesc: "AI-powered Chinese cultural readings from classical texts. Chinese naming, date selection, I Ching, palm reading, dream interpretation. Pay what you want.",
+      desc: "Discover your authentic Chinese name, consult the I Ching oracle, find auspicious wedding dates, get AI palm reading & decode your dreams. 5 ancient wisdom tools — try free, pay $1 to unlock. Trusted by 42+ countries.",
+      ogDesc: "5 ancient Chinese wisdom tools: Chinese naming, I Ching divination, auspicious dates, palm reading & dream interpretation. Try free, unlock full results for $1. Used in 42+ countries.",
+      twitterDesc: "5 ancient Chinese wisdom tools — naming, I Ching, auspicious dates, palm reading, dream interpretation. Try free, pay $1. Used in 42+ countries.",
       ogLocale: "en_US",
     },
     ru: {

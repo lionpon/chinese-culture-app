@@ -136,47 +136,47 @@ export const MATCHES: WCMatch[] = [
   { id: "K5", date: "2026-06-27", home: "Colombia", away: "Portugal", group: "K", venue: "Miami", stage: "group" },
   { id: "K6", date: "2026-06-27", home: "DR Congo", away: "Uzbekistan", group: "K", venue: "Atlanta", stage: "group" },
 
-  // ===== Knockout: Round of 32 (June 28 - July 3) =====
-  { id: "R1", date: "2026-06-28", home: "TBD", away: "TBD", group: "R32", venue: "Los Angeles", stage: "round32" },
-  { id: "R2", date: "2026-06-29", home: "TBD", away: "TBD", group: "R32", venue: "Boston", stage: "round32" },
-  { id: "R3", date: "2026-06-29", home: "TBD", away: "TBD", group: "R32", venue: "Monterrey", stage: "round32" },
-  { id: "R4", date: "2026-06-29", home: "TBD", away: "TBD", group: "R32", venue: "Houston", stage: "round32" },
-  { id: "R5", date: "2026-06-30", home: "TBD", away: "TBD", group: "R32", venue: "New York/New Jersey", stage: "round32" },
-  { id: "R6", date: "2026-06-30", home: "TBD", away: "TBD", group: "R32", venue: "Dallas", stage: "round32" },
-  { id: "R7", date: "2026-06-30", home: "TBD", away: "TBD", group: "R32", venue: "Mexico City", stage: "round32" },
-  { id: "R8", date: "2026-07-01", home: "TBD", away: "TBD", group: "R32", venue: "Atlanta", stage: "round32" },
-  { id: "R9", date: "2026-07-01", home: "TBD", away: "TBD", group: "R32", venue: "Seattle", stage: "round32" },
-  { id: "R10", date: "2026-07-01", home: "TBD", away: "TBD", group: "R32", venue: "San Francisco", stage: "round32" },
-  { id: "R11", date: "2026-07-02", home: "TBD", away: "TBD", group: "R32", venue: "Toronto", stage: "round32" },
-  { id: "R12", date: "2026-07-02", home: "TBD", away: "TBD", group: "R32", venue: "Los Angeles", stage: "round32" },
-  { id: "R13", date: "2026-07-02", home: "TBD", away: "TBD", group: "R32", venue: "Vancouver", stage: "round32" },
-  { id: "R14", date: "2026-07-03", home: "TBD", away: "TBD", group: "R32", venue: "Miami", stage: "round32" },
-  { id: "R15", date: "2026-07-03", home: "TBD", away: "TBD", group: "R32", venue: "Kansas City", stage: "round32" },
-  { id: "R16", date: "2026-07-03", home: "TBD", away: "TBD", group: "R32", venue: "Dallas", stage: "round32" },
+  // ===== Knockout: Round of 32 (June 29 - July 4) =====
+  { id: "R1", date: "2026-06-29", home: "South Africa", away: "Canada", group: "R32", venue: "Los Angeles", stage: "round32", result: { home: 0, away: 1 } },
+  { id: "R2", date: "2026-06-30", home: "Brazil", away: "Japan", group: "R32", venue: "Boston", stage: "round32", result: { home: 2, away: 1 } },
+  { id: "R3", date: "2026-06-30", home: "Germany", away: "Paraguay", group: "R32", venue: "Monterrey", stage: "round32", result: { home: 4, away: 5 } },
+  { id: "R4", date: "2026-06-30", home: "Netherlands", away: "Morocco", group: "R32", venue: "Houston", stage: "round32", result: { home: 3, away: 4 } },
+  { id: "R5", date: "2026-07-01", home: "Côte d'Ivoire", away: "Norway", group: "R32", venue: "New York/New Jersey", stage: "round32", result: { home: 1, away: 2 } },
+  { id: "R6", date: "2026-07-01", home: "France", away: "Sweden", group: "R32", venue: "Dallas", stage: "round32", result: { home: 3, away: 0 } },
+  { id: "R7", date: "2026-07-01", home: "Mexico", away: "Ecuador", group: "R32", venue: "Mexico City", stage: "round32", result: { home: 2, away: 0 } },
+  { id: "R8", date: "2026-07-02", home: "England", away: "DR Congo", group: "R32", venue: "Atlanta", stage: "round32", result: { home: 2, away: 1 } },
+  { id: "R9", date: "2026-07-02", home: "Belgium", away: "Senegal", group: "R32", venue: "Seattle", stage: "round32", result: { home: 3, away: 2 } },
+  { id: "R10", date: "2026-07-02", home: "USA", away: "Bosnia & Herzegovina", group: "R32", venue: "San Francisco", stage: "round32", result: { home: 2, away: 0 } },
+  { id: "R11", date: "2026-07-03", home: "Spain", away: "Austria", group: "R32", venue: "Toronto", stage: "round32", result: { home: 3, away: 0 } },
+  { id: "R12", date: "2026-07-03", home: "Portugal", away: "Croatia", group: "R32", venue: "Los Angeles", stage: "round32", result: { home: 2, away: 1 } },
+  { id: "R13", date: "2026-07-03", home: "Switzerland", away: "Algeria", group: "R32", venue: "Vancouver", stage: "round32", result: { home: 2, away: 0 } },
+  { id: "R14", date: "2026-07-04", home: "Australia", away: "Egypt", group: "R32", venue: "Miami", stage: "round32", result: { home: 3, away: 5 } },
+  { id: "R15", date: "2026-07-04", home: "Argentina", away: "Cabo Verde", group: "R32", venue: "Kansas City", stage: "round32", result: { home: 3, away: 2 } },
+  { id: "R16", date: "2026-07-04", home: "Colombia", away: "Ghana", group: "R32", venue: "Dallas", stage: "round32", result: { home: 1, away: 0 } },
 
-  // ===== Round of 16 (July 4-7) =====
-  { id: "16-1", date: "2026-07-04", home: "TBD", away: "TBD", group: "R16", venue: "Philadelphia", stage: "round16" },
-  { id: "16-2", date: "2026-07-04", home: "TBD", away: "TBD", group: "R16", venue: "Houston", stage: "round16" },
-  { id: "16-3", date: "2026-07-05", home: "TBD", away: "TBD", group: "R16", venue: "New York/New Jersey", stage: "round16" },
-  { id: "16-4", date: "2026-07-05", home: "TBD", away: "TBD", group: "R16", venue: "Mexico City", stage: "round16" },
-  { id: "16-5", date: "2026-07-06", home: "TBD", away: "TBD", group: "R16", venue: "Dallas", stage: "round16" },
-  { id: "16-6", date: "2026-07-06", home: "TBD", away: "TBD", group: "R16", venue: "Seattle", stage: "round16" },
-  { id: "16-7", date: "2026-07-07", home: "TBD", away: "TBD", group: "R16", venue: "Atlanta", stage: "round16" },
-  { id: "16-8", date: "2026-07-07", home: "TBD", away: "TBD", group: "R16", venue: "Vancouver", stage: "round16" },
+  // ===== Round of 16 (July 5-8) =====
+  { id: "16-1", date: "2026-07-05", home: "Canada", away: "Morocco", group: "R16", venue: "Philadelphia", stage: "round16", result: { home: 0, away: 3 } },
+  { id: "16-2", date: "2026-07-05", home: "Paraguay", away: "France", group: "R16", venue: "Houston", stage: "round16", result: { home: 0, away: 1 } },
+  { id: "16-3", date: "2026-07-06", home: "Brazil", away: "Norway", group: "R16", venue: "New York/New Jersey", stage: "round16", result: { home: 1, away: 2 } },
+  { id: "16-4", date: "2026-07-06", home: "Mexico", away: "England", group: "R16", venue: "Mexico City", stage: "round16", result: { home: 2, away: 3 } },
+  { id: "16-5", date: "2026-07-07", home: "Portugal", away: "Spain", group: "R16", venue: "Dallas", stage: "round16", result: { home: 0, away: 1 } },
+  { id: "16-6", date: "2026-07-07", home: "USA", away: "Belgium", group: "R16", venue: "Seattle", stage: "round16", result: { home: 1, away: 4 } },
+  { id: "16-7", date: "2026-07-08", home: "Argentina", away: "Egypt", group: "R16", venue: "Atlanta", stage: "round16", result: { home: 3, away: 2 } },
+  { id: "16-8", date: "2026-07-08", home: "Switzerland", away: "Colombia", group: "R16", venue: "Vancouver", stage: "round16", result: { home: 4, away: 3 } },
 
-  // ===== Quarter-finals (July 9-11) =====
-  { id: "QF1", date: "2026-07-09", home: "TBD", away: "TBD", group: "QF", venue: "Boston", stage: "quarter" },
-  { id: "QF2", date: "2026-07-10", home: "TBD", away: "TBD", group: "QF", venue: "Los Angeles", stage: "quarter" },
-  { id: "QF3", date: "2026-07-11", home: "TBD", away: "TBD", group: "QF", venue: "Miami", stage: "quarter" },
-  { id: "QF4", date: "2026-07-11", home: "TBD", away: "TBD", group: "QF", venue: "Kansas City", stage: "quarter" },
+  // ===== Quarter-finals (July 10-12) =====
+  { id: "QF1", date: "2026-07-10", home: "France", away: "Morocco", group: "QF", venue: "Boston", stage: "quarter", result: { home: 2, away: 0 } },
+  { id: "QF2", date: "2026-07-11", home: "Spain", away: "Belgium", group: "QF", venue: "Los Angeles", stage: "quarter", result: { home: 2, away: 1 } },
+  { id: "QF3", date: "2026-07-12", home: "Norway", away: "England", group: "QF", venue: "Miami", stage: "quarter", result: { home: 1, away: 2 } },
+  { id: "QF4", date: "2026-07-12", home: "Argentina", away: "Switzerland", group: "QF", venue: "Kansas City", stage: "quarter", result: { home: 3, away: 1 } },
 
-  // ===== Semi-finals (July 14-15) =====
-  { id: "SF1", date: "2026-07-14", home: "TBD", away: "TBD", group: "SF", venue: "Dallas", stage: "semi" },
-  { id: "SF2", date: "2026-07-15", home: "TBD", away: "TBD", group: "SF", venue: "Atlanta", stage: "semi" },
+  // ===== Semi-finals (July 15-16) =====
+  { id: "SF1", date: "2026-07-15", home: "France", away: "Spain", group: "SF", venue: "Dallas", stage: "semi", result: { home: 0, away: 2 } },
+  { id: "SF2", date: "2026-07-16", home: "England", away: "Argentina", group: "SF", venue: "Atlanta", stage: "semi", result: { home: 1, away: 2 } },
 
   // ===== Third Place & Final =====
-  { id: "3RD", date: "2026-07-18", home: "TBD", away: "TBD", group: "3RD", venue: "Miami", stage: "third" },
-  { id: "FINAL", date: "2026-07-19", home: "TBD", away: "TBD", group: "FINAL", venue: "New York/New Jersey", stage: "final" },
+  { id: "3RD", date: "2026-07-18", home: "England", away: "France", group: "3RD", venue: "Miami", stage: "third" },
+  { id: "FINAL", date: "2026-07-19", home: "Argentina", away: "Spain", group: "FINAL", venue: "New York/New Jersey", stage: "final" },
 ];
 
 export function getMatchesByDate(date: string): WCMatch[] {

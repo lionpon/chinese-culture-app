@@ -17,10 +17,10 @@ const CONTENT: Record<string, {
   cta: string; ctaLink: string;
 }> = {
   en: {
-    title: "Feng Shui Basics: Home, Office & Bagua Guide | Chinese Culture Studio",
-    desc: "Learn Feng Shui fundamentals: qi energy, yin-yang balance, five elements, bagua map. Practical tips for home and office arrangement to attract good fortune.",
-    ogTitle: "Feng Shui Basics: Home & Office Guide",
-    ogDesc: "Master the ancient art of placement — from bagua map to five elements, create harmony in your space.",
+    title: "Feng Shui for Beginners: 10 Tips for Home, Office & Wealth (2026) | Chinese Culture Studio",
+    desc: "Simple Feng Shui tips anyone can use: arrange your home & office for wealth, love & health. Bagua map, five elements, desk placement — explained simply.",
+    ogTitle: "Feng Shui for Beginners: Home, Office & Wealth Tips (2026)",
+    ogDesc: "10 easy Feng Shui tips for your home & office. Learn bagua map, five elements, and desk placement to attract wealth and good fortune.",
     heading: "Feng Shui: The Ancient Art of Placement",
     subtitle: "Feng Shui (风水, literally \"wind-water\") is a 3,000-year-old Chinese practice of arranging spaces to harmonize with natural energy (qi). It influences everything from building orientation to furniture placement — and is still widely practiced today.",
     whatTitle: "What Is Feng Shui?",

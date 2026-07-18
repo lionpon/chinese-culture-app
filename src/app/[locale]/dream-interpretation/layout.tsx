@@ -5,8 +5,8 @@ type Props = { params: { locale: string } };
 
 const META: Record<string, Metadata> = {
   en: {
-    title: "Chinese Dream Interpretation — Zhou Gong + Freud AI Analysis | Chinese Culture Studio",
-    description: "Describe your dream and get a dual-perspective interpretation combining Zhou Gong's ancient Chinese dream dictionary with Freudian psychoanalysis. AI-powered, in English and Chinese.",
+    title: "Free Dream Interpretation: What Does Your Dream Mean? Zhou Gong + Freud AI | Chinese Culture Studio",
+    description: "Describe your dream — get instant analysis from Zhou Gong's 3,000-year Chinese dream dictionary + Freudian psychology. Snakes, water, teeth falling out, death decoded. Try free, unlock full reading for $1.",
     robots: "index, follow",
   },
   ru: {
