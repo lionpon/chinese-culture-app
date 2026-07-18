@@ -11,7 +11,7 @@ export default function GuideCTA({
 }: {
   href: string;
   service: "naming" | "calendar" | "divination" | "palm-reading" | "dream-interpretation";
-  variant?: "card" | "inline";
+  variant?: "card" | "inline" | "sticky";
 }) {
   const t = useTranslations("guide");
 
@@ -24,6 +24,27 @@ export default function GuideCTA({
   };
 
   const item = info[service] || info.divination;
+
+  if (variant === "sticky") {
+    return (
+      <div className="fixed bottom-0 left-0 right-0 z-50 p-3 bg-white/95 backdrop-blur border-t border-stone-200 shadow-lg animate-slide-up">
+        <div className="max-w-2xl mx-auto flex items-center gap-3">
+          <span className="text-xl shrink-0">{item.icon}</span>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-bold text-stone-800 truncate">{item.title}</p>
+            <p className="text-xs text-stone-400 truncate">{item.desc}</p>
+          </div>
+          <Link
+            href={href}
+            onClick={() => trackClick("guide_cta_sticky_" + service)}
+            className="shrink-0 px-5 py-2.5 rounded-xl text-sm font-bold btn-primary whitespace-nowrap shadow-md"
+          >
+            {item.cta} →
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   if (variant === "inline") {
     return (

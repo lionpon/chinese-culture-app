@@ -178,6 +178,8 @@ export default function ChineseNameGirlGuide({ params: { locale } }: Props) {
         <GuideCTA href="/naming" service="naming" />
       </div>
       <hr className="my-6 border-stone-200" /><p className="text-xs text-stone-400">{c.disclaimer}</p>
+
+      <GuideCTA href="/naming" service="naming" variant="sticky" />
     </article>
   );
 }

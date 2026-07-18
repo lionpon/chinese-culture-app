@@ -109,7 +109,9 @@
     "terms": "Условия Использования",
     "trust": {
       "countries": "Стран Охвачено",
-      "readings": "Интерпретаций Сделано"
+      "readings": "Интерпретаций Сделано",
+      "free": "1 Бесплатно",
+      "freeLabel": "Пробный Доступ"
     },
     "guides": {
       "heading": "Изучите Китайскую Культуру",
@@ -156,7 +158,8 @@
       "firstNameAnalyzePlaceholder": "например 一郎, 法子",
       "lastNameAnalyze": "Ваша фамилия (иероглифами)",
       "lastNameAnalyzePlaceholder": "например 山本, 李",
-      "submitAnalyze": "Анализировать Имя"
+      "submitAnalyze": "Анализировать Имя",
+      "optional": "необязательно"
     },
     "example": {
       "summary": "Пример результата — посмотрите, что вы получите",

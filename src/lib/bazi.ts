@@ -134,11 +134,18 @@ const HIDDEN_STEMS: Record<string, string[]> = {
   亥: ["壬", "甲"],
 };
 
-export function calculateBazi(year: number, month: number, day: number, hour: number) {
-  const yearPillar = getYearPillar(year);
-  const monthPillar = getMonthPillar(year, month);
-  const dayPillar = getDayPillar(year, month, day);
-  const hourPillar = getHourPillar(dayPillar.stem, hour);
+export function calculateBazi(year?: number, month?: number, day?: number, hour?: number) {
+  // Fallback to current date if birth info is missing
+  const now = new Date();
+  const y = year ?? now.getFullYear();
+  const m = month ?? (now.getMonth() + 1);
+  const d = day ?? now.getDate();
+  const h = hour ?? 12;
+
+  const yearPillar = getYearPillar(y);
+  const monthPillar = getMonthPillar(y, m);
+  const dayPillar = getDayPillar(y, m, d);
+  const hourPillar = getHourPillar(dayPillar.stem, h);
 
   // Count all elements (including hidden stems)
   const allStems = [

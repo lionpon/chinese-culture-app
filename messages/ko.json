@@ -109,7 +109,9 @@
     "terms": "이용약관",
     "trust": {
       "countries": "서비스 국가",
-      "readings": "완료된 해석"
+      "readings": "완료된 해석",
+      "free": "1회 무료",
+      "freeLabel": "신규 사용자 혜택"
     },
     "guides": {
       "heading": "중국 문화 탐험하기",
@@ -156,7 +158,8 @@
       "firstNameAnalyzePlaceholder": "예: 一郎, 法子",
       "lastNameAnalyze": "성 (한자)",
       "lastNameAnalyzePlaceholder": "예: 山本, 李",
-      "submitAnalyze": "이름 분석"
+      "submitAnalyze": "이름 분석",
+      "optional": "선택사항"
     },
     "example": {
       "summary": "예시 결과 — 받으실 내용을 미리 확인하세요",

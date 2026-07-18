@@ -109,7 +109,9 @@
     "terms": "利用規約",
     "trust": {
       "countries": "対応国数",
-      "readings": "鑑定実績"
+      "readings": "鑑定実績",
+      "free": "1回無料",
+      "freeLabel": "新規ユーザー特典"
     },
     "guides": {
       "heading": "中国文化を探る",
@@ -156,7 +158,8 @@
       "firstNameAnalyzePlaceholder": "例: 一郎, 法子",
       "lastNameAnalyze": "あなたの姓（漢字）",
       "lastNameAnalyzePlaceholder": "例: 山本, 李",
-      "submitAnalyze": "名前を分析"
+      "submitAnalyze": "名前を分析",
+      "optional": "任意"
     },
     "example": {
       "summary": "結果の例 — 何が得られるか確認",

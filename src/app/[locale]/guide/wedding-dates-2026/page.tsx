@@ -137,6 +137,8 @@ export default function WeddingDatesGuide({ params: { locale } }: Props) {
       <GuideFaq lang={locale} faqs={c.faqs} />
       <GuideCTA href="/calendar" service="calendar" />
       <hr className="my-6 border-stone-200" /><p className="text-xs text-stone-400">{c.disclaimer}</p>
+
+      <GuideCTA href="/calendar" service="calendar" variant="sticky" />
     </article>
   );
 }

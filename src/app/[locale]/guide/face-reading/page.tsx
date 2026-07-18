@@ -187,6 +187,9 @@ export default function FaceReadingPage({ params }: Props) {
         <GuideCTA href="/palm-reading" service="palm-reading" />
       </section>
 
+      {/* Sticky bottom CTA — captures users who scrolled this far */}
+      <GuideCTA href="/palm-reading" service="palm-reading" variant="sticky" />
+
       <GuideFaq faqs={c.faqs} lang={params.locale} />
     </div>
   );

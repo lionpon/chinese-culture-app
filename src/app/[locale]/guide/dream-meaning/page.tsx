@@ -395,6 +395,8 @@ export default function DreamMeaningPage({ params }: Props) {
       </section>
 
       <GuideFaq faqs={c.faqs} lang={params.locale} />
+
+      <GuideCTA href="/dream-interpretation" service="dream-interpretation" variant="sticky" />
     </div>
   );
 }

@@ -109,7 +109,9 @@
     "terms": "Terms of Service",
     "trust": {
       "countries": "Countries Served",
-      "readings": "Readings Completed"
+      "readings": "Readings Completed",
+      "free": "1 Free",
+      "freeLabel": "Trial for New Users"
     },
     "guides": {
       "heading": "Explore Chinese Culture",
@@ -156,7 +158,8 @@
       "firstNameAnalyzePlaceholder": "e.g. 一郎, 法子",
       "lastNameAnalyze": "Your Surname (kanji/hanja)",
       "lastNameAnalyzePlaceholder": "e.g. 山本, 李",
-      "submitAnalyze": "Analyze My Name"
+      "submitAnalyze": "Analyze My Name",
+      "optional": "optional"
     },
     "example": {
       "summary": "Example result — see what you'll get",

@@ -51,6 +51,11 @@ export default function NamingPage() {
     );
   }
 
+  function intOrUndefined(val: string): number | undefined {
+    const n = parseInt(val);
+    return isNaN(n) ? undefined : n;
+  }
+
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
@@ -59,10 +64,10 @@ export default function NamingPage() {
       firstName: form.firstName.value,
       lastName: form.lastName.value,
       gender: form.gender.value,
-      birthYear: parseInt(form.birthYear.value),
-      birthMonth: parseInt(form.birthMonth.value),
-      birthDay: parseInt(form.birthDay.value),
-      birthHour: parseInt(form.birthHour.value),
+      birthYear: intOrUndefined(form.birthYear.value),
+      birthMonth: intOrUndefined(form.birthMonth.value),
+      birthDay: intOrUndefined(form.birthDay.value),
+      birthHour: intOrUndefined(form.birthHour.value),
       style: styleEl ? styleEl.value as "elegant" | "grand" | "fresh" : "elegant",
       mode,
       amount,
@@ -72,9 +77,12 @@ export default function NamingPage() {
 
   return (
     <div className="max-w-lg mx-auto">
-      <div className="text-center mb-8">
+      <div className="text-center mb-6">
         <h1 className="text-2xl sm:text-3xl font-bold text-accent">{t("title")}</h1>
         <p className="text-stone-500 mt-2">{t("subtitle")}</p>
+        <p className="text-xs text-stone-400 mt-1 flex items-center justify-center gap-1">
+          ⚡ 30s · {hasFreeUses() ? "1 free reading" : ""}
+        </p>
         {!hasFreeUses() && (
           <p className="text-xs mt-1 inline-block px-3 py-1 rounded badge-accent">{t("badge")}</p>
         )}
@@ -83,7 +91,7 @@ export default function NamingPage() {
       <FreeTierBadge />
       <ExampleResult />
 
-      <form onSubmit={handleSubmit} className="space-y-5 card-classic p-4 sm:p-6">
+      <form onSubmit={handleSubmit} className="space-y-4 card-classic p-4 sm:p-6">
         {/* Mode toggle — only for ja/ko users who may already have a Chinese name */}
         {isJaKo && (
           <div>
@@ -142,16 +150,22 @@ export default function NamingPage() {
           </select>
         </div>
         <div>
-          <label className="block text-sm font-medium text-stone-700 mb-1">{t("form.dob")}</label>
+          <label className="block text-sm font-medium text-stone-700 mb-1">
+            {t("form.dob")}
+            <span className="text-stone-400 font-normal text-xs ml-1">({t("form.optional")})</span>
+          </label>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-            <input name="birthYear" type="number" placeholder={t("form.year")} required min={1900} max={2100} className="border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
-            <input name="birthMonth" type="number" placeholder={t("form.month")} required min={1} max={12} className="border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
-            <input name="birthDay" type="number" placeholder={t("form.day")} required min={1} max={31} className="border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
+            <input name="birthYear" type="number" placeholder={t("form.year")} min={1900} max={2100} className="border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
+            <input name="birthMonth" type="number" placeholder={t("form.month")} min={1} max={12} className="border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
+            <input name="birthDay" type="number" placeholder={t("form.day")} min={1} max={31} className="border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
           </div>
         </div>
         <div>
-          <label className="block text-sm font-medium text-stone-700 mb-1">{t("form.hour")}</label>
-          <input name="birthHour" type="number" placeholder={t("form.hourPlaceholder")} required min={0} max={23} className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
+          <label className="block text-sm font-medium text-stone-700 mb-1">
+            {t("form.hour")}
+            <span className="text-stone-400 font-normal text-xs ml-1">({t("form.optional")})</span>
+          </label>
+          <input name="birthHour" type="number" placeholder={t("form.hourPlaceholder")} min={0} max={23} className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
           <p className="text-xs text-stone-400 mt-1">{t("form.hourHelper")}</p>
         </div>
 

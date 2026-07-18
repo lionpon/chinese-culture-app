@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Link } from "@/navigation";
 import GuideFaq from "@/components/GuideFaq";
+import GuideCTA from "@/components/GuideCTA";
 
 type Props = { params: { locale: string } };
 
@@ -216,6 +217,8 @@ export default function AuspiciousDatesGuide({ params: { locale } }: Props) {
 
       <hr className="my-6 border-stone-200" />
       <p className="text-xs text-stone-400">{c.disclaimer}</p>
+
+      <GuideCTA href="/calendar" service="calendar" variant="sticky" />
     </article>
   );
 }

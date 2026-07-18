@@ -4,6 +4,8 @@ import { MATCHES, GROUPS, type WCMatch, getMatchesByDate } from "@/data/world-cu
 import { predictMatch, getAccuracyStats, type MatchPrediction, type Prediction } from "@/lib/world-cup";
 import { BASE_URL } from "@/lib/config";
 import WorldCupCTA from "@/components/WorldCupCTA";
+import GuideCTA from "@/components/GuideCTA";
+import EmailCaptureForm from "@/components/EmailCaptureForm";
 
 type Props = { params: { locale: string } };
 
@@ -269,7 +271,13 @@ export default function WorldCupPage({ params }: Props) {
         </Link>
       </section>
 
+      <div className="max-w-md mx-auto mb-8">
+        <EmailCaptureForm source="divination" />
+      </div>
+
       <p className="text-center text-xs text-stone-400 mb-8">{u.disclaimer}</p>
+
+      <GuideCTA href="/divination" service="divination" variant="sticky" />
     </div>
   );
 }

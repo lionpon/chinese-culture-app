@@ -6,6 +6,7 @@ import DailyHexagram from "@/components/DailyHexagram";
 import FreeTierBadge from "@/components/FreeTierBadge";
 import FeatureCard from "@/components/FeatureCard";
 import ContactForm from "@/components/ContactForm";
+import EmailCaptureForm from "@/components/EmailCaptureForm";
 import TrustSignals from "@/components/TrustSignals";
 import { Link } from "@/navigation";
 import { trackClick } from "@/lib/track";
@@ -56,7 +57,20 @@ export default function HomePage() {
         </div>
       </section>
 
-      <TrustSignals />
+      {/* Hero CTA — primary conversion driver */}
+      <div className="max-w-md mx-auto mb-8 px-4">
+        <div className="rounded-2xl p-5 text-center shadow-lg" style={{ background: "linear-gradient(135deg, #2d1b13 0%, #4a2c1f 100%)" }}>
+          <p className="text-amber-400 text-sm font-bold mb-1">✨ {t("quickStart.naming")} — Free</p>
+          <p className="text-white/70 text-xs mb-4">Find a meaningful Chinese name in 30 seconds</p>
+          <Link
+            href="/naming"
+            onClick={() => trackClick("hero_cta_naming")}
+            className="inline-block px-6 py-3 rounded-xl text-sm font-bold bg-amber-400 text-[#2d1b13] hover:bg-amber-300 transition-all shadow-md"
+          >
+            {t("quickStart.naming")} →
+          </Link>
+        </div>
+      </div>
 
       {showWorldCupBanner() && (
         <div className="max-w-2xl mx-auto mb-6 animate-pulse">
@@ -136,6 +150,10 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      <div className="max-w-md mx-auto mb-8">
+        <EmailCaptureForm source="naming" />
+      </div>
 
       <ContactForm />
 
