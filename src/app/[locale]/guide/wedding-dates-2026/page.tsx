@@ -123,6 +123,9 @@ export default function WeddingDatesGuide({ params: { locale } }: Props) {
       <p className="text-stone-500 text-sm">{c.subtitle}</p>
       <hr className="my-6 border-stone-200" />
       <h2>{c.introTitle}</h2><p>{c.introBody}</p>
+
+      <GuideCTA href="/calendar" service="calendar" variant="inline" />
+
       <h2>{c.avoidTitle}</h2><ul>{c.avoidItems.map((item) => <li key={item}>{item}</li>)}</ul>
       <h2>{c.monthsTitle}</h2>
       {months.map((m) => (

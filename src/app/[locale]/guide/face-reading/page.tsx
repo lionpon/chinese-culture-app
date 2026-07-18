@@ -165,6 +165,8 @@ export default function FaceReadingPage({ params }: Props) {
         <p className="text-sm text-stone-600 leading-relaxed">{c.whatBody}</p>
       </section>
 
+      <GuideCTA href="/palm-reading" service="palm-reading" variant="inline" />
+
       <section className="mb-6">
         <h2 className="text-lg font-semibold text-stone-700 mb-4">{c.featuresTitle}</h2>
         <div className="space-y-3">

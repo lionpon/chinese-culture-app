@@ -3,6 +3,7 @@ import { Link } from "@/navigation";
 import { MATCHES, GROUPS, type WCMatch, getMatchesByDate } from "@/data/world-cup-2026";
 import { predictMatch, getAccuracyStats, type MatchPrediction, type Prediction } from "@/lib/world-cup";
 import { BASE_URL } from "@/lib/config";
+import WorldCupCTA from "@/components/WorldCupCTA";
 
 type Props = { params: { locale: string } };
 
@@ -209,6 +210,8 @@ export default function WorldCupPage({ params }: Props) {
           </div>
         </div>
       )}
+
+      <WorldCupCTA />
 
       <div className="text-center mb-8">
         <h1 className="text-2xl sm:text-4xl font-bold mb-3" style={{ color: "var(--accent)" }}>{u.hero}</h1>

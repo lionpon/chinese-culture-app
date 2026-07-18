@@ -5,6 +5,14 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/navigation";
 import { getFreeTier } from "@/lib/free-tier";
 
+const ICONS: Record<string, string> = {
+  naming: "🖋",
+  calendar: "📅",
+  divination: "☯",
+  "palm-reading": "✋",
+  "dream-interpretation": "🌙",
+};
+
 export default function FeatureCard({
   href,
   title,
@@ -25,22 +33,30 @@ export default function FeatureCard({
     setRemaining(getFreeTier().remaining);
   }, []);
 
+  // Extract service key from href
+  const service = href.split("/").pop() || "";
+  const icon = ICONS[service] || "✨";
+  const isFree = !hideFree && remaining > 0;
+
   return (
     <Link
       href={href}
       onClick={onClick}
-      className="group block p-4 sm:p-6 rounded-xl border border-stone-200 bg-white hover:border-stone-300 hover:shadow-md transition-all"
+      className="group block p-5 sm:p-6 rounded-2xl border-2 border-stone-100 bg-white hover:border-accent/30 hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5"
     >
-      <h2 className="text-lg font-semibold text-stone-800 mb-2 group-hover:text-stone-900 transition-colors">
+      <span className="text-3xl mb-3 block">{icon}</span>
+      <h2 className="text-base font-bold text-stone-800 mb-1.5 group-hover:text-accent transition-colors">
         {title}
       </h2>
-      <p className="text-sm text-stone-500 leading-relaxed">{desc}</p>
-      <span className="inline-block mt-4 text-xs font-medium text-stone-400 group-hover:text-stone-500 transition-colors">
-        {hideFree
-          ? t("cta.paid")
-          : remaining > 0
-            ? t("cta.free")
-            : t("cta.paid")}
+      <p className="text-xs text-stone-400 leading-relaxed mb-4">{desc}</p>
+      <span
+        className={`inline-block px-4 py-2 rounded-lg text-xs font-semibold transition-colors ${
+          isFree
+            ? "bg-accent/10 text-accent group-hover:bg-accent group-hover:text-white"
+            : "bg-stone-100 text-stone-500 group-hover:bg-stone-200"
+        }`}
+      >
+        {isFree ? "✨ " + t("cta.free") : t("cta.paid")}
       </span>
     </Link>
   );

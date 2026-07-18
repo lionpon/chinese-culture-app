@@ -188,6 +188,8 @@ export default function IChingBeginnerGuide({ params: { locale } }: Props) {
         {c.readSteps.map((s) => <li key={s}>{s}</li>)}
       </ol>
 
+      <GuideCTA href="/divination" service="divination" variant="inline" />
+
       <h2>{c.tipsTitle}</h2>
       <ul>
         {c.tips.map((t) => <li key={t}>{t}</li>)}

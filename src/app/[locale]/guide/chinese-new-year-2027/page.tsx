@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Link } from "@/navigation";
 import GuideFaq from "@/components/GuideFaq";
+import GuideCTA from "@/components/GuideCTA";
 
 type Props = { params: { locale: string } };
 
@@ -223,6 +224,8 @@ export default function ChineseNewYear2027Guide({ params: { locale } }: Props) {
         <li dangerouslySetInnerHTML={{ __html: c.trad4 }} />
         <li dangerouslySetInnerHTML={{ __html: c.trad5 }} />
       </ol>
+
+      <GuideCTA href="/divination" service="divination" variant="inline" />
 
       <h2>{c.predTitle}</h2>
       <div className="not-prose grid grid-cols-1 sm:grid-cols-2 gap-3 my-4">
