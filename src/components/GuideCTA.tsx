@@ -27,12 +27,12 @@ export default function GuideCTA({
 
   if (variant === "sticky") {
     return (
-      <div className="fixed bottom-0 left-0 right-0 z-50 p-3 bg-white/95 backdrop-blur border-t border-stone-200 shadow-lg animate-slide-up">
+      <div className="fixed bottom-0 left-0 right-0 z-50 p-3 border-t shadow-lg animate-slide-up" style={{ backgroundColor: "rgba(26, 26, 46, 0.95)", backdropFilter: "blur(12px)", borderColor: "var(--border-medium)" }}>
         <div className="max-w-2xl mx-auto flex items-center gap-3">
           <span className="text-xl shrink-0">{item.icon}</span>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-bold text-stone-800 truncate">{item.title}</p>
-            <p className="text-xs text-stone-400 truncate">{item.desc}</p>
+            <p className="text-sm font-bold truncate" style={{ color: "var(--text-primary)" }}>{item.title}</p>
+            <p className="text-xs truncate" style={{ color: "var(--text-muted)" }}>{item.desc}</p>
           </div>
           <Link
             href={href}
@@ -49,11 +49,11 @@ export default function GuideCTA({
   if (variant === "inline") {
     return (
       <div className="not-prose my-6">
-        <div className="flex items-center gap-3 p-3 sm:p-4 rounded-xl border-2 border-accent/20 bg-accent/5">
+        <div className="flex items-center gap-3 p-3 sm:p-4 rounded-xl border" style={{ borderColor: "var(--border-medium)", backgroundColor: "var(--gold-subtle)" }}>
           <span className="text-2xl shrink-0">{item.icon}</span>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-semibold text-accent truncate">{item.title}</p>
-            <p className="text-xs text-stone-500 truncate hidden sm:block">{item.desc}</p>
+            <p className="text-sm font-semibold truncate" style={{ color: "var(--gold)" }}>{item.title}</p>
+            <p className="text-xs truncate hidden sm:block" style={{ color: "var(--text-muted)" }}>{item.desc}</p>
           </div>
           <Link
             href={href}
@@ -69,13 +69,12 @@ export default function GuideCTA({
 
   return (
     <div className="not-prose my-10">
-      <div className="card-classic p-5 sm:p-6 text-center"
-        style={{ borderColor: "rgba(155,74,58,0.2)", background: "linear-gradient(135deg, #FFFAF5 0%, #FDF5ED 100%)" }}>
+      <div className="card-classic p-5 sm:p-6 text-center" style={{ background: "linear-gradient(135deg, rgba(201,169,110,0.12), rgba(201,169,110,0.04))", borderColor: "var(--border-medium)" }}>
         <p className="text-2xl mb-2">{item.icon}</p>
-        <h3 className="text-base font-bold mb-1" style={{ color: "var(--accent)" }}>
+        <h3 className="text-base font-bold mb-1" style={{ color: "var(--gold)" }}>
           {item.title}
         </h3>
-        <p className="text-sm text-stone-500 mb-4 max-w-sm mx-auto">
+        <p className="text-sm mb-4 max-w-sm mx-auto" style={{ color: "var(--text-body)" }}>
           {item.desc}
         </p>
         <Link
@@ -85,7 +84,7 @@ export default function GuideCTA({
         >
           {item.cta} →
         </Link>
-        <p className="text-xs text-stone-400 mt-3">
+        <p className="text-xs mt-3" style={{ color: "var(--text-dim)" }}>
           {t("cta.disclaimer")}
         </p>
       </div>

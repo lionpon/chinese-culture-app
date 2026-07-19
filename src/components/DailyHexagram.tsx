@@ -55,16 +55,16 @@ export default function DailyHexagram() {
         {t("dailyHexagram.heading")}
       </p>
       <div className="card-classic p-4 sm:p-6 text-center">
-        <p className="text-2xl sm:text-3xl font-bold mb-1 text-accent">
+        <p className="text-2xl sm:text-3xl font-bold mb-1" style={{ color: "var(--gold)" }}>
           {mainHexagram.nameZh}
         </p>
         <div className="flex items-center justify-center gap-2 mb-4">
-          <p className="text-sm text-stone-500">
+          <p style={{ color: "var(--text-muted)" }} className="text-sm">
             {mainHexagram.pinyin} — {localizedName}
           </p>
           <SpeakButton text={mainHexagram.nameZh} />
         </div>
-        <p className="text-sm text-stone-600 leading-relaxed mb-5 max-w-md mx-auto">
+        <p className="text-sm leading-relaxed mb-5 max-w-md mx-auto" style={{ color: "var(--text-body)" }}>
           {teaser}
         </p>
         <div className="flex flex-col sm:flex-row gap-2 justify-center">
@@ -78,7 +78,8 @@ export default function DailyHexagram() {
           <Link
             href="/divination"
             onClick={() => trackClick("daily_divination_link")}
-            className="inline-block px-5 py-2.5 rounded-xl text-sm font-medium text-stone-600 hover:text-stone-800 transition-colors"
+            className="inline-block px-5 py-2.5 rounded-xl text-sm font-medium transition-colors"
+            style={{ color: "var(--text-muted)" }}
           >
             {t("dailyHexagram.askOwn")}
           </Link>

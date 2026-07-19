@@ -132,7 +132,7 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <html lang={params.locale}>
-      <body className="min-h-screen text-stone-800 antialiased">
+      <body className="min-h-screen antialiased" style={{ backgroundColor: "var(--bg-deep)", color: "var(--text-body)" }}>
         <NextIntlClientProvider messages={messages} locale={params.locale}>
           <Suspense fallback={null}>
             <AutoDailyReport />
@@ -140,24 +140,24 @@ export default async function LocaleLayout({ children, params }: Props) {
           <JsonLd />
           <AppProvider>
             <AnalyticsTracker />
-            <header className="border-b border-stone-200/60 bg-white/70 backdrop-blur-md sticky top-0 z-50">
+            <header className="sticky top-0 z-50" style={{ borderBottom: "1px solid var(--border-subtle)", backgroundColor: "rgba(15, 15, 26, 0.85)", backdropFilter: "blur(12px)" }}>
               <div className="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
-                <a href={`${pathname || ""}/`} className="text-lg font-bold tracking-tight text-accent">
+                <a href={`${pathname || ""}/`} className="text-lg font-bold tracking-tight" style={{ color: "var(--gold)" }}>
                   Chinese Culture Studio
                 </a>
-                <nav className="hidden sm:flex gap-4 text-sm text-stone-500 items-center">
-                  <a href={`${pathname}/world-cup`} className="font-semibold hover:opacity-80 transition-opacity" style={{ color: "var(--accent)" }}>⚽ World Cup</a>
-                  <span className="text-stone-300">|</span>
-                  <a href={`${pathname}/naming`} className="hover:text-stone-800 transition-colors">{t("nav.name")}</a>
-                  <a href={`${pathname}/calendar`} className="hover:text-stone-800 transition-colors">{t("nav.dates")}</a>
-                  <a href={`${pathname}/divination`} className="hover:text-stone-800 transition-colors">{t("nav.iching")}</a>
-                  <a href={`${pathname}/palm-reading`} className="hover:text-stone-800 transition-colors">{t("nav.palmReading")}</a>
-                  <a href={`${pathname}/dream-interpretation`} className="hover:text-stone-800 transition-colors">{t("nav.dreamInterpretation")}</a>
-                  <span className="text-stone-300 mx-1">|</span>
+                <nav className="hidden sm:flex gap-4 text-sm items-center">
+                  <a href={`${pathname}/world-cup`} className="font-semibold hover:opacity-80 transition-opacity" style={{ color: "var(--vermilion)" }}>⚽ World Cup</a>
+                  <span style={{ color: "var(--border-medium)" }}>|</span>
+                  <a href={`${pathname}/naming`} className="nav-link">{t("nav.name")}</a>
+                  <a href={`${pathname}/calendar`} className="nav-link">{t("nav.dates")}</a>
+                  <a href={`${pathname}/divination`} className="nav-link">{t("nav.iching")}</a>
+                  <a href={`${pathname}/palm-reading`} className="nav-link">{t("nav.palmReading")}</a>
+                  <a href={`${pathname}/dream-interpretation`} className="nav-link">{t("nav.dreamInterpretation")}</a>
+                  <span style={{ color: "var(--border-medium)" }} className="mx-1">|</span>
                   <LanguageSwitcher />
                 </nav>
                 <div className="flex items-center gap-2 sm:gap-4">
-                  <a href={`${pathname}/world-cup`} className="sm:hidden text-xs font-bold px-2.5 py-1 rounded-full animate-pulse" style={{ backgroundColor: "var(--accent)", color: "white" }}>
+                  <a href={`${pathname}/world-cup`} className="sm:hidden text-xs font-bold px-2.5 py-1 rounded-full animate-pulse" style={{ backgroundColor: "var(--vermilion)", color: "#fff" }}>
                     ⚽ WC
                   </a>
                   <span className="sm:hidden"><LanguageSwitcher /></span>
@@ -166,25 +166,25 @@ export default async function LocaleLayout({ children, params }: Props) {
                 </div>
               </div>
             </header>
-            <main className="max-w-5xl mx-auto px-3 sm:px-4 py-6 sm:py-8">{children}</main>
-            <footer className="border-t border-stone-200/60 py-6 sm:py-8 mt-12 sm:mt-16">
-              <div className="max-w-5xl mx-auto px-4 text-center text-xs text-stone-400 space-y-2">
+            <main className="max-w-5xl mx-auto px-3 sm:px-4 py-6 sm:py-8 relative z-10">{children}</main>
+            <footer className="py-6 sm:py-8 mt-12 sm:mt-16" style={{ borderTop: "1px solid var(--border-subtle)" }}>
+              <div className="max-w-5xl mx-auto px-4 text-center text-xs space-y-2" style={{ color: "var(--text-dim)" }}>
                 <p>{t("footer.disclaimer")}</p>
                 <p>{t("footer.paymentNote")}</p>
                 <p className="flex justify-center gap-4 flex-wrap">
                   {footerGuides.map((g) => (
-                    <a key={g.href} href={`${pathname}${g.href}`} className="hover:text-stone-500 underline">{g.label}</a>
+                    <a key={g.href} href={`${pathname}${g.href}`} className="underline footer-link">{g.label}</a>
                   ))}
                 </p>
                 <p className="flex justify-center gap-4 flex-wrap font-medium">
                   {footerTools.map((g) => (
-                    <a key={g.href} href={`${pathname}${g.href}`} className="hover:text-stone-500 underline">{g.label}</a>
+                    <a key={g.href} href={`${pathname}${g.href}`} className="underline footer-link">{g.label}</a>
                   ))}
                 </p>
                 <p className="flex justify-center gap-4 flex-wrap">
-                  <a href={`${pathname}/about`} className="hover:text-stone-500 underline">{t("footer.about")}</a>
-                  <a href={`${pathname}/terms`} className="hover:text-stone-500 underline">{t("footer.terms")}</a>
-                  <a href={`${pathname}/privacy`} className="hover:text-stone-500 underline">{t("footer.privacy")}</a>
+                  <a href={`${pathname}/about`} className="underline footer-link">{t("footer.about")}</a>
+                  <a href={`${pathname}/terms`} className="underline footer-link">{t("footer.terms")}</a>
+                  <a href={`${pathname}/privacy`} className="underline footer-link">{t("footer.privacy")}</a>
                 </p>
                 <p>{t("footer.copyright")}</p>
               </div>

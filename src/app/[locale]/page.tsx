@@ -33,24 +33,30 @@ export default function HomePage() {
 
   return (
     <div>
-      <section className="text-center py-12 sm:py-24">
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-stone-900 mb-4">
+      {/* Hero Section */}
+      <section className="text-center py-12 sm:py-20 relative">
+        {/* Decorative glow behind hero */}
+        <div className="absolute inset-0 pointer-events-none" style={{
+          background: "radial-gradient(ellipse at 50% 0%, rgba(201, 169, 110, 0.12) 0%, transparent 70%)",
+        }} />
+        <h1 className="text-3xl sm:text-5xl font-bold tracking-tight mb-4 relative" style={{ color: "var(--text-primary)" }}>
           {t("title")}
         </h1>
-        <p className="text-base sm:text-lg text-stone-500 max-w-lg mx-auto leading-relaxed">
+        <p className="text-base sm:text-lg max-w-xl mx-auto leading-relaxed relative" style={{ color: "var(--text-muted)" }}>
           {t("subtitle")}
         </p>
 
-        <div className="flex justify-center gap-3 mt-8 flex-wrap">
-          <Link href="/naming" onClick={() => trackClick("quick_naming")} className="group flex items-center gap-2 px-4 py-3 rounded-xl border-2 border-stone-200 bg-white hover:border-accent hover:shadow-md transition-all text-sm font-medium text-stone-700 hover:text-accent">
+        {/* Quick links */}
+        <div className="flex justify-center gap-3 mt-8 flex-wrap relative">
+          <Link href="/naming" onClick={() => trackClick("quick_naming")} className="group flex items-center gap-2 px-4 py-3 rounded-xl border text-sm font-medium quick-link">
             <span className="text-lg">名</span>
             {t("quickStart.naming")}
           </Link>
-          <Link href="/divination" onClick={() => trackClick("quick_divination")} className="group flex items-center gap-2 px-4 py-3 rounded-xl border-2 border-stone-200 bg-white hover:border-accent hover:shadow-md transition-all text-sm font-medium text-stone-700 hover:text-accent">
+          <Link href="/divination" onClick={() => trackClick("quick_divination")} className="group flex items-center gap-2 px-4 py-3 rounded-xl border text-sm font-medium quick-link">
             <span className="text-lg">卦</span>
             {t("quickStart.divination")}
           </Link>
-          <Link href="/calendar" onClick={() => trackClick("quick_calendar")} className="group flex items-center gap-2 px-4 py-3 rounded-xl border-2 border-stone-200 bg-white hover:border-accent hover:shadow-md transition-all text-sm font-medium text-stone-700 hover:text-accent">
+          <Link href="/calendar" onClick={() => trackClick("quick_calendar")} className="group flex items-center gap-2 px-4 py-3 rounded-xl border text-sm font-medium quick-link">
             <span className="text-lg">曆</span>
             {t("quickStart.calendar")}
           </Link>
@@ -59,13 +65,16 @@ export default function HomePage() {
 
       {/* Hero CTA — primary conversion driver */}
       <div className="max-w-md mx-auto mb-8 px-4">
-        <div className="rounded-2xl p-5 text-center shadow-lg" style={{ background: "linear-gradient(135deg, #2d1b13 0%, #4a2c1f 100%)" }}>
-          <p className="text-amber-400 text-sm font-bold mb-1">✨ {t("quickStart.naming")} — Free</p>
-          <p className="text-white/70 text-xs mb-4">Find a meaningful Chinese name in 30 seconds</p>
+        <div className="rounded-2xl p-6 text-center relative overflow-hidden" style={{
+          background: "linear-gradient(135deg, rgba(201,169,110,0.15) 0%, rgba(201,169,110,0.05) 100%)",
+          border: "1px solid var(--border-medium)",
+        }}>
+          <p className="text-sm font-bold mb-1" style={{ color: "var(--gold)" }}>✨ {t("quickStart.naming")} — Free</p>
+          <p className="text-xs mb-4" style={{ color: "var(--text-muted)" }}>Find a meaningful Chinese name in 30 seconds</p>
           <Link
             href="/naming"
             onClick={() => trackClick("hero_cta_naming")}
-            className="inline-block px-6 py-3 rounded-xl text-sm font-bold bg-amber-400 text-[#2d1b13] hover:bg-amber-300 transition-all shadow-md"
+            className="inline-block px-6 py-3 rounded-xl text-sm font-bold btn-primary"
           >
             {t("quickStart.naming")} →
           </Link>
@@ -75,8 +84,7 @@ export default function HomePage() {
       {showWorldCupBanner() && (
         <div className="max-w-2xl mx-auto mb-6 animate-pulse">
           <Link href="/world-cup" onClick={() => trackClick("banner_worldcup")} className="block">
-            <div className="rounded-2xl p-4 sm:p-5 text-center transition-all hover:shadow-md hover:scale-[1.02] active:scale-95"
-              style={{ background: "linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 70%, #f59e0b))" }}>
+            <div className="rounded-2xl p-4 sm:p-5 text-center transition-all hover:shadow-md hover:scale-[1.02] active:scale-95" style={{ background: "linear-gradient(135deg, var(--vermilion), #8b1a1a)" }}>
               <p className="text-white/90 text-xs sm:text-sm font-medium mb-1">⚽ {wc.text}</p>
               <p className="text-white font-bold text-sm sm:text-base">{wc.cta}</p>
             </div>
@@ -125,7 +133,7 @@ export default function HomePage() {
       </div>
 
       <section className="max-w-4xl mx-auto mt-12 sm:mt-16 mb-10">
-        <h2 className="text-lg font-semibold text-stone-800 text-center mb-6">
+        <h2 className="text-lg font-semibold text-center mb-6" style={{ color: "var(--text-primary)" }}>
           {t("guides.heading")}
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3">
@@ -142,7 +150,7 @@ export default function HomePage() {
               key={key}
               href={href}
               onClick={() => trackClick(`guide_${key}`)}
-              className="block px-3 py-2.5 rounded-lg text-sm text-stone-600 hover:text-stone-900 hover:bg-stone-100 transition-colors text-center"
+              className="block px-3 py-2.5 rounded-lg text-sm transition-colors text-center guide-link"
             >
               {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
               {t(`guides.${key}` as any)}
@@ -158,10 +166,10 @@ export default function HomePage() {
       <ContactForm />
 
       <section className="mt-12 sm:mt-20 text-center">
-        <p className="text-xs text-stone-400 max-w-md mx-auto leading-relaxed">
-          <Link href="/privacy" className="underline hover:text-stone-500">{t("privacy")}</Link>
+        <p className="text-xs max-w-md mx-auto leading-relaxed" style={{ color: "var(--text-dim)" }}>
+          <Link href="/privacy" className="underline footer-link">{t("privacy")}</Link>
           {" · "}
-          <Link href="/terms" className="underline hover:text-stone-500">{t("terms")}</Link>
+          <Link href="/terms" className="underline footer-link">{t("terms")}</Link>
         </p>
       </section>
     </div>

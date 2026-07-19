@@ -83,7 +83,7 @@ export default function NamingResultView({
             </div>
 
             {a.suggestion && (
-              <div className="card-classic p-4 sm:p-6 mb-4" style={{ borderColor: "rgba(155,74,58,0.3)" }}>
+              <div className="card-classic p-4 sm:p-6 mb-4" style={{ borderColor: "var(--border-strong)" }}>
                 <p className="text-sm font-medium text-stone-600 mb-3">Based on your Bazi, consider</p>
                 <ResultCard opt={a.suggestion} i={0} recommended={false} />
                 <p className="text-xs text-stone-400 mt-3 text-center">Same surname, more balanced given name</p>

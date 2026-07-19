@@ -24,8 +24,8 @@ export default function NamingPage() {
         <summary className="text-sm font-medium text-stone-600 select-none">
           {t("example.summary")}
         </summary>
-        <div className="mt-4 pt-4 border-t border-stone-100 space-y-4">
-          <div className="card-classic p-4" style={{ borderColor: "rgba(155,74,58,0.15)" }}>
+        <div className="mt-4 pt-4 border-t space-y-4" style={{ borderColor: "var(--border-subtle)" }}>
+          <div className="card-classic p-4" style={{ borderColor: "var(--border-medium)" }}>
             <div className="text-center mb-2">
               <p className="text-3xl font-bold text-accent">林明哲</p>
               <div className="flex items-center justify-center gap-2 mt-1">

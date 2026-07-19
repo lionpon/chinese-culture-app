@@ -44,7 +44,7 @@ function DayCard({ day }: { day: CalendarResult["auspiciousDays"][0] }) {
         <div className="flex flex-wrap gap-1">
           {day.hours.map(h => (
             <span key={h.branch} className="text-xs px-2 py-1 rounded border"
-              style={h.auspicious ? { color: "var(--accent)", backgroundColor: "var(--accent-muted)", borderColor: "rgba(155,74,58,0.25)" } : { color: "#A4958A", backgroundColor: "#F5F3F0", borderColor: "#E8E4DF" }}
+              style={h.auspicious ? { color: "var(--gold)", backgroundColor: "var(--gold-subtle)", borderColor: "var(--border-strong)" } : { color: "var(--text-dim)", backgroundColor: "var(--bg-surface)", borderColor: "var(--border-subtle)" }}
               title={`${h.label} (${h.labelEn}) — ${h.auspicious ? "Auspicious" : "Inauspicious"}`}>
               {h.label} <span className="opacity-60">{h.time}</span>
             </span>

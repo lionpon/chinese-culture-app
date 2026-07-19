@@ -30,16 +30,17 @@ export default function CookieConsent() {
   if (!visible) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-[100] bg-white/95 backdrop-blur border-t border-stone-200 shadow-lg">
-      <div className="max-w-5xl mx-auto px-3 sm:px-4 py-3 sm:py-4 flex flex-col sm:flex-row items-start sm:items-center gap-3 text-xs sm:text-sm text-stone-600">
+    <div className="fixed bottom-0 left-0 right-0 z-[100] border-t shadow-lg" style={{ backgroundColor: "rgba(26, 26, 46, 0.98)", backdropFilter: "blur(12px)", borderColor: "var(--border-medium)" }}>
+      <div className="max-w-5xl mx-auto px-3 sm:px-4 py-3 sm:py-4 flex flex-col sm:flex-row items-start sm:items-center gap-3 text-xs sm:text-sm" style={{ color: "var(--text-muted)" }}>
         <p className="flex-1 leading-relaxed">
           {t("cookie.text")}{" "}
-          <Link href="/privacy" className="underline text-stone-800 hover:text-stone-600">{t("cookie.privacyLink")}</Link>.
+          <Link href="/privacy" className="underline" style={{ color: "var(--gold)" }}>{t("cookie.privacyLink")}</Link>.
         </p>
         <div className="flex gap-2 shrink-0">
           <button
             onClick={() => choose(false)}
-            className="px-3 sm:px-4 py-1.5 rounded-lg text-xs border border-stone-300 text-stone-500 hover:bg-stone-50 transition-colors"
+            className="px-3 sm:px-4 py-1.5 rounded-lg text-xs border transition-colors"
+            style={{ borderColor: "var(--border-medium)", color: "var(--text-muted)", backgroundColor: "var(--bg-surface)" }}
           >
             {t("cookie.essentialOnly")}
           </button>

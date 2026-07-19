@@ -13,7 +13,8 @@ export default function NavMenu() {
     <div className="sm:hidden">
       <button
         onClick={() => setOpen(!open)}
-        className="p-2 -mr-2 text-stone-500 hover:text-stone-800 transition-colors"
+        className="p-2 -mr-2 transition-colors"
+        style={{ color: "var(--text-muted)" }}
         aria-label={t("toggleMenu")}
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -25,27 +26,27 @@ export default function NavMenu() {
         </svg>
       </button>
       {open && (
-        <div className="absolute top-14 left-0 right-0 bg-white/95 backdrop-blur-md border-b border-stone-200 shadow-lg">
+        <div className="absolute top-14 left-0 right-0 border-b shadow-lg" style={{ backgroundColor: "rgba(26, 26, 46, 0.98)", backdropFilter: "blur(12px)", borderColor: "var(--border-subtle)" }}>
           <div className="flex flex-col p-4 space-y-3">
-            <Link href="/world-cup" className="text-sm font-semibold py-1" style={{ color: "var(--accent)" }} onClick={() => setOpen(false)}>
+            <Link href="/world-cup" className="text-sm font-semibold py-1" style={{ color: "var(--vermilion)" }} onClick={() => setOpen(false)}>
               ⚽ World Cup
             </Link>
-            <Link href="/naming" className="text-sm text-stone-600 hover:text-stone-900 py-1" onClick={() => setOpen(false)}>
+            <Link href="/naming" className="text-sm py-1" style={{ color: "var(--text-muted)" }} onClick={() => setOpen(false)}>
               {t("nav.createName")}
             </Link>
-            <Link href="/calendar" className="text-sm text-stone-600 hover:text-stone-900 py-1" onClick={() => setOpen(false)}>
+            <Link href="/calendar" className="text-sm py-1" style={{ color: "var(--text-muted)" }} onClick={() => setOpen(false)}>
               {t("nav.dateSelection")}
             </Link>
-            <Link href="/divination" className="text-sm text-stone-600 hover:text-stone-900 py-1" onClick={() => setOpen(false)}>
+            <Link href="/divination" className="text-sm py-1" style={{ color: "var(--text-muted)" }} onClick={() => setOpen(false)}>
               {t("nav.ichingDivination")}
             </Link>
-            <Link href="/palm-reading" className="text-sm text-stone-600 hover:text-stone-900 py-1" onClick={() => setOpen(false)}>
+            <Link href="/palm-reading" className="text-sm py-1" style={{ color: "var(--text-muted)" }} onClick={() => setOpen(false)}>
               {t("nav.palmMenu")}
             </Link>
-            <Link href="/dream-interpretation" className="text-sm text-stone-600 hover:text-stone-900 py-1" onClick={() => setOpen(false)}>
+            <Link href="/dream-interpretation" className="text-sm py-1" style={{ color: "var(--text-muted)" }} onClick={() => setOpen(false)}>
               {t("nav.dreamMenu")}
             </Link>
-            <div className="pt-2 border-t border-stone-100">
+            <div className="pt-2" style={{ borderTop: "1px solid var(--border-subtle)" }}>
               <LanguageSwitcher />
             </div>
           </div>

@@ -38,35 +38,36 @@ export default function EmailCaptureForm({ source }: EmailCaptureFormProps) {
 
   if (status === "success") {
     return (
-      <div className="mt-8 p-4 bg-green-50 border border-green-200 rounded-lg text-center">
-        <p className="text-green-700 text-sm">{t("emailSuccess")}</p>
+      <div className="mt-8 p-4 rounded-lg text-center" style={{ backgroundColor: "rgba(91, 154, 123, 0.12)", border: "1px solid rgba(91, 154, 123, 0.25)" }}>
+        <p className="text-sm" style={{ color: "var(--jade)" }}>{t("emailSuccess")}</p>
       </div>
     );
   }
 
   return (
-    <div className="mt-8 p-5 border border-stone-200 rounded-lg bg-stone-50">
-      <p className="text-sm font-medium text-stone-700 mb-3">{t("emailTitle")}</p>
+    <div className="mt-8 p-5 border rounded-lg" style={{ borderColor: "var(--border-medium)", backgroundColor: "var(--bg-surface)" }}>
+      <p className="text-sm font-medium mb-3" style={{ color: "var(--text-body)" }}>{t("emailTitle")}</p>
       <form onSubmit={handleSubmit} className="flex gap-2 max-w-sm">
         <input
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder={t("emailPlaceholder")}
-          className="flex-1 px-3 py-2 text-sm border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent/30"
+          className="flex-1 px-3 py-2 text-sm rounded-md focus:outline-none"
+          style={{ backgroundColor: "var(--bg-deep)", border: "1px solid var(--border-medium)", color: "var(--text-primary)" }}
           required
         />
         <button
           type="submit"
           disabled={status === "loading"}
-          className="px-4 py-2 text-sm font-medium text-white rounded-md transition-colors disabled:opacity-60"
-          style={{ backgroundColor: "var(--accent)" }}
+          className="px-4 py-2 text-sm font-medium rounded-md transition-colors disabled:opacity-60"
+          style={{ backgroundColor: "var(--gold)", color: "var(--bg-deep)" }}
         >
           {status === "loading" ? "..." : t("emailSubmit")}
         </button>
       </form>
       {status === "error" && (
-        <p className="text-red-500 text-xs mt-2">{t("emailError")}</p>
+        <p className="text-red-400 text-xs mt-2">{t("emailError")}</p>
       )}
     </div>
   );

@@ -42,19 +42,40 @@ export default function FeatureCard({
     <Link
       href={href}
       onClick={onClick}
-      className="group block p-5 sm:p-6 rounded-2xl border-2 border-stone-100 bg-white hover:border-accent/30 hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5"
+      className="group block p-5 sm:p-6 rounded-2xl border transition-all duration-200 hover:-translate-y-0.5"
+      style={{
+        borderColor: "var(--border-subtle)",
+        backgroundColor: "var(--bg-card)",
+      }}
+      onMouseEnter={e => {
+        const t = e.currentTarget;
+        t.style.borderColor = "var(--border-strong)";
+        t.style.boxShadow = "0 0 30px var(--gold-subtle), 0 4px 20px rgba(0,0,0,0.3)";
+      }}
+      onMouseLeave={e => {
+        const t = e.currentTarget;
+        t.style.borderColor = "var(--border-subtle)";
+        t.style.boxShadow = "none";
+      }}
     >
       <span className="text-3xl mb-3 block">{icon}</span>
-      <h2 className="text-base font-bold text-stone-800 mb-1.5 group-hover:text-accent transition-colors">
+      <h2 className="text-base font-bold mb-1.5 transition-colors" style={{ color: "var(--text-primary)" }}>
         {title}
       </h2>
-      <p className="text-xs text-stone-400 leading-relaxed mb-4">{desc}</p>
+      <p className="text-xs leading-relaxed mb-4" style={{ color: "var(--text-muted)" }}>{desc}</p>
       <span
         className={`inline-block px-4 py-2 rounded-lg text-xs font-semibold transition-colors ${
           isFree
-            ? "bg-accent/10 text-accent group-hover:bg-accent group-hover:text-white"
-            : "bg-stone-100 text-stone-500 group-hover:bg-stone-200"
+            ? ""
+            : ""
         }`}
+        style={isFree ? {
+          backgroundColor: "var(--gold-subtle)",
+          color: "var(--gold)",
+        } : {
+          backgroundColor: "var(--bg-surface)",
+          color: "var(--text-muted)",
+        }}
       >
         {isFree ? "✨ " + t("cta.free") : t("cta.paid")}
       </span>

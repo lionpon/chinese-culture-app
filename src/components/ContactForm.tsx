@@ -57,14 +57,14 @@ export default function ContactForm() {
   if (status === "success") {
     return (
       <section className="py-8 px-4 max-w-md mx-auto text-center">
-        <p className="text-sm text-green-600">{t("success")}</p>
+        <p className="text-sm" style={{ color: "var(--jade)" }}>{t("success")}</p>
       </section>
     );
   }
 
   return (
     <section className="py-8 px-4 max-w-md mx-auto">
-      <h2 className="text-sm font-medium text-stone-400 text-center mb-4">{t("title")}</h2>
+      <h2 className="text-sm font-medium text-center mb-4" style={{ color: "var(--text-muted)" }}>{t("title")}</h2>
       <form onSubmit={handleSubmit} className="space-y-2">
         <div className="flex gap-2">
           <input
@@ -73,12 +73,14 @@ export default function ContactForm() {
             type="email"
             required
             placeholder={t("emailPlaceholder")}
-            className="flex-1 px-3 py-1.5 text-sm border border-stone-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-amber-400 text-stone-700 placeholder:text-stone-300"
+            className="flex-1 px-3 py-1.5 text-sm border rounded-lg focus:outline-none focus:ring-1"
+            style={{ backgroundColor: "var(--bg-surface)", borderColor: "var(--border-medium)", color: "var(--text-primary)" }}
           />
           <button
             type="submit"
             disabled={status === "loading"}
-            className="px-4 py-1.5 text-sm bg-stone-100 hover:bg-stone-200 disabled:bg-stone-50 text-stone-500 font-medium rounded-lg transition-colors shrink-0"
+            className="px-4 py-1.5 text-sm font-medium rounded-lg transition-colors shrink-0 disabled:opacity-50"
+            style={{ backgroundColor: "var(--bg-surface)", color: "var(--text-muted)" }}
           >
             {status === "loading" ? t("sending") : t("submit")}
           </button>
@@ -89,10 +91,11 @@ export default function ContactForm() {
           required
           rows={2}
           placeholder={t("messagePlaceholder")}
-          className="w-full px-3 py-1.5 text-sm border border-stone-200 rounded-lg focus:outline-none focus:ring-1 focus:ring-amber-400 text-stone-700 placeholder:text-stone-300 resize-none"
+          className="w-full px-3 py-1.5 text-sm border rounded-lg focus:outline-none focus:ring-1 resize-none"
+          style={{ backgroundColor: "var(--bg-surface)", borderColor: "var(--border-medium)", color: "var(--text-primary)" }}
         />
         {status === "error" && errorMsg && (
-          <p className="text-red-500 text-xs">{errorMsg}</p>
+          <p className="text-red-400 text-xs">{errorMsg}</p>
         )}
       </form>
     </section>

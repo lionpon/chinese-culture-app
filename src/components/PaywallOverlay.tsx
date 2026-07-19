@@ -47,46 +47,45 @@ export default function PaywallOverlay({
     <div className="relative my-4">
       {/* Progress bar */}
       <div className="mb-3 flex items-center gap-2">
-        <div className="flex-1 h-1.5 bg-stone-200 rounded-full overflow-hidden">
-          <div className="h-full w-[30%] rounded-full"
-            style={{ backgroundColor: "var(--accent)" }} />
+        <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ backgroundColor: "var(--bg-surface)" }}>
+          <div className="h-full w-[30%] rounded-full" style={{ backgroundColor: "var(--gold)" }} />
         </div>
-        <span className="text-xs text-stone-400 font-medium">30%</span>
+        <span className="text-xs font-medium" style={{ color: "var(--text-muted)" }}>30%</span>
       </div>
-      <p className="text-sm font-semibold text-center mb-4" style={{ color: "var(--accent)" }}>
+      <p className="text-sm font-semibold text-center mb-4" style={{ color: "var(--gold)" }}>
         {t("unlockTitle")}
       </p>
 
-      {/* Teaser cards — showing what's locked */}
+      {/* Teaser cards */}
       <div className="space-y-2 opacity-50 pointer-events-none mb-4">
         {cards.map((title, i) => (
-          <div key={i} className="bg-white rounded-lg px-4 py-3 border border-stone-200/60 shadow-sm">
-            <p className="text-sm font-medium text-stone-700">
+          <div key={i} className="rounded-lg px-4 py-3 border" style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-subtle)" }}>
+            <p className="text-sm font-medium" style={{ color: "var(--text-primary)" }}>
               {title}
             </p>
-            <p className="text-xs text-stone-400">
+            <p className="text-xs" style={{ color: "var(--text-muted)" }}>
               {t("lockedContent")}
             </p>
           </div>
         ))}
-        <div className="bg-stone-50 rounded-lg px-4 py-3 text-center border border-dashed border-stone-200">
-          <p className="text-xs text-stone-400">{t("andMore")}</p>
+        <div className="rounded-lg px-4 py-3 text-center border border-dashed" style={{ backgroundColor: "var(--bg-surface)", borderColor: "var(--border-medium)" }}>
+          <p className="text-xs" style={{ color: "var(--text-muted)" }}>{t("andMore")}</p>
         </div>
       </div>
 
-      {/* Action buttons — primary = unlock */}
+      {/* Action buttons */}
       <div className="flex flex-col gap-2">
         <button
           onClick={unlock}
           disabled={loading}
-          className="w-full py-3 rounded-xl text-sm font-medium text-white transition-opacity disabled:opacity-60"
-          style={{ backgroundColor: "var(--accent)" }}
+          className="w-full py-3 rounded-xl text-sm font-medium btn-primary disabled:opacity-60"
         >
           {loading ? "..." : t("unlockFullCta")}
         </button>
         <button
           onClick={() => setDismissed(true)}
-          className="w-full py-2 rounded-xl text-xs text-stone-400 hover:text-stone-500 transition-colors"
+          className="w-full py-2 rounded-xl text-xs transition-colors"
+          style={{ color: "var(--text-muted)" }}
         >
           {t("seeFreePreview")}
         </button>

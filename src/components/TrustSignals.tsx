@@ -21,18 +21,18 @@ export default function TrustSignals() {
   return (
     <div className="flex justify-center gap-6 sm:gap-10 py-6 text-center">
       <div>
-        <div className="text-xl sm:text-2xl font-bold text-accent">{displayCountries}+</div>
-        <div className="text-xs text-stone-400 mt-1">{t("trust.countries")}</div>
+        <div className="text-xl sm:text-2xl font-bold" style={{ color: "var(--gold)" }}>{displayCountries}+</div>
+        <div className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>{t("trust.countries")}</div>
       </div>
-      <div className="w-px bg-stone-200" />
+      <div className="w-px" style={{ backgroundColor: "var(--border-medium)" }} />
       <div>
-        <div className="text-xl sm:text-2xl font-bold text-accent">{displayReadings}+</div>
-        <div className="text-xs text-stone-400 mt-1">{t("trust.readings")}</div>
+        <div className="text-xl sm:text-2xl font-bold" style={{ color: "var(--gold)" }}>{displayReadings}+</div>
+        <div className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>{t("trust.readings")}</div>
       </div>
-      <div className="w-px bg-stone-200 hidden sm:block" />
+      <div className="w-px hidden sm:block" style={{ backgroundColor: "var(--border-medium)" }} />
       <div className="hidden sm:block">
-        <div className="text-xl sm:text-2xl font-bold text-accent">{t("trust.free")}</div>
-        <div className="text-xs text-stone-400 mt-1">{t("trust.freeLabel")}</div>
+        <div className="text-xl sm:text-2xl font-bold" style={{ color: "var(--gold)" }}>{t("trust.free")}</div>
+        <div className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>{t("trust.freeLabel")}</div>
       </div>
     </div>
   );
