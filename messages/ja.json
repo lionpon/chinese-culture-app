@@ -11,7 +11,11 @@
       "dateSelection": "吉日選択",
       "ichingDivination": "易経占い",
       "palmMenu": "手相鑑定",
-      "dreamMenu": "夢占い"
+      "dreamMenu": "夢占い",
+      "daily": "毎日",
+      "freeTools": "無料ツール",
+      "zodiacCalc": "十二支計算",
+      "fiveElementsTest": "五行診断"
     },
     "footer": {
       "disclaimer": "娯楽と文化理解のためのものです。専門的なアドバイスではありません。",
@@ -112,6 +116,15 @@
       "readings": "鑑定実績",
       "free": "1回無料",
       "freeLabel": "新規ユーザー特典"
+    },
+    "weeklyFortune": {
+      "title": "週間運勢を受け取る",
+      "subtitle": "易経の智慧、吉日、十二支のヒント — 毎週月曜日",
+      "placeholder": "you@example.com",
+      "cta": "登録",
+      "success": "ようこそ！月曜日に最初の運勢が届きます ✨",
+      "error": "エラーが発生しました。再試行してください。",
+      "privacy": "スパムなし。週1回のみ。"
     },
     "guides": {
       "heading": "中国文化を探る",

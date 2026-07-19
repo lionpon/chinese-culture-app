@@ -11,7 +11,11 @@
       "dateSelection": "길일 선택",
       "ichingDivination": "주역 점술",
       "palmMenu": "수상 보기",
-      "dreamMenu": "꿈 해몽"
+      "dreamMenu": "꿈 해몽",
+      "daily": "매일",
+      "freeTools": "무료 도구",
+      "zodiacCalc": "띠 계산기",
+      "fiveElementsTest": "오행 테스트"
     },
     "footer": {
       "disclaimer": "문화 체험 및 오락 목적으로만 제공됩니다. 전문적인 조언이 아닙니다.",
@@ -112,6 +116,15 @@
       "readings": "완료된 해석",
       "free": "1회 무료",
       "freeLabel": "신규 사용자 혜택"
+    },
+    "weeklyFortune": {
+      "title": "주간 운세 받기",
+      "subtitle": "무료 주역 인사이트, 길일, 띠 팁 — 매주 월요일",
+      "placeholder": "you@example.com",
+      "cta": "구독",
+      "success": "환영합니다! 월요일에 첫 운세가 도착합니다 ✨",
+      "error": "오류가 발생했습니다. 다시 시도해주세요.",
+      "privacy": "스팸 없음. 주 1회 발송."
     },
     "guides": {
       "heading": "중국 문화 탐험하기",

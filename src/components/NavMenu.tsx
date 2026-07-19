@@ -40,12 +40,27 @@ export default function NavMenu() {
             <Link href="/divination" className="text-sm py-1" style={{ color: "var(--text-muted)" }} onClick={() => setOpen(false)}>
               {t("nav.ichingDivination")}
             </Link>
-            <Link href="/palm-reading" className="text-sm py-1" style={{ color: "var(--text-muted)" }} onClick={() => setOpen(false)}>
-              {t("nav.palmMenu")}
+            <Link
+              href={`/daily/${new Date().toISOString().slice(0, 10)}`}
+              className="text-sm py-1 font-medium" style={{ color: "var(--gold)" }} onClick={() => setOpen(false)}
+            >
+              ✦ {t("nav.daily")}
             </Link>
-            <Link href="/dream-interpretation" className="text-sm py-1" style={{ color: "var(--text-muted)" }} onClick={() => setOpen(false)}>
-              {t("nav.dreamMenu")}
-            </Link>
+            <div className="pt-2" style={{ borderTop: "1px solid var(--border-subtle)" }}>
+              <p className="text-xs px-1 mb-2" style={{ color: "var(--text-dim)" }}>{t("nav.freeTools")}</p>
+              <Link href="/palm-reading" className="text-sm py-1 block" style={{ color: "var(--text-muted)" }} onClick={() => setOpen(false)}>
+                {t("nav.palmMenu")}
+              </Link>
+              <Link href="/dream-interpretation" className="text-sm py-1 block" style={{ color: "var(--text-muted)" }} onClick={() => setOpen(false)}>
+                {t("nav.dreamMenu")}
+              </Link>
+              <Link href="/tools/zodiac-calculator" className="text-sm py-1 block" style={{ color: "var(--text-muted)" }} onClick={() => setOpen(false)}>
+                {t("nav.zodiacCalc")}
+              </Link>
+              <Link href="/tools/five-elements-test" className="text-sm py-1 block" style={{ color: "var(--text-muted)" }} onClick={() => setOpen(false)}>
+                {t("nav.fiveElementsTest")}
+              </Link>
+            </div>
             <div className="pt-2" style={{ borderTop: "1px solid var(--border-subtle)" }}>
               <LanguageSwitcher />
             </div>

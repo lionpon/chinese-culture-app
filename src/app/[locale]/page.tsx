@@ -1,12 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useParams } from "next/navigation";
 import DailyHexagram from "@/components/DailyHexagram";
 import FreeTierBadge from "@/components/FreeTierBadge";
 import FeatureCard from "@/components/FeatureCard";
 import ContactForm from "@/components/ContactForm";
-import EmailCaptureForm from "@/components/EmailCaptureForm";
 import { Link } from "@/navigation";
 import { trackClick } from "@/lib/track";
 
@@ -22,6 +22,66 @@ function showWorldCupBanner(): boolean {
   const start = new Date("2026-06-11T00:00:00Z");
   const end = new Date("2026-07-20T00:00:00Z");
   return now >= start && now < end;
+}
+
+function WeeklyFortuneSignup() {
+  const t = useTranslations("home");
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return;
+    setStatus("loading");
+    trackClick("subscribe_weekly");
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.trim(), source: "homepage" }),
+      });
+      if (res.ok) { setStatus("success"); setEmail(""); }
+      else setStatus("error");
+    } catch { setStatus("error"); }
+  };
+
+  if (status === "success") {
+    return (
+      <div className="max-w-md mx-auto mb-8 p-5 rounded-xl text-center" style={{ backgroundColor: "rgba(91,154,123,0.12)", border: "1px solid rgba(91,154,123,0.25)" }}>
+        <p className="text-sm" style={{ color: "var(--jade)" }}>{t("weeklyFortune.success")}</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="max-w-md mx-auto mb-10">
+      <div className="rounded-2xl p-5 sm:p-6 text-center" style={{ backgroundColor: "var(--bg-surface)", border: "1px solid var(--border-medium)" }}>
+        <p className="text-base font-semibold mb-1" style={{ color: "var(--gold)" }}>{t("weeklyFortune.title")}</p>
+        <p className="text-xs mb-4" style={{ color: "var(--text-muted)" }}>{t("weeklyFortune.subtitle")}</p>
+        <form onSubmit={handleSubmit} className="flex gap-2 max-w-sm mx-auto">
+          <input
+            type="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            placeholder={t("weeklyFortune.placeholder")}
+            className="flex-1 px-3 py-2.5 text-sm rounded-xl focus:outline-none"
+            style={{ backgroundColor: "var(--bg-deep)", border: "1px solid var(--border-medium)", color: "var(--text-primary)" }}
+            required
+          />
+          <button
+            type="submit"
+            disabled={status === "loading"}
+            className="px-5 py-2.5 text-sm font-medium rounded-xl transition-colors disabled:opacity-60"
+            style={{ backgroundColor: "var(--gold)", color: "var(--bg-deep)" }}
+          >
+            {status === "loading" ? "..." : t("weeklyFortune.cta")}
+          </button>
+        </form>
+        <p className="text-xs mt-3" style={{ color: "var(--text-dim)" }}>{t("weeklyFortune.privacy")}</p>
+        {status === "error" && <p className="text-red-400 text-xs mt-2">{t("weeklyFortune.error")}</p>}
+      </div>
+    </div>
+  );
 }
 
 export default function HomePage() {
@@ -158,9 +218,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <div className="max-w-md mx-auto mb-8">
-        <EmailCaptureForm source="naming" />
-      </div>
+      <WeeklyFortuneSignup />
 
       <ContactForm />
 

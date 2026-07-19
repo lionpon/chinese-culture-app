@@ -145,15 +145,27 @@ export default async function LocaleLayout({ children, params }: Props) {
                 <a href={`${pathname || ""}/`} className="text-lg font-bold tracking-tight" style={{ color: "var(--gold)" }}>
                   Chinese Culture Studio
                 </a>
-                <nav className="hidden sm:flex gap-4 text-sm items-center">
-                  <a href={`${pathname}/world-cup`} className="font-semibold hover:opacity-80 transition-opacity" style={{ color: "var(--vermilion)" }}>⚽ World Cup</a>
-                  <span style={{ color: "var(--border-medium)" }}>|</span>
+                <nav className="hidden sm:flex gap-3 text-sm items-center">
+                  <a href={`${pathname}/world-cup`} className="font-semibold hover:opacity-80 transition-opacity" style={{ color: "var(--vermilion)" }}>⚽ WC</a>
                   <a href={`${pathname}/naming`} className="nav-link">{t("nav.name")}</a>
                   <a href={`${pathname}/calendar`} className="nav-link">{t("nav.dates")}</a>
                   <a href={`${pathname}/divination`} className="nav-link">{t("nav.iching")}</a>
-                  <a href={`${pathname}/palm-reading`} className="nav-link">{t("nav.palmReading")}</a>
-                  <a href={`${pathname}/dream-interpretation`} className="nav-link">{t("nav.dreamInterpretation")}</a>
-                  <span style={{ color: "var(--border-medium)" }} className="mx-1">|</span>
+                  <a href={`${pathname}/daily/${new Date().toISOString().slice(0, 10)}`} className="nav-link" style={{ color: "var(--gold)" }}>✦ {t("nav.daily")}</a>
+                  {/* Free Tools dropdown */}
+                  <div className="relative group">
+                    <button className="nav-link flex items-center gap-0.5">
+                      {t("nav.freeTools")}
+                      <svg className="w-3 h-3 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                    </button>
+                    <div className="absolute top-full right-0 mt-1 py-2 w-48 rounded-xl border opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50" style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-medium)", boxShadow: "0 8px 30px rgba(0,0,0,0.4)" }}>
+                      <a href={`${pathname}/palm-reading`} className="block px-4 py-2 text-sm hover:bg-white/5 transition-colors">{t("nav.palmMenu")}</a>
+                      <a href={`${pathname}/dream-interpretation`} className="block px-4 py-2 text-sm hover:bg-white/5 transition-colors">{t("nav.dreamMenu")}</a>
+                      <div className="my-1 mx-3" style={{ borderTop: "1px solid var(--border-subtle)" }} />
+                      <a href={`${pathname}/tools/zodiac-calculator`} className="block px-4 py-2 text-sm hover:bg-white/5 transition-colors">{t("nav.zodiacCalc")}</a>
+                      <a href={`${pathname}/tools/five-elements-test`} className="block px-4 py-2 text-sm hover:bg-white/5 transition-colors">{t("nav.fiveElementsTest")}</a>
+                    </div>
+                  </div>
+                  <span style={{ color: "var(--border-medium)" }} className="mx-0.5">|</span>
                   <LanguageSwitcher />
                 </nav>
                 <div className="flex items-center gap-2 sm:gap-4">

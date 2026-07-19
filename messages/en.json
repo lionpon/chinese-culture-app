@@ -11,7 +11,11 @@
       "dateSelection": "Auspicious Date Selection",
       "ichingDivination": "I Ching Divination",
       "palmMenu": "Palm Reading",
-      "dreamMenu": "Dream Interpretation"
+      "dreamMenu": "Dream Interpretation",
+      "daily": "Daily",
+      "freeTools": "Free Tools",
+      "zodiacCalc": "Zodiac Calculator",
+      "fiveElementsTest": "Five Elements Test"
     },
     "footer": {
       "disclaimer": "For entertainment and cultural appreciation only. Not professional advice.",
@@ -112,6 +116,15 @@
       "readings": "Readings Completed",
       "free": "1 Free",
       "freeLabel": "Trial for New Users"
+    },
+    "weeklyFortune": {
+      "title": "Get Your Weekly Fortune",
+      "subtitle": "Free I Ching insights, lucky dates & zodiac tips — every Monday",
+      "placeholder": "you@example.com",
+      "cta": "Subscribe",
+      "success": "Welcome! Your first fortune arrives Monday ✨",
+      "error": "Something went wrong. Please try again.",
+      "privacy": "No spam. One email per week. Unsubscribe anytime."
     },
     "guides": {
       "heading": "Explore Chinese Culture",
