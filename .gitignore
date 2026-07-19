@@ -40,3 +40,4 @@ prisma/dev.db
 next-env.d.ts
 paypal-creds.txt
 *.docx
+_render_events.txt

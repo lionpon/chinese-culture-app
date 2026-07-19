@@ -59,16 +59,12 @@ export default function FeatureCard({
       }}
     >
       <span className="text-3xl mb-3 block">{icon}</span>
-      <h2 className="text-base font-bold mb-1.5 transition-colors" style={{ color: "var(--text-primary)" }}>
+      <h2 className="text-base font-bold mb-1.5" style={{ color: "var(--text-primary)" }}>
         {title}
       </h2>
       <p className="text-xs leading-relaxed mb-4" style={{ color: "var(--text-muted)" }}>{desc}</p>
       <span
-        className={`inline-block px-4 py-2 rounded-lg text-xs font-semibold transition-colors ${
-          isFree
-            ? ""
-            : ""
-        }`}
+        className="inline-block px-4 py-2 rounded-lg text-xs font-semibold"
         style={isFree ? {
           backgroundColor: "var(--gold-subtle)",
           color: "var(--gold)",
