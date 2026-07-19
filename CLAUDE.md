@@ -94,15 +94,37 @@ src/
 三层闭环：PDT (return) + 主动生成 (auto-create) + IPN (webhook)
 PayPal Standard Checkout，支持信用卡支付。
 
-## 近期状态 (2026-07-19)
+## 近期状态 (2026-07-19 深夜)
 
-- 线上正常运行，PayPal 生产模式
+- **线上版本：P2 (72aab46)** — P3 构建失败，P4 未推送
+- Render 状态：P3 failed deploy (exit code 1)
 - 7日数据：225访问 3点击 3免费试用 $0收入
-- 0转化根因：高流量页面缺CTA、免费功能无吸引力
-- **P0 已完成：起名页免费八字五行预览** — 日主、五行平衡条、喜用神
-- **P2 已完成：导航栏免费工具入口 + 首页周运势邮件订阅**
-- **P3 已完成：择日/占卜免费预览**
-  - 择日页：选日期+事件后即时预览吉日数量、最佳日期评分
-  - 占卜页：「预览运程」按钮，即时显示卦名+卦辞+判词
-- 待：P1（世界杯页面 CTA、指南页嵌入工具）
-- 待 PayPal 企业审批
+
+### 部署链路
+```
+本地 master (7d62e15) ← P0+P2+P3+P4+埋点 全部就绪
+        │
+        ├── GitHub origin (72aab46) ← 仅 P0+P2（P3 推送成功但构建失败）
+        │
+        └── Render 线上 ← P2 (72aab46) ← 当前运行版本
+```
+
+### 已完成的本地工作（待推送修复）
+- **P0**: 起名页 Bazi 预览 ✅ 已部署
+- **P2**: 导航栏+邮件订阅 ✅ 已部署
+- **P3**: 择日/占卜预览 ❌ 构建失败（需排查）
+- **P4**: 指南页互动工具 ⏳ 本地就绪
+- **埋点**: preview_bazi/calendar/divination 等 24 个事件 ⏳ 本地就绪
+
+### 下一步（明天）
+1. 排查 P3 构建失败原因（Render build log）
+2. 修复后合并推送到 GitHub
+3. Render 自动部署上线
+4. 站点的间歇 806308665 错误 → Render 免费实例冷启动，升级 Starter $7/月可解决
+
+### 推送命令（网络通时）
+```bash
+cd "/d/chinese culture/project2"
+git push --force-with-lease origin master
+```
+注：已配置 `http.version=HTTP/1.1` 防墙；如仍失败用 SSH over 443 或等网络恢复
