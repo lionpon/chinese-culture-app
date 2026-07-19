@@ -13,8 +13,8 @@
 
   --text-primary: #e8e4dc;
   --text-body: #c0beb8;
-  --text-muted: #8888a0;
-  --text-dim: #6a6a80;
+  --text-muted: #9e9eb5;
+  --text-dim: #9494a8;
 
   --gold: #c9a96e;
   --gold-light: #d4b87a;
@@ -24,9 +24,9 @@
   --accent: #c9a96e;
   --accent-light: #d4b87a;
 
-  --vermilion: #d44637;
-  --vermilion-hover: #e85545;
-  --vermilion-glow: rgba(212, 70, 55, 0.3);
+  --vermilion: #f06050;
+  --vermilion-hover: #f57565;
+  --vermilion-glow: rgba(240, 96, 80, 0.3);
 
   --jade: #5b9a7b;
 }
@@ -81,7 +81,7 @@ body::before {
 
 /* ── Buttons ── */
 .btn-primary {
-  background: linear-gradient(135deg, var(--vermilion), #b33a2e);
+  background: linear-gradient(135deg, var(--vermilion), #d05545);
   color: #fff;
   border-radius: 0.75rem;
   font-weight: 600;
@@ -89,7 +89,7 @@ body::before {
   box-shadow: 0 2px 12px var(--vermilion-glow);
 }
 .btn-primary:hover {
-  background: linear-gradient(135deg, var(--vermilion-hover), #c94035);
+  background: linear-gradient(135deg, var(--vermilion-hover), #d56050);
   box-shadow: 0 4px 20px rgba(212, 70, 55, 0.45);
   transform: translateY(-1px);
 }
