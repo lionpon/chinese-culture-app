@@ -30,6 +30,7 @@ export default function DivinationPage() {
    if (res.ok) {
     const data = await res.json();
     setPreview(data);
+    trackClick("preview_divination");
    }
   } catch {} finally { setPreviewLoading(false); }
  }, [method]);

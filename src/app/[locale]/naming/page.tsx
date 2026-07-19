@@ -89,6 +89,7 @@ export default function NamingPage() {
       if (res.ok) {
         const data = await res.json();
         setPreview(data);
+        trackClick("preview_bazi");
       }
     } catch {
       // silent fail — preview is optional

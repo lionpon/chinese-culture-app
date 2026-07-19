@@ -39,6 +39,7 @@ export default function CalendarPage() {
       if (res.ok) {
         const data = await res.json();
         setPreview(data);
+        trackClick("preview_calendar");
       }
     } catch {
       // silent fail
