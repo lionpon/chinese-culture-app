@@ -175,7 +175,7 @@ export const MATCHES: WCMatch[] = [
   { id: "SF2", date: "2026-07-16", home: "England", away: "Argentina", group: "SF", venue: "Atlanta", stage: "semi", result: { home: 1, away: 2 } },
 
   // ===== Third Place & Final =====
-  { id: "3RD", date: "2026-07-18", home: "England", away: "France", group: "3RD", venue: "Miami", stage: "third" },
+  { id: "3RD", date: "2026-07-18", home: "England", away: "France", group: "3RD", venue: "Miami", stage: "third", result: { home: 6, away: 4 } },
   { id: "FINAL", date: "2026-07-19", home: "Argentina", away: "Spain", group: "FINAL", venue: "New York/New Jersey", stage: "final" },
 ];
 
