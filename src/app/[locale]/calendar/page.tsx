@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useRef, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import { useCheckout } from "@/lib/useCheckout";
 import SubmitButton from "@/components/SubmitButton";
@@ -9,10 +9,56 @@ import FreeTierBadge from "@/components/FreeTierBadge";
 import { hasFreeUses } from "@/lib/free-tier";
 import { trackClick } from "@/lib/track";
 
+interface CalendarPreview {
+  totalDays: number;
+  bestScore: number;
+  bestJianchu: string;
+  bestConstellation: string;
+  bestSuitable: string[];
+  bestSuitableEn: string[];
+  hint: string;
+  eventType: string;
+}
+
 export default function CalendarPage() {
- const t = useTranslations("calendar");
- const { loading, checkout } = useCheckout("calendar");
- const [amount, setAmount] = useState(1);
+  const t = useTranslations("calendar");
+  const { loading, checkout } = useCheckout("calendar");
+  const [amount, setAmount] = useState(1);
+  const [preview, setPreview] = useState<CalendarPreview | null>(null);
+  const [previewLoading, setPreviewLoading] = useState(false);
+  const previewTimer = useRef<ReturnType<typeof setTimeout>>();
+
+  const fetchPreview = useCallback(async (startDate: string, endDate: string, eventType: string) => {
+    setPreviewLoading(true);
+    try {
+      const res = await fetch("/api/preview/calendar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ startDate, endDate, eventType }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setPreview(data);
+      }
+    } catch {
+      // silent fail
+    } finally {
+      setPreviewLoading(false);
+    }
+  }, []);
+
+  function onFieldChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
+    const form = e.currentTarget.form;
+    if (!form) return;
+    const start = (form.elements.namedItem("startDate") as HTMLInputElement)?.value;
+    const end = (form.elements.namedItem("endDate") as HTMLInputElement)?.value;
+    const evt = (form.elements.namedItem("eventType") as HTMLSelectElement)?.value;
+
+    if (previewTimer.current) clearTimeout(previewTimer.current);
+    if (start && end && evt) {
+      previewTimer.current = setTimeout(() => fetchPreview(start, end, evt), 500);
+    }
+  }
 
  function ExampleResult() {
  return (
@@ -77,20 +123,65 @@ export default function CalendarPage() {
  <FreeTierBadge />
  <ExampleResult />
 
+ {/* Free Calendar Preview */}
+ {preview && (
+  <div className="card-classic p-4 sm:p-5 mb-6 animate-fadeIn" style={{ borderColor: "var(--border-strong)" }}>
+   <div className="flex items-center gap-2 mb-3">
+    <span className="text-lg">📅</span>
+    <div>
+     <p className="text-sm font-semibold" style={{ color: "var(--gold)" }}>
+      {preview.totalDays} {t("preview.daysFound")} · {preview.eventType}
+     </p>
+     <p className="text-xs text-stone-400">{preview.hint}</p>
+    </div>
+   </div>
+   <div className="rounded-lg p-3 mb-3" style={{ backgroundColor: "var(--bg-surface)" }}>
+    <div className="flex items-center justify-between mb-2">
+     <p className="text-sm font-medium text-stone-400">{t("preview.bestDate")}</p>
+     <span className="text-xs px-2 py-0.5 rounded-full font-medium"
+      style={{ backgroundColor: "var(--gold-subtle)", color: "var(--gold)" }}>
+      {t("preview.score")}: {preview.bestScore}/100
+     </span>
+    </div>
+    <div className="flex flex-wrap gap-2 mb-1">
+     {preview.bestSuitableEn.map((s, i) => (
+      <span key={i} className="text-xs px-2 py-0.5 rounded-full"
+       style={{ backgroundColor: "rgba(91,154,123,0.12)", color: "var(--jade)", border: "1px solid rgba(91,154,123,0.25)" }}>
+       {s}
+      </span>
+     ))}
+    </div>
+    <p className="text-xs text-stone-400">{preview.bestJianchu} · {preview.bestConstellation}</p>
+   </div>
+   <div className="bg-stone-50 rounded-lg p-3 text-center">
+    <p className="text-sm font-medium text-stone-700">{t("preview.cta")}</p>
+    <p className="text-xs text-stone-400 mt-1">{t("preview.ctaSub")}</p>
+   </div>
+  </div>
+ )}
+
+ {previewLoading && !preview && (
+  <div className="card-classic p-4 mb-6 animate-pulse">
+   <div className="h-4 bg-stone-200 rounded w-3/4 mb-3" />
+   <div className="h-2 bg-stone-100 rounded w-full mb-2" />
+   <div className="h-2 bg-stone-100 rounded w-2/3" />
+  </div>
+ )}
+
  <form onSubmit={handleSubmit} className="space-y-5 card-classic p-4 sm:p-6">
  <div>
  <label className="block text-sm font-medium text-stone-700 mb-1">{t("form.range")}</label>
  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
  <div><span className="text-xs text-stone-400">{t("form.start")}</span>
- <input name="startDate" type="date" required className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" /></div>
+ <input name="startDate" type="date" required onChange={onFieldChange} className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" /></div>
  <div><span className="text-xs text-stone-400">{t("form.end")}</span>
- <input name="endDate" type="date" required className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" /></div>
+ <input name="endDate" type="date" required onChange={onFieldChange} className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" /></div>
  </div>
  <p className="text-xs text-stone-400 mt-1">{t("form.rangeHelper")}</p>
  </div>
  <div>
  <label className="block text-sm font-medium text-stone-700 mb-1">{t("form.eventType")}</label>
- <select name="eventType" required className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300">
+ <select name="eventType" required onChange={onFieldChange} className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300">
  <option value="">{t("form.eventPlaceholder")}</option>
  <option value="wedding">{t("events.wedding")}</option>
  <option value="engagement">{t("events.engagement")}</option>

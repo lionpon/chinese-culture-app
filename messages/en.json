@@ -242,6 +242,13 @@
       "meeting": "Meeting & Gathering · 会友",
       "renovation": "Renovation · 装修"
     },
+    "preview": {
+      "daysFound": "auspicious days found",
+      "bestDate": "Best Match",
+      "score": "Score",
+      "cta": "Submit to unlock exact dates & auspicious hours",
+      "ctaSub": "Free preview shows 1 date — unlock all with full details → $1"
+    },
     "meta": {
       "title": "Auspicious Date Selection | Chinese Culture Studio",
       "description": "Find the most favorable dates for weddings, business openings, travel, and more based on the traditional Chinese almanac (Tong Shu). Pay what you want (min $1).",
@@ -277,6 +284,13 @@
       "judgmentTitle": "Original Judgment (卦辞)",
       "judgmentText": "Success. Perseverance furthers. The Creative works sublime success, furthering through perseverance.",
       "footer": "Cast your own hexagram above. Free preview shows the core reading — unlock changed & mutual hexagrams with a contribution."
+    },
+    "preview": {
+      "button": "Preview My Fortune",
+      "hint": "Free preview — see your hexagram before you submit",
+      "judgmentLabel": "The Oracle Says",
+      "cta": "Submit above to cast your official hexagram",
+      "ctaSub": "Free preview shows the core reading — unlock changed & mutual hexagrams → $1"
     },
     "meta": {
       "title": "I Ching Divination | Chinese Culture Studio",

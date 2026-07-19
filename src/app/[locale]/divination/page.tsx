@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import { useCheckout } from "@/lib/useCheckout";
 import SubmitButton from "@/components/SubmitButton";
@@ -15,6 +15,24 @@ export default function DivinationPage() {
  const { loading, checkout } = useCheckout("divination");
  const [method, setMethod] = useState<"time" | "random" | "manual">("time");
  const [amount, setAmount] = useState(1);
+ const [preview, setPreview] = useState<{nameZh:string;nameEn:string;pinyin:string;judgmentEn:string;advice:string}|null>(null);
+ const [previewLoading, setPreviewLoading] = useState(false);
+
+
+ const fetchPreview = useCallback(async () => {
+  setPreviewLoading(true);
+  try {
+   const res = await fetch("/api/preview/divination", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ method }),
+   });
+   if (res.ok) {
+    const data = await res.json();
+    setPreview(data);
+   }
+  } catch {} finally { setPreviewLoading(false); }
+ }, [method]);
 
  function ExampleResult() {
  return (
@@ -86,6 +104,34 @@ export default function DivinationPage() {
 
  <FreeTierBadge />
  <ExampleResult />
+
+ {/* Divination Preview */}
+ {!preview && (
+  <div className="text-center mb-6">
+   <button type="button" onClick={fetchPreview} disabled={previewLoading}
+    className="px-6 py-3 rounded-xl text-sm font-medium transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-60"
+    style={{ backgroundColor: "var(--gold)", color: "var(--bg-deep)" }}>
+    {previewLoading ? "⏳ ..." : "🔮 " + t("preview.button")}
+   </button>
+   <p className="text-xs text-stone-400 mt-2">{t("preview.hint")}</p>
+  </div>
+ )}
+
+ {preview && (
+  <div className="card-classic p-4 sm:p-5 mb-6 animate-fadeIn text-center" style={{ borderColor: "var(--border-strong)" }}>
+   <p className="text-3xl font-bold mb-2" style={{ color: "var(--gold)" }}>{preview.nameZh}</p>
+   <p className="text-sm text-stone-400 mb-3">{preview.pinyin} — {preview.nameEn}</p>
+   <div className="rounded-lg p-3 mb-4" style={{ backgroundColor: "var(--bg-surface)" }}>
+    <p className="text-xs font-medium text-stone-400 mb-1">{t("preview.judgmentLabel")}</p>
+    <p className="text-sm leading-relaxed" style={{ color: "var(--text-body)" }}>{preview.judgmentEn}</p>
+   </div>
+   <p className="text-xs italic text-stone-400 mb-4">{preview.advice}</p>
+   <div className="bg-stone-50 rounded-lg p-3">
+    <p className="text-sm font-medium text-stone-700">{t("preview.cta")}</p>
+    <p className="text-xs text-stone-400 mt-1">{t("preview.ctaSub")}</p>
+   </div>
+  </div>
+ )}
 
  <form onSubmit={handleSubmit} className="space-y-5 card-classic p-4 sm:p-6">
  <div>
