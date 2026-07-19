@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useCallback, useRef } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { useCheckout } from "@/lib/useCheckout";
 import SubmitButton from "@/components/SubmitButton";
@@ -10,6 +10,30 @@ import SpeakButton from "@/components/SpeakButton";
 import { hasFreeUses } from "@/lib/free-tier";
 import { trackClick } from "@/lib/track";
 
+interface PreviewData {
+  dayMaster: { wuxing: string; element: string; heavenlyStem: string };
+  elements: { element: string; elementEn: string; count: number }[];
+  maxCount: number;
+  analysis: string;
+  favorable: { element: string; elementEn: string }[];
+  unfavorable: { element: string; elementEn: string }[];
+  balanced: boolean;
+  strongest: { element: string; elementEn: string };
+  weakest: { element: string; elementEn: string };
+}
+
+const ELEMENT_COLORS: Record<string, string> = {
+  "Wood": "#4A9E4A",
+  "Fire": "#E0554A",
+  "Earth": "#C4A44A",
+  "Metal": "#D4C45A",
+  "Water": "#4A90D9",
+};
+
+const ELEMENT_EMOJI: Record<string, string> = {
+  "Wood": "🌳", "Fire": "🔥", "Earth": "🏔️", "Metal": "⚜️", "Water": "💧",
+};
+
 export default function NamingPage() {
   const t = useTranslations("naming");
   const locale = useLocale();
@@ -17,6 +41,9 @@ export default function NamingPage() {
   const { loading, checkout } = useCheckout("naming");
   const [amount, setAmount] = useState(1);
   const [mode, setMode] = useState<"create" | "analyze">("create");
+  const [preview, setPreview] = useState<PreviewData | null>(null);
+  const [previewLoading, setPreviewLoading] = useState(false);
+  const previewTimer = useRef<ReturnType<typeof setTimeout>>();
 
   function ExampleResult() {
     return (
@@ -49,6 +76,42 @@ export default function NamingPage() {
         </div>
       </details>
     );
+  }
+
+  const fetchPreview = useCallback(async (year: number, month: number, day?: number, hour?: number) => {
+    setPreviewLoading(true);
+    try {
+      const res = await fetch("/api/preview/naming", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ birthYear: year, birthMonth: month, birthDay: day, birthHour: hour }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setPreview(data);
+      }
+    } catch {
+      // silent fail — preview is optional
+    } finally {
+      setPreviewLoading(false);
+    }
+  }, []);
+
+  function onBirthInput(e: React.ChangeEvent<HTMLInputElement>) {
+    // Debounced preview fetch when birth fields change
+    const form = e.currentTarget.form;
+    if (!form) return;
+    const y = parseInt((form.elements.namedItem("birthYear") as HTMLInputElement)?.value);
+    const m = parseInt((form.elements.namedItem("birthMonth") as HTMLInputElement)?.value);
+    const d = parseInt((form.elements.namedItem("birthDay") as HTMLInputElement)?.value);
+    const h = parseInt((form.elements.namedItem("birthHour") as HTMLInputElement)?.value);
+
+    if (previewTimer.current) clearTimeout(previewTimer.current);
+    if (!isNaN(y) && !isNaN(m) && y >= 1900 && m >= 1 && m <= 12) {
+      previewTimer.current = setTimeout(() => {
+        fetchPreview(y, m, isNaN(d) ? undefined : d, isNaN(h) ? undefined : h);
+      }, 500);
+    }
   }
 
   function intOrUndefined(val: string): number | undefined {
@@ -90,6 +153,78 @@ export default function NamingPage() {
 
       <FreeTierBadge />
       <ExampleResult />
+
+      {/* Free Bazi Preview — appears when birth date is filled */}
+      {preview && (
+        <div className="card-classic p-4 sm:p-5 mb-6 animate-fadeIn" style={{ borderColor: "var(--border-strong)" }}>
+          <div className="flex items-center gap-2 mb-3">
+            <span className="text-lg">{ELEMENT_EMOJI[preview.dayMaster.element] || "✨"}</span>
+            <div>
+              <p className="text-sm font-semibold text-accent">
+                {t("preview.dayMaster")}: <span className="text-base">{preview.dayMaster.heavenlyStem}</span>
+                <span className="text-stone-500"> ({preview.dayMaster.wuxing}{preview.dayMaster.element})</span>
+              </p>
+              <p className="text-xs text-stone-400">{preview.analysis}</p>
+            </div>
+          </div>
+
+          {/* Five Elements Balance Bars */}
+          <div className="space-y-1.5 mb-3">
+            <p className="text-xs font-medium text-stone-500">{t("preview.elementsTitle")}</p>
+            {preview.elements.map((el) => (
+              <div key={el.element} className="flex items-center gap-2">
+                <span className="text-xs w-12 text-stone-500">{el.elementEn} {el.element}</span>
+                <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ backgroundColor: "var(--bg-surface)" }}>
+                  <div
+                    className="h-full rounded-full transition-all duration-700"
+                    style={{
+                      width: `${Math.max(8, (el.count / preview.maxCount) * 100)}%`,
+                      backgroundColor: ELEMENT_COLORS[el.elementEn] || "#999",
+                    }}
+                  />
+                </div>
+                <span className="text-xs w-4 text-stone-400">{el.count}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* Lucky Elements */}
+          <div className="flex flex-wrap items-center gap-2 mb-3">
+            <span className="text-xs text-stone-500">{t("preview.favorable")}:</span>
+            {preview.favorable.map((el) => (
+              <span
+                key={el.element}
+                className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium"
+                style={{
+                  backgroundColor: (ELEMENT_COLORS[el.elementEn] || "#999") + "18",
+                  color: ELEMENT_COLORS[el.elementEn] || "#999",
+                  border: `1px solid ${(ELEMENT_COLORS[el.elementEn] || "#999")}40`,
+                }}
+              >
+                {ELEMENT_EMOJI[el.elementEn]} {el.elementEn} {el.element}
+              </span>
+            ))}
+          </div>
+
+          {/* Teaser CTA */}
+          <div className="bg-stone-50 rounded-lg p-3 text-center">
+            <p className="text-sm font-medium text-stone-700">{t("preview.teaser")}</p>
+            <p className="text-xs text-stone-400 mt-1">{t("preview.teaserSub")}</p>
+          </div>
+        </div>
+      )}
+
+      {/* Preview loading skeleton */}
+      {previewLoading && !preview && (
+        <div className="card-classic p-4 mb-6 animate-pulse">
+          <div className="h-4 bg-stone-200 rounded w-3/4 mb-3" />
+          <div className="space-y-2">
+            {[1, 2, 3, 4, 5].map(i => (
+              <div key={i} className="h-2 bg-stone-100 rounded w-full" />
+            ))}
+          </div>
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="space-y-4 card-classic p-4 sm:p-6">
         {/* Mode toggle — only for ja/ko users who may already have a Chinese name */}
@@ -155,9 +290,9 @@ export default function NamingPage() {
             <span className="text-stone-400 font-normal text-xs ml-1">({t("form.optional")})</span>
           </label>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-            <input name="birthYear" type="number" placeholder={t("form.year")} min={1900} max={2100} className="border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
-            <input name="birthMonth" type="number" placeholder={t("form.month")} min={1} max={12} className="border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
-            <input name="birthDay" type="number" placeholder={t("form.day")} min={1} max={31} className="border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
+            <input name="birthYear" type="number" placeholder={t("form.year")} min={1900} max={2100} onChange={onBirthInput} className="border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
+            <input name="birthMonth" type="number" placeholder={t("form.month")} min={1} max={12} onChange={onBirthInput} className="border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
+            <input name="birthDay" type="number" placeholder={t("form.day")} min={1} max={31} onChange={onBirthInput} className="border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
           </div>
         </div>
         <div>
@@ -165,7 +300,7 @@ export default function NamingPage() {
             {t("form.hour")}
             <span className="text-stone-400 font-normal text-xs ml-1">({t("form.optional")})</span>
           </label>
-          <input name="birthHour" type="number" placeholder={t("form.hourPlaceholder")} min={0} max={23} className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
+          <input name="birthHour" type="number" placeholder={t("form.hourPlaceholder")} min={0} max={23} onChange={onBirthInput} className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
           <p className="text-xs text-stone-400 mt-1">{t("form.hourHelper")}</p>
         </div>
 

@@ -172,6 +172,13 @@
       "baziText": "Your day master is 甲木 (Yang Wood) — strong, upright, and growth-oriented. Favorable elements: Water + Wood. The selected names nourish your day master and balance your elemental chart.",
       "footer": "Fill in the form above to get your personalized names. Free preview shows 1 name — unlock all 5 with full Bazi analysis."
     },
+    "preview": {
+      "dayMaster": "Your Day Master",
+      "elementsTitle": "Five Elements Balance",
+      "favorable": "Lucky Elements",
+      "teaser": "Your personalized Chinese names are ready based on your Bazi",
+      "teaserSub": "Fill in your name and gender above, then Generate → $1"
+    },
     "meta": {
       "title": "Chinese Name Generator: Create Authentic Names by Five Elements & Bazi | Chinese Culture Studio",
       "description": "Generate authentic Chinese names based on your birth date, gender, Five Elements (Wu Xing) and Bazi. AI-powered Chinese naming from classical texts. Free preview. Pay what you want.",
