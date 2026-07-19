@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import GuideFaq from "@/components/GuideFaq";
 import GuideCTA from "@/components/GuideCTA";
+import GuideToolEmbed from "@/components/GuideToolEmbed";
 
 type Props = { params: { locale: string } };
 
@@ -187,6 +188,8 @@ export default function IChingBeginnerGuide({ params: { locale } }: Props) {
       <ol>
         {c.readSteps.map((s) => <li key={s}>{s}</li>)}
       </ol>
+
+      <GuideToolEmbed tool="iching" />
 
       <GuideCTA href="/divination" service="divination" variant="inline" />
 

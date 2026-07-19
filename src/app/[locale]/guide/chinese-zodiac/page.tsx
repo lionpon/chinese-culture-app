@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Link } from "@/navigation";
 import GuideFaq from "@/components/GuideFaq";
+import GuideToolEmbed from "@/components/GuideToolEmbed";
 
 type Props = { params: { locale: string } };
 
@@ -162,6 +163,8 @@ export default function ChineseZodiacGuide({ params: { locale } }: Props) {
       <p className="text-xs text-stone-400">{c.note}</p>
 
       <GuideFaq lang={locale} faqs={c.faqs} />
+
+      <GuideToolEmbed tool="zodiac" />
 
       <div className="not-prose my-8 text-center">
         <Link href="/divination" className="inline-block px-6 py-3 rounded-xl text-white font-medium" style={{ backgroundColor: "var(--accent)" }}>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import GuideFaq from "@/components/GuideFaq";
 import GuideCTA from "@/components/GuideCTA";
+import GuideToolEmbed from "@/components/GuideToolEmbed";
 
 type Props = { params: { locale: string } };
 
@@ -123,6 +124,8 @@ export default function WeddingDatesGuide({ params: { locale } }: Props) {
       <p className="text-stone-500 text-sm">{c.subtitle}</p>
       <hr className="my-6 border-stone-200" />
       <h2>{c.introTitle}</h2><p>{c.introBody}</p>
+
+      <GuideToolEmbed tool="dateCheck" />
 
       <GuideCTA href="/calendar" service="calendar" variant="inline" />
 

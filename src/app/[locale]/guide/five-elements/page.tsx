@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Link } from "@/navigation";
 import GuideFaq from "@/components/GuideFaq";
+import GuideToolEmbed from "@/components/GuideToolEmbed";
 
 type Props = { params: { locale: string } };
 
@@ -228,6 +229,8 @@ export default function FiveElementsGuide({ params: { locale } }: Props) {
       </ul>
 
       <GuideFaq lang={locale} faqs={c.faqs} />
+
+      <GuideToolEmbed tool="elements" />
 
       <div className="not-prose my-8 text-center">
         <Link href="/naming" className="inline-block px-6 py-3 rounded-xl text-white font-medium" style={{ backgroundColor: "var(--accent)" }}>{c.cta}</Link>

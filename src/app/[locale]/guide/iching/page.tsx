@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Link } from "@/navigation";
 import GuideFaq from "@/components/GuideFaq";
+import GuideToolEmbed from "@/components/GuideToolEmbed";
 
 type Props = { params: { locale: string } };
 
@@ -210,6 +211,8 @@ export default function IChingGuide({ params: { locale } }: Props) {
       <p>{c.tryBody}</p>
 
       <GuideFaq lang={locale} faqs={c.faqs} />
+
+      <GuideToolEmbed tool="iching" />
 
       <div className="not-prose my-8">
         <Link href="/divination" className="inline-block px-6 py-3 rounded-xl text-white font-medium" style={{ backgroundColor: "var(--accent)" }}>
