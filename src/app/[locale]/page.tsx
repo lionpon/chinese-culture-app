@@ -7,7 +7,6 @@ import FreeTierBadge from "@/components/FreeTierBadge";
 import FeatureCard from "@/components/FeatureCard";
 import ContactForm from "@/components/ContactForm";
 import EmailCaptureForm from "@/components/EmailCaptureForm";
-import TrustSignals from "@/components/TrustSignals";
 import { Link } from "@/navigation";
 import { trackClick } from "@/lib/track";
 
