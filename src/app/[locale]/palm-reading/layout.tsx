@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { BASE_URL } from "@/lib/config";
+import { BreadcrumbListSchema } from "@/components/JsonLd";
 
 type Props = { params: { locale: string } };
 
@@ -32,5 +33,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default function PalmReadingLayout({ children }: { children: React.ReactNode }) {
-  return children;
+  return (
+    <>
+      <BreadcrumbListSchema
+        items={[
+          { name: "Chinese Culture Studio", url: BASE_URL },
+          { name: "Palm Reading", url: `${BASE_URL}/palm-reading` },
+        ]}
+      />
+      {children}
+    </>
+  );
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { BASE_URL } from "@/lib/config";
+import { BreadcrumbListSchema } from "@/components/JsonLd";
 
 type Props = { params: { locale: string } };
 
@@ -50,5 +51,15 @@ export default function DreamInterpretationLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <>
+      <BreadcrumbListSchema
+        items={[
+          { name: "Chinese Culture Studio", url: BASE_URL },
+          { name: "Dream Interpretation", url: `${BASE_URL}/dream-interpretation` },
+        ]}
+      />
+      {children}
+    </>
+  );
 }
