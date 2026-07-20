@@ -67,7 +67,11 @@
       "two": "無料プレビューが2回あります — お試しください！",
       "one": "無料プレビューが残り1回です"
     },
-    "toggleMenu": "ナビゲーションメニューを開く"
+    "toggleMenu": "ナビゲーションメニューを開く",
+    "validation": {
+      "selectRequired": "項目を選択してください",
+      "inputRequired": "この項目を入力してください"
+    }
   },
   "home": {
     "title": "Chinese Culture Studio",

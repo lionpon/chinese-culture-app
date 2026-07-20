@@ -36,6 +36,7 @@ const ELEMENT_EMOJI: Record<string, string> = {
 
 export default function NamingPage() {
   const t = useTranslations("naming");
+  const tc = useTranslations("common");
   const locale = useLocale();
   const isJaKo = locale === "ja" || locale === "ko";
   const { loading, checkout } = useCheckout("naming");
@@ -266,6 +267,8 @@ export default function NamingPage() {
             </label>
             <input name="firstName" required
               placeholder={mode === "analyze" ? t("form.firstNameAnalyzePlaceholder") : t("form.firstNamePlaceholder")}
+              onInvalid={(e) => e.currentTarget.setCustomValidity(tc("validation.inputRequired"))}
+              onInput={(e) => e.currentTarget.setCustomValidity("")}
               className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
           </div>
           <div>
@@ -274,12 +277,17 @@ export default function NamingPage() {
             </label>
             <input name="lastName" required
               placeholder={mode === "analyze" ? t("form.lastNameAnalyzePlaceholder") : t("form.lastNamePlaceholder")}
+              onInvalid={(e) => e.currentTarget.setCustomValidity(tc("validation.inputRequired"))}
+              onInput={(e) => e.currentTarget.setCustomValidity("")}
               className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
           </div>
         </div>
         <div>
           <label className="block text-sm font-medium text-stone-700 mb-1">{t("form.gender")}</label>
-          <select name="gender" required className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300">
+          <select name="gender" required
+            onInvalid={(e) => e.currentTarget.setCustomValidity(tc("validation.selectRequired"))}
+            onInput={(e) => e.currentTarget.setCustomValidity("")}
+            className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300">
             <option value="">{t("form.genderPlaceholder")}</option>
             <option value="male">{t("form.male")}</option>
             <option value="female">{t("form.female")}</option>
@@ -308,7 +316,10 @@ export default function NamingPage() {
         {mode !== "analyze" && (
           <div>
             <label className="block text-sm font-medium text-stone-700 mb-1">{t("form.style")}</label>
-            <select name="style" required className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300">
+            <select name="style" required
+              onInvalid={(e) => e.currentTarget.setCustomValidity(tc("validation.selectRequired"))}
+              onInput={(e) => e.currentTarget.setCustomValidity("")}
+              className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300">
               <option value="">{t("form.stylePlaceholder")}</option>
               <option value="elegant">{t("form.styleElegant")}</option>
               <option value="grand">{t("form.styleGrand")}</option>

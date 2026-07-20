@@ -12,6 +12,7 @@ import { trackClick } from "@/lib/track";
 
 export default function DivinationPage() {
  const t = useTranslations("divination");
+ const tc = useTranslations("common");
  const { loading, checkout } = useCheckout("divination");
  const [method, setMethod] = useState<"time" | "random" | "manual">("time");
  const [amount, setAmount] = useState(1);
@@ -155,9 +156,18 @@ export default function DivinationPage() {
  <div>
  <label className="block text-sm font-medium text-stone-700 mb-1">{t("form.numbers")}</label>
  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
- <input name="num1" type="number" placeholder={t("form.firstNum")} required min={1} max={999} className="border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
- <input name="num2" type="number" placeholder={t("form.secondNum")} required min={1} max={999} className="border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
- <input name="num3" type="number" placeholder={t("form.thirdNum")} required min={1} max={999} className="border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
+ <input name="num1" type="number" placeholder={t("form.firstNum")} required min={1} max={999}
+ onInvalid={(e) => e.currentTarget.setCustomValidity(tc("validation.inputRequired"))}
+ onInput={(e) => e.currentTarget.setCustomValidity("")}
+ className="border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
+ <input name="num2" type="number" placeholder={t("form.secondNum")} required min={1} max={999}
+ onInvalid={(e) => e.currentTarget.setCustomValidity(tc("validation.inputRequired"))}
+ onInput={(e) => e.currentTarget.setCustomValidity("")}
+ className="border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
+ <input name="num3" type="number" placeholder={t("form.thirdNum")} required min={1} max={999}
+ onInvalid={(e) => e.currentTarget.setCustomValidity(tc("validation.inputRequired"))}
+ onInput={(e) => e.currentTarget.setCustomValidity("")}
+ className="border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
  </div>
  </div>
  )}

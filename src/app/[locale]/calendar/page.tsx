@@ -22,6 +22,7 @@ interface CalendarPreview {
 
 export default function CalendarPage() {
   const t = useTranslations("calendar");
+  const tc = useTranslations("common");
   const { loading, checkout } = useCheckout("calendar");
   const [amount, setAmount] = useState(1);
   const [preview, setPreview] = useState<CalendarPreview | null>(null);
@@ -174,15 +175,24 @@ export default function CalendarPage() {
  <label className="block text-sm font-medium text-stone-700 mb-1">{t("form.range")}</label>
  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
  <div><span className="text-xs text-stone-400">{t("form.start")}</span>
- <input name="startDate" type="date" required onChange={onFieldChange} className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" /></div>
+ <input name="startDate" type="date" required onChange={onFieldChange}
+ onInvalid={(e) => e.currentTarget.setCustomValidity(tc("validation.inputRequired"))}
+ onInput={(e) => e.currentTarget.setCustomValidity("")}
+ className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" /></div>
  <div><span className="text-xs text-stone-400">{t("form.end")}</span>
- <input name="endDate" type="date" required onChange={onFieldChange} className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" /></div>
+ <input name="endDate" type="date" required onChange={onFieldChange}
+ onInvalid={(e) => e.currentTarget.setCustomValidity(tc("validation.inputRequired"))}
+ onInput={(e) => e.currentTarget.setCustomValidity("")}
+ className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" /></div>
  </div>
  <p className="text-xs text-stone-400 mt-1">{t("form.rangeHelper")}</p>
  </div>
  <div>
  <label className="block text-sm font-medium text-stone-700 mb-1">{t("form.eventType")}</label>
- <select name="eventType" required onChange={onFieldChange} className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300">
+ <select name="eventType" required onChange={onFieldChange}
+ onInvalid={(e) => e.currentTarget.setCustomValidity(tc("validation.selectRequired"))}
+ onInput={(e) => e.currentTarget.setCustomValidity("")}
+ className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300">
  <option value="">{t("form.eventPlaceholder")}</option>
  <option value="wedding">{t("events.wedding")}</option>
  <option value="engagement">{t("events.engagement")}</option>

@@ -11,6 +11,7 @@ import { hasFreeUses } from "@/lib/free-tier";
 
 export default function DreamInterpretationPage() {
  const t = useTranslations("dream");
+ const tc = useTranslations("common");
  const { loading, checkout } = useCheckout("dream-interpretation");
  const [amount, setAmount] = useState(1);
  const [consent, setConsent] = useState(false);
@@ -56,6 +57,8 @@ export default function DreamInterpretationPage() {
  minLength={10}
  maxLength={2000}
  placeholder={t("form.dreamPlaceholder")}
+ onInvalid={(e) => e.currentTarget.setCustomValidity(tc("validation.inputRequired"))}
+ onInput={(e) => e.currentTarget.setCustomValidity("")}
  className="w-full border border-stone-300 rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300 resize-y"
  onChange={(e) => setCharCount(e.target.value.length)}
  />

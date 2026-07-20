@@ -67,7 +67,11 @@
       "two": "You have 2 free previews — try it out!",
       "one": "You have 1 free preview remaining"
     },
-    "toggleMenu": "Toggle navigation menu"
+    "toggleMenu": "Toggle navigation menu",
+    "validation": {
+      "selectRequired": "Please select an option",
+      "inputRequired": "Please fill out this field"
+    }
   },
   "home": {
     "title": "Chinese Culture Studio",
@@ -505,11 +509,31 @@
     },
     "cta": {
       "disclaimer": "Free preview available. From $1.",
-      "naming": { "title": "Get Your Chinese Name", "desc": "Based on your birth info, Five Elements & classical texts. See an example above.", "cta": "Generate My Chinese Name" },
-      "calendar": { "title": "Find Your Auspicious Date", "desc": "Traditional almanac analysis for weddings, business, travel & more.", "cta": "Select Your Date" },
-      "divination": { "title": "Cast Your I Ching Hexagram", "desc": "3,000 years of wisdom. Ask a question, get your hexagram.", "cta": "Consult the I Ching" },
-      "palm": { "title": "Read Your Palm", "desc": "Upload a hand photo for AI-powered palm line analysis.", "cta": "Read My Palm" },
-      "dream": { "title": "Interpret Your Dream", "desc": "Zhou Gong + Freudian dream analysis. What did that dream mean?", "cta": "Interpret My Dream" }
+      "naming": {
+        "title": "Get Your Chinese Name",
+        "desc": "Based on your birth info, Five Elements & classical texts. See an example above.",
+        "cta": "Generate My Chinese Name"
+      },
+      "calendar": {
+        "title": "Find Your Auspicious Date",
+        "desc": "Traditional almanac analysis for weddings, business, travel & more.",
+        "cta": "Select Your Date"
+      },
+      "divination": {
+        "title": "Cast Your I Ching Hexagram",
+        "desc": "3,000 years of wisdom. Ask a question, get your hexagram.",
+        "cta": "Consult the I Ching"
+      },
+      "palm": {
+        "title": "Read Your Palm",
+        "desc": "Upload a hand photo for AI-powered palm line analysis.",
+        "cta": "Read My Palm"
+      },
+      "dream": {
+        "title": "Interpret Your Dream",
+        "desc": "Zhou Gong + Freudian dream analysis. What did that dream mean?",
+        "cta": "Interpret My Dream"
+      }
     }
   },
   "success": {

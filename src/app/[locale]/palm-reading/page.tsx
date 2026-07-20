@@ -11,6 +11,7 @@ import { Link } from "@/navigation";
 
 export default function PalmReadingPage() {
  const t = useTranslations("palm");
+ const tc = useTranslations("common");
  const { loading, checkout } = useCheckout("palm-reading");
  const [image, setImage] = useState<string | null>(null);
  const [amount, setAmount] = useState(1);
@@ -136,7 +137,10 @@ export default function PalmReadingPage() {
  <label className="block text-sm font-medium text-stone-700 mb-1">
  {t("form.whichHand")} <span className="text-red-400">*</span>
  </label>
- <select name="handSide" required className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300">
+ <select name="handSide" required
+ onInvalid={(e) => e.currentTarget.setCustomValidity(tc("validation.selectRequired"))}
+ onInput={(e) => e.currentTarget.setCustomValidity("")}
+ className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300">
  <option value="">{t("form.handPlaceholder")}</option>
  <option value="left">{t("form.leftHand")}</option>
  <option value="right">{t("form.rightHand")}</option>

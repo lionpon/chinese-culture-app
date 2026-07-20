@@ -67,7 +67,11 @@
       "two": "2회 무료 미리보기가 있습니다 — 체험해 보세요!",
       "one": "1회 무료 미리보기가 남았습니다"
     },
-    "toggleMenu": "네비게이션 메뉴 열기"
+    "toggleMenu": "네비게이션 메뉴 열기",
+    "validation": {
+      "selectRequired": "옵션을 선택해주세요",
+      "inputRequired": "이 항목을 입력해주세요"
+    }
   },
   "home": {
     "title": "Chinese Culture Studio",
