@@ -112,11 +112,10 @@ PayPal Standard Checkout，支持信用卡支付。
 构建日志报错连接 `ep-lucky-dust-aqcxp3j7`（旧 Neon），但 DATABASE_URL 已正确设置为 Supabase。疑似 Render 构建缓存残留。
 
 ### 晚上继续的步骤
-1. Render → **Clear build cache**
-2. 确认环境变量：DATABASE_URL（Supabase pooler）+ DIRECT_URL（Supabase direct）
-3. **Cancel** 所有卡住的部署
-4. **Manual Deploy → Deploy latest commit**
-5. 观察构建日志 → 应该走通
+1. (已完成 clear cache)
+2. **Cancel** 所有卡住的部署
+3. **Manual Deploy → Deploy latest commit** (366c5b7)
+4. 构建应跳过 AutoDailyReport，跑通 `next build`
 
 ### 连接信息
 ```
