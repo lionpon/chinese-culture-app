@@ -94,26 +94,29 @@ src/
 三层闭环：PDT (return) + 主动生成 (auto-create) + IPN (webhook)
 PayPal Standard Checkout，支持信用卡支付。
 
-## 近期状态 (2026-07-20)
+## 近期状态 (2026-07-20 傍晚)
 
-- **线上版本**：旧 P2 仍在跑，`bdc3e17` 部署中
-- **数据库**：已从 Neon 迁移到 Supabase (`vnktcrolpcyktduldpfm`)
-- **GitHub**：全量同步，所有 commit 已推送
+- **线上版本**：旧 P2 仍在跑（`Y6Ib4fIBwS7t7MlOzFVs1`）
+- **数据库**：Supabase (`vnktcrolpcyktduldpfm`) ✅ 已迁移
+- **GitHub**：全量同步，本地领先 origin 2 commits
 
 ### 今日完成
-- ✅ **Supabase 迁移**：Neon PostgreSQL → Supabase（免费）
-  - 项目 ID: `vnktcrolpcyktduldpfm`
-  - 本地直连 5432，Render 用 pooler 6543
-  - 4 表 schema 已同步
+- ✅ **Supabase 迁移**：Neon → Supabase，4 表已同步，本地验证通过
 - ✅ **Git push**：P3+P4+埋点+迁移代码全部推送 GitHub
-- ✅ **构建修复**：移除 `prisma db push`（PgBouncer 不兼容）
-- ⏳ **Render 部署**：`bdc3e17` 构建中
-- ⏳ **PayPal**：企业审批已过，待网站上线后配置
+- ✅ **修复**：移除 `prisma db push`（PgBouncer 不兼容）、补俄语翻译、AutoDailyReport try-catch
+- ✅ **PayPal**：企业审批已通过
+- 🔴 **Render 部署**：构建时报 `PrismaClientInitializationError` 仍连旧 Neon 地址
 
-### 待办
-1. 等 Render 部署完成
-2. 配置 PayPal 生产环境
-3. 更新世界杯决赛数据
+### 🔴 当前阻塞：Render 构建连不上 Supabase
+
+构建日志报错连接 `ep-lucky-dust-aqcxp3j7`（旧 Neon），但 DATABASE_URL 已正确设置为 Supabase。疑似 Render 构建缓存残留。
+
+### 晚上继续的步骤
+1. Render → **Clear build cache**
+2. 确认环境变量：DATABASE_URL（Supabase pooler）+ DIRECT_URL（Supabase direct）
+3. **Cancel** 所有卡住的部署
+4. **Manual Deploy → Deploy latest commit**
+5. 观察构建日志 → 应该走通
 
 ### 连接信息
 ```
