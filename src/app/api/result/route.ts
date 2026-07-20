@@ -116,10 +116,14 @@ export async function GET(req: NextRequest) {
   }
 
   if (purchase.status === "pending") {
-    // Paid purchase — proactively generate result immediately instead of waiting for IPN
-    // This ensures the success page shows results instantly, not after a delay
-    // IPN will later confirm payment but won't regenerate the result (idempotent)
+    // Auto-create result for paid purchases — only within 10 minutes after checkout.
+    // Covers normal PayPal redirect (~1-2 min) when PDT doesn't complete instantly.
+    // Prevents stale pending purchases from being exploited via id enumeration.
     if (!purchase.fingerprint) {
+      const ageSeconds = (Date.now() - new Date(purchase.createdAt).getTime()) / 1000;
+      if (ageSeconds > 600) {
+        return NextResponse.json({ status: "expired", error: "Purchase expired. Please try again." });
+      }
       try {
         const input = JSON.parse(purchase.input);
         let result: unknown;
