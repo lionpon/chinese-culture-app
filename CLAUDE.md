@@ -94,37 +94,29 @@ src/
 三层闭环：PDT (return) + 主动生成 (auto-create) + IPN (webhook)
 PayPal Standard Checkout，支持信用卡支付。
 
-## 近期状态 (2026-07-19 深夜)
+## 近期状态 (2026-07-20)
 
-- **线上版本：P2 (72aab46)** — P3 构建失败，P4 未推送
-- Render 状态：P3 failed deploy (exit code 1)
-- 7日数据：225访问 3点击 3免费试用 $0收入
+- **线上版本**：旧 P2 仍在跑，`bdc3e17` 部署中
+- **数据库**：已从 Neon 迁移到 Supabase (`vnktcrolpcyktduldpfm`)
+- **GitHub**：全量同步，所有 commit 已推送
 
-### 部署链路
+### 今日完成
+- ✅ **Supabase 迁移**：Neon PostgreSQL → Supabase（免费）
+  - 项目 ID: `vnktcrolpcyktduldpfm`
+  - 本地直连 5432，Render 用 pooler 6543
+  - 4 表 schema 已同步
+- ✅ **Git push**：P3+P4+埋点+迁移代码全部推送 GitHub
+- ✅ **构建修复**：移除 `prisma db push`（PgBouncer 不兼容）
+- ⏳ **Render 部署**：`bdc3e17` 构建中
+- ⏳ **PayPal**：企业审批已过，待网站上线后配置
+
+### 待办
+1. 等 Render 部署完成
+2. 配置 PayPal 生产环境
+3. 更新世界杯决赛数据
+
+### 连接信息
 ```
-本地 master (7d62e15) ← P0+P2+P3+P4+埋点 全部就绪
-        │
-        ├── GitHub origin (72aab46) ← 仅 P0+P2（P3 推送成功但构建失败）
-        │
-        └── Render 线上 ← P2 (72aab46) ← 当前运行版本
+Supabase Pooler: postgresql://postgres.vnktcrolpcyktduldpfm:***@aws-0-us-east-1.pooler.supabase.com:6543/postgres?pgbouncer=true&connection_limit=1
+Supabase Direct: postgresql://postgres:***@db.vnktcrolpcyktduldpfm.supabase.co:5432/postgres
 ```
-
-### 已完成的本地工作（待推送修复）
-- **P0**: 起名页 Bazi 预览 ✅ 已部署
-- **P2**: 导航栏+邮件订阅 ✅ 已部署
-- **P3**: 择日/占卜预览 ❌ 构建失败（需排查）
-- **P4**: 指南页互动工具 ⏳ 本地就绪
-- **埋点**: preview_bazi/calendar/divination 等 24 个事件 ⏳ 本地就绪
-
-### 下一步（明天）
-1. 排查 P3 构建失败原因（Render build log）
-2. 修复后合并推送到 GitHub
-3. Render 自动部署上线
-4. 站点的间歇 806308665 错误 → Render 免费实例冷启动，升级 Starter $7/月可解决
-
-### 推送命令（网络通时）
-```bash
-cd "/d/chinese culture/project2"
-git push --force-with-lease origin master
-```
-注：已配置 `http.version=HTTP/1.1` 防墙；如仍失败用 SSH over 443 或等网络恢复
