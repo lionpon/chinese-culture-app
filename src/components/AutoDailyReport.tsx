@@ -5,6 +5,10 @@ import { prisma } from "@/lib/db";
 import { BASE_URL } from "@/lib/config";
 
 export default async function AutoDailyReport() {
+  // Skip DB operations during Next.js build (static generation)
+  // DATABASE_URL may not be accessible from Render build environment
+  if (process.env.NEXT_PHASE === "phase-production-build") return null;
+
   try {
     const today = new Date().toISOString().slice(0, 10);
 
