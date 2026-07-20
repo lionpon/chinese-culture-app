@@ -12,6 +12,7 @@ type Props = { params: { locale: string } };
 const UI: Record<string, {
   title: string; desc: string; ogTitle: string; ogDesc: string;
   hero: string; subtitle: string; intro: string;
+  championBanner: string; tournamentOver: string;
   todayLabel: string; upcomingLabel: string; fullScheduleLabel: string;
   noMatches: string; groupLabel: string; vs: string;
   cta: string; ctaText: string; disclaimer: string; groupsLabel: string;
