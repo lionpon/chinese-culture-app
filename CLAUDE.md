@@ -94,31 +94,45 @@ src/
 三层闭环：PDT (return) + 主动生成 (auto-create) + IPN (webhook)
 PayPal Standard Checkout，支持信用卡支付。
 
-## 近期状态 (2026-07-20 傍晚)
+## 近期状态 (2026-07-20 深夜)
 
-- **线上版本**：旧 P2 仍在跑（`Y6Ib4fIBwS7t7MlOzFVs1`）
-- **数据库**：Supabase (`vnktcrolpcyktduldpfm`) ✅ 已迁移
-- **GitHub**：全量同步，本地领先 origin 2 commits
+- **线上版本**：`aeda292` Live on Render + Cloudflare
+- **域名**：`www.culture-of-china.com` 正常运行
+- **数据库**：Supabase (`vnktcrolpcyktduldpfm`) ✅
+- **GitHub**：`git@github.com:lionpon/chinese-culture-app.git` (SSH deploy key)
 
 ### 今日完成
-- ✅ **Supabase 迁移**：Neon → Supabase，4 表已同步，本地验证通过
-- ✅ **Git push**：P3+P4+埋点+迁移代码全部推送 GitHub
-- ✅ **修复**：移除 `prisma db push`（PgBouncer 不兼容）、补俄语翻译、AutoDailyReport try-catch
-- ✅ **PayPal**：企业审批已通过
-- 🔴 **Render 部署**：构建时报 `PrismaClientInitializationError` 仍连旧 Neon 地址
+- ✅ **Render 部署修复**：移除 `prisma db push`（PgBouncer 不兼容），构建成功
+- ✅ **世界杯结束**：西班牙 1-0 阿根廷夺冠，页面更新为冠军回顾模式，4 语言
+- ✅ **支付闭环上线**：PayPal 企业商户，三层闭环（PDT + 自动生成 + IPN）
+- ✅ **信用卡直付**：Account Optional 已开启，Visa/Mastercard 无需 PayPal 账号
+- ✅ **安全修复**：`/api/result` 自动生成加入 10 分钟窗口限制
+- ✅ **环境变量**：全新 PDT Token 已部署，SANDBOX=false
 
-### 🔴 当前阻塞：Render 构建连不上 Supabase
+### PayPal 商户配置
+| 设置 | 状态 |
+|------|------|
+| 商户账号 | `22728717@qq.com` 企业已审批 |
+| 自动返回 | ✅ → `/success` |
+| PDT | ✅ Token: `jvQnzkc...` |
+| Account Optional | ✅ 信用卡直付 |
+| IPN URL | `https://www.culture-of-china.com/api/webhook/paypal` |
+| Sandbox | `false` |
 
-构建日志报错连接 `ep-lucky-dust-aqcxp3j7`（旧 Neon），但 DATABASE_URL 已正确设置为 Supabase。疑似 Render 构建缓存残留。
+### Render 环境变量
+`DATABASE_URL` `DIRECT_URL` `NEXT_PUBLIC_APP_URL` `ADMIN_TOKEN` `OPENROUTER_API_KEY` `PAYPAL_PDT_TOKEN` `PAYPAL_SANDBOX` `CONTACT_EMAIL` `CRON_SECRET`（缺 `RESEND_API_KEY` 待找回）
 
-### 晚上继续的步骤
-1. (已完成 clear cache)
-2. **Cancel** 所有卡住的部署
-3. **Manual Deploy → Deploy latest commit** (366c5b7)
-4. 构建应跳过 AutoDailyReport，跑通 `next build`
+### Git 配置
+```
+Remote: git@github.com:lionpon/chinese-culture-app.git (SSH, deploy key)
+Key: ~/.ssh/id_ed25519_temp
+Push: GIT_SSH_COMMAND="ssh -i ~/.ssh/id_ed25519_temp -o IdentitiesOnly=yes" git push
+```
 
 ### 连接信息
 ```
 Supabase Pooler: postgresql://postgres.vnktcrolpcyktduldpfm:***@aws-0-us-east-1.pooler.supabase.com:6543/postgres?pgbouncer=true&connection_limit=1
 Supabase Direct: postgresql://postgres:***@db.vnktcrolpcyktduldpfm.supabase.co:5432/postgres
+Render API: rnd_H4DDOqi0rEVQBJmdBmGUgRAAw7n3 | Service: srv-d88ks0jbc2fs73eb6shg
+Proxy: 127.0.0.1:7897
 ```
