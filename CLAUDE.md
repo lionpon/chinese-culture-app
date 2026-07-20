@@ -26,7 +26,7 @@ Next.js 14 · TypeScript · Prisma · Neon PostgreSQL · Tailwind CSS · next-in
 |---|---|
 | 仓库 | `git@github.com:lionpon/chinese-culture-app.git` (master) |
 | 托管 | Render (oregon, free tier) |
-| 数据库 | Neon PostgreSQL (us-east-1, ep-lucky-dust-aqcxp3j7) |
+| 数据库 | Supabase PostgreSQL (vnktcrolpcyktduldpfm) — migrated from Neon 2026-07-20 |
 | 支付 | PayPal Standard Checkout (`22728717@qq.com`) |
 | 保活 | cron-job.org 每10分钟 |
 
