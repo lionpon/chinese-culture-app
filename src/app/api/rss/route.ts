@@ -3,6 +3,9 @@ import { prisma } from "@/lib/db";
 import { performDivination } from "@/lib/divination";
 import { BASE_URL } from "@/lib/config";
 
+// Don't prerender — requires live DB connection
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   // Get the last 14 days of hexagram data
   const reports = await prisma.dailyReport.findMany({
