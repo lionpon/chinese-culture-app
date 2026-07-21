@@ -62,7 +62,7 @@ export default async function AnimalPage({ params }: Props) {
 
   return (
     <div className="max-w-2xl mx-auto">
-      <AnalyticsTracker pageType="snake-2027-animal" zodiacAnimal={animal} />
+      <AnalyticsTracker />
 
       {/* Back link */}
       <div className="mb-4">

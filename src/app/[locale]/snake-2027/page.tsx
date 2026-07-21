@@ -32,7 +32,7 @@ export default async function Snake2027Page({ params }: Props) {
   const l = (["en","ru","ja","ko"] as Locale[]).includes(locale) ? locale : "en";
   return (
     <div className="max-w-4xl mx-auto">
-      <AnalyticsTracker pageType="snake-2027" />
+      <AnalyticsTracker />
 
       {/* Hero */}
       <section className="text-center py-10 sm:py-16">
