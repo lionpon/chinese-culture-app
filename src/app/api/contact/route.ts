@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "Chinese Culture Studio <onboarding@resend.dev>",
+        from: "Chinese Culture Studio <noreply@culture-of-china.com>",
         to: [contactEmail],
         reply_to: email,
         subject: `Contact Form: message from ${email}`,

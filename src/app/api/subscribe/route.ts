@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          from: "Chinese Culture Studio <onboarding@resend.dev>",
+          from: "Chinese Culture Studio <noreply@culture-of-china.com>",
           to: [email],
           subject: `Your ${sourceLabel} Report from Chinese Culture Studio`,
           text: `Thank you for using the ${sourceLabel}!\n\nExplore more about your Chinese cultural destiny:\n- Get your personalized Chinese name: https://www.culture-of-china.com/naming\n- Consult the I Ching oracle: https://www.culture-of-china.com/divination\n- Find your auspicious dates: https://www.culture-of-china.com/calendar\n\nWarm regards,\nChinese Culture Studio`,

@@ -130,7 +130,7 @@ export async function sendDailyHexagramEmail(): Promise<boolean> {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "Chinese Culture Studio <onboarding@resend.dev>",
+        from: "Chinese Culture Studio <noreply@culture-of-china.com>",
         to: [to],
         subject: `☯️ Daily I Ching: ${h.nameZh} — ${h.nameEn} (${dateStr})`,
         text,
