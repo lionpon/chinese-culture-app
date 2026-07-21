@@ -71,14 +71,19 @@
     "validation": {
       "selectRequired": "項目を選択してください",
       "inputRequired": "この項目を入力してください"
+    },
+    "pricing": {
+      "title": "1回たったの$1",
+      "compare": "通常$9.99 — 90%オフの紹介価格",
+      "secure": "安全な決済 — アカウント不要"
     }
   },
   "home": {
-    "title": "Chinese Culture Studio",
-    "subtitle": "名前、吉日、占い、手相を通じて古代中国の知恵を発見しましょう",
+    "title": "あなただけの中国名を見つけよう",
+    "subtitle": "3000年の東洋の知恵に基づく。パーソナライズ。30秒で。",
     "quickStart": {
       "naming": "中国名を作る",
-      "divination": "易経を占う",
+      "divination": "易経を試す",
       "calendar": "吉日を探す"
     },
     "features": {
@@ -116,10 +121,9 @@
     "privacy": "プライバシーポリシー",
     "terms": "利用規約",
     "trust": {
-      "countries": "対応国数",
-      "readings": "鑑定実績",
-      "free": "1回無料",
-      "freeLabel": "新規ユーザー特典"
+      "item1": "3000年の易経と八字に基づく",
+      "item2": "30秒で結果を表示",
+      "item3": "安全な決済 — アカウント不要"
     },
     "weeklyFortune": {
       "title": "週間運勢を受け取る",

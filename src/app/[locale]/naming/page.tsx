@@ -156,6 +156,12 @@ export default function NamingPage() {
       <FreeTierBadge />
       <ExampleResult />
 
+      {/* Pricing banner */}
+      <div className="card-classic p-3 mb-6 text-center border-dashed" style={{ borderColor: "var(--gold)", backgroundColor: "rgba(201, 169, 110, 0.06)" }}>
+        <p className="text-sm font-bold" style={{ color: "var(--gold)" }}>{tc("pricing.title")}</p>
+        <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>{tc("pricing.compare")}</p>
+      </div>
+
       {/* Free Bazi Preview — appears when birth date is filled */}
       {preview && (
         <div className="card-classic p-4 sm:p-5 mb-6 animate-fadeIn" style={{ borderColor: "var(--border-strong)" }}>

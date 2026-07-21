@@ -71,15 +71,20 @@
     "validation": {
       "selectRequired": "Please select an option",
       "inputRequired": "Please fill out this field"
+    },
+    "pricing": {
+      "title": "Only $1 per reading",
+      "compare": "Usually $9.99 — 90% off introductory price",
+      "secure": "Secure checkout — No account required"
     }
   },
   "home": {
-    "title": "Chinese Culture Studio",
-    "subtitle": "Discover the wisdom of ancient Chinese classics through names, dates, divination, and palm reading",
+    "title": "Find Your Authentic Chinese Name",
+    "subtitle": "Based on 3,000 years of Eastern wisdom. Personalized. In 30 seconds.",
     "quickStart": {
       "naming": "Get Your Chinese Name",
-      "divination": "Cast I Ching",
-      "calendar": "Find Auspicious Date"
+      "divination": "Try I Ching",
+      "calendar": "Find Lucky Dates"
     },
     "features": {
       "naming": {
@@ -116,10 +121,9 @@
     "privacy": "Privacy Policy",
     "terms": "Terms of Service",
     "trust": {
-      "countries": "Countries Served",
-      "readings": "Readings Completed",
-      "free": "1 Free",
-      "freeLabel": "Trial for New Users"
+      "item1": "Based on 3,000-year-old I Ching & Bazi",
+      "item2": "Instant results in 30 seconds",
+      "item3": "Secure payment — No account needed"
     },
     "weeklyFortune": {
       "title": "Get Your Weekly Fortune",

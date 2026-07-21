@@ -71,14 +71,19 @@
     "validation": {
       "selectRequired": "옵션을 선택해주세요",
       "inputRequired": "이 항목을 입력해주세요"
+    },
+    "pricing": {
+      "title": "1회 단 $1",
+      "compare": "정가 $9.99 — 90% 할인 소개 가격",
+      "secure": "안전한 결제 — 계정 불필요"
     }
   },
   "home": {
-    "title": "Chinese Culture Studio",
-    "subtitle": "이름, 길일, 점술, 수상을 통해 고대 중국 고전의 지혜를 발견하세요",
+    "title": "당신만의 중국식 이름을 찾아보세요",
+    "subtitle": "3000년 동양의 지혜를 바탕으로. 개인 맞춤. 30초 만에.",
     "quickStart": {
       "naming": "중국식 이름 받기",
-      "divination": "주역 점치기",
+      "divination": "주역 시도하기",
       "calendar": "길일 찾기"
     },
     "features": {
@@ -116,10 +121,9 @@
     "privacy": "개인정보처리방침",
     "terms": "이용약관",
     "trust": {
-      "countries": "서비스 국가",
-      "readings": "완료된 해석",
-      "free": "1회 무료",
-      "freeLabel": "신규 사용자 혜택"
+      "item1": "3000년 주역과 사주에 기반",
+      "item2": "30초 만에 결과 확인",
+      "item3": "안전한 결제 — 계정 불필요"
     },
     "weeklyFortune": {
       "title": "주간 운세 받기",
