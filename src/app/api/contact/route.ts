@@ -37,6 +37,7 @@ export async function POST(req: NextRequest) {
     // Save to DB as fallback even if email not configured
     try {
       const { prisma } = await import("@/lib/db");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       await (prisma as any).contactMessage?.create?.({
         data: { email, message: message.trim() }
       });
