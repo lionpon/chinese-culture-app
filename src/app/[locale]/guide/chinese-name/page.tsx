@@ -55,7 +55,7 @@ const CONTENT: Record<string, {
     faqs: [
       { q: "How are Chinese names created?", a: "Chinese names are created based on the Five Elements (Wu Xing), Bazi analysis, and classical texts. Each name is unique and reflects the person's elemental balance." },
       { q: "What is Bazi?", a: "Bazi (Eight Characters) is a destiny system based on the year, month, day, and hour of birth. It reveals a person's elemental composition and helps select a harmonious name." },
-      { q: "How much does it cost?", a: "You choose the contribution amount — from $1. It's a voluntary contribution to support the app, not a purchase of a service." },
+      { q: "How much does it cost?", a: "Pay what you want — from $1. Your payment supports ongoing development and server costs, not a purchase of a service." },
     ],
     cta: "Create Your Chinese Name — from $1",
     disclaimer: "For cultural appreciation only. Not professional advice.",
@@ -93,7 +93,7 @@ const CONTENT: Record<string, {
     faqs: [
       { q: "Как создаются китайские имена?", a: "Китайские имена создаются на основе Пяти Элементов (У-Син), анализа Ба-цзы и классических текстов. Каждое имя уникально и отражает баланс элементов человека." },
       { q: "Что такое Ба-цзы?", a: "Ба-цзы (Восемь Иероглифов) — это система судьбы, основанная на годе, месяце, дне и часе рождения. Она показывает элементный состав человека и помогает подобрать гармоничное имя." },
-      { q: "Сколько стоит создание имени?", a: "Вы сами выбираете сумму взноса — от $1. Это добровольный вклад в поддержку приложения, а не покупка услуги." },
+      { q: "Сколько стоит создание имени?", a: "Платите сколько хотите — от $1. Ваш платеж поддерживает развитие приложения, а не покупка услуги." },
     ],
     cta: "Создать Китайское Имя — от $1",
     disclaimer: "Только для культурного ознакомления. Не является профессиональной консультацией.",
@@ -131,7 +131,7 @@ const CONTENT: Record<string, {
     faqs: [
       { q: "中国名はどのように作られますか？", a: "中国名は五行、八字分析、古典テキストに基づいて作られます。それぞれの名前は独自のもので、その人の元素バランスを反映しています。" },
       { q: "八字とは何ですか？", a: "八字（Eight Characters）は生年月日時に基づく運命学システムです。その人の元素構成を明らかにし、調和のとれた名前選びを助けます。" },
-      { q: "料金はいくらですか？", a: "支援額は$1からご自身で選べます。これはサービスの購入ではなく、アプリを支援する任意のご寄付です。" },
+      { q: "料金はいくらですか？", a: "お気持ちで — $1から。サービスの購入ではなく、開発とサーバー費用を支えるものです。" },
     ],
     cta: "あなたの中国名を作成 — $1から",
     disclaimer: "文化理解のためのものです。専門的なアドバイスではありません。",

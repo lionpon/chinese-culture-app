@@ -60,5 +60,5 @@ ${BASE_URL}/calendar
 <b>✋ Palm Reading</b> — Classical palmistry analysis
 ${BASE_URL}/palm-reading
 
-<i>Voluntary contributions welcome (from $1). For cultural appreciation.</i>`;
+<i>Pay what you want (from $1). For cultural appreciation.</i>`;
 }

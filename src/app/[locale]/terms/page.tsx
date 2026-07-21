@@ -23,11 +23,11 @@ export default function TermsPage() {
         actions you take based on these results, and you accept all risks associated therewith.
       </p>
 
-      <h2>3. Payment &amp; Contributions</h2>
+      <h2>3. Payment</h2>
       <p>
-        Each reading requires a contribution of USD $1.00, processed securely through PayPal
+        You choose your payment amount — from USD $1.00 — processed securely through PayPal
         (which supports PayPal accounts and major credit/debit cards such as Visa, Mastercard, and Amex).
-        <strong>This payment is a voluntary contribution toward the hosting, development, API costs,
+        <strong>This payment supports the hosting, development, API costs,
         and ongoing maintenance of this application.</strong> It is not a purchase of advice, a consultation
         fee, or compensation for any particular outcome, and it does not create any advisory, fiduciary,
         or client-professional relationship. You are supporting the continued availability of this

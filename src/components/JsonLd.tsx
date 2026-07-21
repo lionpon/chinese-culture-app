@@ -29,7 +29,7 @@ export default function JsonLd() {
       name: "Chinese Culture Studio",
       url: BASE_URL,
       description:
-        "Cultural experiences based on Chinese classics: name creation, auspicious date selection, I Ching divination, and palm reading. Voluntary contributions welcome (min $1).",
+        "Cultural experiences based on Chinese classics: name creation, auspicious date selection, I Ching divination, and palm reading. Pay what you want (from $1).",
       applicationCategory: "LifestyleApplication",
       operatingSystem: "Web",
       offers: {

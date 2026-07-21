@@ -63,7 +63,7 @@ const CONTENT: Record<string, {
     faqs: [
       { q: "What makes a date auspicious?", a: "A date's auspiciousness is determined by the Chinese almanac (Tong Shu), considering zodiac compatibility, moon phases, the 12 Day Officers, and Five Elements harmony." },
       { q: "What events can I find dates for?", a: "Weddings, engagements, business openings, travel, moving house, signing contracts, construction, medical treatment, and many more." },
-      { q: "Is it paid?", a: "You choose the contribution amount — from $1. First 2 date selections are free (preview mode). It's a voluntary contribution." },
+      { q: "Is it paid?", a: "Pay what you want — from $1. First 2 date selections are free (preview mode). Your payment supports ongoing development." },
     ],
     cta: "Find Your Auspicious Date — from $1",
     disclaimer: "For cultural appreciation only. Not professional advice.",
@@ -106,7 +106,7 @@ const CONTENT: Record<string, {
     faqs: [
       { q: "Что делает дату благоприятной?", a: "Благоприятность даты определяется по китайскому альманаху (Тун Шу) с учётом зодиакальной совместимости, фаз луны, 12 дневных офицеров и гармонии Пяти Элементов." },
       { q: "Для каких событий можно выбрать дату?", a: "Свадьба, помолвка, открытие бизнеса, путешествие, переезд, подписание контракта, строительство, лечение и многие другие." },
-      { q: "Это платно?", a: "Вы сами выбираете сумму взноса — от $1. Первые 2 выбора дат бесплатны (в режиме предпросмотра). Это добровольный вклад." },
+      { q: "Это платно?", a: "Платите сколько хотите — от $1. Первые 2 выбора дат бесплатны (в режиме предпросмотра). Ваш платеж поддерживает развитие сервиса." },
     ],
     cta: "Найти Благоприятную Дату — от $1",
     disclaimer: "Только для культурного ознакомления. Не является профессиональной консультацией.",
@@ -149,7 +149,7 @@ const CONTENT: Record<string, {
     faqs: [
       { q: "日が吉日かどうかは何で決まりますか？", a: "日の吉凶は中国暦（通書）によって決まり、干支の相性、月の満ち欠け、十二直、五行の調和が考慮されます。" },
       { q: "どんなイベントの日取りを探せますか？", a: "結婚式、婚約、開業、旅行、引越し、契約締結、建築、治療など多岐にわたります。" },
-      { q: "有料ですか？", a: "支援額は$1からご自身で選べます。最初の2回の日取り選択は無料（プレビューモード）です。これは任意のご支援です。" },
+      { q: "有料ですか？", a: "お気持ちで — $1から。最初の2回の日取り選択は無料（プレビューモード）です。開発とサーバー費用を支えるものです。" },
     ],
     cta: "吉日を探す — $1から",
     disclaimer: "文化理解のためのものです。専門的なアドバイスではありません。",

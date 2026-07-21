@@ -19,7 +19,7 @@
     },
     "footer": {
       "disclaimer": "For entertainment and cultural appreciation only. Not professional advice.",
-      "paymentNote": "Payments are voluntary contributions for app maintenance — not a purchase of services.",
+      "paymentNote": "Payments support app maintenance — not a purchase of services.",
       "guides": {
         "chineseName": "Chinese Name Guide",
         "iching": "I Ching Guide",
@@ -47,15 +47,15 @@
       "processing": "Processing...",
       "free": "{label} — Free",
       "paid": "{label} · Support ${amount}",
-      "helper": "Your contribution helps maintain the service",
+      "helper": "Supports ongoing development & server costs",
       "paidSimple": "Get Your Reading · ${amount}",
       "cardNote": "PayPal or credit/debit card — no PayPal account needed"
     },
     "amount": {
-      "label": "Support Amount (USD)",
+      "label": "Amount (USD)",
       "custom": "Custom",
       "placeholder": "Amount",
-      "helper": "Your contribution supports ongoing development, API costs, and server maintenance."
+      "helper": "Supports ongoing development, API costs, and server maintenance."
     },
     "speak": {
       "listen": "Listen",
@@ -74,7 +74,7 @@
     },
     "pricing": {
       "title": "Pay what you want · from $1",
-      "compare": "Voluntary contribution — supports ongoing development",
+      "compare": "Supports ongoing development & server costs",
       "secure": "PayPal or credit card — no account needed"
     }
   },
@@ -148,7 +148,7 @@
   "naming": {
     "title": "Create a Chinese Name",
     "subtitle": "Based on your birth information and classical Chinese texts",
-    "badge": "$1 contribution",
+    "badge": "$1",
     "form": {
       "firstName": "First / Given Name",
       "firstNamePlaceholder": "e.g. Michael, Анна",
@@ -165,7 +165,7 @@
       "hour": "Birth Hour (0-23)",
       "hourPlaceholder": "e.g. 8 for 8:00 AM",
       "hourHelper": "Approximate is fine if you don't know the exact hour.",
-      "previewNote": "Your contribution amount will be used after free previews are exhausted.",
+      "previewNote": "Your amount will be used after free previews are exhausted.",
       "style": "Name Style",
       "stylePlaceholder": "Select...",
       "styleElegant": "Elegant & Refined · 典雅",
@@ -213,13 +213,13 @@
   "calendar": {
     "title": "Auspicious Date Selection",
     "subtitle": "Based on traditional Chinese almanac principles",
-    "badge": "$1 contribution",
+    "badge": "$1",
     "form": {
       "range": "Date Range",
       "start": "Start",
       "end": "End",
       "rangeHelper": "Select a range of up to 90 days for best results.",
-      "previewNote": "Your contribution amount will be used after free previews are exhausted.",
+      "previewNote": "Your amount will be used after free previews are exhausted.",
       "eventType": "Event Type",
       "eventPlaceholder": "Select event type...",
       "submit": "Find Auspicious Dates"
@@ -270,7 +270,7 @@
   "divination": {
     "title": "I Ching Divination",
     "subtitle": "Consult the ancient Book of Changes",
-    "badge": "$1 contribution",
+    "badge": "$1",
     "form": {
       "question": "Your Question (optional)",
       "questionPlaceholder": "What would you like guidance on?",
@@ -282,7 +282,7 @@
       "firstNum": "First",
       "secondNum": "Second",
       "thirdNum": "Third",
-      "previewNote": "Your contribution amount will be used after free previews are exhausted.",
+      "previewNote": "Your amount will be used after free previews are exhausted.",
       "submit": "Cast Hexagram"
     },
     "example": {
@@ -313,7 +313,7 @@
   "palm": {
     "title": "Palm Reading",
     "subtitle": "Upload a photo of your palm for a classical Chinese palmistry analysis",
-    "badge": "$1 contribution",
+    "badge": "$1",
     "form": {
       "photo": "Palm Photo *",
       "uploadText": "Click or drag a photo here",
@@ -359,7 +359,7 @@
   "dream": {
     "title": "Dream Interpretation",
     "subtitle": "Describe your dream and get a dual-perspective interpretation combining Zhou Gong's ancient dream dictionary with Freudian psychoanalysis",
-    "badge": "$1 contribution",
+    "badge": "$1",
     "learnMore": "Learn more about Chinese dream symbols →",
     "form": {
       "dreamLabel": "Describe Your Dream *",
@@ -554,11 +554,11 @@
     "backHome": "Back to Home",
     "timeoutFooter": "If the result doesn't appear within 10 minutes, please contact support with your reference ID.",
     "failedTitle": "Something went wrong",
-    "failedBody": "Processing failed. Your contribution is safe — contact support for assistance.",
+    "failedBody": "Processing failed. Your payment is safe — contact support for assistance.",
     "returnHome": "Return to Home",
     "freeBanner": "{n} free use(s) remaining",
     "freeLast": "That was your last free reading",
-    "freeText": "Each personalized reading requires computation based on classical texts and traditional methods. Future readings are supported with a $1 contribution.",
+    "freeText": "Each personalized reading requires computation based on classical texts and traditional methods. Future readings are powered by user support — from $1.",
     "anotherName": "Get Another Name",
     "anotherDate": "Find Another Date",
     "anotherHexagram": "Cast Another Hexagram",
