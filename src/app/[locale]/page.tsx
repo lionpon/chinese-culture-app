@@ -199,6 +199,7 @@ export default function HomePage() {
           {([
             { key: "iching", href: "/guide/iching-beginner" },
             { key: "fiveElements", href: "/guide/five-elements" },
+            { key: "snake2027", href: "/snake-2027" },
             { key: "zodiac", href: "/guide/chinese-zodiac" },
             { key: "lucky", href: "/guide/lucky-numbers" },
             { key: "fengshui", href: "/guide/feng-shui" },
