@@ -33,28 +33,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/terms", priority: 0.3, changeFreq: "yearly" as const },
   ];
 
-  // Last 30 days of daily hexagram pages
-  const dailyPages: { path: string; priority: number; changeFreq: "daily" | "weekly" | "monthly" | "yearly" }[] = [];
-  for (let i = 0; i < 30; i++) {
-    const d = new Date();
-    d.setDate(d.getDate() - i);
-    const dateStr = d.toISOString().slice(0, 10);
-    const priority = i === 0 ? 0.8 : i <= 7 ? 0.6 : 0.4;
-    dailyPages.push({ path: `/daily/${dateStr}`, priority, changeFreq: "daily" as const });
-  }
+  // Daily hexagram & World Cup pages EXCLUDED from sitemap
+  // These are thin-content pages (one hexagram/match per page).
+  // Including them in sitemap caused 368 "Discovered - not indexed" flags
+  // which dragged down overall domain quality score in Google Search Console.
+  // Pages remain accessible but Google discovers them via internal links instead.
 
-  // World Cup daily prediction pages (June 11 - July 19, 2026 + 7 days after for cache)
-  const worldCupPages: { path: string; priority: number; changeFreq: "daily" | "weekly" | "monthly" | "yearly" }[] = [];
-  const wcStart = new Date("2026-06-11");
-  const wcEnd = new Date("2026-07-26"); // final + 1 week
-  for (let d = new Date(wcStart); d <= wcEnd; d.setDate(d.getDate() + 1)) {
-    const dateStr = d.toISOString().slice(0, 10);
-    const todayStr = new Date().toISOString().slice(0, 10);
-    const p = dateStr === todayStr ? 0.8 : 0.6;
-    worldCupPages.push({ path: `/daily/world-cup/${dateStr}`, priority: p, changeFreq: "daily" as const });
-  }
-
-  const allPages = [...pages, ...dailyPages, ...worldCupPages];
+  const allPages = pages;
 
   // English URLs
   const enEntries = allPages.map(({ path, priority, changeFreq }) => ({
