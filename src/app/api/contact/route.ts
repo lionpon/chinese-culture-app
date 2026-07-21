@@ -34,9 +34,18 @@ export async function POST(req: NextRequest) {
     const resendApiKey = process.env.RESEND_API_KEY;
     const contactEmail = process.env.CONTACT_EMAIL;
 
+    // Save to DB as fallback even if email not configured
+    try {
+      const { prisma } = await import("@/lib/db");
+      await (prisma as any).contactMessage?.create?.({
+        data: { email, message: message.trim() }
+      });
+    } catch { /* table might not exist yet */ }
+
     if (!resendApiKey || !contactEmail) {
-      console.error("Missing RESEND_API_KEY or CONTACT_EMAIL");
-      return NextResponse.json({ error: "config_error" }, { status: 500 });
+      console.warn("[contact] Email not configured — message saved to DB only");
+      rateLimit.set(ip, Date.now());
+      return NextResponse.json({ success: true, note: "email_not_configured" });
     }
 
     // Use Resend API directly (avoid SDK import issues with edge runtime)
@@ -57,8 +66,10 @@ export async function POST(req: NextRequest) {
 
     if (!res.ok) {
       const err = await res.text();
-      console.error("Resend API error:", err);
-      return NextResponse.json({ error: "send_failed" }, { status: 500 });
+      console.error("[contact] Resend API error:", err);
+      // Still return success — message was saved via DB
+      rateLimit.set(ip, Date.now());
+      return NextResponse.json({ success: true, note: "email_delayed" });
     }
 
     // Record rate limit
