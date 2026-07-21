@@ -76,21 +76,7 @@ export default async function Snake2027Page({ params }: Props) {
 
       {/* CTA */}
       <div className="text-center mb-12">
-        <GuideCTA
-          type="naming"
-          title={
-            l === "ru" ? "Получите китайское имя на год Змеи" :
-            l === "ja" ? "巳年のあなたの中国名を手に入れよう" :
-            l === "ko" ? "뱀의 해 당신의 중국식 이름을 받아보세요" :
-            "Get Your Snake Year Chinese Name"
-          }
-          desc={
-            l === "ru" ? "Персонализированное имя на основе Ба-цзы и Пяти Элементов" :
-            l === "ja" ? "八字と五行に基づくあなただけの中国名" :
-            l === "ko" ? "사주와 오행에 기반한 개인 맞춤 중국식 이름" :
-            "Personalized name based on your Bazi and Five Elements"
-          }
-        />
+        <GuideCTA service="naming" href="/naming" />
       </div>
 
       <section className="text-center mb-12">

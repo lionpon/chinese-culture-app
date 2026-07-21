@@ -123,21 +123,7 @@ export default async function AnimalPage({ params }: Props) {
 
       {/* CTA */}
       <div className="mb-8">
-        <GuideCTA
-          type="naming"
-          title={
-            l === "ru" ? `Имя на год Змеи для ${zodiacNamesRu[animal] || pred.animal}` :
-            l === "ja" ? `${zodiacNamesJa[animal] || pred.animal}の巳年中国名` :
-            l === "ko" ? `${zodiacNamesKo[animal] || pred.animal} 뱀의 해 중국식 이름` :
-            `Snake Year Name for ${pred.animal}`
-          }
-          desc={
-            l === "ru" ? "Персонализированное имя на основе Ба-цзы" :
-            l === "ja" ? "八字に基づくあなただけの名前" :
-            l === "ko" ? "사주에 기반한 개인 맞춤 이름" :
-            "Personalized name based on your Bazi"
-          }
-        />
+        <GuideCTA service="naming" href="/naming" />
       </div>
 
       {/* Prev/Next navigation */}
