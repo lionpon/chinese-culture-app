@@ -73,9 +73,9 @@
       "inputRequired": "이 항목을 입력해주세요"
     },
     "pricing": {
-      "title": "1회 단 $1",
-      "compare": "정가 $9.99 — 90% 할인 소개 가격",
-      "secure": "안전한 결제 — 계정 불필요"
+      "title": "자유 기부 · $1부터",
+      "compare": "자발적 후원 — 서비스 개발을 지원합니다",
+      "secure": "PayPal 또는 카드 — 계정 불필요"
     }
   },
   "home": {

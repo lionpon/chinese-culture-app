@@ -73,9 +73,9 @@
       "inputRequired": "Please fill out this field"
     },
     "pricing": {
-      "title": "Only $1 per reading",
-      "compare": "Usually $9.99 — 90% off introductory price",
-      "secure": "Secure checkout — No account required"
+      "title": "Pay what you want · from $1",
+      "compare": "Voluntary contribution — supports ongoing development",
+      "secure": "PayPal or credit card — no account needed"
     }
   },
   "home": {
