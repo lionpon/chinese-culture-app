@@ -120,7 +120,7 @@ PayPal Standard Checkout，支持信用卡支付。
 | Sandbox | `false` |
 
 ### Render 环境变量
-`DATABASE_URL` `DIRECT_URL` `NEXT_PUBLIC_APP_URL` `ADMIN_TOKEN` `OPENROUTER_API_KEY` `PAYPAL_PDT_TOKEN` `PAYPAL_SANDBOX` `CONTACT_EMAIL` `CRON_SECRET`（缺 `RESEND_API_KEY` 待找回）
+`DATABASE_URL` `DIRECT_URL` `NEXT_PUBLIC_APP_URL` `ADMIN_TOKEN` `OPENROUTER_API_KEY` `PAYPAL_PDT_TOKEN` `PAYPAL_SANDBOX` `RESEND_API_KEY` `CONTACT_EMAIL` `CRON_SECRET` ✅ 全部就绪
 
 ### Git 配置
 ```
@@ -135,4 +135,24 @@ Supabase Pooler: postgresql://postgres.vnktcrolpcyktduldpfm:***@aws-0-us-east-1.
 Supabase Direct: postgresql://postgres:***@db.vnktcrolpcyktduldpfm.supabase.co:5432/postgres
 Render API: rnd_H4DDOqi0rEVQBJmdBmGUgRAAw7n3 | Service: srv-d88ks0jbc2fs73eb6shg
 Proxy: 127.0.0.1:7897
+```
+
+## 引流路线图（待选）
+
+世界杯 `I Ching x World Cup` 模式跑通：**全球热点事件 → 易经预测 → SEO 引流 → 转化**
+
+待选事件（按时间线）：
+
+| 事件 | 时间 | 全球搜索量 | 适合度 |
+|------|------|-----------|--------|
+| 🏈 Super Bowl LX | 2026.2 | 🔥🔥🔥🔥🔥 | 美国+全球，胜负明确 |
+| 🎬 奥斯卡 2027 | 2027.3 | 🔥🔥🔥🔥 | 预测获奖，卦对应提名 |
+| 🗳️ 美国中期选举 | 2026.11 | 🔥🔥🔥🔥 | 国会归属预测 |
+| 🏆 欧冠决赛 | 2027.5 | 🔥🔥🔥🔥🔥 | 同世界杯模板 |
+| 🐍 蛇年运势 | ~2027.1 | 🔥🔥🔥 | 天然文化契合 |
+| 🎵 Eurovision | 2027.5 | 🔥🔥🔥 | 欧洲市场 |
+
+### 可做的优化
+- 移动端 PayPal Deep Link（检测手机 → 直接唤起 PayPal App）
+- 支付按钮旁加 Visa/Mastercard 图标（增强信任）
 ```
