@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
 import { Link } from "@/navigation";
 import { snakeYear, zodiacAnimals } from "@/data/snake-2027";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
@@ -31,8 +30,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function Snake2027Page({ params }: Props) {
   const { locale } = await params;
   const l = (["en","ru","ja","ko"] as Locale[]).includes(locale) ? locale : "en";
-  const t = await getTranslations({ locale, namespace: "home" });
-
   return (
     <div className="max-w-4xl mx-auto">
       <AnalyticsTracker pageType="snake-2027" />
