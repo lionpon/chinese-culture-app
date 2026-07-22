@@ -53,8 +53,7 @@ export async function POST(req: NextRequest) {
     if (json.startsWith("```")) json = json.replace(/^```(?:json)?\s*\n?/, "").replace(/\n?\s*```$/, "");
     return NextResponse.json(JSON.parse(json));
   } catch (err: unknown) {
-    const msg = err instanceof Error ? err.message : String(err);
-    console.error("zodiac-match error:", msg);
-    return NextResponse.json({ error: msg }, { status: 500 });
+    console.error("zodiac-match error:", err instanceof Error ? err.message : String(err));
+    return NextResponse.json({ error: "The stars are not aligned. Try again?" }, { status: 500 });
   }
 }
