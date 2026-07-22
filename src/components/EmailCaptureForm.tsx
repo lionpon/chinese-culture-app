@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { trackClick } from "@/lib/track";
 
 interface EmailCaptureFormProps {
-  source: "zodiac-calculator" | "five-elements-test" | "divination" | "naming" | "calendar" | "palm-reading" | "dream-interpretation" | "dream-ai" | "zodiac-match" | "daily-fortune" | "name-preview";
+  source: "zodiac-calculator" | "five-elements-test" | "divination" | "naming" | "calendar" | "palm-reading" | "dream-interpretation" | "dream-ai" | "zodiac-match" | "daily-fortune" | "name-preview" | "quick-oracle";
 }
 
 export default function EmailCaptureForm({ source }: EmailCaptureFormProps) {

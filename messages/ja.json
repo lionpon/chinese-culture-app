@@ -19,7 +19,8 @@
       "dreamAi": "AI夢解読",
       "zodiacMatch": "相性診断",
       "dailyFortune": "今日の運勢",
-      "namePreview": "名前プレビュー"
+      "namePreview": "名前プレビュー",
+      "quickOracle": "クイックオラクル"
     },
     "footer": {
       "disclaimer": "娯楽と文化理解のためのものです。専門的なアドバイスではありません。",
@@ -806,5 +807,32 @@
     "upsellCta": "完全な名前鑑定 · $1",
     "tryAnother": "別の名前を試す",
     "error": "名前の精霊が休んでいます。もう一度お試しください。"
+  },
+  "quickOracle": {
+    "title": "クイックオラクル",
+    "subtitle": "瞬時に答えを得る古代中国の方法。何でも聞いてください — 直接的な答えが返ってきます。",
+    "questionLabel": "気になることは？",
+    "questionPlaceholder": "例：この仕事を受けるべき？引っ越しに良い時期？",
+    "submit": "オラクルに聞く",
+    "asking": "オラクルに相談中...",
+    "disclaimer": "娯楽と文化的考察のためです。専門的な助言の代わりにはなりません。",
+    "error": "オラクルは沈黙しています。もう一度試しますか？",
+    "yourAnswer": "あなたへの答え",
+    "timingHint": "⏱ タイミングの指針",
+    "howItWorks": "どのように機能するの？",
+    "lunarDate": "この瞬間の中国太陰暦に基づく：",
+    "lunarMonth": "太陰月",
+    "lunarDay": "太陰日",
+    "shichen": "時刻（时辰）",
+    "countingSteps": "カウントの道筋：",
+    "stepMonth": "{start}から始めて、太陰月の{count}歩を数える → {land}に到達",
+    "stepDay": "{start}から、太陰日の{count}歩を数える → {land}に到達",
+    "stepHour": "{start}から、時刻の{count}歩を数える → {land}に到達",
+    "methodNote": "これは小六壬（しょうろくじん）、または馬前課（ばぜんか）と呼ばれる、素早い指針を得るための1000年の歴史を持つ中国の民間占い法です。",
+    "upsellTitle": "より深いリーディングをお求めですか？",
+    "upsellDesc": "易経は4096通りの答えと完全な古典的解説を提供します — あなた自身の卦を立てて完全なリーディングを得てください。",
+    "upsellCta": "易経を立てる · $1",
+    "copy": "コピー",
+    "sharePrompt": "オラクルをシェア"
   }
 }

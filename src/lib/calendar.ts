@@ -256,7 +256,7 @@ const LUNAR_DAYS = ["初一", "初二", "初三", "初四", "初五", "初六", 
   "廿一", "廿二", "廿三", "廿四", "廿五", "廿六", "廿七", "廿八", "廿九", "三十"];
 
 // Simple lunar calendar approximation
-function solarToLunar(year: number, month: number, day: number): { lunarYear: number; lunarMonth: number; lunarDay: number; isLeapMonth: boolean } {
+export function solarToLunar(year: number, month: number, day: number): { lunarYear: number; lunarMonth: number; lunarDay: number; isLeapMonth: boolean } {
   // Simplified lunar conversion using a lookup approach
   // This is an approximation - a full lunar calendar requires detailed ephemeris data
   // For production, consider using a library like lunar-javascript or lunar-typescript

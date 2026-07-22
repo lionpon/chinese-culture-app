@@ -114,7 +114,7 @@ export default async function LocaleLayout({ children, params }: Props) {
     "lucky-numbers", "feng-shui", "face-reading", "dream-meaning",
   ];
 
-  const toolSlugs = ["zodiac-calculator", "five-elements-test", "dream-ai", "zodiac-match", "daily-fortune", "name-preview"];
+  const toolSlugs = ["zodiac-calculator", "five-elements-test", "dream-ai", "zodiac-match", "daily-fortune", "name-preview", "quick-oracle"];
 
   const allLabels = footerGuideLabels[params.locale] || footerGuideLabels.en;
   const guideLabels = allLabels.slice(0, 14);

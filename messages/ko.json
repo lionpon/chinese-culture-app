@@ -19,7 +19,8 @@
       "dreamAi": "AI 꿈 해몽",
       "zodiacMatch": "궁합 진단",
       "dailyFortune": "오늘의 운세",
-      "namePreview": "이름 미리보기"
+      "namePreview": "이름 미리보기",
+      "quickOracle": "빠른 오라클"
     },
     "footer": {
       "disclaimer": "문화 체험 및 오락 목적으로만 제공됩니다. 전문적인 조언이 아닙니다.",
@@ -807,5 +808,32 @@
     "upsellCta": "완전한 이름 감정 · $1",
     "tryAnother": "다른 이름 시도하기",
     "error": "이름의 정령이 쉬고 있습니다. 다시 시도해주세요."
+  },
+  "quickOracle": {
+    "title": "빠른 오라클",
+    "subtitle": "즉각적인 답변을 위한 고대 중국의 방법. 무엇이든 물어보세요 — 직접적인 답변을 받으세요.",
+    "questionLabel": "무엇이 고민인가요?",
+    "questionPlaceholder": "예: 이 직장을 수락해야 할까? 지금 이사하기 좋은 시기일까?",
+    "submit": "오라클에게 묻기",
+    "asking": "오라클에 묻는 중...",
+    "disclaimer": "오락 및 문화적 성찰을 위한 것입니다. 전문적 조언을 대체하지 않습니다.",
+    "error": "오라클이 침묵합니다. 다시 시도할까요?",
+    "yourAnswer": "당신의 답변",
+    "timingHint": "⏱ 타이밍 가이드",
+    "howItWorks": "어떻게 작동하나요?",
+    "lunarDate": "이 순간의 중국 음력 기준:",
+    "lunarMonth": "음력 월",
+    "lunarDay": "음력 일",
+    "shichen": "시간 (时辰)",
+    "countingSteps": "계산 경로:",
+    "stepMonth": "{start}에서 시작하여 음력 월 {count}걸음 세기 → {land}에 도착",
+    "stepDay": "{start}에서 음력 일 {count}걸음 세기 → {land}에 도착",
+    "stepHour": "{start}에서 시간 {count}걸음 세기 → {land}에 도착",
+    "methodNote": "소육임(小六壬), 일명 마전과(马前课) — 빠른 지침을 얻기 위한 천 년 역사의 중국 민간 점술법입니다.",
+    "upsellTitle": "더 깊은 해석을 원하시나요?",
+    "upsellDesc": "주역은 4,096가지의 답변과 완전한 고전 해설을 제공합니다 — 직접 괘를 뽑아 완전한 해석을 받아보세요.",
+    "upsellCta": "주역 괘 뽑기 · $1",
+    "copy": "복사",
+    "sharePrompt": "오라클 공유"
   }
 }

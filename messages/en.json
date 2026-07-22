@@ -19,7 +19,8 @@
       "dreamAi": "AI Dream Decoder",
       "zodiacMatch": "Love Match",
       "dailyFortune": "Daily Fortune",
-      "namePreview": "Name Preview"
+      "namePreview": "Name Preview",
+      "quickOracle": "Quick Oracle"
     },
     "footer": {
       "disclaimer": "For entertainment and cultural appreciation only. Not professional advice.",
@@ -834,5 +835,32 @@
     "upsellCta": "Get Full Name Reading · $1",
     "tryAnother": "Try another name",
     "error": "The name spirits are resting. Try again?"
+  },
+  "quickOracle": {
+    "title": "Quick Oracle",
+    "subtitle": "An ancient Chinese method for instant answers. Ask anything — get a direct response.",
+    "questionLabel": "What's on your mind?",
+    "questionPlaceholder": "e.g. Should I take this job? Is now a good time to move?",
+    "submit": "Ask the Oracle",
+    "asking": "Consulting the oracle...",
+    "disclaimer": "For entertainment and cultural reflection. Not a substitute for professional advice.",
+    "error": "The oracle is silent. Try again?",
+    "yourAnswer": "Your Answer",
+    "timingHint": "⏱ Timing Guidance",
+    "howItWorks": "How does this work?",
+    "lunarDate": "Based on the Chinese lunar calendar at this moment:",
+    "lunarMonth": "Lunar month",
+    "lunarDay": "Lunar day",
+    "shichen": "Time period (时辰)",
+    "countingSteps": "The counting path:",
+    "stepMonth": "Start at {start}, count {count} steps for the lunar month → lands on {land}",
+    "stepDay": "From {start}, count {count} steps for the lunar day → lands on {land}",
+    "stepHour": "From {start}, count {count} steps for the hour → lands on {land}",
+    "methodNote": "This is Xiao Liu Ren (小六壬), also called Ma Qian Ke (马前课) — a 1,000-year-old Chinese folk divination method using palm counting to get quick guidance.",
+    "upsellTitle": "Want a deeper reading?",
+    "upsellDesc": "The I Ching offers 4,096 possible answers with full classical commentary — cast your own hexagram for a complete reading.",
+    "upsellCta": "Cast I Ching · $1",
+    "copy": "Copy",
+    "sharePrompt": "Share your oracle"
   }
 }
