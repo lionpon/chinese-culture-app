@@ -54,7 +54,9 @@ export async function POST(req: NextRequest) {
     let json = text.trim();
     if (json.startsWith("```")) json = json.replace(/^```(?:json)?\s*\n?/, "").replace(/\n?\s*```$/, "");
     return NextResponse.json(JSON.parse(json));
-  } catch {
-    return NextResponse.json({ error: "The name spirits are resting. Try again?" }, { status: 500 });
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error("name-preview error:", msg);
+    return NextResponse.json({ error: msg }, { status: 500 });
   }
 }

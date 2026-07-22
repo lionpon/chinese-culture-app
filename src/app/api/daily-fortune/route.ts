@@ -53,7 +53,9 @@ export async function POST(req: NextRequest) {
     let json = text.trim();
     if (json.startsWith("```")) json = json.replace(/^```(?:json)?\s*\n?/, "").replace(/\n?\s*```$/, "");
     return NextResponse.json({ ...JSON.parse(json), sign, date: today });
-  } catch {
-    return NextResponse.json({ error: "The cosmos is quiet. Try again?" }, { status: 500 });
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error("daily-fortune error:", msg);
+    return NextResponse.json({ error: msg }, { status: 500 });
   }
 }

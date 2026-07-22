@@ -74,8 +74,9 @@ export async function POST(req: NextRequest) {
       fortune: result.fortune,
       emoji: result.emoji,
     });
-  } catch (error) {
-    console.error("Dream AI error:", error);
-    return NextResponse.json({ error: "The dream spirits are quiet. Try again?" }, { status: 500 });
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error("dream-ai error:", msg);
+    return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
