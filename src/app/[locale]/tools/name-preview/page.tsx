@@ -109,7 +109,7 @@ export default function NamePreviewPage() {
       {result && (
         <div className="space-y-6">
           <div className="relative overflow-hidden rounded-2xl border-2 border-amber-200 bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50 p-6 shadow-lg">
-            <p className="text-xs text-stone-400 text-center mb-1">{t("for")} "{result.originalName}"</p>
+            <p className="text-xs text-stone-400 text-center mb-1">{t("for")} &ldquo;{result.originalName}&rdquo;</p>
             <h2 className="text-lg font-bold text-stone-800 text-center mb-6">{result.headline}</h2>
             <div className="space-y-4">
               {result.names.map((n, i) => (
