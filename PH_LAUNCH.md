@@ -1,6 +1,6 @@
 # 🚀 Product Hunt 发布计划
 
-> **目标日期**：2026-07-23 周四 | **产品**：Chinese Culture Studio
+> **目标日期**：2026-07-23 周四 | **产品**：Chinese Culture Studio | **状态**：✅ 已预约
 
 ---
 
@@ -9,9 +9,9 @@
 ### Tagline（60字符内）
 
 ```
-5 Ancient Chinese Wisdom Tools — Name, Dates, I Ching, Palm & Dream. $1.
+5 Ancient Chinese Wisdom Tools — Name, Dates, I Ching, Palm & Dream. Pay What You Want.
 ```
-（59 字符 ✅）
+（需确认最终用的是什么）
 
 ---
 
@@ -46,15 +46,15 @@ Hey Product Hunt! 👋
 
 Solo maker here. Built Chinese Culture Studio because most "Chinese astrology" sites are either generic AI wrappers or cost $5-$35 per reading. I wanted something authentic, affordable, and clean.
 
-Every reading uses real classical texts. $1 flat, one-time — no subscription traps. Free tier so anyone can try first.
+Every reading uses real classical texts. Pay what you want, starting at $1 — no subscription traps. Free tier so anyone can try first.
 
-📊 42+ countries, 34+ paid orders (fully organic)
+📊 26+ countries, fully organic traffic
 🔧 Next.js 14 · TypeScript · Prisma · Supabase · Tailwind · PayPal · OpenRouter AI
 
 💡 Fun fact: The I Ching oracle correctly predicted Spain would win the World Cup! I built a live prediction page during the tournament.
 
 🚀 Would love your feedback:
-- Is $1 the right price point?
+- Is pay-what-you-want the right model?
 - Which service interests you most?
 - What feature next? (Feng Shui? Face Reading? Bazi compatibility?)
 
@@ -96,9 +96,15 @@ Thank you! 🙏
 
 ### 🔴 Must Do
 
-- [ ] 注册 PH 账号 → https://www.producthunt.com
-- [ ] 创建产品 → https://www.producthunt.com/launch
-- [ ] 选择发布日 → 2026-07-23 00:01 PST (北京时间 15:01)
+- [x] 注册 PH 账号 → https://www.producthunt.com
+- [x] 创建产品 → https://www.producthunt.com/launch
+- [x] 选择发布日 → 2026-07-23 00:01 PST (北京时间 15:01)
+- [x] Tags: Productivity
+- [x] Funding: Bootstrapped
+- [x] Gallery 截图上传（首页/取名/起卦/AI解梦）
+- [x] Shoutouts 已填
+- [x] First Comment 已准备
+- [x] 投资者部分已填
 - [ ] 提前 30min 唤醒 Render（手动访问网站）
 
 ### 🟡 Nice to Have
@@ -106,6 +112,13 @@ Thank you! 🙏
 - [ ] 网站加 PH 投票 Badge
 - [ ] 30-60s Demo 视频
 - [ ] Twitter 提前预告
+
+### 定价确认
+
+- 预设档位：$1 · $3 · $5 · $10
+- 自定义金额：$1 ~ $100 自由输入
+- 最小值 $1，最大值 $100
+- 免费试用：每人 1 次
 
 ---
 

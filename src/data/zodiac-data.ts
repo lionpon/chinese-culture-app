@@ -104,18 +104,18 @@ const personalities: LocaleRecord<ZodiacInfo>[] = [
 ];
 
 export function getZodiacName(year: number, locale: string): string {
-  const idx = year % 12;
+  const idx = (year - 4) % 12;
   const a = animals[idx];
   const l = locale as keyof LocaleRecord<string>;
   return a?.[l] ?? a.en;
 }
 
 export function getZodiacAnimalZh(year: number): string {
-  return animalZh[year % 12];
+  return animalZh[(year - 4) % 12];
 }
 
 export function getZodiacInfo(year: number, locale: string): ZodiacInfo {
-  const idx = year % 12;
+  const idx = (year - 4) % 12;
   const p = personalities[idx];
   const l = locale as keyof LocaleRecord<ZodiacInfo>;
   return p?.[l] ?? p.en ?? personalities[idx].en;
