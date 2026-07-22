@@ -101,9 +101,58 @@ PayPal Standard Checkout，支持信用卡支付。
 - **域名**：`www.culture-of-china.com` 正常运行
 - **数据库**：Supabase (`vnktcrolpcyktduldpfm`) ✅
 - **GitHub**：`git@github.com:lionpon/chinese-culture-app.git` (SSH deploy key)
-- **最新 commit**：`9059506`（本地有未提交的新功能）
+- **最新 commit**：`be6089c`（线上 Live on Render）
 
-### 7月22日完成：AI 原生增长引擎 v1（4个工具全部上线）
+### 7月22日完成：AI 原生增长引擎 v1（完整版）
+
+#### 🚀 4 个 AI 病毒传播工具（全部上线，API 验证通过）
+| 工具 | 路由 | 病毒点 | 转化目标 |
+|------|------|--------|----------|
+| 🔮 AI Dream Decoder | `/tools/dream-ai` | 梦境解读截图分享 | → `/dream-interpretation` $1 |
+| 💕 Zodiac Love Match | `/tools/zodiac-match` | 配对百分比截图疯传 | → `/naming` $1 |
+| 🔮 Daily Fortune | `/tools/daily-fortune` | 每日运势卡片分享 | → `/divination` $1 |
+| ✨ Name Preview | `/tools/name-preview` | 中文名预览分享 | → `/naming` $1 |
+
+每个工具：免费 · 即时 AI · 分享按钮（Twitter/WhatsApp/复制）· $1 转化漏斗 · 4语言 · 邮件订阅入口
+
+#### 📧 邮件增长引擎
+- ✅ 每日邮件发给所有 DB 订阅者（Prisma 查询 Subscriber 表）
+- ✅ 邮件内含 4 个 AI 工具推广卡片
+- ✅ 4 个工具页面均有 EmailCaptureForm
+- ✅ Resend 每日自动发送，已验证通过
+
+#### ⏰ Cron 计时任务
+- ✅ 预热新页面（28个: snake-2027 + 4 tools × 4 locales）
+- ✅ IndexNow 新增页面推送
+- ✅ 日报生成 · sitemap ping · 邮件发送
+
+#### 🐛 修过的坑
+- `react/no-unescaped-entities` — name-preview JSX 引号
+- em dash `—` 导致 HTTP header ByteString 错误（4 个 API）
+- Render 部署流程：Push → 自动构建 → ~2min 上线
+
+#### 📣 冷启动实验
+- ❌ r/astrology — Rule 4: No self-promotion
+- ❌ r/InternetIsBeautiful — Rule 10: AI-Generated Content
+- ⚠️ Reddit 新账号限流 494s
+- 🔜 **下一步：Product Hunt 发布**（明天周三最佳时机）
+  - 文案已备好（Tagline/Description/First comment）
+  - 注册 → https://www.producthunt.com
+
+#### 📦 新增文件清单
+```
+src/app/api/dream-ai/route.ts
+src/app/api/zodiac-match/route.ts
+src/app/api/daily-fortune/route.ts
+src/app/api/name-preview/route.ts
+src/app/[locale]/tools/dream-ai/page.tsx
+src/app/[locale]/tools/zodiac-match/page.tsx
+src/app/[locale]/tools/daily-fortune/page.tsx
+src/app/[locale]/tools/name-preview/page.tsx
+```
+
+#### 修改文件
+`messages/*.json` · `layout.tsx` · `NavMenu.tsx` · `email.ts` · `cron/route.ts` · `sitemap-ping.ts` · `subscribe/route.ts` · `EmailCaptureForm.tsx` · `CLAUDE.md`
 
 #### 🚀 4 个 AI 病毒传播工具
 | 工具 | 路由 | 病毒点 | 转化目标 |
