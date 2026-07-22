@@ -24,21 +24,20 @@ export default function DivinationResultView({
           <p className="text-sm text-stone-800 leading-relaxed">{result.mainHexagram.advice}</p>
         </div>
 
-        {/* Hexagram identity — always visible */}
+        {/* Hexagram identity — English-first */}
         <div className="text-center border-t border-stone-100 pt-4">
-          <p className="text-2xl font-bold text-accent">{result.mainHexagram.nameZh}</p>
-          <div className="flex items-center justify-center gap-2">
-            <p className="text-base text-stone-500">{result.mainHexagram.pinyin}</p>
+          <p className="text-2xl font-bold text-accent">{result.mainHexagram.nameEn}</p>
+          <div className="flex items-center justify-center gap-2 mt-1">
+            <p className="text-base text-stone-500">{result.mainHexagram.nameZh} · {result.mainHexagram.pinyin}</p>
             <SpeakButton text={result.mainHexagram.nameZh} />
           </div>
-          <p className="text-sm text-stone-400">{result.mainHexagram.nameEn}</p>
         </div>
 
-        {/* Judgment — always visible as teaser */}
+        {/* Judgment — English as main body, Chinese as citation */}
         <div className="bg-stone-50 rounded-lg p-4">
-          <p className="text-sm font-medium text-stone-600 mb-1">Original Judgment (卦辞)</p>
-          <p className="text-stone-800">{result.mainHexagram.judgment}</p>
-          <p className="text-xs text-stone-500 mt-1">{result.mainHexagram.judgmentEn}</p>
+          <p className="text-sm font-medium text-stone-600 mb-1">The Oracle Says</p>
+          <p className="text-stone-800 leading-relaxed">{result.mainHexagram.judgmentEn}</p>
+          <p className="text-xs text-stone-400 mt-2 italic">卦辞: {result.mainHexagram.judgment}</p>
         </div>
 
         {/* Gated content: interpretation + changed/mutual hexagrams + changing line */}
@@ -51,34 +50,37 @@ export default function DivinationResultView({
         ) : (
           <>
             <div>
-              <p className="text-sm font-medium text-stone-600 mb-1">Interpretation</p>
-              <p className="text-sm text-stone-500">{result.mainHexagram.descriptionEn}</p>
+              <p className="text-sm font-medium text-stone-600 mb-1">What This Means for You</p>
+              <p className="text-sm text-stone-500 leading-relaxed">{result.mainHexagram.descriptionEn}</p>
             </div>
+
+            {result.changingLine && (
+              <div className="rounded-lg p-4 changing-line-card">
+                <p className="text-sm font-medium mb-1 text-accent-warm">The Turning Point — Line {result.changingLine.position}</p>
+                <p className="text-stone-800 leading-relaxed">{result.changingLine.textEn}</p>
+                <p className="text-xs text-stone-400 mt-2 italic">爻辞: {result.changingLine.text}</p>
+              </div>
+            )}
 
             {result.changedHexagram && (
               <div className="bg-stone-50 rounded-lg p-4">
-                <p className="text-sm font-medium text-stone-600 mb-1">Changed Hexagram (变卦)</p>
-                <p className="text-stone-800 font-medium">{result.changedHexagram.nameZh}</p>
+                <p className="text-sm font-medium text-stone-600 mb-1">Where This Is Heading</p>
+                <p className="text-stone-800 font-medium">{result.changedHexagram.nameEn}</p>
                 <div className="flex items-center gap-2">
-                  <p className="text-xs text-stone-500">{result.changedHexagram.pinyin} — {result.changedHexagram.nameEn}</p>
+                  <p className="text-xs text-stone-400">{result.changedHexagram.nameZh} · {result.changedHexagram.pinyin}</p>
                   <SpeakButton text={result.changedHexagram.nameZh} />
                 </div>
-                <p className="text-xs text-stone-500 mt-1">{result.changedHexagram.descriptionEn}</p>
+                <p className="text-xs text-stone-500 mt-1 leading-relaxed">{result.changedHexagram.descriptionEn}</p>
               </div>
             )}
 
             {result.mutualHexagram && (
-              <div>
-                <p className="text-sm font-medium text-stone-600 mb-1">Mutual Hexagram (互卦)</p>
-                <p className="text-sm">{result.mutualHexagram.nameZh} ({result.mutualHexagram.pinyin} — {result.mutualHexagram.nameEn})</p>
-              </div>
-            )}
-
-            {result.changingLine && (
-              <div className="rounded-lg p-4 changing-line-card">
-                <p className="text-sm font-medium mb-1 text-accent-warm">Changing Line (动爻) — Position {result.changingLine.position}</p>
-                <p className="text-stone-800">{result.changingLine.text}</p>
-                <p className="text-xs text-stone-500 mt-1">{result.changingLine.textEn}</p>
+              <div className="text-center text-sm text-stone-500">
+                <p>
+                  <span className="text-stone-400">Inner dynamics:</span>{" "}
+                  {result.mutualHexagram.nameEn}{" "}
+                  <span className="text-xs text-stone-400">({result.mutualHexagram.nameZh} · {result.mutualHexagram.pinyin})</span>
+                </p>
               </div>
             )}
           </>
