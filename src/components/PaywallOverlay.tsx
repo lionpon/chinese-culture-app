@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import PaymentTrustBadges from "./PaymentTrustBadges";
 
 export default function PaywallOverlay({
   purchaseId,
@@ -41,51 +42,54 @@ export default function PaywallOverlay({
 
   if (dismissed) return null;
 
-  const cards = lockedTitles || [t(featureKey1), t(featureKey2)];
+  const features = lockedTitles || [t(featureKey1), t(featureKey2)];
 
   return (
-    <div className="relative my-4">
-      {/* Progress bar */}
-      <div className="mb-3 flex items-center gap-2">
-        <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ backgroundColor: "var(--bg-surface)" }}>
-          <div className="h-full w-[30%] rounded-full" style={{ backgroundColor: "var(--gold)" }} />
-        </div>
-        <span className="text-xs font-medium" style={{ color: "var(--text-muted)" }}>30%</span>
-      </div>
-      <p className="text-sm font-semibold text-center mb-4" style={{ color: "var(--gold)" }}>
-        {t("unlockTitle")}
-      </p>
-
-      {/* Teaser cards */}
-      <div className="space-y-2 opacity-50 pointer-events-none mb-4">
-        {cards.map((title, i) => (
-          <div key={i} className="rounded-lg px-4 py-3 border" style={{ backgroundColor: "var(--bg-card)", borderColor: "var(--border-subtle)" }}>
-            <p className="text-sm font-medium" style={{ color: "var(--text-primary)" }}>
-              {title}
-            </p>
-            <p className="text-xs" style={{ color: "var(--text-muted)" }}>
-              {t("lockedContent")}
-            </p>
-          </div>
-        ))}
-        <div className="rounded-lg px-4 py-3 text-center border border-dashed" style={{ backgroundColor: "var(--bg-surface)", borderColor: "var(--border-medium)" }}>
-          <p className="text-xs" style={{ color: "var(--text-muted)" }}>{t("andMore")}</p>
-        </div>
+    <div className="relative my-6">
+      {/* Divider with label */}
+      <div className="flex items-center gap-3 mb-5">
+        <div className="flex-1 h-px" style={{ backgroundColor: "var(--border-medium)" }} />
+        <span className="text-xs font-medium whitespace-nowrap" style={{ color: "var(--gold)" }}>
+          ✨ {t("unlockHeading")}
+        </span>
+        <div className="flex-1 h-px" style={{ backgroundColor: "var(--border-medium)" }} />
       </div>
 
-      {/* Action buttons */}
-      <div className="flex flex-col gap-2">
+      {/* Upgrade card */}
+      <div
+        className="rounded-xl p-5"
+        style={{
+          background: "linear-gradient(135deg, rgba(201,169,110,0.06), rgba(201,169,110,0.02))",
+          border: "1px solid var(--border-medium)",
+        }}
+      >
+        {/* Feature list */}
+        <ul className="space-y-2 mb-4">
+          {features.map((title, i) => (
+            <li key={i} className="flex items-start gap-2 text-sm" style={{ color: "var(--text-body)" }}>
+              <span className="mt-0.5 flex-shrink-0" style={{ color: "var(--gold)" }}>✓</span>
+              <span>{title}</span>
+            </li>
+          ))}
+        </ul>
+
+        {/* CTA button */}
         <button
           onClick={unlock}
           disabled={loading}
-          className="w-full py-3 rounded-xl text-sm font-medium btn-primary disabled:opacity-60"
+          className="w-full py-3 rounded-xl text-sm font-semibold btn-primary disabled:opacity-60 mb-3"
         >
           {loading ? "..." : t("unlockFullCta")}
         </button>
+
+        {/* Payment trust badges */}
+        <PaymentTrustBadges />
+
+        {/* Dismiss */}
         <button
           onClick={() => setDismissed(true)}
-          className="w-full py-2 rounded-xl text-xs transition-colors"
-          style={{ color: "var(--text-muted)" }}
+          className="w-full pt-3 text-xs transition-colors hover:opacity-70"
+          style={{ color: "var(--text-dim)" }}
         >
           {t("seeFreePreview")}
         </button>

@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import PaymentTrustBadges from "./PaymentTrustBadges";
 
 export default function SubmitButton({
   loading,
@@ -21,9 +22,14 @@ export default function SubmitButton({
             : t("submit.paidSimple", { label })}
       </button>
       {!hasFree && (
-        <p className="text-center text-xs text-stone-400 mt-2">
-          {t("submit.cardNote")}
-        </p>
+        <>
+          <p className="text-center text-xs text-stone-400 mt-2">
+            {t("submit.cardNote")}
+          </p>
+          <div className="mt-3">
+            <PaymentTrustBadges />
+          </div>
+        </>
       )}
     </>
   );
