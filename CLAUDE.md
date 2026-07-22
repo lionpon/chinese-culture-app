@@ -14,11 +14,11 @@
 | I Ching Divination | `/divination` | 易经占卜（时间/随机/手动起卦） |
 
 ### 免费内容
-`/palm-reading` `/dream-interpretation` `/daily` `/guide/*` `/tools/*` `/world-cup`
+`/palm-reading` `/dream-interpretation` `/daily` `/guide/*` `/tools/*` `/world-cup` `/snake-2027` `/tools/dream-ai`
 
 ## 技术栈
 
-Next.js 14 · TypeScript · Prisma · Neon PostgreSQL · Tailwind CSS · next-intl · PayPal Standard Checkout · OpenRouter AI
+Next.js 14 · TypeScript · Prisma · Supabase PostgreSQL · Tailwind CSS · next-intl · PayPal Standard Checkout · OpenRouter AI · Resend
 
 ## 基础设施
 
@@ -45,6 +45,7 @@ src/
 │   │   ├── guide/         # 指南(14个子页面)
 │   │   ├── tools/         # 工具
 │   │   ├── world-cup/     # 世界杯
+│   │   ├── snake-2027/    # 🐍 蛇年运势 (13页: 总览+12生肖)
 │   │   ├── admin/         # 管理后台
 │   │   ├── success/       # 支付成功
 │   │   ├── about/privacy/terms/
@@ -76,7 +77,7 @@ src/
 ```
 
 ### 关键组件
-`PaywallOverlay` `NamingResultView` `CalendarResultView` `DivinationResultView` `PalmReadingResultView` `DreamInterpretationResultView` `WorldCupCTA` `GuideCTA` `FreeTierBadge` `AnalyticsTracker` `CookieConsent` `EmailCaptureForm` `LanguageSwitcher` `ShareButton`
+`PaywallOverlay` `NamingResultView` `CalendarResultView` `DivinationResultView` `PalmReadingResultView` `DreamInterpretationResultView` `WorldCupCTA` `GuideCTA` `SnakeYearCard` `ZodiacDetailCard` `FreeTierBadge` `AnalyticsTracker` `CookieConsent` `EmailCaptureForm` `LanguageSwitcher` `ShareButton`
 
 ### 关键 lib
 `paypal.ts` `bazi.ts` `calendar.ts` `divination.ts` `naming.ts` `palm-reading.ts` `dream-interpretation.ts` `db.ts` `report.ts` `track.ts` `useCheckout.ts` `result-store.tsx` `free-tier.ts` `bot-filter.ts` `email.ts` `telegram.ts`
@@ -94,20 +95,84 @@ src/
 三层闭环：PDT (return) + 主动生成 (auto-create) + IPN (webhook)
 PayPal Standard Checkout，支持信用卡支付。
 
-## 近期状态 (2026-07-20 深夜)
+## 近期状态 (2026-07-22)
 
-- **线上版本**：`aeda292` Live on Render + Cloudflare
+- **线上版本**：`9059506` Live on Render + Cloudflare
 - **域名**：`www.culture-of-china.com` 正常运行
 - **数据库**：Supabase (`vnktcrolpcyktduldpfm`) ✅
 - **GitHub**：`git@github.com:lionpon/chinese-culture-app.git` (SSH deploy key)
+- **最新 commit**：`9059506`（本地有未提交的新功能）
 
-### 今日完成
-- ✅ **Render 部署修复**：移除 `prisma db push`（PgBouncer 不兼容），构建成功
-- ✅ **世界杯结束**：西班牙 1-0 阿根廷夺冠，页面更新为冠军回顾模式，4 语言
-- ✅ **支付闭环上线**：PayPal 企业商户，三层闭环（PDT + 自动生成 + IPN）
-- ✅ **信用卡直付**：Account Optional 已开启，Visa/Mastercard 无需 PayPal 账号
-- ✅ **安全修复**：`/api/result` 自动生成加入 10 分钟窗口限制
-- ✅ **环境变量**：全新 PDT Token 已部署，SANDBOX=false
+### 7月22日完成：AI 原生增长引擎 v1（4个工具全部上线）
+
+#### 🚀 4 个 AI 病毒传播工具
+| 工具 | 路由 | 病毒点 | 转化目标 |
+|------|------|--------|----------|
+| 🔮 **AI Dream Decoder** | `/tools/dream-ai` | 梦境解读截图分享 | → `/dream-interpretation` $1 |
+| 💕 **Zodiac Love Match** | `/tools/zodiac-match` | 配对百分比截图疯传 | → `/naming` $1 |
+| 🔮 **Daily Fortune** | `/tools/daily-fortune` | 每日运势卡片分享 | → `/divination` $1 |
+| ✨ **Name Preview** | `/tools/name-preview` | 中文名预览分享 | → `/naming` $1 |
+
+**共同特征**：
+- ✅ 全部免费使用，无需登录/支付
+- ✅ 所有结果设计为可分享卡片（Twitter / WhatsApp / 复制）
+- ✅ 每个工具都有清晰的 $1 转化 CTA
+- ✅ 4 语言完整支持（en/ru/ja/ko）
+- ✅ 埋点追踪完整（submit / result / share / upsell）
+- ✅ 全部通过 `next build` 编译，0 错误
+
+**增长逻辑**：免费工具 → 用户体验 wow moment → 社交分享 → 新用户进入 → 循环 → 部分转化 $1
+
+**新增 API 路由**：`/api/dream-ai` `/api/zodiac-match` `/api/daily-fortune` `/api/name-preview`
+
+**新增页面**：`/tools/dream-ai` `/tools/zodiac-match` `/tools/daily-fortune` `/tools/name-preview`
+
+### 7月21日（回顾）
+
+#### 🐍 蛇年 2027 预热（SEO 引流新频道）
+- ✅ **13 个新页面上线**：蛇年总览 + 12 生肖运势（`/snake-2027`，4 语言）
+- ✅ **SEO 优化**：每页独立 meta title/description，sitemap 已收录
+- ✅ **追踪埋点**：AnalyticsTracker 接入所有蛇年页面
+- ✅ **首页入口**：guides 区域新增蛇年链接（4 locales）
+- ✅ 世界杯引流模式复用到蛇年：**热点事件 → 生肖运势 → SEO 引流 → 转化**
+
+#### 📧 Resend 邮件系统完善
+- ✅ 发件人地址正式化：`onboarding@resend.dev` → `noreply@culture-of-china.com`
+- ✅ Contact 表单容错：缺少 `RESEND_API_KEY` 时优雅降级，不报错
+- ✅ i18n 表单验证：浏览器默认英文提示 → 四语言本地化错误消息
+- ✅ Resend 域名验证已在 Resend 控制台配置
+
+#### 📊 竞品分析
+- ✅ `COMPETITOR_ANALYSIS.md` 完成：5 家竞品深度分析（Astrology.com / Cafe Astrology / Astro-Charts / Feng Shui Web / Your Chinese Astrology）
+- ✅ 核心发现：**$1 定价远低于市场 ($5-$35)，是巨大优势但被隐藏了**
+- ✅ P0-P3 转化优化路线图已制定（Hero 重构 / 定价前置 / Paywall 免费预览等）
+
+#### 🔧 组件修复
+- ✅ GuideCTA 使用正确 props（service + href）
+- ✅ AnalyticsTracker 移除多余 props
+- ✅ snake-2027 页面清理未使用变量
+
+### 7月21日 Git 提交
+| Commit | 内容 |
+|--------|------|
+| `9059506` | docs: update CLAUDE.md + competitor analysis |
+| `16cd493` | fix: use correct GuideCTA props (service + href) |
+| `ebacc0d` | fix: remove AnalyticsTracker props |
+| `fd6f442` | fix: remove unused variable in snake-2027 page |
+| `015bbbd` | feat: add snake-2027 link to homepage guides section (4 locales) |
+| `6d945ae` | feat: Year of the Snake 2027 pages — 12 zodiac + overview |
+| `c670fda` | fix: change sender from onboarding@resend.dev to noreply@culture-of-china.com |
+| `e8c1717` | fix: add eslint-disable for any type in contact fallback |
+| `7435eaf` | fix: contact form gracefully handles missing email config |
+| `86da2c8` | fix: i18n form validation — locale-aware messages |
+
+### 7月20日（回顾）
+- Render 部署修复（移除 prisma db push）
+- 世界杯结束（西班牙夺冠，冠军回顾模式）
+- PayPal 支付闭环上线（PDT + 自动生成 + IPN 三层）
+- 信用卡直付开启（Account Optional）
+- 安全修复（/api/result 10分钟窗口）
+- Neon → Supabase 数据库迁移完成
 
 ### PayPal 商户配置
 | 设置 | 状态 |
@@ -120,7 +185,7 @@ PayPal Standard Checkout，支持信用卡支付。
 | Sandbox | `false` |
 
 ### Render 环境变量
-`DATABASE_URL` `DIRECT_URL` `NEXT_PUBLIC_APP_URL` `ADMIN_TOKEN` `OPENROUTER_API_KEY` `PAYPAL_PDT_TOKEN` `PAYPAL_SANDBOX` `RESEND_API_KEY` `CONTACT_EMAIL` `CRON_SECRET` ✅ 全部就绪
+`DATABASE_URL` `DIRECT_URL` `NEXT_PUBLIC_APP_URL` `ADMIN_TOKEN` `OPENROUTER_API_KEY` `PAYPAL_PDT_TOKEN` `PAYPAL_SANDBOX` `RESEND_API_KEY` `CONTACT__EMAIL` `CRON_SECRET` ✅ 全部就绪
 
 ### Git 配置
 ```

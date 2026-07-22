@@ -102,10 +102,10 @@ export default async function LocaleLayout({ children, params }: Props) {
   const pathname = params.locale === "en" ? "" : `/${params.locale}`;
 
   const footerGuideLabels: Record<string, string[]> = {
-    en: ["Chinese Name Guide", "Boy Names", "Girl Names", "I Ching Guide", "I Ching Beginner", "Auspicious Dates", "Wedding Dates 2026", "Chinese Zodiac", "Five Elements", "CNY 2027", "Lucky Numbers", "Feng Shui", "Face Reading", "Dream Meaning", "Free Zodiac Calculator", "Five Elements Test"],
-    ru: ["Гид по Китайским Именам", "Мужские Имена", "Женские Имена", "Гид по И-Цзин", "И-Цзин для Начинающих", "Благоприятные Даты", "Свадебные Даты 2026", "Китайский Зодиак", "Пять Элементов", "КНГ 2027", "Счастливые числа", "Фэн-шуй", "Чтение лица", "Толкование снов", "Калькулятор Зодиака", "Тест Пяти Элементов"],
-    ja: ["中国名ガイド", "男性の名前", "女性の名前", "易経ガイド", "易経入門", "吉日", "2026年結婚日", "十二支", "五行", "旧正月2027", "縁起の良い数字", "風水", "人相学", "夢占い", "無料十二支計算", "五行診断"],
-    ko: ["중국식 이름 가이드", "남자 이름", "여자 이름", "주역 가이드", "주역 입문", "길일", "2026 결혼 날짜", "십이지", "오행", "2027 춘절", "행운의 숫자", "풍수", "관상", "꿈 해몽", "무료 띠 계산기", "오행 테스트"],
+    en: ["Chinese Name Guide", "Boy Names", "Girl Names", "I Ching Guide", "I Ching Beginner", "Auspicious Dates", "Wedding Dates 2026", "Chinese Zodiac", "Five Elements", "CNY 2027", "Lucky Numbers", "Feng Shui", "Face Reading", "Dream Meaning", "Free Zodiac Calculator", "Five Elements Test", "AI Dream Decoder", "Love Match", "Daily Fortune", "Name Preview"],
+    ru: ["Гид по Китайским Именам", "Мужские Имена", "Женские Имена", "Гид по И-Цзин", "И-Цзин для Начинающих", "Благоприятные Даты", "Свадебные Даты 2026", "Китайский Зодиак", "Пять Элементов", "КНГ 2027", "Счастливые числа", "Фэн-шуй", "Чтение лица", "Толкование снов", "Калькулятор Зодиака", "Тест Пяти Элементов", "AI Расшифровка Снов", "Совместимость", "Предсказание", "Превью Имён"],
+    ja: ["中国名ガイド", "男性の名前", "女性の名前", "易経ガイド", "易経入門", "吉日", "2026年結婚日", "十二支", "五行", "旧正月2027", "縁起の良い数字", "風水", "人相学", "夢占い", "無料十二支計算", "五行診断", "AI夢解読", "相性診断", "今日の運勢", "名前プレビュー"],
+    ko: ["중국식 이름 가이드", "남자 이름", "여자 이름", "주역 가이드", "주역 입문", "길일", "2026 결혼 날짜", "십이지", "오행", "2027 춘절", "행운의 숫자", "풍수", "관상", "꿈 해몽", "무료 띠 계산기", "오행 테스트", "AI 꿈 해몽", "궁합 진단", "오늘의 운세", "이름 미리보기"],
   };
 
   const guideSlugs = [
@@ -114,7 +114,7 @@ export default async function LocaleLayout({ children, params }: Props) {
     "lucky-numbers", "feng-shui", "face-reading", "dream-meaning",
   ];
 
-  const toolSlugs = ["zodiac-calculator", "five-elements-test"];
+  const toolSlugs = ["zodiac-calculator", "five-elements-test", "dream-ai", "zodiac-match", "daily-fortune", "name-preview"];
 
   const allLabels = footerGuideLabels[params.locale] || footerGuideLabels.en;
   const guideLabels = allLabels.slice(0, 14);
@@ -163,6 +163,12 @@ export default async function LocaleLayout({ children, params }: Props) {
                       <div className="my-1 mx-3" style={{ borderTop: "1px solid var(--border-subtle)" }} />
                       <a href={`${pathname}/tools/zodiac-calculator`} className="block px-4 py-2 text-sm hover:bg-white/5 transition-colors">{t("nav.zodiacCalc")}</a>
                       <a href={`${pathname}/tools/five-elements-test`} className="block px-4 py-2 text-sm hover:bg-white/5 transition-colors">{t("nav.fiveElementsTest")}</a>
+                      <div className="my-1 mx-3" style={{ borderTop: "1px solid var(--border-subtle)" }} />
+                      <a href={`${pathname}/tools/dream-ai`} className="block px-4 py-2 text-sm hover:bg-white/5 transition-colors" style={{ color: "var(--gold)" }}>✦ {t("nav.dreamAi")}</a>
+                      <div className="my-1 mx-3" style={{ borderTop: "1px solid var(--border-subtle)" }} />
+                      <a href={`${pathname}/tools/zodiac-match`} className="block px-4 py-2 text-sm hover:bg-white/5 transition-colors">💕 {t("nav.zodiacMatch")}</a>
+                      <a href={`${pathname}/tools/daily-fortune`} className="block px-4 py-2 text-sm hover:bg-white/5 transition-colors">🔮 {t("nav.dailyFortune")}</a>
+                      <a href={`${pathname}/tools/name-preview`} className="block px-4 py-2 text-sm hover:bg-white/5 transition-colors">✨ {t("nav.namePreview")}</a>
                     </div>
                   </div>
                   <span style={{ color: "var(--border-medium)" }} className="mx-0.5">|</span>

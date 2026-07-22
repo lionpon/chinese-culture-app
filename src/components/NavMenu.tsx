@@ -60,6 +60,18 @@ export default function NavMenu() {
               <Link href="/tools/five-elements-test" className="text-sm py-1 block" style={{ color: "var(--text-muted)" }} onClick={() => setOpen(false)}>
                 {t("nav.fiveElementsTest")}
               </Link>
+              <Link href="/tools/dream-ai" className="text-sm py-1 block font-medium" style={{ color: "var(--gold)" }} onClick={() => setOpen(false)}>
+                ✦ {t("nav.dreamAi")}
+              </Link>
+              <Link href="/tools/zodiac-match" className="text-sm py-1 block" style={{ color: "var(--text-muted)" }} onClick={() => setOpen(false)}>
+                💕 {t("nav.zodiacMatch")}
+              </Link>
+              <Link href="/tools/daily-fortune" className="text-sm py-1 block" style={{ color: "var(--text-muted)" }} onClick={() => setOpen(false)}>
+                🔮 {t("nav.dailyFortune")}
+              </Link>
+              <Link href="/tools/name-preview" className="text-sm py-1 block" style={{ color: "var(--text-muted)" }} onClick={() => setOpen(false)}>
+                ✨ {t("nav.namePreview")}
+              </Link>
             </div>
             <div className="pt-2" style={{ borderTop: "1px solid var(--border-subtle)" }}>
               <LanguageSwitcher />
