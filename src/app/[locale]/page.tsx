@@ -24,6 +24,22 @@ function showWorldCupBanner(): boolean {
   return now >= start && now < end;
 }
 
+// ---- Product Hunt Launch Banner (2026-07-23 ~ 2026-07-31) ----
+const PH_BANNER: Record<string, { text: string; cta: string }> = {
+  en: { text: "🚀 We're live on Product Hunt!", cta: "Support us with a vote →" },
+  ru: { text: "🚀 Мы на Product Hunt!", cta: "Поддержите нас голосом →" },
+  ja: { text: "🚀 Product Hunt に登場しました！", cta: "投票で応援 →" },
+  ko: { text: "🚀 Product Hunt 출시!", cta: "투표로 응원하기 →" },
+};
+const PH_URL = "https://www.producthunt.com/posts/chinese-culture-studio";
+
+function showPHBanner(): boolean {
+  const now = new Date();
+  const start = new Date("2026-07-23T00:00:00Z");
+  const end = new Date("2026-07-31T00:00:00Z");
+  return now >= start && now < end;
+}
+
 function WeeklyFortuneSignup() {
   const t = useTranslations("home");
   const [email, setEmail] = useState("");
@@ -89,6 +105,7 @@ export default function HomePage() {
   const params = useParams();
   const locale = (params?.locale as string) || "en";
   const wc = WC_BANNER[locale] || WC_BANNER.en;
+  const ph = PH_BANNER[locale] || PH_BANNER.en;
 
   return (
     <div>
@@ -148,6 +165,17 @@ export default function HomePage() {
               <p className="text-white font-bold text-sm sm:text-base">{wc.cta}</p>
             </div>
           </Link>
+        </div>
+      )}
+
+      {showPHBanner() && (
+        <div className="max-w-2xl mx-auto mb-6">
+          <a href={PH_URL} target="_blank" rel="noopener noreferrer" onClick={() => trackClick("banner_producthunt")} className="block">
+            <div className="rounded-2xl p-4 sm:p-5 text-center transition-all hover:shadow-lg hover:scale-[1.02] active:scale-95" style={{ background: "linear-gradient(135deg, #DA552F, #B83A1A)" }}>
+              <p className="text-white/90 text-xs sm:text-sm font-medium mb-1">🐱 {ph.text}</p>
+              <p className="text-white font-bold text-sm sm:text-base">{ph.cta}</p>
+            </div>
+          </a>
         </div>
       )}
 
