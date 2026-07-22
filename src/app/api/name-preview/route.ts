@@ -6,7 +6,7 @@ const client = new OpenAI({
   apiKey: process.env.OPENROUTER_API_KEY || "sk-placeholder",
   defaultHeaders: {
     "HTTP-Referer": process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
-    "X-Title": "Chinese Culture Studio — Name Preview",
+    "X-Title": "Chinese Culture Studio - Name Preview",
   },
 });
 
