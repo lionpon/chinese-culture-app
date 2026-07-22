@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/navigation";
 import { trackClick } from "@/lib/track";
 import { BASE_URL } from "@/lib/config";
+import EmailCaptureForm from "@/components/EmailCaptureForm";
 
 const ZODIAC = [
   { key: "Rat", emoji: "🐀" }, { key: "Ox", emoji: "🐂" }, { key: "Tiger", emoji: "🐅" },
@@ -169,6 +170,7 @@ export default function DailyFortunePage() {
           </div>
         </div>
       )}
+      <EmailCaptureForm source="daily-fortune" />
     </div>
   );
 }

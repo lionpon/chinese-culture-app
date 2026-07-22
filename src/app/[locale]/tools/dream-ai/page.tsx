@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/navigation";
 import { trackClick } from "@/lib/track";
 import { BASE_URL } from "@/lib/config";
+import EmailCaptureForm from "@/components/EmailCaptureForm";
 
 interface DreamResult {
   title: string;
@@ -185,6 +186,7 @@ export default function DreamAiPage() {
           </div>
         </div>
       )}
+      <EmailCaptureForm source="dream-ai" />
     </div>
   );
 }

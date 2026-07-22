@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "invalid_email" }, { status: 400 });
     }
 
-    const validSources = ["zodiac-calculator", "five-elements-test", "divination", "naming", "calendar", "palm-reading", "homepage", "dream-interpretation"];
+    const validSources = ["zodiac-calculator", "five-elements-test", "divination", "naming", "calendar", "palm-reading", "homepage", "dream-interpretation", "dream-ai", "zodiac-match", "daily-fortune", "name-preview"];
     if (!source || !validSources.includes(source)) {
       return NextResponse.json({ error: "invalid_source" }, { status: 400 });
     }
