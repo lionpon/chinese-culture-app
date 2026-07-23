@@ -100,7 +100,9 @@ export default function QuickOraclePage() {
             onChange={(e) => setQuestion(e.target.value)}
             placeholder={t("questionPlaceholder")}
             rows={2}
-            className="w-full px-4 py-3 rounded-xl bg-stone-800/50 border border-stone-700 text-stone-200 placeholder-stone-500 text-sm resize-none focus:outline-none focus:border-stone-500 transition-colors"
+            className="w-full px-4 py-3 rounded-xl border border-stone-300 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-amber-300 transition-colors"
+            style={{ backgroundColor: "var(--bg-surface)", color: "var(--text-primary)" }}
+
           />
         </div>
         <button type="submit" disabled={loading} className="w-full py-3 rounded-xl text-sm font-semibold btn-primary disabled:opacity-60">
