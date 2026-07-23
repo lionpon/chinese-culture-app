@@ -51,9 +51,9 @@
     "submit": {
       "processing": "処理中...",
       "free": "{label} — 無料",
-      "paid": "{label} · ${amount} 支援",
+      "paid": "{label} · {amount} 支援",
       "helper": "ご支援がサービスの維持に役立ちます",
-      "paidSimple": "結果を見る · ${amount}",
+      "paidSimple": "結果を見る · {amount}",
       "cardNote": "PayPalまたはクレジットカード — PayPalアカウント不要",
       "paidNote": "PayPalまたはクレジットカード — アカウント不要"
     },
@@ -294,7 +294,8 @@
       "secondNum": "2番目",
       "thirdNum": "3番目",
       "previewNote": "無料プレビューが尽きると支援額が使用されます。",
-      "submit": "卦を立てる"
+      "submit": "卦を立てる",
+      "timeHint": "現在の日時を使用します"
     },
     "example": {
       "summary": "結果の例 — 何が得られるか確認",

@@ -51,9 +51,9 @@
     "submit": {
       "processing": "Processing...",
       "free": "{label} — Free",
-      "paid": "{label} · Support ${amount}",
+      "paid": "{label} · Support {amount}",
       "helper": "Supports ongoing development & server costs",
-      "paidSimple": "Get Your Reading · ${amount}",
+      "paidSimple": "Get Your Reading · {amount}",
       "cardNote": "PayPal or credit/debit card — no PayPal account needed",
       "paidNote": "PayPal or credit card — no account needed"
     },
@@ -294,7 +294,8 @@
       "secondNum": "Second",
       "thirdNum": "Third",
       "previewNote": "Your amount will be used after free previews are exhausted.",
-      "submit": "Cast Hexagram"
+      "submit": "Cast Hexagram",
+      "timeHint": "Uses current date and time for authentic time-based casting"
     },
     "example": {
       "summary": "Example result — see what you'll get",

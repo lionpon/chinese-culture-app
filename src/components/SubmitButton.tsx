@@ -35,6 +35,9 @@ export default function SubmitButton({
         >
           {t("submit.paid", { label, amount: `$${amt}` })}
         </button>
+        <div className="mt-3">
+          <PaymentTrustBadges />
+        </div>
         <p className="text-center text-xs" style={{ color: "var(--text-dim)" }}>
           {t("submit.paidNote")}
         </p>

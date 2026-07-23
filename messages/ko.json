@@ -51,9 +51,9 @@
     "submit": {
       "processing": "처리 중...",
       "free": "{label} — 무료",
-      "paid": "{label} · ${amount}",
+      "paid": "{label} · {amount}",
       "helper": "PayPal 또는 신용카드 — PayPal 계정 불필요",
-      "paidSimple": "결과 보기 · ${amount}",
+      "paidSimple": "결과 보기 · {amount}",
       "cardNote": "PayPal 또는 신용카드 — PayPal 계정 불필요",
       "paidNote": "PayPal 또는 신용카드 — 계정 불필요"
     },
@@ -294,7 +294,8 @@
       "secondNum": "두 번째",
       "thirdNum": "세 번째",
       "previewNote": "무료 미리보기 소진 후 금액이 사용됩니다.",
-      "submit": "괘상 뽑기"
+      "submit": "괘상 뽑기",
+      "timeHint": "현재 날짜와 시간을 사용합니다"
     },
     "example": {
       "summary": "예시 결과 — 받으실 내용을 미리 확인하세요",

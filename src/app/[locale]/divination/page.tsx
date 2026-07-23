@@ -165,6 +165,9 @@ export default function DivinationPage() {
  </button>
  ))}
  </div>
+ {method === "time" && (
+   <p className="text-xs mt-1" style={{ color: "var(--text-dim)" }}>{t("form.timeHint")}</p>
+ )}
  </div>
  {method === "manual" && (
  <div>
