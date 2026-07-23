@@ -217,6 +217,12 @@ export default function HomePage() {
           desc={t("features.dream.desc")}
           onClick={() => trackClick("feature_dream")}
         />
+        <FeatureCard
+          href="/tools/quick-oracle"
+          title={t("features.quickOracle.title")}
+          desc={t("features.quickOracle.desc")}
+          onClick={() => trackClick("feature_quick_oracle")}
+        />
       </div>
 
       <section className="max-w-4xl mx-auto mt-12 sm:mt-16 mb-10">

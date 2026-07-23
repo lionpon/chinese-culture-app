@@ -112,6 +112,10 @@
       "dream": {
         "title": "Dream Interpretation",
         "desc": "Describe your dream and receive a dual-perspective analysis from Zhou Gong's ancient dream dictionary and Freudian psychoanalysis."
+      },
+      "quickOracle": {
+        "title": "Quick Oracle (Xiao Liu Ren)",
+        "desc": "Get instant answers with this 2,000-year-old Chinese divination method. Ask any question, get a direct response."
       }
     },
     "cta": {
