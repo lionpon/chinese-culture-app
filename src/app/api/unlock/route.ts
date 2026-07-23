@@ -19,6 +19,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Invalid purchase" }, { status: 400 });
     }
 
+    // Read user's chosen amount from original purchase (preserves AmountPicker selection)
+    let originalInput: Record<string, unknown> = {};
+    try { originalInput = JSON.parse(original.input); } catch { /* use default */ }
+    const payAmount = Math.max(
+      (typeof originalInput.amount === "number" ? originalInput.amount : 0) || (amount ?? 1),
+      1
+    );
+
     // Create new pending purchase from original input
     const pending = await prisma.purchase.create({
       data: {
@@ -28,8 +36,6 @@ export async function POST(req: NextRequest) {
         status: "pending",
       },
     });
-
-    const payAmount = Math.max(amount ?? 1, 1);
 
     // PayPal (LS dropped support for Chinese merchants)
     const url = buildPayPalCheckoutUrl(pending.id, pending.type, payAmount);

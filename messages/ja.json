@@ -54,7 +54,8 @@
       "paid": "{label} · ${amount} 支援",
       "helper": "ご支援がサービスの維持に役立ちます",
       "paidSimple": "結果を見る · ${amount}",
-      "cardNote": "PayPalまたはクレジットカード — PayPalアカウント不要"
+      "cardNote": "PayPalまたはクレジットカード — PayPalアカウント不要",
+      "paidNote": "PayPalまたはクレジットカード — アカウント不要"
     },
     "amount": {
       "label": "支援額 (USD)",
@@ -556,7 +557,8 @@
     "seeFreePreview": "閉じる",
     "lockedContent": "ロック中 — $1で解除",
     "andMore": "+ さらに詳細を見る",
-    "unlockFullCta": "完全な結果 — $1"
+    "unlockFullCta": "完全な結果 — $1",
+    "paywallPersistent": "一回限りの支払い · サブスクリプションなし · 即時解除"
   },
   "legal": {
     "privacy": {

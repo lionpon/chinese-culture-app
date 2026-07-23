@@ -54,7 +54,8 @@
       "paid": "{label} · Поддержать ${amount}",
       "helper": "Ваш вклад помогает поддерживать сервис",
       "paidSimple": "Получить результат · ${amount}",
-      "cardNote": "PayPal или банковская карта — аккаунт PayPal не нужен"
+      "cardNote": "PayPal или банковская карта — аккаунт PayPal не нужен",
+      "paidNote": "PayPal или банковская карта — аккаунт не нужен"
     },
     "amount": {
       "label": "Сумма Поддержки (USD)",
@@ -584,7 +585,8 @@
     "seeFreePreview": "Нет, закрыть",
     "lockedContent": "Закрыто — $1 для разблокировки",
     "andMore": "+ ещё больше деталей",
-    "unlockFullCta": "Полный результат — $1"
+    "unlockFullCta": "Полный результат — $1",
+    "paywallPersistent": "Одноразовый платёж · без подписки · мгновенный доступ"
   },
   "legal": {
     "privacy": {

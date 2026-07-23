@@ -48,9 +48,17 @@ function truncateForFreePreview(type: string, result: Record<string, unknown>): 
     case "calendar": {
       const r = result as Record<string, unknown>;
       const days = r.auspiciousDays as Array<Record<string, unknown>> | undefined;
+      const first = days?.[0];
+      if (!first) return { auspiciousDays: [] };
+      // Free preview: only show date + score + lunar date, hide suitability details
       return {
-        auspiciousDays: days?.slice(0, 1) ?? [],
-        // Exclude: remaining days
+        auspiciousDays: [{
+          date: first.date,
+          lunarDate: first.lunarDate,
+          score: first.score,
+          // Locked: ganzhi, jianchu, constellation, suitable, unsuitable, gods, hours
+        }],
+        lockedCount: (days?.length ?? 1) - 1,
       };
     }
     case "dream-interpretation": {

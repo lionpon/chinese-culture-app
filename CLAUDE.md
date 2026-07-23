@@ -95,15 +95,47 @@ src/
 三层闭环：PDT (return) + 主动生成 (auto-create) + IPN (webhook)
 PayPal Standard Checkout，支持信用卡支付。
 
-## 近期状态 (2026-07-22)
+## 近期状态 (2026-07-23)
 
-- **线上版本**：`9059506` Live on Render + Cloudflare
+- **线上版本**：`2ba5d55` Live on Render + Cloudflare
 - **域名**：`www.culture-of-china.com` 正常运行
 - **数据库**：Supabase (`vnktcrolpcyktduldpfm`) ✅
 - **GitHub**：`git@github.com:lionpon/chinese-culture-app.git` (SSH deploy key)
-- **最新 commit**：`be6089c`（线上 Live on Render）
+- **最新 commit**：`2ba5d55`（fix: zodiac year calculation）
 
-### 7月22日完成：AI 原生增长引擎 v1（完整版）
+### 7月23日：🚀 Product Hunt 正式上线
+
+- ✅ **PH 页面**：https://www.producthunt.com/posts/chinese-culture-studio
+- ✅ **上线时间**：2026-07-23 00:01 PST（北京时间 15:01）
+- ✅ **Tagline**：Chinese Name, I Ching, Palm & Dream Reading — 5 Tools, $1
+- ✅ **First Comment**：已发布
+- ✅ **网站横幅**：首页 PH 橙红横幅已激活（7/23-7/31）
+- ✅ **PH 互动**：已开始给同天上线产品留言
+
+**推广渠道现状**：
+| 渠道 | 状态 |
+|------|------|
+| PH 社区互动 | 🔄 进行中 |
+| HN (Hacker News) | ❌ 注册被封（VPN IP 被拉黑） |
+| 邮件推广 | ❌ 订阅用户 ~0 |
+| Twitter/X | ❌ 无账号（TWITTER_ENABLED 未激活） |
+| Reddit | ❌ r/astrology Rule 4, r/InternetIsBeautiful Rule 10 |
+
+**上线前准备提交（7/22）**：
+| 提交 | 内容 |
+|------|------|
+| `0fca8df` | PH 启动计划 + 首页横幅 |
+| `0f073d9` | 支付墙重设计（Visa/MC/PayPal 徽章） |
+| `f7154e0` | 占卜英文优先布局 |
+| `8cbcd44` | 小六壬（PH 后上线用） |
+
+### 7月22日晚：生肖计算器 Bug 修复
+- 🐛 **Bug**：生肖计算器年份索引用 `year % 12` 导致所有生肖偏移 4 位（1980 年显示鼠→应为猴）
+- ✅ **修复**：`(year - 4) % 12`，中国生肖以甲子年（公元4年）为起点
+- 📄 **文件**：`src/data/zodiac-data.ts`（3 行）
+- ✅ Build 通过，已推送上线 `2ba5d55`
+
+### 7月22日日间：AI 原生增长引擎 v1（完整版）
 
 #### 🚀 4 个 AI 病毒传播工具（全部上线，API 验证通过）
 | 工具 | 路由 | 病毒点 | 转化目标 |

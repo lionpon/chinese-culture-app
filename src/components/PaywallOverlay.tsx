@@ -17,7 +17,6 @@ export default function PaywallOverlay({
 }) {
   const t = useTranslations("success");
   const [loading, setLoading] = useState(false);
-  const [dismissed, setDismissed] = useState(false);
 
   async function unlock() {
     setLoading(true);
@@ -25,7 +24,7 @@ export default function PaywallOverlay({
       const res = await fetch("/api/unlock", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ purchase_id: purchaseId, amount: 1 }),
+        body: JSON.stringify({ purchase_id: purchaseId }),
       });
       const data = await res.json();
       if (data.url) {
@@ -39,8 +38,6 @@ export default function PaywallOverlay({
       setLoading(false);
     }
   }
-
-  if (dismissed) return null;
 
   const features = lockedTitles || [t(featureKey1), t(featureKey2)];
 
@@ -85,14 +82,10 @@ export default function PaywallOverlay({
         {/* Payment trust badges */}
         <PaymentTrustBadges />
 
-        {/* Dismiss */}
-        <button
-          onClick={() => setDismissed(true)}
-          className="w-full pt-3 text-xs transition-colors hover:opacity-70"
-          style={{ color: "var(--text-dim)" }}
-        >
-          {t("seeFreePreview")}
-        </button>
+        {/* Note — paywall stays visible, no dismiss */}
+        <p className="w-full pt-3 text-xs text-center" style={{ color: "var(--text-dim)" }}>
+          {t("paywallPersistent")}
+        </p>
       </div>
     </div>
   );

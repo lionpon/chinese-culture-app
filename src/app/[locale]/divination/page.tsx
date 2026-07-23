@@ -69,23 +69,31 @@ export default function DivinationPage() {
  );
  }
 
- async function handleSubmit(e: FormEvent<HTMLFormElement>) {
- e.preventDefault();
- const form = e.currentTarget;
- const data: Record<string, unknown> = {
- method,
- question: form.question?.value || null,
- };
- if (method === "manual") {
- data.numbers = [
- parseInt(form.num1.value) || 1,
- parseInt(form.num2.value) || 1,
- parseInt(form.num3.value) || 1,
- ];
+ function getFormData(form: HTMLFormElement) {
+   const data: Record<string, unknown> = {
+     method,
+     question: form.question?.value || null,
+   };
+   if (method === "manual") {
+     data.numbers = [
+       parseInt(form.num1.value) || 1,
+       parseInt(form.num2.value) || 1,
+       parseInt(form.num3.value) || 1,
+     ];
+   }
+   data.amount = amount;
+   return data;
  }
- data.amount = amount;
- await checkout(data);
+
+ async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+   e.preventDefault();
+   await checkout(getFormData(e.currentTarget));
  trackClick("form_submit_divination");
+ }
+
+ function handlePaidClick() {
+   checkout(getFormData(document.querySelector('form') as HTMLFormElement), true);
+   trackClick("form_submit_divination_paid");
  }
 
  const methodLabels: Record<string, string> = {
@@ -182,7 +190,7 @@ export default function DivinationPage() {
  {hasFreeUses() && (
  <p className="text-xs text-stone-400 text-center">{t("form.previewNote")}</p>
  )}
- <SubmitButton loading={loading} label={t("form.submit")} hasFree={hasFreeUses()} />
+ <SubmitButton loading={loading} label={t("form.submit")} hasFree={hasFreeUses()} onPaidClick={handlePaidClick} amount={amount} />
  </form>
  </div>
  );

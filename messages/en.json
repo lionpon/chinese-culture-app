@@ -54,7 +54,8 @@
       "paid": "{label} · Support ${amount}",
       "helper": "Supports ongoing development & server costs",
       "paidSimple": "Get Your Reading · ${amount}",
-      "cardNote": "PayPal or credit/debit card — no PayPal account needed"
+      "cardNote": "PayPal or credit/debit card — no PayPal account needed",
+      "paidNote": "PayPal or credit card — no account needed"
     },
     "amount": {
       "label": "Amount (USD)",
@@ -584,7 +585,8 @@
     "seeFreePreview": "No thanks, close this",
     "lockedContent": "Locked — $1 to unlock",
     "andMore": "+ more personalized details",
-    "unlockFullCta": "Unlock Full Result · $1"
+    "unlockFullCta": "Unlock Full Result · $1",
+    "paywallPersistent": "One-time payment · no subscription · instant unlock"
   },
   "legal": {
     "privacy": {

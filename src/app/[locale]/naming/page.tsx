@@ -121,11 +121,9 @@ export default function NamingPage() {
     return isNaN(n) ? undefined : n;
   }
 
-  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const form = e.currentTarget;
+  function getFormData(form: HTMLFormElement) {
     const styleEl = form.elements.namedItem("style") as HTMLSelectElement | null;
-    await checkout({
+    return {
       firstName: form.firstName.value,
       lastName: form.lastName.value,
       gender: form.gender.value,
@@ -136,8 +134,18 @@ export default function NamingPage() {
       style: styleEl ? styleEl.value as "elegant" | "grand" | "fresh" : "elegant",
       mode,
       amount,
-    });
+    };
+  }
+
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    await checkout(getFormData(e.currentTarget));
     trackClick("form_submit_naming");
+  }
+
+  function handlePaidClick() {
+    checkout(getFormData(document.querySelector('form') as HTMLFormElement), true);
+    trackClick("form_submit_naming_paid");
   }
 
   return (
@@ -338,7 +346,7 @@ export default function NamingPage() {
         {hasFreeUses() && (
           <p className="text-xs text-stone-400 text-center">{t("form.previewNote")}</p>
         )}
-        <SubmitButton loading={loading} label={mode === "analyze" ? t("form.submitAnalyze") : t("form.submit")} hasFree={hasFreeUses()} />
+        <SubmitButton loading={loading} label={mode === "analyze" ? t("form.submitAnalyze") : t("form.submit")} hasFree={hasFreeUses()} onPaidClick={handlePaidClick} amount={amount} />
       </form>
     </div>
   );

@@ -100,16 +100,24 @@ export default function CalendarPage() {
  );
  }
 
+ function getFormData(form: HTMLFormElement) {
+   return {
+     startDate: form.startDate.value,
+     endDate: form.endDate.value,
+     eventType: form.eventType.value,
+     amount,
+   };
+ }
+
  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
- e.preventDefault();
- const form = e.currentTarget;
- await checkout({
- startDate: form.startDate.value,
- endDate: form.endDate.value,
- eventType: form.eventType.value,
- amount,
- });
- trackClick("form_submit_calendar");
+   e.preventDefault();
+   await checkout(getFormData(e.currentTarget));
+   trackClick("form_submit_calendar");
+ }
+
+ function handlePaidClick() {
+   checkout(getFormData(document.querySelector('form') as HTMLFormElement), true);
+   trackClick("form_submit_calendar_paid");
  }
 
  return (
@@ -220,7 +228,7 @@ export default function CalendarPage() {
  {hasFreeUses() && (
  <p className="text-xs text-stone-400 text-center">{t("form.previewNote")}</p>
  )}
- <SubmitButton loading={loading} label={t("form.submit")} hasFree={hasFreeUses()} />
+ <SubmitButton loading={loading} label={t("form.submit")} hasFree={hasFreeUses()} onPaidClick={handlePaidClick} amount={amount} />
  </form>
  </div>
  );

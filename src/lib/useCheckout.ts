@@ -7,9 +7,9 @@ import { trackClick } from "./track";
 export function useCheckout(type: string) {
   const [loading, setLoading] = useState(false);
 
-  async function checkout(data: Record<string, unknown>) {
+  async function checkout(data: Record<string, unknown>, forcePaid?: boolean) {
     setLoading(true);
-    const free = hasFreeUses();
+    const free = forcePaid ? false : hasFreeUses();
     try {
       const res = await fetch("/api/checkout", {
         method: "POST",
