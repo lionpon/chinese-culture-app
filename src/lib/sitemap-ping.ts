@@ -44,6 +44,7 @@ function buildIndexNowUrls(): string[] {
     "/world-cup", "/snake-2027",
     "/guide/feng-shui", "/guide/face-reading", "/guide/dream-meaning",
     "/tools/dream-ai", "/tools/zodiac-match", "/tools/daily-fortune", "/tools/name-preview",
+    "/tools/quick-oracle", "/tools/zodiac-calculator", "/tools/five-elements-test",
   ];
 
   // Last 30 daily pages

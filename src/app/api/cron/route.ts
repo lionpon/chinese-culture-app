@@ -67,6 +67,9 @@ export async function GET(req: NextRequest) {
     "/tools/zodiac-match",
     "/tools/daily-fortune",
     "/tools/name-preview",
+    "/tools/quick-oracle",
+    "/tools/zodiac-calculator",
+    "/tools/five-elements-test",
   ];
   for (const lang of ["", "ru", "ja", "ko"]) {
     for (const page of pages) {
