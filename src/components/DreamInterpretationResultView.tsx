@@ -80,7 +80,7 @@ export default function DreamInterpretationResultView({
           <span className="text-base font-normal text-stone-500">
             ({dt.chineseCategory})
           </span>
-          <span className="mx-2 text-stone-300">|</span>
+          <span className="mx-2 text-stone-400">|</span>
           <span className="text-base font-normal text-stone-500">
             {dt.freudianTypeEn}
           </span>

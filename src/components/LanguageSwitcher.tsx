@@ -26,7 +26,7 @@ export default function LanguageSwitcher() {
       >
         EN
       </button>
-      <span className="text-stone-300">|</span>
+      <span className="text-stone-400">|</span>
       <button
         onClick={() => switchTo("ru")}
         className={`hover:text-stone-800 transition-colors ${locale === "ru" ? "text-stone-800 font-bold" : "text-stone-400"}`}
@@ -34,7 +34,7 @@ export default function LanguageSwitcher() {
       >
         RU
       </button>
-      <span className="text-stone-300">|</span>
+      <span className="text-stone-400">|</span>
       <button
         onClick={() => switchTo("ja")}
         className={`hover:text-stone-800 transition-colors ${locale === "ja" ? "text-stone-800 font-bold" : "text-stone-400"}`}
@@ -42,7 +42,7 @@ export default function LanguageSwitcher() {
       >
         JA
       </button>
-      <span className="text-stone-300">|</span>
+      <span className="text-stone-400">|</span>
       <button
         onClick={() => switchTo("ko")}
         className={`hover:text-stone-800 transition-colors ${locale === "ko" ? "text-stone-800 font-bold" : "text-stone-400"}`}

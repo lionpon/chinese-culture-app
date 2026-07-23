@@ -121,7 +121,7 @@ export default function QuickOraclePage() {
             <p className="text-xs uppercase tracking-widest text-stone-400 mb-2">{t("yourAnswer")}</p>
             <p className="text-3xl font-bold mb-1" style={{ color: colors.text }}>{result.palace.nameEn}</p>
             <p className="text-lg text-stone-400 mb-4">{result.palace.name}</p>
-            <p className="text-base text-stone-200 leading-relaxed mb-3">{result.palace.verdictText}</p>
+            <p className="text-base leading-relaxed mb-3" style={{ color: "var(--text-primary)" }}>{result.palace.verdictText}</p>
             {(result.palace.guidance || result.palace.conclusion) && (
               <div className="bg-black/20 rounded-xl p-4 text-left">
                 <p className="text-sm text-stone-300 leading-relaxed">{result.palace.conclusion || result.palace.guidance}</p>
@@ -135,7 +135,7 @@ export default function QuickOraclePage() {
 
           <div className="card-classic p-4 text-center">
             <p className="text-xs text-stone-400 mb-1">{t("timingHint")}</p>
-            <p className="text-sm text-stone-300">{result.palace.timing}</p>
+            <p className="text-sm" style={{ color: "var(--text-primary)" }}>{result.palace.timing}</p>
           </div>
 
           <div className="flex flex-wrap justify-center gap-3">
@@ -145,7 +145,7 @@ export default function QuickOraclePage() {
           </div>
 
           <div className="card-classic p-4">
-            <button onClick={() => setShowCalc(!showCalc)} className="w-full text-left flex items-center justify-between text-xs text-stone-400 hover:text-stone-300 transition-colors">
+            <button onClick={() => setShowCalc(!showCalc)} className="w-full text-left flex items-center justify-between text-xs text-stone-400 transition-colors hover:opacity-70">
               <span>{t("howItWorks")}</span>
               <span>{showCalc ? "▾" : "▸"}</span>
             </button>
@@ -169,7 +169,7 @@ export default function QuickOraclePage() {
           </div>
 
           <div className="card-classic p-5 text-center" style={{ borderColor: "var(--border-medium)" }}>
-            <p className="text-sm text-stone-300 mb-1">{t("upsellTitle")}</p>
+            <p className="text-sm mb-1" style={{ color: "var(--text-primary)" }}>{t("upsellTitle")}</p>
             <p className="text-xs text-stone-500 mb-3">{t("upsellDesc")}</p>
             <Link href="/divination" className="inline-block px-5 py-2 rounded-xl text-sm font-medium btn-primary">{t("upsellCta")}</Link>
           </div>
