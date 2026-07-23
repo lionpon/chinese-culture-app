@@ -139,9 +139,9 @@ export default function QuickOraclePage() {
           </div>
 
           <div className="flex flex-wrap justify-center gap-3">
-            <a href={"https://twitter.com/intent/tweet?text=" + encodeURIComponent(shareText)} target="_blank" rel="noopener noreferrer" onClick={() => trackClick("quick_oracle_share_twitter")} className="px-4 py-2 rounded-full text-xs font-medium bg-stone-800 text-stone-300 hover:bg-stone-700 transition-colors">X Share</a>
-            <a href={"https://wa.me/?text=" + encodeURIComponent(shareText)} target="_blank" rel="noopener noreferrer" onClick={() => trackClick("quick_oracle_share_whatsapp")} className="px-4 py-2 rounded-full text-xs font-medium bg-stone-800 text-stone-300 hover:bg-stone-700 transition-colors">WhatsApp</a>
-            <button onClick={copyToClipboard} className="px-4 py-2 rounded-full text-xs font-medium bg-stone-800 text-stone-300 hover:bg-stone-700 transition-colors">{copied ? "✓ Copied!" : t("copy")}</button>
+            <a href={"https://twitter.com/intent/tweet?text=" + encodeURIComponent(shareText)} target="_blank" rel="noopener noreferrer" onClick={() => trackClick("quick_oracle_share_twitter")} className="px-4 py-2 rounded-full text-xs font-medium transition-colors" style={{ backgroundColor: "var(--bg-surface)", color: "var(--text-muted)", border: "1px solid var(--border-medium)" }}>X Share</a>
+            <a href={"https://wa.me/?text=" + encodeURIComponent(shareText)} target="_blank" rel="noopener noreferrer" onClick={() => trackClick("quick_oracle_share_whatsapp")} className="px-4 py-2 rounded-full text-xs font-medium transition-colors" style={{ backgroundColor: "var(--bg-surface)", color: "var(--text-muted)", border: "1px solid var(--border-medium)" }}>WhatsApp</a>
+            <button onClick={copyToClipboard} className="px-4 py-2 rounded-full text-xs font-medium transition-colors" style={{ backgroundColor: "var(--bg-surface)", color: "var(--text-muted)", border: "1px solid var(--border-medium)" }}>{copied ? "✓ Copied!" : t("copy")}</button>
           </div>
 
           <div className="card-classic p-4">
