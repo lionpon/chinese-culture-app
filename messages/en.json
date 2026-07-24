@@ -87,6 +87,7 @@
   "home": {
     "title": "Find Your Authentic Chinese Name",
     "subtitle": "Based on 3,000 years of Eastern wisdom. Personalized. In 30 seconds.",
+    "heroPricing": "From $1 — pay what you feel it's worth",
     "quickStart": {
       "naming": "Get Your Chinese Name",
       "divination": "Try I Ching",
@@ -590,8 +591,8 @@
     "seeFreePreview": "No thanks, close this",
     "lockedContent": "Locked — $1 to unlock",
     "andMore": "+ more personalized details",
-    "unlockFullCta": "Unlock Full Result · $1",
-    "paywallPersistent": "One-time payment · no subscription · instant unlock"
+    "unlockFullCta": "Support & Unlock Full Result",
+    "paywallPersistent": "One-time payment · no subscription · pay what you think it's worth · from $1"
   },
   "legal": {
     "privacy": {

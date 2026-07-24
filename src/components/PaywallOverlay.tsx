@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import PaymentTrustBadges from "./PaymentTrustBadges";
+import { trackClick } from "@/lib/track";
 
 export default function PaywallOverlay({
   purchaseId,
@@ -20,6 +21,7 @@ export default function PaywallOverlay({
 
   async function unlock() {
     setLoading(true);
+    trackClick("paywall_unlock_click");
     try {
       const res = await fetch("/api/unlock", {
         method: "POST",

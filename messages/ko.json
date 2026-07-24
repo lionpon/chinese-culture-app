@@ -87,6 +87,7 @@
   "home": {
     "title": "당신만의 중국식 이름을 찾아보세요",
     "subtitle": "3000년 동양의 지혜를 바탕으로. 개인 맞춤. 30초 만에.",
+    "heroPricing": "$1부터 — 가치에 맞게 지불하세요",
     "quickStart": {
       "naming": "중국식 이름 받기",
       "divination": "주역 시도하기",
@@ -562,8 +563,8 @@
     "seeFreePreview": "아니요, 닫기",
     "lockedContent": "잠김 — $1로 해제",
     "andMore": "+ 더 많은 세부 정보",
-    "unlockFullCta": "전체 결과 — $1",
-    "paywallPersistent": "일회성 결제 · 구독 없음 · 즉시 잠금 해제"
+    "unlockFullCta": "후원하고 전체 결과 보기",
+    "paywallPersistent": "일회성 결제 · 구독 없음 · 가치에 맞게 지불 · $1부터"
   },
   "legal": {
     "privacy": {

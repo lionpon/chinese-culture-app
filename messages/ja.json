@@ -87,6 +87,7 @@
   "home": {
     "title": "あなただけの中国名を見つけよう",
     "subtitle": "3000年の東洋の知恵に基づく。パーソナライズ。30秒で。",
+    "heroPricing": "$1から — 価値に応じてお支払いください",
     "quickStart": {
       "naming": "中国名を作る",
       "divination": "易経を試す",
@@ -562,8 +563,8 @@
     "seeFreePreview": "閉じる",
     "lockedContent": "ロック中 — $1で解除",
     "andMore": "+ さらに詳細を見る",
-    "unlockFullCta": "完全な結果 — $1",
-    "paywallPersistent": "一回限りの支払い · サブスクリプションなし · 即時解除"
+    "unlockFullCta": "サポートして全結果を見る",
+    "paywallPersistent": "一回限りの支払い · サブスクリプションなし · 価値に応じてお支払い · $1から"
   },
   "legal": {
     "privacy": {

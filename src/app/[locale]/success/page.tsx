@@ -37,8 +37,10 @@ function SuccessContent() {
       return;
     }
 
-    // Paid user landed on success page — track funnel entry
-    if (!isFree) {
+    // Track success page landing
+    if (isFree) {
+      trackClick("free_result_viewed");
+    } else {
       trackClick("pay_landed");
     }
 

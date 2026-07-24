@@ -121,6 +121,9 @@ export default function HomePage() {
         <p className="text-base sm:text-lg max-w-xl mx-auto leading-relaxed relative" style={{ color: "var(--text-muted)" }}>
           {t("subtitle")}
         </p>
+        <p className="text-sm sm:text-base font-medium mt-3 relative" style={{ color: "var(--gold)" }}>
+          {t("heroPricing")}
+        </p>
 
         {/* Quick links */}
         <div className="flex justify-center gap-3 mt-8 flex-wrap relative">
