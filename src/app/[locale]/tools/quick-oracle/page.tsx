@@ -11,6 +11,7 @@ interface PalaceResult {
   name: string;
   nameEn: string;
   verdict: string;
+  shortAnswer: string;
   verdictText: string;
   guidance: string;
   conclusion: string;
@@ -72,7 +73,7 @@ export default function QuickOraclePage() {
   }
 
   const shareText = result
-    ? "🔮 Quick Oracle: " + result.palace.nameEn + " (" + result.palace.name + ")" + "\n\n\"" + result.palace.verdictText + "\"" + "\n\n" + (result.question ? "Asked: " + result.question + "\n\n" : "") + "Ask yours: " + BASE_URL + "/tools/quick-oracle"
+    ? "🔮 " + result.palace.shortAnswer + "\n\n" + result.palace.nameEn + " (" + result.palace.name + ")" + "\n\n" + (result.question ? "Q: " + result.question + "\n\n" : "") + "Ask yours: " + BASE_URL + "/tools/quick-oracle"
     : "";
 
   async function copyToClipboard() {
@@ -117,14 +118,29 @@ export default function QuickOraclePage() {
 
       {result && (
         <div className="space-y-6">
-          <div className="rounded-2xl p-6 text-center" style={{ background: colors.bg, border: "1px solid " + colors.border }}>
-            <p className="text-xs uppercase tracking-widest text-stone-400 mb-2">{t("yourAnswer")}</p>
-            <p className="text-3xl font-bold mb-1" style={{ color: colors.text }}>{result.palace.nameEn}</p>
-            <p className="text-lg text-stone-400 mb-4">{result.palace.name}</p>
-            <p className="text-base leading-relaxed mb-3" style={{ color: "var(--text-primary)" }}>{result.palace.verdictText}</p>
+          {/* Result card — designed for Western users: clear answer first, then context */}
+          <div className="rounded-2xl p-6" style={{ background: colors.bg, border: "1px solid " + colors.border }}>
+            {/* 1st: The answer they came for */}
+            <p className="text-xl sm:text-2xl font-bold text-center mb-1" style={{ color: colors.text }}>
+              {result.palace.shortAnswer}
+            </p>
+
+            {/* 2nd: Palace name (cultural context) */}
+            <p className="text-center text-xs text-stone-400 mt-2 mb-3">
+              {result.palace.nameEn} · {result.palace.name} · {result.palace.element}
+            </p>
+
+            {/* 3rd: One-line verdict summary */}
+            <p className="text-sm text-center leading-relaxed mb-4" style={{ color: "var(--text-primary)", opacity: 0.85 }}>
+              {result.palace.verdictText}
+            </p>
+
+            {/* 4th: Detailed guidance */}
             {(result.palace.guidance || result.palace.conclusion) && (
-              <div className="bg-black/20 rounded-xl p-4 text-left">
-                <p className="text-sm text-stone-300 leading-relaxed">{result.palace.conclusion || result.palace.guidance}</p>
+              <div className="rounded-xl p-4 text-left" style={{ background: "rgba(0,0,0,0.15)" }}>
+                <p className="text-sm leading-relaxed" style={{ color: "var(--text-primary)", opacity: 0.8 }}>
+                  {result.palace.conclusion || result.palace.guidance}
+                </p>
               </div>
             )}
           </div>

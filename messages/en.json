@@ -413,6 +413,8 @@
       "meaning": "Meaning",
       "elements": "Elements",
       "source": "Source",
+      "nameRationale": "With {elements} elements, this name balances your Bazi chart — selected from {source}.",
+      "classicalSource": "classical Chinese texts",
       "recommended": "Recommended — Best match for your elemental profile",
       "baziAnalysis": "Bazi Analysis"
     },

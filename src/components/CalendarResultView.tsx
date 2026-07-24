@@ -1,8 +1,10 @@
 "use client";
 
+import { useEffect } from "react";
 import type { CalendarResult } from "@/types";
 import PaywallOverlay from "./PaywallOverlay";
 import EmailCaptureForm from "./EmailCaptureForm";
+import { trackClick } from "@/lib/track";
 
 function DayCard({ day, isLocked }: { day: CalendarResult["auspiciousDays"][0]; isLocked?: boolean }) {
   const lockedStyle: React.CSSProperties = isLocked ? {
@@ -80,9 +82,30 @@ export default function CalendarResultView({
   isFree?: boolean;
   purchaseId?: string;
 }) {
+  const days = result.auspiciousDays;
+  const bestDay = days.length > 0 ? days[0] : null;
+
+  useEffect(() => {
+    trackClick(isFree ? "result_free_calendar" : "result_viewed_calendar");
+  }, [isFree]);
+
   return (
     <div>
-      <h1 className="text-2xl font-bold text-center mb-6 text-accent">Auspicious Dates</h1>
+      <h1 className="text-2xl font-bold text-center mb-6 text-accent">Your Auspicious Dates</h1>
+
+      {/* Summary — the answer they came for */}
+      {bestDay && (
+        <div className="card-classic p-4 sm:p-5 mb-6 text-center" style={{ borderColor: "var(--border-strong)", background: "linear-gradient(135deg, rgba(201,169,110,0.06), transparent)" }}>
+          <p className="text-sm leading-relaxed mb-1" style={{ color: "var(--text-primary)" }}>
+            We found <strong>{days.length}</strong> auspicious {days.length === 1 ? "day" : "days"} in your window.
+          </p>
+          <p className="text-xs" style={{ color: "var(--gold)" }}>
+            The strongest is <strong>{bestDay.date}</strong> with a score of <strong>{bestDay.score}/100</strong>
+            {bestDay.lunarDate ? <> · {bestDay.lunarDate}</> : null}
+          </p>
+        </div>
+      )}
+
       <div className="space-y-4">
         {/* Free preview: show top date with blurred details */}
         {isFree && result.auspiciousDays.length > 0 && (
@@ -107,4 +130,3 @@ export default function CalendarResultView({
     </div>
   );
 }
-

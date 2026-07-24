@@ -1,10 +1,12 @@
 "use client";
 
+import { useEffect } from "react";
 import { useTranslations } from "next-intl";
 import type { NamingResult, NameAnalysisResult } from "@/types";
 import SpeakButton from "./SpeakButton";
 import PaywallOverlay from "./PaywallOverlay";
 import EmailCaptureForm from "./EmailCaptureForm";
+import { trackClick } from "@/lib/track";
 
 function ResultCard({ opt, i, recommended, isFree }: { opt: { characters: string; pinyin: string; meaning: string; wuxing?: string; source?: string; sourceText?: string }; i: number; recommended: boolean; isFree?: boolean }) {
   const t = useTranslations("result");
@@ -43,6 +45,11 @@ export default function NamingResultView({
 }) {
   const t = useTranslations("result");
 
+  useEffect(() => {
+    const mode = ("type" in result && result.type === "analysis") ? "name_analysis" : "naming";
+    trackClick(isFree ? `result_free_${mode}` : `result_viewed_${mode}`);
+  }, [isFree, result]);
+
   // Analyze mode
   if ("type" in result && result.type === "analysis") {
     const a = result as NameAnalysisResult;
@@ -67,6 +74,9 @@ export default function NamingResultView({
 
           <div className="space-y-2 text-sm">
             <p><span className="text-stone-400">{t("analyze.score")}:</span> <strong>{a.score}% — {matchLabels[a.baziCompatibility.match]}</strong></p>
+            {a.baziCompatibility.analysisEn && (
+              <p className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>{a.baziCompatibility.analysisEn}</p>
+            )}
           </div>
         </div>
 
@@ -112,6 +122,18 @@ export default function NamingResultView({
     <div>
       <h1 className="text-2xl font-bold text-center mb-6 text-accent">{t("naming.title")}</h1>
       <div className="space-y-4">
+        {/* Why this name? — one-line context */}
+        {r.options.length > 0 && r.options[0].wuxing && (
+          <div className="text-center px-4">
+            <p className="text-xs leading-relaxed" style={{ color: "var(--text-muted)" }}>
+              {t("naming.nameRationale", {
+                elements: r.options[0].wuxing,
+                source: r.options[0].source || t("naming.classicalSource")
+              })}
+            </p>
+          </div>
+        )}
+
         {/* Always show first recommended name */}
         {r.options.length > 0 && (
           <ResultCard opt={r.options[0]} i={0} recommended={true} isFree={!!(isFree && purchaseId)} />

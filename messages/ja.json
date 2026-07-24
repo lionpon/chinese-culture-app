@@ -413,6 +413,8 @@
       "meaning": "意味",
       "elements": "五行",
       "source": "出典",
+      "nameRationale": "{elements}の五行を持つこの名前は、あなたの八字チャートのバランスを整えます — {source}から選ばれました。",
+      "classicalSource": "中国古典文献",
       "recommended": "おすすめ — あなたの五行プロファイルに最適",
       "baziAnalysis": "八字分析"
     },

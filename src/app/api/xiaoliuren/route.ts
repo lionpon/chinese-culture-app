@@ -13,6 +13,7 @@ export async function POST(req: NextRequest) {
         name: result.palace.name,
         nameEn: result.palace.nameEn,
         verdict: result.palace.verdict,
+        shortAnswer: result.palace.en.shortAnswer,
         verdictText: result.palace.en.verdict,
         guidance: "guidance" in result.palace.en ? result.palace.en.guidance : "",
         conclusion: "conclusion" in result.palace.en ? (result.palace.en as { conclusion: string }).conclusion : "",

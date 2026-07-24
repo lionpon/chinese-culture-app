@@ -1,7 +1,9 @@
 "use client";
 
+import { useEffect } from "react";
 import type { PalmReadingResult, LineAnalysis, MountAnalysis } from "@/types";
 import EmailCaptureForm from "./EmailCaptureForm";
+import { trackClick } from "@/lib/track";
 
 const QUALITY_COLORS: Record<string, string> = {
   excellent: "#2D6A4F",
@@ -65,11 +67,15 @@ function MountBadge({ mount }: { mount: MountAnalysis }) {
 export default function PalmReadingResultView({ result, isFree: _isFree, purchaseId: _purchaseId }: { result: PalmReadingResult; isFree?: boolean; purchaseId?: string }) {
   void _isFree; void _purchaseId;
   const h = result.handType;
+
+  useEffect(() => {
+    trackClick("result_viewed_palm");
+  }, []);
   const bg = ELEMENT_COLORS[h.element] || "#F5F0E8";
 
   return (
     <div className="space-y-6">
-      {/* Hand Type Banner */}
+      {/* 1: Hand Type Banner */}
       <div className="rounded-2xl p-5 text-center" style={{ backgroundColor: bg, border: "1px solid rgba(0,0,0,0.06)" }}>
         <p className="text-xs text-stone-500 uppercase tracking-wide mb-1">Hand Type · 五行手型</p>
         <h3 className="text-xl font-bold text-stone-800 mb-1">
@@ -79,7 +85,19 @@ export default function PalmReadingResultView({ result, isFree: _isFree, purchas
         <p className="text-xs text-stone-500">{h.descriptionEn}</p>
       </div>
 
-      {/* Three Lines */}
+      {/* 2: Overall Judgment — the conclusion, moved up */}
+      <div className="card-classic p-5 text-center" style={{ borderColor: "var(--border-strong)" }}>
+        <p className="text-xs font-medium mb-2 uppercase tracking-wide text-stone-400">What Your Palm Reveals</p>
+        <p className="text-sm font-semibold leading-relaxed mb-2" style={{ color: "var(--text-primary)" }}>{result.overallJudgment.textEn}</p>
+        <p className="text-xs text-stone-500">{result.overallJudgment.text}</p>
+        {result.overallJudgment.classicalRef && (
+          <div className="mt-3 pt-3 border-t border-stone-100">
+            <p className="text-xs text-accent italic">{result.overallJudgment.classicalRef}</p>
+          </div>
+        )}
+      </div>
+
+      {/* 3: Three Lines */}
       <div>
         <h3 className="text-sm font-semibold text-stone-800 mb-3 text-center">
           Three Talent Lines · 三才纹
@@ -103,7 +121,7 @@ export default function PalmReadingResultView({ result, isFree: _isFree, purchas
         </div>
       </div>
 
-      {/* Auxiliary Lines */}
+      {/* 4: Auxiliary Lines */}
       {Object.keys(result.auxiliaryLines).length > 0 && (
         <div>
           <h3 className="text-sm font-semibold text-stone-800 mb-3 text-center">
@@ -142,7 +160,7 @@ export default function PalmReadingResultView({ result, isFree: _isFree, purchas
         </div>
       )}
 
-      {/* Mounts */}
+      {/* 5: Mounts */}
       <div>
         <h3 className="text-sm font-semibold text-stone-800 mb-3 text-center">
           Nine Palaces · 掌中九宫
@@ -154,19 +172,7 @@ export default function PalmReadingResultView({ result, isFree: _isFree, purchas
         </div>
       </div>
 
-      {/* Overall Judgment */}
-      <div className="card-classic p-5">
-        <h3 className="text-sm font-semibold text-stone-800 mb-3 text-center">
-          Overall Judgment · 综合判断
-        </h3>
-        <p className="text-sm text-stone-700 mb-2">{result.overallJudgment.text}</p>
-        <p className="text-xs text-stone-500 mb-3">{result.overallJudgment.textEn}</p>
-        <div className="border-t border-stone-100 pt-3">
-          <p className="text-xs text-accent italic">{result.overallJudgment.classicalRef}</p>
-        </div>
-      </div>
-
-      {/* Advice */}
+      {/* 6: Advice */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         {(["career", "love", "health"] as const).map((key) => (
           <div key={key} className="bg-white border border-stone-200 rounded-xl p-4">

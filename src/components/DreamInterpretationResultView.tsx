@@ -1,9 +1,11 @@
 "use client";
 
+import { useEffect } from "react";
 import type { DreamInterpretationResult } from "@/types";
 import PaywallOverlay from "./PaywallOverlay";
 import EmailCaptureForm from "./EmailCaptureForm";
 import { useTranslations } from "next-intl";
+import { trackClick } from "@/lib/track";
 
 const CATEGORY_COLORS: Record<string, string> = {
   "正梦": "#E8F5E9",
@@ -62,6 +64,10 @@ export default function DreamInterpretationResultView({
   const zg = result.zhouGong;
   const fd = result.freudian;
 
+  useEffect(() => {
+    trackClick(isFree ? "result_free_dream" : "result_viewed_dream");
+  }, [isFree]);
+
   return (
     <div className="space-y-6">
       {/* Dream Type Banner */}
@@ -87,6 +93,20 @@ export default function DreamInterpretationResultView({
         </h3>
         <p className="text-sm text-stone-600 mb-1">{dt.description}</p>
         <p className="text-xs text-stone-500">{dt.descriptionEn}</p>
+      </div>
+
+      {/* 2: Overview — the verdict, moved to top */}
+      <div className="card-classic p-5 text-center" style={{ borderColor: "var(--border-strong)" }}>
+        <p className="text-xs font-medium mb-2 uppercase tracking-wide text-stone-400">{t("result.overview")}</p>
+        <p className="text-sm font-semibold leading-relaxed mb-2" style={{ color: "var(--text-primary)" }}>{result.overview.textEn}</p>
+        <p className="text-xs text-stone-500 mb-3">{result.overview.text}</p>
+        {result.overview.classicalRef && (
+          <div className="border-t border-stone-100 pt-3">
+            <p className="text-xs text-accent italic">
+              {result.overview.classicalRef}
+            </p>
+          </div>
+        )}
       </div>
 
       {/* Free preview: 1 Zhou Gong symbol + partial interpretation, then paywall */}
@@ -254,22 +274,6 @@ export default function DreamInterpretationResultView({
               </p>
             </div>
           )}
-
-          {/* Overview */}
-          <div className="card-classic p-5">
-            <h3 className="text-sm font-semibold text-stone-800 mb-3 text-center">
-              {t("result.overview")}
-            </h3>
-            <p className="text-sm text-stone-700 mb-2">{result.overview.text}</p>
-            <p className="text-xs text-stone-500 mb-3">{result.overview.textEn}</p>
-            {result.overview.classicalRef && (
-              <div className="border-t border-stone-100 pt-3">
-                <p className="text-xs text-accent italic">
-                  {result.overview.classicalRef}
-                </p>
-              </div>
-            )}
-          </div>
 
           {/* Advice */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">

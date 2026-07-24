@@ -413,6 +413,8 @@
       "meaning": "의미",
       "elements": "오행",
       "source": "출전",
+      "nameRationale": "{elements} 오행을 가진 이 이름은 당신의 사주 차트의 균형을 맞춥니다 — {source}에서 선택되었습니다.",
+      "classicalSource": "중국 고전 문헌",
       "recommended": "추천 — 오행 프로필에 가장 잘 맞는 이름",
       "baziAnalysis": "사주 분석"
     },
