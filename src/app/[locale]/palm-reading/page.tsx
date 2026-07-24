@@ -193,7 +193,7 @@ export default function PalmReadingPage() {
  </div>
 
  <AmountPicker value={amount} onChange={setAmount} />
- <SubmitButton loading={loading || uploading} label={uploading ? t("form.uploading") : loading ? t("form.processing") : t("form.submit")} hasFree={false} />
+ <SubmitButton loading={loading || uploading} label={uploading ? t("form.uploading") : loading ? t("form.processing") : t("form.submit")} hasFree={false} amount={amount} />
  </form>
  </div>
  );

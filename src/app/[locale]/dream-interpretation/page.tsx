@@ -29,6 +29,17 @@ export default function DreamInterpretationPage() {
  trackClick("form_submit_dream_interpretation");
  }
 
+ function handlePaidClick() {
+ const form = document.querySelector("form") as HTMLFormElement;
+ checkout({
+ dreamText: form.dreamText.value,
+ dreamType: form.dreamType.value || undefined,
+ focus: form.interpretFocus.value || undefined,
+ amount,
+ }, true);
+ trackClick("form_submit_dream_paid");
+ }
+
  return (
  <div className="max-w-lg mx-auto">
  <div className="text-center mb-8">
@@ -125,7 +136,7 @@ export default function DreamInterpretationPage() {
  </div>
 
  <AmountPicker value={amount} onChange={setAmount} />
- <SubmitButton loading={loading} label={loading ? t("form.processing") : t("form.submit")} hasFree={hasFreeUses()} />
+ <SubmitButton loading={loading} label={loading ? t("form.processing") : t("form.submit")} hasFree={hasFreeUses()} onPaidClick={handlePaidClick} amount={amount} />
  </form>
 
  {/* Link to dream meaning guide */}
