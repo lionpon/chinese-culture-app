@@ -95,13 +95,45 @@ src/
 三层闭环：PDT (return) + 主动生成 (auto-create) + IPN (webhook)
 PayPal Standard Checkout，支持信用卡支付。
 
-## 近期状态 (2026-07-23)
+## 近期状态 (2026-07-24)
 
-- **线上版本**：`2ba5d55` Live on Render + Cloudflare
+- **线上版本**：`4096ffd` Live on Render + Cloudflare
 - **域名**：`www.culture-of-china.com` 正常运行
 - **数据库**：Supabase (`vnktcrolpcyktduldpfm`) ✅
 - **GitHub**：`git@github.com:lionpon/chinese-culture-app.git` (SSH deploy key)
-- **最新 commit**：`2ba5d55`（fix: zodiac year calculation）
+- **最新 commit**：`4096ffd`（fix: dream-interp missing onPaidClick）
+
+### 7月24日：支付链路审计 + 转化漏斗优化
+
+#### 🔍 支付全链路审计
+逐节点排查了提交→checkout→PayPal→PDT→结果生成的完整路径，**路径单一干净**，无多余跳转。
+
+#### 🐛 发现并修复：dream-interpretation "Support $X" 按钮无效
+- **Bug**：`SubmitButton` 缺少 `onPaidClick` 和 `amount` props，用户有免费次数时点击"Support $X"无反应
+- **影响**：解梦的真实用户想付费支持，按钮点击无效，可能直接流失
+- **修复**：添加 `handlePaidClick` 函数 + 传递 `onPaidClick` + `amount` props
+- **同时修复**：palm-reading 按钮金额显示补齐（之前写死 $1 不反映 AmountPicker 选择）
+- **Commit**：`4096ffd`
+
+#### 🏷️ 首页 Hero 价格前置
+- Hero 标题下方新增金色价格行："From $1 — pay what you feel it's worth"（4 locales）
+- **目的**：用户进站第一眼就知道定价模式，不用走 3 步填完表才看到价格
+
+#### 🔓 PaywallOverlay 信任信号强化
+- CTA 按钮：`"Unlock Full Result · $1"` → `"Support & Unlock Full Result"`（去掉 $1 硬编码）
+- 底部文案：`"One-time payment · no subscription · instant unlock"` → `"...pay what you think it's worth · from $1"`
+- 4 locales 同步更新
+
+#### 📊 新增漏斗埋点
+| 事件 | 触发点 |
+|------|--------|
+| `free_result_viewed` | 免费用户落地 success 页面（看到预览+付费墙） |
+| `paywall_unlock_click` | 用户点击付费墙"Support & Unlock"按钮 |
+
+#### 📊 日报分析
+- 7/20-7/23 共 10 笔订单，6 笔测试 + 2 笔真实用户（解梦+择日 free trial），0 笔真实付费
+- 7/23 PH 上线日：78 访问/18 国，有 pay_click 但未完成支付
+- 7/24：32 访问但 93% 为数据中心流量
 
 ### 7月23日：🚀 Product Hunt 正式上线
 
