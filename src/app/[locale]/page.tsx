@@ -31,7 +31,7 @@ const PH_BANNER: Record<string, { text: string; cta: string }> = {
   ja: { text: "🚀 Product Hunt に登場しました！", cta: "投票で応援 →" },
   ko: { text: "🚀 Product Hunt 출시!", cta: "투표로 응원하기 →" },
 };
-const PH_URL = "https://www.producthunt.com/posts/chinese-culture-studio";
+const PH_URL = "https://www.producthunt.com/products/chinese-culture-studio?launch=chinese-culture-studio-2";
 
 function showPHBanner(): boolean {
   const now = new Date();
