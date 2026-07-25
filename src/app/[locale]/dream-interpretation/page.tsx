@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { useCheckout } from "@/lib/useCheckout";
 import SubmitButton from "@/components/SubmitButton";
@@ -16,6 +16,11 @@ export default function DreamInterpretationPage() {
  const [amount, setAmount] = useState(DEFAULT_AMOUNT);
  const [consent, setConsent] = useState(false);
  const [charCount, setCharCount] = useState(0);
+ const [hasFree, setHasFree] = useState(false);
+
+ useEffect(() => {
+   setHasFree(hasFreeUses());
+ }, []);
 
  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
  e.preventDefault();
@@ -143,7 +148,7 @@ export default function DreamInterpretationPage() {
  </div>
 
  <AmountPicker value={amount} onChange={setAmount} />
- <SubmitButton loading={loading} label={loading ? t("form.processing") : t("form.submit")} hasFree={hasFreeUses()} onPaidClick={handlePaidClick} amount={amount} />
+ <SubmitButton loading={loading} label={loading ? t("form.processing") : t("form.submit")} hasFree={hasFree} onPaidClick={handlePaidClick} amount={amount} />
  </form>
 
  {/* Link to dream meaning guide */}

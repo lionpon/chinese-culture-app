@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState, useCallback, useRef } from "react";
+import { FormEvent, useState, useCallback, useRef, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { useCheckout } from "@/lib/useCheckout";
 import SubmitButton from "@/components/SubmitButton";
@@ -44,7 +44,12 @@ export default function NamingPage() {
   const [mode, setMode] = useState<"create" | "analyze">("create");
   const [preview, setPreview] = useState<PreviewData | null>(null);
   const [previewLoading, setPreviewLoading] = useState(false);
+  const [hasFree, setHasFree] = useState(false);
   const previewTimer = useRef<ReturnType<typeof setTimeout>>();
+
+  useEffect(() => {
+    setHasFree(hasFreeUses());
+  }, []);
 
   function ExampleResult() {
     return (
@@ -155,9 +160,9 @@ export default function NamingPage() {
         <h1 className="text-2xl sm:text-3xl font-bold text-accent">{t("title")}</h1>
         <p className="text-stone-500 mt-2">{t("subtitle")}</p>
         <p className="text-xs text-stone-400 mt-1 flex items-center justify-center gap-1">
-          ⚡ 30s · {hasFreeUses() ? "1 free reading" : ""}
+          ⚡ 30s · {hasFree ? "1 free reading" : ""}
         </p>
-        {!hasFreeUses() && (
+        {!hasFree && (
           <p className="text-xs mt-1 inline-block px-3 py-1 rounded badge-accent">{t("badge")}</p>
         )}
       </div>
@@ -345,10 +350,10 @@ export default function NamingPage() {
         )}
 
         <AmountPicker value={amount} onChange={setAmount} />
-        {hasFreeUses() && (
+        {hasFree && (
           <p className="text-xs text-stone-400 text-center">{t("form.previewNote")}</p>
         )}
-        <SubmitButton loading={loading} label={mode === "analyze" ? t("form.submitAnalyze") : t("form.submit")} hasFree={hasFreeUses()} onPaidClick={handlePaidClick} amount={amount} />
+        <SubmitButton loading={loading} label={mode === "analyze" ? t("form.submitAnalyze") : t("form.submit")} hasFree={hasFree} onPaidClick={handlePaidClick} amount={amount} />
       </form>
     </div>
   );

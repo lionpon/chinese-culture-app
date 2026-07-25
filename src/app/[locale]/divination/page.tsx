@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, FormEvent, useCallback } from "react";
+import { useState, FormEvent, useCallback, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { useCheckout } from "@/lib/useCheckout";
 import SubmitButton from "@/components/SubmitButton";
@@ -18,6 +18,11 @@ export default function DivinationPage() {
  const [amount, setAmount] = useState(DEFAULT_AMOUNT);
  const [preview, setPreview] = useState<{nameZh:string;nameEn:string;pinyin:string;judgmentEn:string;advice:string}|null>(null);
  const [previewLoading, setPreviewLoading] = useState(false);
+ const [hasFree, setHasFree] = useState(false);
+
+ useEffect(() => {
+   setHasFree(hasFreeUses());
+ }, []);
 
 
  const fetchPreview = useCallback(async () => {
@@ -107,7 +112,7 @@ export default function DivinationPage() {
  <div className="text-center mb-8">
  <h1 className="text-2xl sm:text-3xl font-bold text-accent">{t("title")}</h1>
  <p className="text-stone-500 mt-2">{t("subtitle")}</p>
- {!hasFreeUses() && (
+ {!hasFree && (
  <p className="text-xs mt-1 inline-block px-3 py-1 rounded badge-accent">{t("badge")}</p>
  )}
  </div>
@@ -191,10 +196,10 @@ export default function DivinationPage() {
  )}
 
  <AmountPicker value={amount} onChange={setAmount} />
- {hasFreeUses() && (
+ {hasFree && (
  <p className="text-xs text-stone-400 text-center">{t("form.previewNote")}</p>
  )}
- <SubmitButton loading={loading} label={t("form.submit")} hasFree={hasFreeUses()} onPaidClick={handlePaidClick} amount={amount} />
+ <SubmitButton loading={loading} label={t("form.submit")} hasFree={hasFree} onPaidClick={handlePaidClick} amount={amount} />
  </form>
  </div>
  );
