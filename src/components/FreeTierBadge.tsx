@@ -4,12 +4,16 @@ import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { getFreeTier } from "@/lib/free-tier";
 
-export default function FreeTierBadge() {
+export default function FreeTierBadge({ initialRemaining }: { initialRemaining?: number }) {
   const t = useTranslations("common");
-  const [remaining, setRemaining] = useState(0);
+  // Use server-provided value to avoid hydration flash (CLS)
+  const [remaining, setRemaining] = useState(initialRemaining ?? 0);
 
   useEffect(() => {
-    setRemaining(getFreeTier().remaining);
+    // Sync with localStorage (catches cross-tab changes)
+    const actual = getFreeTier().remaining;
+    if (actual !== remaining) setRemaining(actual);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (remaining <= 0) return null;

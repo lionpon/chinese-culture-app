@@ -130,7 +130,7 @@ export default function CalendarClient({ initialHasFree }: { initialHasFree: boo
  )}
  </div>
 
- <FreeTierBadge />
+ <FreeTierBadge initialRemaining={initialHasFree ? 1 : 0} />
  <ExampleResult />
 
  {/* Pricing banner */}

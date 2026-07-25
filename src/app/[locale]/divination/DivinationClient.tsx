@@ -112,7 +112,7 @@ export default function DivinationClient({ initialHasFree }: { initialHasFree: b
  )}
  </div>
 
- <FreeTierBadge />
+ <FreeTierBadge initialRemaining={initialHasFree ? 1 : 0} />
  <ExampleResult />
 
  {/* Pricing banner */}

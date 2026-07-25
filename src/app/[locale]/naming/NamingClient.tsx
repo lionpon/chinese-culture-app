@@ -162,7 +162,7 @@ export default function NamingClient({ initialHasFree }: { initialHasFree: boole
         )}
       </div>
 
-      <FreeTierBadge />
+      <FreeTierBadge initialRemaining={initialHasFree ? 1 : 0} />
       <ExampleResult />
 
       {/* Pricing banner */}
