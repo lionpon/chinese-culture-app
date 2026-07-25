@@ -101,7 +101,7 @@ PayPal Standard Checkout，支持信用卡支付。
 - **域名**：`www.culture-of-china.com` 正常运行
 - **数据库**：Supabase (`vnktcrolpcyktduldpfm`) ✅
 - **GitHub**：`git@github.com:lionpon/chinese-culture-app.git` (SSH deploy key)
-- **最新 commit**：`f189813`（fix: ru/ja/ko — payment trust, guide prices, compliance）
+- **最新 commit**：`13d1480`（feat: hook redesign — curiosity-driven preview copy × 4 locales）
 
 ### 7月25日：全站大整改——定价、叙事、多语言、支付信任
 
@@ -171,6 +171,28 @@ PayPal Standard Checkout，支持信用卡支付。
 f189813 fix: ru/ja/ko — payment trust, guide prices, compliance
 ```
 共 20+ 文件，~500 行改动
+
+### 7月25日晚：钩子专项整改——预览缺口感设计
+
+基于分析：免费预览给得太水 → 用户觉得不值钱；钩子设计错了方向 → 欧美用户吃"解决我的问题"而非"大师亲算"。
+
+#### 改动原则
+每个 hook 必须制造具体的、可感知的、带私人定制感的"缺口感"：
+- ❌ "免费看手相" → ✅ "Your hand reveals what you don't say. One hidden strength, one blind spot."
+- ❌ "大师为你择吉日" → ✅ "3 dates in your window score 90+. Check before you commit."
+- ❌ "免费取名" → ✅ "See what the Chinese would have named you — based on the exact day you were born."
+
+#### 覆盖范围（4 locales × 55 处）
+| 层级 | 内容 |
+|------|------|
+| 首页 | 5 个 feature card desc |
+| 服务页 | 5 个 subtitle |
+| 免费工具 | 5 个 subtitle |
+| 预览区 | freeTier badge、naming teaser、calendar ctaSub、divination hint/ctaSub |
+| Guide CTA | 5 个 desc |
+
+#### Commit
+`13d1480` feat: hook redesign — curiosity-driven preview copy × 4 locales
 
 #### 🔍 支付全链路审计
 逐节点排查了提交→checkout→PayPal→PDT→结果生成的完整路径，**路径单一干净**，无多余跳转。
