@@ -19,7 +19,7 @@ export async function generateNames(input: NamingInput, preview = false): Promis
   if (!preview) {
     // Generate AI narratives for paid users (in target locale)
     try {
-      const locale = (input as Record<string, unknown>).locale as string | undefined;
+      const locale = (input as unknown as Record<string, unknown>).locale as string | undefined;
       full.options = await addNarratives(full.options, input, full.baziAnalysis, locale);
     } catch {
       // Silent fail — base meanings are still present
