@@ -119,6 +119,7 @@ export default function DivinationPage() {
  <div className="card-classic p-3 mb-6 text-center border-dashed" style={{ borderColor: "var(--gold)", backgroundColor: "rgba(201, 169, 110, 0.06)" }}>
    <p className="text-sm font-bold" style={{ color: "var(--gold)" }}>{tc("pricing.title")}</p>
    <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>{tc("pricing.compare")}</p>
+   <p className="text-xs mt-1" style={{ color: "var(--text-dim)" }}>{tc("pricing.secure")}</p>
  </div>
 
  {/* Divination Preview */}

@@ -24,6 +24,15 @@ export default function SubmitButton({
         <button type="submit" disabled={loading} className="w-full py-3 btn-primary">
           {loading ? t("submit.processing") : t("submit.free", { label })}
         </button>
+
+        {/* Divider */}
+        <div className="flex items-center gap-3 py-1">
+          <div className="flex-1 h-px" style={{ backgroundColor: "var(--border-subtle)" }} />
+          <span className="text-xs" style={{ color: "var(--text-dim)" }}>or unlock everything</span>
+          <div className="flex-1 h-px" style={{ backgroundColor: "var(--border-subtle)" }} />
+        </div>
+
+        {/* Paid button */}
         <button
           type="button"
           disabled={loading}
@@ -36,12 +45,14 @@ export default function SubmitButton({
         >
           {t("submit.paid", { label, amount: `$${amt}` })}
         </button>
-        <div className="mt-3">
+
+        {/* Trust strip */}
+        <div className="rounded-lg p-3 text-center space-y-2" style={{ backgroundColor: "rgba(201,169,110,0.04)" }}>
           <PaymentTrustBadges />
+          <p className="text-center text-xs" style={{ color: "var(--text-dim)" }}>
+            {t("submit.paidNote")}
+          </p>
         </div>
-        <p className="text-center text-xs" style={{ color: "var(--text-dim)" }}>
-          {t("submit.paidNote")}
-        </p>
       </div>
     );
   }
@@ -53,7 +64,7 @@ export default function SubmitButton({
           ? t("submit.processing")
           : t("submit.paidSimple", { label, amount: `$${amt}` })}
       </button>
-      <p className="text-center text-xs text-stone-400 mt-2">
+      <p className="text-center text-xs mt-2" style={{ color: "var(--text-dim)" }}>
         {t("submit.cardNote")}
       </p>
       <div className="mt-3">

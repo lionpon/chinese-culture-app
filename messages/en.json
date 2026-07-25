@@ -53,8 +53,8 @@
       "free": "{label} — Free Preview",
       "paid": "Get Your Reading · {amount}",
       "paidSimple": "Get Your Reading · {amount}",
-      "cardNote": "PayPal or credit/debit card — no PayPal account needed",
-      "paidNote": "Secure checkout via PayPal or credit card"
+      "cardNote": "🔐 Secure checkout via PayPal · Credit card accepted · Instant access",
+      "paidNote": "🔐 Secure checkout via PayPal · No account needed · Instant access"
     },
     "amount": {
       "label": "Choose your price",
@@ -79,7 +79,7 @@
     "pricing": {
       "title": "From $5.99 — or name your price",
       "compare": "Personalized results grounded in classical Chinese texts",
-      "secure": "🔒 Secure checkout · No account needed · Instant delivery"
+      "secure": "🔐 PayPal secured · No account needed · Instant delivery · One-time payment"
     }
   },
   "home": {
