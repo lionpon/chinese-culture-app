@@ -111,7 +111,7 @@ export async function translateResultEnFields(result: unknown, locale: string): 
     for (let j = 0; j < path.length - 1; j++) {
       const key = path[j];
       if (/^\d+$/.test(key)) {
-        obj = (obj as unknown[])[parseInt(key)] as Record<string, unknown>;
+        obj = (obj as unknown as unknown[])[parseInt(key)] as Record<string, unknown>;
       } else {
         obj = obj[key] as Record<string, unknown>;
       }
