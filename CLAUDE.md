@@ -95,15 +95,82 @@ src/
 三层闭环：PDT (return) + 主动生成 (auto-create) + IPN (webhook)
 PayPal Standard Checkout，支持信用卡支付。
 
-## 近期状态 (2026-07-24)
+## 近期状态 (2026-07-25)
 
-- **线上版本**：`4096ffd` Live on Render + Cloudflare
+- **线上版本**：`f189813` Live on Render + Cloudflare
 - **域名**：`www.culture-of-china.com` 正常运行
 - **数据库**：Supabase (`vnktcrolpcyktduldpfm`) ✅
 - **GitHub**：`git@github.com:lionpon/chinese-culture-app.git` (SSH deploy key)
-- **最新 commit**：`4096ffd`（fix: dream-interp missing onPaidClick）
+- **最新 commit**：`f189813`（fix: ru/ja/ko — payment trust, guide prices, compliance）
 
-### 7月24日：支付链路审计 + 转化漏斗优化
+### 7月25日：全站大整改——定价、叙事、多语言、支付信任
+
+#### 🔴 P0：起名 AI narrative（核心功能改动）
+- `naming.ts` 接入 OpenRouter gpt-4o-mini，付费用户自动生成个性化叙事
+- 以 "you/your" 人称写 3-5 句，将 Bazi + 名字含义编织成故事
+- `NamingResultView` 顶部金色卡片展示 narrative
+- `generateNames()` 改为 async，所有 API 路由 await
+
+#### 🔴 P0：定价重构
+- 默认价格 `$1` → `$5.99`，预设 `[$5.99, $9.99, $14.99, $19.99]`
+- 自定义入口缩小（需点击 "Custom" 才出现输入框）
+- `AmountPicker` 新增 `amount_changed_{amt}` + `amount_custom_mode` 埋点
+- 5 个服务页面 + SubmitButton + checkout API fallback 全部更新
+
+#### 🟡 P1：全站文案去 "Support" 化
+- `en.json` 30+ 处：submit、amount、pricing、success、payment、guide CTA
+- PayPal 商品名（`paypal.ts` PRODUCT_NAMES）去 "Support"，补 dream-interpretation
+- Terms §3 重写：从 "赞助/捐赠" 改为购买服务语言 + 退款政策
+- Footer paymentNote、freeText、heroPricing 全部更新
+
+#### 🟡 P1：解梦/手相结果叙事连贯化
+- `DreamInterpretationResultView`：symbols/latentMeaning/wishFulfillment → 合成 "What Your Dream Is Telling You" 叙事 + 折叠详情
+- `PalmReadingResultView`：同样 narrative-first 结构
+- 付费用户先看到完整叙事，细节可展开
+
+#### 🟢 P2：PDF 下载
+- 新增 `DownloadPDF` 组件（jsPDF + html2canvas）
+- 5 个 ResultView 全部接入，仅付费用户可见
+- 埋点 `pdf_download`
+
+#### 🟢 P2：免费试用 1 次
+- 代码 `MAX_FREE=1`，前端 localStorage + 服务端 cookie + SHA-256 指纹三重校验
+- 四语言 freeTier 文案统一为温暖风格
+
+#### 🌐 四语言同步
+- ru/ja/ko 三个 locale 文件全面同步：定价、去 Support、免费次数、paywall 叙事
+- 10 个 guide 页面硬编码价格 `$1`→`$5.99`，FAQ "赞助"→"购买"
+- `PaymentTrustBadges` 国际化（trustBadges key × 4 locale）
+- submit.paidNote/cardNote 增强：安全 + 即时 + 免注册 × 4 语言
+
+#### 🤖 多语言 AI 结果（双层保障）
+- 第一层：dream/palm/naming AI prompt 注入语言指令 → 直接用 ru/ja/ko 生成
+- 第二层：`translate.ts` 翻译兜底（calendar/divination/wuxing 算法内容）
+- `looksLikeEnglish()` 检测跳过已本地化字段，防止重复翻译
+- `useCheckout` 自动从 URL 读 locale，全程透传
+
+#### 🔐 支付信任全链路
+- PayPal 商品名去 Support（paypal.ts）
+- PDT 金额比对 `mc_gross` vs `input.amount`，差异告警
+- `PaymentTrustBadges` 三行信任：SSL · Instant · Refund
+- SubmitButton 增加 "or unlock everything" 分隔引导
+- 5 个表单页 pricing 横幅新增 `pricing.secure` 信任行
+
+#### 📊 埋点全量覆盖
+- 34 个事件覆盖所有交互点（locale-agnostic，自动带路径前缀）
+- 新增：amount_changed、amount_custom_mode、pdf_download、form_submit_dream_paid
+
+#### 🔒 合规更新
+- Terms §3：定价说明 + 购买性质 + 退款政策
+- Privacy：Neon → Supabase（5 处），contribution → purchase
+- 日期统一更新为 25 July 2026
+
+#### 📦 本次推送 commits
+```
+0fa1be7 fix: double-cast NamingInput to access locale field
+f189813 fix: ru/ja/ko — payment trust, guide prices, compliance
+```
+共 20+ 文件，~500 行改动
 
 #### 🔍 支付全链路审计
 逐节点排查了提交→checkout→PayPal→PDT→结果生成的完整路径，**路径单一干净**，无多余跳转。
