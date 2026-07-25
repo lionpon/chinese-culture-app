@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, FormEvent, useEffect } from "react";
+import { useState, FormEvent, useLayoutEffect } from "react";
 import { useTranslations } from "next-intl";
 import { useCheckout } from "@/lib/useCheckout";
 import SubmitButton from "@/components/SubmitButton";
@@ -18,7 +18,7 @@ export default function DreamInterpretationPage() {
  const [charCount, setCharCount] = useState(0);
  const [hasFree, setHasFree] = useState(false);
 
- useEffect(() => {
+ useLayoutEffect(() => {
    setHasFree(hasFreeUses());
  }, []);
 

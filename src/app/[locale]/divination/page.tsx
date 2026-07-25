@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, FormEvent, useCallback, useEffect } from "react";
+import { useState, FormEvent, useCallback, useLayoutEffect } from "react";
 import { useTranslations } from "next-intl";
 import { useCheckout } from "@/lib/useCheckout";
 import SubmitButton from "@/components/SubmitButton";
@@ -20,7 +20,7 @@ export default function DivinationPage() {
  const [previewLoading, setPreviewLoading] = useState(false);
  const [hasFree, setHasFree] = useState(false);
 
- useEffect(() => {
+ useLayoutEffect(() => {
    setHasFree(hasFreeUses());
  }, []);
 

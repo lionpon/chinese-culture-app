@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState, useRef, useCallback, useEffect } from "react";
+import { FormEvent, useState, useRef, useCallback, useLayoutEffect } from "react";
 import { useTranslations } from "next-intl";
 import { useCheckout } from "@/lib/useCheckout";
 import SubmitButton from "@/components/SubmitButton";
@@ -30,7 +30,7 @@ export default function CalendarPage() {
   const [hasFree, setHasFree] = useState(false);
   const previewTimer = useRef<ReturnType<typeof setTimeout>>();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setHasFree(hasFreeUses());
   }, []);
 

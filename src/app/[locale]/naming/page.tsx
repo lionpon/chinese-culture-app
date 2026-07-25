@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState, useCallback, useRef, useEffect } from "react";
+import { FormEvent, useState, useCallback, useRef, useLayoutEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { useCheckout } from "@/lib/useCheckout";
 import SubmitButton from "@/components/SubmitButton";
@@ -47,7 +47,7 @@ export default function NamingPage() {
   const [hasFree, setHasFree] = useState(false);
   const previewTimer = useRef<ReturnType<typeof setTimeout>>();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setHasFree(hasFreeUses());
   }, []);
 
