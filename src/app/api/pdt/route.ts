@@ -34,7 +34,14 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ status: "pending" });
     }
 
+    // Verify amount matches — prevent tampering
     const input = JSON.parse(purchase.input);
+    const expectedAmount = typeof input.amount === "number" ? input.amount : 5.99;
+    const paidAmount = parseFloat(pdt.amount || "0");
+    if (paidAmount > 0 && Math.abs(paidAmount - expectedAmount) > 0.02) {
+      console.warn(`PDT amount mismatch: paid $${paidAmount}, expected $${expectedAmount}, purchase ${purchase_id}`);
+    }
+
     let result: unknown;
 
     switch (purchase.type) {

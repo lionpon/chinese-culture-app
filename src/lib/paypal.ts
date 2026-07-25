@@ -13,10 +13,11 @@ export function getAppUrl(): string {
 }
 
 export const PRODUCT_NAMES: Record<string, string> = {
-  naming: "Support Chinese Culture Studio — Name Reading",
-  calendar: "Support Chinese Culture Studio — Date Selection",
-  divination: "Support Chinese Culture Studio — I Ching Reading",
-  "palm-reading": "Support Chinese Culture Studio — Palm Reading",
+  naming: "Chinese Name Reading — Chinese Culture Studio",
+  calendar: "Auspicious Date Selection — Chinese Culture Studio",
+  divination: "I Ching Reading — Chinese Culture Studio",
+  "palm-reading": "Palm Reading — Chinese Culture Studio",
+  "dream-interpretation": "Dream Interpretation — Chinese Culture Studio",
 };
 
 export function buildPayPalCheckoutUrl(purchaseId: string, type: string, amount = 1): string {

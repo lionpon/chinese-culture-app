@@ -23,10 +23,12 @@ export default function PaymentTrustBadges() {
           <text x="4" y="17" fontFamily="Arial" fontWeight="bold" fontSize="12" fill="white">PayPal</text>
         </svg>
       </div>
-      {/* Security text */}
-      <p className="text-xs" style={{ color: "var(--text-dim)" }}>
-        🔒 Secure checkout · No account needed
-      </p>
+      {/* Trust signals */}
+      <div className="flex flex-wrap justify-center gap-x-4 gap-y-0.5 text-xs" style={{ color: "var(--text-dim)" }}>
+        <span>🔒 SSL encrypted</span>
+        <span>⚡ Instant delivery</span>
+        <span>🔄 Refund if not delivered</span>
+      </div>
     </div>
   );
 }
