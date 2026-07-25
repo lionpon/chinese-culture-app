@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { buildPayPalCheckoutUrl } from "@/lib/paypal";
 import { prisma } from "@/lib/db";
+import { translateResultEnFields } from "@/lib/translate";
 import { generateNames, analyzeName } from "@/lib/naming";
 import { selectAuspiciousDays } from "@/lib/calendar";
 import { performDivination } from "@/lib/divination";
@@ -52,6 +53,10 @@ export async function POST(req: NextRequest) {
         case "divination": result = performDivination(input as unknown as DivinationInput, true); break;
         case "dream-interpretation": result = await interpretDream(input as unknown as DreamInterpretationInput, true); break;
       }
+
+      // Translate for non-English locales
+      const locale = typeof input.locale === "string" ? input.locale : "en";
+      if (locale !== "en") await translateResultEnFields(result, locale);
 
       const purchase = await prisma.purchase.create({
         data: {

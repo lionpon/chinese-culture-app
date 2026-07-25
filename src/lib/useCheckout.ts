@@ -10,6 +10,10 @@ export function useCheckout(type: string) {
   async function checkout(data: Record<string, unknown>, forcePaid?: boolean) {
     setLoading(true);
     const free = forcePaid ? false : hasFreeUses();
+    // Auto-detect locale from URL path (e.g. /ru/naming → ru)
+    const pathLocale = window.location.pathname.split("/")[1];
+    const locale = ["ru", "ja", "ko"].includes(pathLocale) ? pathLocale : "en";
+    data.locale = locale;
     try {
       const res = await fetch("/api/checkout", {
         method: "POST",

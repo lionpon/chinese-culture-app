@@ -134,6 +134,7 @@ export default function NamingPage() {
       style: styleEl ? styleEl.value as "elegant" | "grand" | "fresh" : "elegant",
       mode,
       amount,
+      locale,
     };
   }
 

@@ -6,6 +6,7 @@ import { selectAuspiciousDays } from "@/lib/calendar";
 import { performDivination } from "@/lib/divination";
 import { readPalm } from "@/lib/palm-reading";
 import { interpretDream } from "@/lib/dream-interpretation";
+import { translateResultEnFields } from "@/lib/translate";
 import type { NamingInput, CalendarInput, DivinationInput, PalmReadingInput, DreamInterpretationInput } from "@/types";
 
 export async function POST(req: NextRequest) {
@@ -52,6 +53,10 @@ export async function POST(req: NextRequest) {
       default:
         return NextResponse.json({ error: "Unknown type" }, { status: 400 });
     }
+
+    // Translate for non-English locales
+    const locale = typeof input.locale === "string" ? input.locale : "en";
+    if (locale !== "en") await translateResultEnFields(result, locale);
 
     await prisma.purchase.update({
       where: { id: purchaseId },
