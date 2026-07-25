@@ -53,8 +53,8 @@
       "free": "{label} — 무료",
       "paid": "결과 보기 · {amount}",
       "paidSimple": "결과 보기 · {amount}",
-      "cardNote": "PayPal 또는 신용카드 — PayPal 계정 불필요",
-      "paidNote": "PayPal 또는 신용카드 — 계정 불필요"
+      "cardNote": "🔐 PayPal 안전 결제 · 신용카드 가능 · 즉시 접근",
+      "paidNote": "🔐 PayPal 안전 결제 · 계정 불필요 · 즉시 접근"
     },
     "amount": {
       "label": "가격 선택",
@@ -70,6 +70,11 @@
     "freeTier": {
       "one": "무료 리딩 1회가 있습니다 — 소중히 사용하세요 ✨",
       "none": "무료 리딩이 기다리고 있습니다 — 아래에서 잠금 해제"
+    },
+    "trustBadges": {
+      "ssl": "🔒 SSL 암호화",
+      "instant": "⚡ 즉시 전달",
+      "refund": "🔄 미전달 시 환불"
     },
     "toggleMenu": "네비게이션 메뉴 열기",
     "validation": {

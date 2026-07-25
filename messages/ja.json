@@ -53,8 +53,8 @@
       "free": "{label} — 無料",
       "paid": "結果を見る · {amount}",
       "paidSimple": "結果を見る · {amount}",
-      "cardNote": "PayPalまたはクレジットカード — PayPalアカウント不要",
-      "paidNote": "PayPalまたはクレジットカード — アカウント不要"
+      "cardNote": "🔐 PayPalで安全に決済 · クレカ対応 · 即時アクセス",
+      "paidNote": "🔐 PayPalで安全に決済 · アカウント不要 · 即時アクセス"
     },
     "amount": {
       "label": "価格を選ぶ",
@@ -70,6 +70,11 @@
     "freeTier": {
       "one": "無料リーディングが1回あります — 大切に ✨",
       "none": "無料リーディングをお待ちしています — 以下から解除"
+    },
+    "trustBadges": {
+      "ssl": "🔒 SSL暗号化",
+      "instant": "⚡ 即時配信",
+      "refund": "🔄 未配信時返金"
     },
     "toggleMenu": "ナビゲーションメニューを開く",
     "validation": {

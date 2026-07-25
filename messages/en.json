@@ -71,6 +71,11 @@
       "one": "You have one free reading — make it count ✨",
       "none": "Your free reading awaits — unlock below"
     },
+    "trustBadges": {
+      "ssl": "🔒 SSL encrypted",
+      "instant": "⚡ Instant delivery",
+      "refund": "🔄 Refund if not delivered"
+    },
     "toggleMenu": "Toggle navigation menu",
     "validation": {
       "selectRequired": "Please select an option",
