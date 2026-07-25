@@ -5,6 +5,7 @@ import { selectAuspiciousDays } from "@/lib/calendar";
 import { performDivination } from "@/lib/divination";
 import { readPalm } from "@/lib/palm-reading";
 import { interpretDream } from "@/lib/dream-interpretation";
+import { translateResultEnFields } from "@/lib/translate";
 import type { NamingInput, CalendarInput, DivinationInput, PalmReadingInput, DreamInterpretationInput } from "@/types";
 
 async function computeFingerprint(req: NextRequest): Promise<string> {
@@ -142,6 +143,8 @@ export async function GET(req: NextRequest) {
           case "palm-reading": result = await readPalm(input as PalmReadingInput); break;
           case "dream-interpretation": result = await interpretDream(input as DreamInterpretationInput); break;
         }
+        const locale = typeof input.locale === "string" ? input.locale : "en";
+        await translateResultEnFields(result, locale);
         await prisma.purchase.update({
           where: { id: purchaseId },
           data: { status: "completed", paid: true, result: JSON.stringify(result) },
