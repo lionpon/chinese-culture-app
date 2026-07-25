@@ -88,9 +88,21 @@ IMPORTANT:
 - Quality must be one of: "excellent", "good", "fair", "poor"
 - Explain classical concepts in plain language that a Western audience can understand
 - Do NOT include markdown formatting in the JSON values
-- Return ONLY the JSON, no other text`;
+- Return ONLY the JSON, no other text
+${LOCALE_INSTRUCTION}`;
+
+const PALM_LOCALE_NAMES: Record<string, string> = {
+  ru: "Russian", ja: "Japanese", ko: "Korean",
+};
+
+function buildPalmPrompt(locale?: string): string {
+  if (!locale || locale === "en" || !PALM_LOCALE_NAMES[locale]) return SYSTEM_PROMPT;
+  const lang = PALM_LOCALE_NAMES[locale];
+  return SYSTEM_PROMPT + `\n\nLANGUAGE: Write ALL English fields (descriptionEn, meaningEn, textEn, careerEn, loveEn, healthEn) in natural, fluent ${lang} — not English. Sound like a native ${lang} speaker. Keep Chinese fields unchanged.`;
+}
 
 export async function readPalm(input: PalmReadingInput): Promise<PalmReadingResult> {
+  const systemPrompt = buildPalmPrompt(input.locale);
   const imageBase64 = getPalmImage(input.imageKey);
   if (!imageBase64) {
     throw new Error("Image expired or not found. Please re-upload your palm photo.");
@@ -109,7 +121,7 @@ Provide a complete palm reading based on classical Chinese palmistry texts.`;
       model: "qwen/qwen2.5-vl-72b-instruct",
       max_tokens: 4096,
       messages: [
-        { role: "system", content: SYSTEM_PROMPT },
+        { role: "system", content: systemPrompt },
         {
           role: "user",
           content: [

@@ -54,9 +54,8 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: "Unknown type" }, { status: 400 });
     }
 
-    // Translate for non-English locales
     const locale = typeof input.locale === "string" ? input.locale : "en";
-    if (locale !== "en") await translateResultEnFields(result, locale);
+    await translateResultEnFields(result, locale);
 
     await prisma.purchase.update({
       where: { id: purchaseId },

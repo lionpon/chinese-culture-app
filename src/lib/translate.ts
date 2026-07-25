@@ -80,7 +80,13 @@ export async function translateResultEnFields(result: unknown, locale: string): 
   if (locale === "en" || !result) return;
 
   // Collect all *En string paths + narrative + advice
+  // Skip fields that are already in a non-English script (AI already localized them)
   const paths: { path: string[]; value: string }[] = [];
+  function looksLikeEnglish(text: string): boolean {
+    // If text contains significant Cyrillic/Hangul/Kana, it's already localized
+    const nonLatin = text.match(/[А-яЁё가-힯぀-ゟ゠-ヿ]/g);
+    return !nonLatin || nonLatin.length < 3; // Allow a few CJK chars (Chinese terms)
+  }
   function walk(obj: unknown, path: string[]) {
     if (!obj || typeof obj !== "object") return;
     if (Array.isArray(obj)) {
@@ -88,8 +94,8 @@ export async function translateResultEnFields(result: unknown, locale: string): 
       return;
     }
     for (const [key, value] of Object.entries(obj as Record<string, unknown>)) {
-      const isEnField = key.endsWith("En") || key === "narrative" || key === "advice";
-      if (typeof value === "string" && isEnField && value.length > 5) {
+      const isEnField = key.endsWith("En") || key === "advice";
+      if (typeof value === "string" && isEnField && value.length > 5 && looksLikeEnglish(value)) {
         paths.push({ path: [...path, key], value });
       } else if (typeof value === "object" && value !== null) {
         walk(value, [...path, key]);

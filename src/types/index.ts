@@ -177,6 +177,7 @@ export interface PalmReadingInput {
   ageRange?: string;
   handSide: "left" | "right";
   question?: string;
+  locale?: string;
 }
 
 export interface LineAnalysis {
@@ -251,6 +252,7 @@ export interface DreamInterpretationInput {
   dreamText: string;
   dreamType?: "normal" | "nightmare" | "recurring" | "lucid";
   focus?: "chinese" | "freudian" | "both";
+  locale?: string;
 }
 
 export interface DreamSymbol {

@@ -54,9 +54,8 @@ export async function POST(req: NextRequest) {
         case "dream-interpretation": result = await interpretDream(input as unknown as DreamInterpretationInput, true); break;
       }
 
-      // Translate for non-English locales
       const locale = typeof input.locale === "string" ? input.locale : "en";
-      if (locale !== "en") await translateResultEnFields(result, locale);
+      await translateResultEnFields(result, locale);
 
       const purchase = await prisma.purchase.create({
         data: {

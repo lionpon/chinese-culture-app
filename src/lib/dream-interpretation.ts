@@ -119,12 +119,24 @@ IMPORTANT:
 - Include jungian archertypes only when relevant
 - The jungian field may be omitted if no clear archetypes emerge
 - Do NOT include markdown formatting in JSON values
-- Return ONLY the JSON, no other text`;
+- Return ONLY the JSON, no other text
+${LOCALE_INSTRUCTION}`;
+
+const LOCALE_NAMES_AI: Record<string, string> = {
+  ru: "Russian", ja: "Japanese", ko: "Korean",
+};
+
+function buildSystemPrompt(locale?: string): string {
+  if (!locale || locale === "en" || !LOCALE_NAMES_AI[locale]) return SYSTEM_PROMPT;
+  const lang = LOCALE_NAMES_AI[locale];
+  return SYSTEM_PROMPT + `\n\nLANGUAGE: Write ALL English fields (descriptionEn, meaningEn, overallInterpretationEn, latentMeaningEn, wishFulfillmentEn, analysisEn, compensationEn, practicalEn, psychologicalEn, textEn) in natural, fluent ${lang} — not English. Sound like a native ${lang} speaker. Keep Chinese fields unchanged.`;
+}
 
 export async function interpretDream(
   input: DreamInterpretationInput,
   preview = false
 ): Promise<DreamInterpretationResult> {
+  const systemPrompt = buildSystemPrompt(input.locale);
   if (preview) {
     return {
       dreamType: {
@@ -181,7 +193,7 @@ Analyze the dream through both Chinese classical dream interpretation and Wester
     model: "openai/gpt-4o-mini",
     max_tokens: 4096,
     messages: [
-      { role: "system", content: SYSTEM_PROMPT },
+      { role: "system", content: systemPrompt },
       { role: "user", content: userMessage },
     ],
   });

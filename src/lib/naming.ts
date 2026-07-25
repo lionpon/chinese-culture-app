@@ -17,9 +17,10 @@ const ai = new OpenAI({
 export async function generateNames(input: NamingInput, preview = false): Promise<NamingResult> {
   const full = _generateNames(input);
   if (!preview) {
-    // Generate AI narratives for paid users
+    // Generate AI narratives for paid users (in target locale)
     try {
-      full.options = await addNarratives(full.options, input, full.baziAnalysis);
+      const locale = (input as Record<string, unknown>).locale as string | undefined;
+      full.options = await addNarratives(full.options, input, full.baziAnalysis, locale);
     } catch {
       // Silent fail — base meanings are still present
     }
@@ -331,9 +332,16 @@ async function addNarratives(
   options: NameOption[],
   input: NamingInput,
   bazi: BaziResult,
+  locale?: string,
 ): Promise<NameOption[]> {
   const dayMasterEl = bazi.day.element || bazi.day.wuxing;
   const firstName = input.firstName || "";
+
+  const localeNames: Record<string, string> = { ru: "Russian", ja: "Japanese", ko: "Korean" };
+  const langName = localeNames[locale || ""];
+  const langInstruction = langName
+    ? `\nIMPORTANT: Write the entire paragraph in natural, fluent ${langName}. Sound like a native speaker — warm, poetic, never robotic.`
+    : "";
 
   const namesList = options.map((o, i) =>
     `${i + 1}. ${o.characters} (${o.pinyin}) — ${o.wuxing} elements — "${o.meaning}"`
@@ -353,6 +361,7 @@ Write a SINGLE paragraph (3-5 sentences) that:
 - Sounds like a wise friend telling them something meaningful about themselves — warm, poetic but grounded, never robotic
 - Do NOT list the names again — just tell the story they collectively tell
 - End with a sentence that makes them feel seen and understood
+${langInstruction}
 
 Return ONLY the paragraph, no quotes, no labels.`;
 
