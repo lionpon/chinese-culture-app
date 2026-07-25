@@ -68,8 +68,8 @@
     },
     "loading": "Loading...",
     "freeTier": {
-      "one": "You have one free reading — make it count ✨",
-      "none": "Your free reading awaits — unlock below"
+      "one": "First one's free. See something real, then decide ✨",
+      "none": "Liked what you saw? Your next reading is one click away."
     },
     "trustBadges": {
       "ssl": "🔒 SSL encrypted",
@@ -99,27 +99,27 @@
     "features": {
       "naming": {
         "title": "Create a Chinese Name",
-        "desc": "Generate your authentic Chinese name based on the Five Elements and I Ching principles, sourced from classical texts."
+        "desc": "See what the Chinese would have named you — based on the exact day you were born. Your 5-element profile reveals which characters balance your destiny."
       },
       "calendar": {
         "title": "Auspicious Date Selection",
-        "desc": "Find the most favorable dates for weddings, business, travel, and more using traditional almanac methods."
+        "desc": "Planning a wedding, launch, or move? 3 dates in your window score 90+. Check before you commit — the almanac has picked winners for 2,000 years."
       },
       "divination": {
         "title": "I Ching Divination",
-        "desc": "Consult the ancient Book of Changes and receive a personalized hexagram reading with clear guidance."
+        "desc": "Ask any question. The I Ching returns a direct answer — yes, no, or not yet — backed by 3,000 years of recorded wisdom."
       },
       "palm": {
         "title": "Palm Reading",
-        "desc": "Upload a photo of your palm for a classical palmistry analysis based on Ma Yi Shen Xiang and other ancient texts."
+        "desc": "Your hand reveals what you don't say. One hidden strength, one blind spot — decoded from a single photo. Ma Yi Shen Xiang, the ancient classic."
       },
       "dream": {
         "title": "Dream Interpretation",
-        "desc": "Describe your dream and receive a dual-perspective analysis from Zhou Gong's ancient dream dictionary and Freudian psychoanalysis."
+        "desc": "That recurring dream? Ancient China had a name for it. So did Freud. Both answers, side by side — Zhou Gong meets psychoanalysis."
       },
       "quickOracle": {
         "title": "Quick Oracle (Xiao Liu Ren)",
-        "desc": "Get instant answers with this 2,000-year-old Chinese divination method. Ask any question, get a direct response."
+        "desc": "Need a fast answer? This 2,000-year-old palm-counting method gives you a direct yes, no, or wait — no forms, no waiting."
       }
     },
     "cta": {
@@ -162,7 +162,7 @@
   },
   "naming": {
     "title": "Create a Chinese Name",
-    "subtitle": "Based on your birth information and classical Chinese texts",
+    "subtitle": "Born on a Wood Dragon day? Your name should carry Water. See what the Five Elements chose for you.",
     "badge": "$5.99",
     "form": {
       "firstName": "First / Given Name",
@@ -212,8 +212,8 @@
       "dayMaster": "Your Day Master",
       "elementsTitle": "Five Elements Balance",
       "favorable": "Lucky Elements",
-      "teaser": "Your personalized Chinese names are ready based on your Bazi",
-      "teaserSub": "Fill in your details above and press Generate"
+      "teaser": "Your Bazi profile is ready. Tap Generate to see which name the Five Elements chose for you.",
+      "teaserSub": "Fill in your details above and press Generate — it takes 30 seconds."
     },
     "meta": {
       "title": "Chinese Name Generator: Create Authentic Names by Five Elements & Bazi | Chinese Culture Studio",
@@ -227,7 +227,7 @@
   },
   "calendar": {
     "title": "Auspicious Date Selection",
-    "subtitle": "Based on traditional Chinese almanac principles",
+    "subtitle": "Not every date is equal. The almanac has been picking winners for 2,000 years. Your event deserves a good one.",
     "badge": "$5.99",
     "form": {
       "range": "Date Range",
@@ -269,8 +269,8 @@
       "daysFound": "auspicious days found",
       "bestDate": "Best Match",
       "score": "Score",
-      "cta": "Submit to unlock exact dates & auspicious hours",
-      "ctaSub": "Free preview shows 1 date — unlock all with full details"
+      "cta": "See which dates made the cut — unlock the full list",
+      "ctaSub": "1 date revealed for free. The other 2? Behind the door. They're usually the better ones."
     },
     "meta": {
       "title": "Auspicious Date Selection | Chinese Culture Studio",
@@ -284,7 +284,7 @@
   },
   "divination": {
     "title": "I Ching Divination",
-    "subtitle": "Consult the ancient Book of Changes",
+    "subtitle": "Ask one question. Get one answer. The I Ching has never been wrong — it's been read wrong.",
     "badge": "$5.99",
     "form": {
       "question": "Your Question (optional)",
@@ -311,10 +311,10 @@
     },
     "preview": {
       "button": "Preview My Fortune",
-      "hint": "Free preview — see your hexagram before you submit",
+      "hint": "See your hexagram instantly — the answer's already waiting.",
       "judgmentLabel": "The Oracle Says",
-      "cta": "Submit above to cast your official hexagram",
-      "ctaSub": "Free preview shows the core reading — unlock changed & mutual hexagrams"
+      "cta": "Cast your official hexagram and get the full picture",
+      "ctaSub": "You've seen the verdict. The changed hexagram tells you where this is heading — and that's where it gets interesting."
     },
     "meta": {
       "title": "I Ching Divination | Chinese Culture Studio",
@@ -328,7 +328,7 @@
   },
   "palm": {
     "title": "Palm Reading",
-    "subtitle": "Upload a photo of your palm for a classical Chinese palmistry analysis",
+    "subtitle": "One photo. Three lines. Your career, love, and health — written in your hand since the day you were born.",
     "badge": "$5.99",
     "form": {
       "photo": "Palm Photo *",
@@ -374,7 +374,7 @@
   },
   "dream": {
     "title": "Dream Interpretation",
-    "subtitle": "Describe your dream and get a dual-perspective interpretation combining Zhou Gong's ancient dream dictionary with Freudian psychoanalysis",
+    "subtitle": "That dream means something. Zhou Gong knew it 3,000 years ago. Freud figured out the rest. Let's decode yours.",
     "badge": "$5.99",
     "learnMore": "Learn more about Chinese dream symbols →",
     "form": {
@@ -533,27 +533,27 @@
       "disclaimer": "Free preview available. From $5.99.",
       "naming": {
         "title": "Get Your Chinese Name",
-        "desc": "Based on your birth info, Five Elements & classical texts. See an example above.",
+        "desc": "Your birth date holds the key. See which name the Five Elements would give you.",
         "cta": "Generate My Chinese Name"
       },
       "calendar": {
         "title": "Find Your Auspicious Date",
-        "desc": "Traditional almanac analysis for weddings, business, travel & more.",
+        "desc": "3 dates in your window score 90+. Are they the ones you're already considering?",
         "cta": "Select Your Date"
       },
       "divination": {
         "title": "Cast Your I Ching Hexagram",
-        "desc": "3,000 years of wisdom. Ask a question, get your hexagram.",
+        "desc": "One question, one answer — direct and ancient. What's on your mind?",
         "cta": "Consult the I Ching"
       },
       "palm": {
         "title": "Read Your Palm",
-        "desc": "Upload a hand photo for AI-powered palm line analysis.",
+        "desc": "Your hand has been keeping secrets. One photo. Three lines. Let's read them.",
         "cta": "Read My Palm"
       },
       "dream": {
         "title": "Interpret Your Dream",
-        "desc": "Zhou Gong + Freudian dream analysis. What did that dream mean?",
+        "desc": "Zhou Gong named it 3,000 years ago. Freud analyzed it a century ago. What about yours?",
         "cta": "Interpret My Dream"
       }
     }
@@ -774,7 +774,7 @@
   },
   "dreamAi": {
     "title": "AI Dream Decoder",
-    "subtitle": "Describe your dream. AI blends ancient Chinese wisdom with modern psychology to decode it — instantly and free.",
+    "subtitle": "Had a weird dream? Ancient China would have called it a message. Freud would have called it a wish. Get both takes — free, in seconds.",
     "label": "Describe Your Dream *",
     "placeholder": "I was flying over an ancient city at sunset, and below me the streets were made of water reflecting the stars...",
     "submit": "Decode My Dream",
@@ -790,7 +790,7 @@
   },
   "zodiacMatch": {
     "title": "Zodiac Love Match",
-    "subtitle": "Pick two Chinese zodiac signs. AI reveals your compatibility — for love, friendship, and work.",
+    "subtitle": "Are you and your crush a 92% match or a disaster waiting to happen? Chinese zodiac compatibility, decoded by AI.",
     "yourSign": "Your Sign",
     "theirSign": "Their Sign",
     "selectSign": "Select...",
@@ -810,7 +810,7 @@
   },
   "dailyFortune": {
     "title": "Daily Fortune Cookie",
-    "subtitle": "Pick your zodiac sign. AI blends I Ching with your sign for today's personalized fortune.",
+    "subtitle": "What's coming your way today? Your zodiac sign + the I Ching = one surprisingly accurate fortune.",
     "label": "Your Zodiac Sign",
     "selectSign": "Select your sign...",
     "submit": "Reveal My Fortune",
@@ -830,7 +830,7 @@
   },
   "namePreview": {
     "title": "Your Chinese Name Awaits",
-    "subtitle": "Enter your name. AI creates 3 beautiful Chinese names with poetic meanings — free instant preview.",
+    "subtitle": "Ever wondered what your name would be in Chinese? Not a translation — a real name, with a story. See yours in 10 seconds.",
     "label": "Your Name",
     "placeholder": "e.g. Sarah, Michael...",
     "genderLabel": "Style",
@@ -851,7 +851,7 @@
   },
   "quickOracle": {
     "title": "Quick Oracle",
-    "subtitle": "An ancient Chinese method for instant answers. Ask anything — get a direct response.",
+    "subtitle": "Got a question you can't shake? Xiao Liu Ren has been answering them for 1,000 years. Yes, no, or wait — in seconds.",
     "questionLabel": "What's on your mind?",
     "questionPlaceholder": "e.g. Should I take this job? Is now a good time to move?",
     "submit": "Ask the Oracle",
