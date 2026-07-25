@@ -92,15 +92,27 @@ export function analyzeWuxing(
     favorable.push(dayMaster);
   }
 
-  // Build English description
+  // Build English description — warm, conversational
+  const dayEl = ELEMENT_EN[dayMaster] || dayMaster;
   const descParts: string[] = [];
-  descParts.push(`Your Day Master is ${ELEMENT_EN[dayMaster] || dayMaster} (${dayMaster}).`);
+
+  // Day master with personality language
+  const dayPersonalities: Record<string, string> = {
+    "木": "You're like a towering tree — you grow steadily, think independently, and lead with quiet strength.",
+    "火": "You burn bright — passionate, charismatic, and naturally drawn to the spotlight.",
+    "土": "You're the steady ground beneath others' feet — reliable, nurturing, and deeply grounded.",
+    "金": "You carry a sharp clarity — disciplined, principled, with an eye for what truly matters.",
+    "水": "You flow like deep water — intuitive, wise, and endlessly adaptable to whatever life brings.",
+  };
+  descParts.push(dayPersonalities[dayMaster] || `Your Day Master is ${dayEl} (${dayMaster}).`);
 
   if (maxCount - minCount <= 2) {
-    descParts.push("Your Five Elements are relatively balanced, which is favorable.");
+    descParts.push("Your Five Elements sit in rare balance — a naturally harmonious foundation that serves you well in any path you choose.");
   } else {
-    descParts.push(`Your chart shows strong ${ELEMENT_EN[strongest] || strongest} (${strongest}) and weak ${ELEMENT_EN[weakest] || weakest} (${weakest}).`);
-    descParts.push(`Favorable elements: ${favorable.map(e => ELEMENT_EN[e] || e).join(", ")}.`);
+    const strongEl = ELEMENT_EN[strongest] || strongest;
+    const weakEl = ELEMENT_EN[weakest] || weakest;
+    const favList = favorable.map(e => ELEMENT_EN[e] || e).join(" and ");
+    descParts.push(`Your chart leans strongly toward ${strongEl} while ${weakEl} runs a bit thin. What brings you back into balance: more ${favList}.`);
   }
 
   return {

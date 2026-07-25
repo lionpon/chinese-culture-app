@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
 
     switch (type) {
       case "naming":
-        result = generateNames(input as NamingInput);
+        result = await generateNames(input as NamingInput);
         break;
       case "calendar":
         result = selectAuspiciousDays(input as CalendarInput);

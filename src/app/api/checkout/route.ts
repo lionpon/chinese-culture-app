@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
 
       let result: unknown;
       switch (type) {
-        case "naming": result = (input.mode === "analyze") ? analyzeName(input as unknown as NamingInput) : generateNames(input as unknown as NamingInput, true); break;
+        case "naming": result = (input.mode === "analyze") ? analyzeName(input as unknown as NamingInput) : await generateNames(input as unknown as NamingInput, true); break;
         case "calendar": result = selectAuspiciousDays(input as unknown as CalendarInput, true); break;
         case "divination": result = performDivination(input as unknown as DivinationInput, true); break;
         case "dream-interpretation": result = await interpretDream(input as unknown as DreamInterpretationInput, true); break;
@@ -88,7 +88,7 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    const amount = typeof input.amount === "number" && input.amount >= 1 ? input.amount : 1;
+    const amount = typeof input.amount === "number" && input.amount >= 1 ? input.amount : 5.99;
 
     // PayPal Standard — supports PayPal accounts + credit/debit cards for overseas users
     const url = buildPayPalCheckoutUrl(purchase.id, type, amount);

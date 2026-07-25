@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
 
     switch (purchase.type) {
       case "naming":
-        result = (input.mode === "analyze") ? analyzeName(input as NamingInput) : generateNames(input as NamingInput);
+        result = (input.mode === "analyze") ? analyzeName(input as NamingInput) : await generateNames(input as NamingInput);
         break;
       case "calendar":
         result = selectAuspiciousDays(input as CalendarInput);

@@ -1,17 +1,26 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import type { NamingResult, NameAnalysisResult } from "@/types";
 import SpeakButton from "./SpeakButton";
 import PaywallOverlay from "./PaywallOverlay";
 import EmailCaptureForm from "./EmailCaptureForm";
+import DownloadPDF from "./DownloadPDF";
 import { trackClick } from "@/lib/track";
 
-function ResultCard({ opt, i, recommended, isFree }: { opt: { characters: string; pinyin: string; meaning: string; wuxing?: string; source?: string; sourceText?: string }; i: number; recommended: boolean; isFree?: boolean }) {
+function ResultCard({ opt, i, recommended, isFree, showNarrative }: { opt: { characters: string; pinyin: string; meaning: string; narrative?: string; wuxing?: string; source?: string; sourceText?: string }; i: number; recommended: boolean; isFree?: boolean; showNarrative?: boolean }) {
   const t = useTranslations("result");
   return (
     <div key={i} className="card-classic p-4 sm:p-6">
+      {/* Narrative intro — the story behind this name */}
+      {showNarrative && opt.narrative && i === 0 && (
+        <div className="mb-4 px-3 py-3 rounded-lg" style={{ backgroundColor: "rgba(201,169,110,0.06)", border: "1px solid rgba(201,169,110,0.15)" }}>
+          <p className="text-sm leading-relaxed italic" style={{ color: "var(--text-body)" }}>
+            {opt.narrative}
+          </p>
+        </div>
+      )}
       <div className="text-center mb-3">
         <p className="text-3xl font-bold text-accent">{opt.characters}</p>
         <div className="flex items-center justify-center gap-2 mt-1">
@@ -44,6 +53,7 @@ export default function NamingResultView({
   purchaseId?: string;
 }) {
   const t = useTranslations("result");
+  const resultRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const mode = ("type" in result && result.type === "analysis") ? "name_analysis" : "naming";
@@ -120,6 +130,17 @@ export default function NamingResultView({
   const r = result as NamingResult;
   return (
     <div>
+      {/* PDF download — paid users only */}
+      {!isFree && (
+        <div className="flex justify-end mb-4">
+          <DownloadPDF
+            filename={`chinese-name-${r.options[0]?.characters || "reading"}`}
+            title="Your Chinese Name Reading"
+            resultRef={resultRef}
+          />
+        </div>
+      )}
+      <div ref={resultRef}>
       <h1 className="text-2xl font-bold text-center mb-6 text-accent">{t("naming.title")}</h1>
       <div className="space-y-4">
         {/* Why this name? — one-line context */}
@@ -136,7 +157,7 @@ export default function NamingResultView({
 
         {/* Always show first recommended name */}
         {r.options.length > 0 && (
-          <ResultCard opt={r.options[0]} i={0} recommended={true} isFree={!!(isFree && purchaseId)} />
+          <ResultCard opt={r.options[0]} i={0} recommended={true} isFree={!!(isFree && purchaseId)} showNarrative={!isFree} />
         )}
 
         {/* Gate remaining names + bazi analysis behind paywall */}
@@ -160,6 +181,7 @@ export default function NamingResultView({
         )}
       </div>
       <EmailCaptureForm source="naming" />
+      </div>
     </div>
   );
 }

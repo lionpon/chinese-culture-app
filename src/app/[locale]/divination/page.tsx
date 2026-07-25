@@ -4,7 +4,7 @@ import { useState, FormEvent, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import { useCheckout } from "@/lib/useCheckout";
 import SubmitButton from "@/components/SubmitButton";
-import AmountPicker from "@/components/AmountPicker";
+import AmountPicker, { DEFAULT_AMOUNT } from "@/components/AmountPicker";
 import FreeTierBadge from "@/components/FreeTierBadge";
 import SpeakButton from "@/components/SpeakButton";
 import { hasFreeUses } from "@/lib/free-tier";
@@ -15,7 +15,7 @@ export default function DivinationPage() {
  const tc = useTranslations("common");
  const { loading, checkout } = useCheckout("divination");
  const [method, setMethod] = useState<"time" | "random" | "manual">("time");
- const [amount, setAmount] = useState(1);
+ const [amount, setAmount] = useState(DEFAULT_AMOUNT);
  const [preview, setPreview] = useState<{nameZh:string;nameEn:string;pinyin:string;judgmentEn:string;advice:string}|null>(null);
  const [previewLoading, setPreviewLoading] = useState(false);
 

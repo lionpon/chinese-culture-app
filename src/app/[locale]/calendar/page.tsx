@@ -4,7 +4,7 @@ import { FormEvent, useState, useRef, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import { useCheckout } from "@/lib/useCheckout";
 import SubmitButton from "@/components/SubmitButton";
-import AmountPicker from "@/components/AmountPicker";
+import AmountPicker, { DEFAULT_AMOUNT } from "@/components/AmountPicker";
 import FreeTierBadge from "@/components/FreeTierBadge";
 import { hasFreeUses } from "@/lib/free-tier";
 import { trackClick } from "@/lib/track";
@@ -24,7 +24,7 @@ export default function CalendarPage() {
   const t = useTranslations("calendar");
   const tc = useTranslations("common");
   const { loading, checkout } = useCheckout("calendar");
-  const [amount, setAmount] = useState(1);
+  const [amount, setAmount] = useState(DEFAULT_AMOUNT);
   const [preview, setPreview] = useState<CalendarPreview | null>(null);
   const [previewLoading, setPreviewLoading] = useState(false);
   const previewTimer = useRef<ReturnType<typeof setTimeout>>();

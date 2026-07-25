@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { trackClick } from "@/lib/track";
 
-const PRESETS = [1, 3, 5, 10];
+export const PRESETS = [5.99, 9.99, 14.99, 19.99];
+export const DEFAULT_AMOUNT = 5.99;
 
 interface Props {
   value: number;
@@ -13,6 +15,20 @@ interface Props {
 export default function AmountPicker({ value, onChange }: Props) {
   const t = useTranslations("common");
   const [customMode, setCustomMode] = useState(false);
+
+  function handlePreset(amt: number) {
+    setCustomMode(false);
+    onChange(amt);
+    if (amt !== DEFAULT_AMOUNT || value !== DEFAULT_AMOUNT) {
+      trackClick(`amount_changed_${amt}`);
+    }
+  }
+
+  function handleCustom() {
+    setCustomMode(true);
+    if (value < 1) onChange(DEFAULT_AMOUNT);
+    trackClick("amount_custom_mode");
+  }
 
   return (
     <div>
@@ -24,7 +40,7 @@ export default function AmountPicker({ value, onChange }: Props) {
           <button
             key={amt}
             type="button"
-            onClick={() => { setCustomMode(false); onChange(amt); }}
+            onClick={() => handlePreset(amt)}
             className={`px-4 py-2 rounded-lg text-sm border transition-colors ${
               !customMode && value === amt
                 ? "border-accent bg-accent-muted text-accent font-medium"
@@ -36,7 +52,7 @@ export default function AmountPicker({ value, onChange }: Props) {
         ))}
         <button
           type="button"
-          onClick={() => { setCustomMode(true); onChange(value >= 1 ? value : 5); }}
+          onClick={handleCustom}
           className={`px-4 py-2 rounded-lg text-sm border transition-colors ${
             customMode
               ? "border-accent bg-accent-muted text-accent font-medium"
@@ -57,9 +73,6 @@ export default function AmountPicker({ value, onChange }: Props) {
           placeholder={t("amount.placeholder")}
         />
       )}
-      <p className="text-xs text-stone-400 mt-1.5">
-        {t("amount.helper")}
-      </p>
     </div>
   );
 }

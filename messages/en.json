@@ -49,19 +49,18 @@
       "acceptAll": "Accept All"
     },
     "submit": {
-      "processing": "Processing...",
-      "free": "{label} — Free",
-      "paid": "{label} · Support {amount}",
-      "helper": "Supports ongoing development & server costs",
+      "processing": "Working on it...",
+      "free": "{label} — Free Preview",
+      "paid": "Get Your Reading · {amount}",
       "paidSimple": "Get Your Reading · {amount}",
       "cardNote": "PayPal or credit/debit card — no PayPal account needed",
-      "paidNote": "PayPal or credit card — no account needed"
+      "paidNote": "Secure checkout via PayPal or credit card"
     },
     "amount": {
-      "label": "Amount (USD)",
+      "label": "Choose your price",
       "custom": "Custom",
       "placeholder": "Amount",
-      "helper": "Supports ongoing development, API costs, and server maintenance."
+      "helper": "One-time payment. No subscription. Yours to keep."
     },
     "speak": {
       "listen": "Listen",
@@ -69,9 +68,8 @@
     },
     "loading": "Loading...",
     "freeTier": {
-      "three": "You have 3 free previews — try them out!",
-      "two": "You have 2 free previews — try it out!",
-      "one": "You have 1 free preview remaining"
+      "one": "You have one free reading — make it count ✨",
+      "none": "Your free reading awaits — unlock below"
     },
     "toggleMenu": "Toggle navigation menu",
     "validation": {
@@ -79,15 +77,15 @@
       "inputRequired": "Please fill out this field"
     },
     "pricing": {
-      "title": "Pay what you want · from $1",
-      "compare": "Supports ongoing development & server costs",
-      "secure": "PayPal or credit card — no account needed"
+      "title": "From $5.99 — or name your price",
+      "compare": "Personalized results grounded in classical Chinese texts",
+      "secure": "🔒 Secure checkout · No account needed · Instant delivery"
     }
   },
   "home": {
     "title": "Find Your Authentic Chinese Name",
     "subtitle": "Based on 3,000 years of Eastern wisdom. Personalized. In 30 seconds.",
-    "heroPricing": "From $1 — pay what you feel it's worth",
+    "heroPricing": "From $5.99 — personalized results, grounded in 3,000 years of wisdom",
     "quickStart": {
       "naming": "Get Your Chinese Name",
       "divination": "Try I Ching",
@@ -120,14 +118,14 @@
       }
     },
     "cta": {
-      "paid": "Support with $1 →",
-      "free": "Free trial available →"
+      "paid": "Get Started →",
+      "free": "Try for free →"
     },
     "dailyHexagram": {
       "heading": "Free Daily Guidance",
-      "cta": "Get Your Full I Ching Reading → $1",
-      "helper": "Today's hexagram refreshes daily. For a personal reading based on your question, cast your own.",
-      "askOwn": "Cast Your Own →"
+      "cta": "Get Your Full I Ching Reading →",
+      "helper": "Today's hexagram refreshes daily. For a personal reading based on your own question, cast your own hexagram.",
+      "askOwn": "Ask Your Own Question →"
     },
     "privacy": "Privacy Policy",
     "terms": "Terms of Service",
@@ -160,7 +158,7 @@
   "naming": {
     "title": "Create a Chinese Name",
     "subtitle": "Based on your birth information and classical Chinese texts",
-    "badge": "$1",
+    "badge": "$5.99",
     "form": {
       "firstName": "First / Given Name",
       "firstNamePlaceholder": "e.g. Michael, Анна",
@@ -177,7 +175,7 @@
       "hour": "Birth Hour (0-23)",
       "hourPlaceholder": "e.g. 8 for 8:00 AM",
       "hourHelper": "Approximate is fine if you don't know the exact hour.",
-      "previewNote": "Your amount will be used after free previews are exhausted.",
+      "previewNote": "You'll only be charged after your free preview is used.",
       "style": "Name Style",
       "stylePlaceholder": "Select...",
       "styleElegant": "Elegant & Refined · 典雅",
@@ -202,15 +200,15 @@
       "meaningText": "Forest of bright wisdom",
       "elementsText": "Wood + Fire",
       "baziTitle": "Bazi Analysis (八字分析)",
-      "baziText": "Your day master is 甲木 (Yang Wood) — strong, upright, and growth-oriented. Favorable elements: Water + Wood. The selected names nourish your day master and balance your elemental chart.",
-      "footer": "Fill in the form above to get your personalized names. Free preview shows 1 name — unlock all 5 with full Bazi analysis."
+      "baziText": "Your day master is 甲木 (Yang Wood) — like an ancient cedar, you grow tall and steady. Water and Wood are your allies. The names below are crafted to nourish your natural strength and bring your elements into harmony.",
+      "footer": "Fill in your details above. Your free preview reveals your first name and Bazi overview — continue to see all 5 names with their full stories."
     },
     "preview": {
       "dayMaster": "Your Day Master",
       "elementsTitle": "Five Elements Balance",
       "favorable": "Lucky Elements",
       "teaser": "Your personalized Chinese names are ready based on your Bazi",
-      "teaserSub": "Fill in your name and gender above, then Generate → $1"
+      "teaserSub": "Fill in your details above and press Generate"
     },
     "meta": {
       "title": "Chinese Name Generator: Create Authentic Names by Five Elements & Bazi | Chinese Culture Studio",
@@ -225,13 +223,13 @@
   "calendar": {
     "title": "Auspicious Date Selection",
     "subtitle": "Based on traditional Chinese almanac principles",
-    "badge": "$1",
+    "badge": "$5.99",
     "form": {
       "range": "Date Range",
       "start": "Start",
       "end": "End",
       "rangeHelper": "Select a range of up to 90 days for best results.",
-      "previewNote": "Your amount will be used after free previews are exhausted.",
+      "previewNote": "You'll only be charged after your free preview is used.",
       "eventType": "Event Type",
       "eventPlaceholder": "Select event type...",
       "submit": "Find Auspicious Dates"
@@ -245,7 +243,7 @@
       "suitableItems": "Wedding, Engagement",
       "unsuitableItems": "Litigation, Funeral",
       "godsItems": "Heavenly Virtue, Lunar Virtue",
-      "footer": "Select your event type and date range above. Free preview shows 1 date — unlock all 3 with auspicious hours."
+      "footer": "Choose your event and date range above. Your free preview reveals the strongest date — continue to unlock all 3 with full timing details."
     },
     "events": {
       "wedding": "Wedding · 嫁娶",
@@ -267,11 +265,11 @@
       "bestDate": "Best Match",
       "score": "Score",
       "cta": "Submit to unlock exact dates & auspicious hours",
-      "ctaSub": "Free preview shows 1 date — unlock all with full details → $1"
+      "ctaSub": "Free preview shows 1 date — unlock all with full details"
     },
     "meta": {
       "title": "Auspicious Date Selection | Chinese Culture Studio",
-      "description": "Find the most favorable dates for weddings, business openings, travel, and more based on the traditional Chinese almanac (Tong Shu). Pay what you want (min $1).",
+      "description": "Find the most favorable dates for weddings, business openings, travel, and more based on the traditional Chinese almanac (Tong Shu). Pay what you want (from $5.99).",
       "ogTitle": "Auspicious Date Selection | Chinese Culture Studio",
       "ogDescription": "Find the most favorable dates based on the traditional Chinese almanac. Pay what you want.",
       "twitterTitle": "Auspicious Date Selection | Chinese Culture Studio",
@@ -282,7 +280,7 @@
   "divination": {
     "title": "I Ching Divination",
     "subtitle": "Consult the ancient Book of Changes",
-    "badge": "$1",
+    "badge": "$5.99",
     "form": {
       "question": "Your Question (optional)",
       "questionPlaceholder": "What would you like guidance on?",
@@ -294,7 +292,7 @@
       "firstNum": "First",
       "secondNum": "Second",
       "thirdNum": "Third",
-      "previewNote": "Your amount will be used after free previews are exhausted.",
+      "previewNote": "You'll only be charged after your free preview is used.",
       "submit": "Cast Hexagram",
       "timeHint": "Uses current date and time for authentic time-based casting"
     },
@@ -304,18 +302,18 @@
       "guidanceText": "☀️ Verdict: Auspicious 吉 — This is a time for bold, decisive action. Take the initiative now — launch that project, make the first move, step into leadership. Your momentum will be rewarded.",
       "judgmentTitle": "Original Judgment (卦辞)",
       "judgmentText": "Success. Perseverance furthers. The Creative works sublime success, furthering through perseverance.",
-      "footer": "Cast your own hexagram above. Free preview shows the core reading — unlock changed & mutual hexagrams with a contribution."
+      "footer": "Cast your own hexagram above. Your free preview gives you the oracle's answer — continue to see the full picture with changed and mutual hexagrams."
     },
     "preview": {
       "button": "Preview My Fortune",
       "hint": "Free preview — see your hexagram before you submit",
       "judgmentLabel": "The Oracle Says",
       "cta": "Submit above to cast your official hexagram",
-      "ctaSub": "Free preview shows the core reading — unlock changed & mutual hexagrams → $1"
+      "ctaSub": "Free preview shows the core reading — unlock changed & mutual hexagrams"
     },
     "meta": {
       "title": "I Ching Divination | Chinese Culture Studio",
-      "description": "Consult the ancient Book of Changes (I Ching) for guidance and insight. Three casting methods: time-based, random, or manual coin toss. Pay what you want (min $1).",
+      "description": "Consult the ancient Book of Changes (I Ching) for guidance and insight. Three casting methods: time-based, random, or manual coin toss. Pay what you want (from $5.99).",
       "ogTitle": "I Ching Divination | Chinese Culture Studio",
       "ogDescription": "Consult the ancient Book of Changes. Three casting methods available. Pay what you want.",
       "twitterTitle": "I Ching Divination | Chinese Culture Studio",
@@ -326,7 +324,7 @@
   "palm": {
     "title": "Palm Reading",
     "subtitle": "Upload a photo of your palm for a classical Chinese palmistry analysis",
-    "badge": "$1",
+    "badge": "$5.99",
     "form": {
       "photo": "Palm Photo *",
       "uploadText": "Click or drag a photo here",
@@ -361,7 +359,7 @@
     },
     "meta": {
       "title": "Palm Reading | Chinese Culture Studio",
-      "description": "Upload a photo of your palm and receive an AI-powered analysis based on classical Chinese palmistry. Your image is processed in memory and never stored. Pay what you want (min $1).",
+      "description": "Upload a photo of your palm and receive an AI-powered analysis based on classical Chinese palmistry. Your image is processed in memory and never stored. Pay what you want (from $5.99).",
       "ogTitle": "Palm Reading | Chinese Culture Studio",
       "ogDescription": "AI-powered palm reading based on classical Chinese palmistry. Privacy-first — images never stored. Pay what you want.",
       "twitterTitle": "Palm Reading | Chinese Culture Studio",
@@ -372,7 +370,7 @@
   "dream": {
     "title": "Dream Interpretation",
     "subtitle": "Describe your dream and get a dual-perspective interpretation combining Zhou Gong's ancient dream dictionary with Freudian psychoanalysis",
-    "badge": "$1",
+    "badge": "$5.99",
     "learnMore": "Learn more about Chinese dream symbols →",
     "form": {
       "dreamLabel": "Describe Your Dream *",
@@ -494,7 +492,7 @@
       "method4": "Sound and Rhythm",
       "method5": "Poetic & Literary Allusions",
       "mistakes": "Common Mistakes to Avoid",
-      "cta": "Create Your Chinese Name → $1.00",
+      "cta": "Create Your Chinese Name →",
       "disclaimer": "For cultural appreciation only. Not professional advice."
     },
     "iching": {
@@ -510,7 +508,7 @@
       "trigramSymbol": "Symbol",
       "casting": "How to Cast a Hexagram",
       "interpretation": "Interpreting Your Reading",
-      "cta": "Consult the I Ching → $1.00",
+      "cta": "Consult the I Ching →",
       "disclaimer": "For cultural appreciation and entertainment only. Not professional advice."
     },
     "auspiciousDates": {
@@ -523,11 +521,11 @@
       "element3": "Auspicious & Inauspicious Stars",
       "element4": "Clash with Personal Zodiac",
       "common": "Good Dates for Common Events",
-      "cta": "Find Your Auspicious Date → $1.00",
+      "cta": "Find Your Auspicious Date →",
       "disclaimer": "For cultural appreciation only. Not professional advice."
     },
     "cta": {
-      "disclaimer": "Free preview available. From $1.",
+      "disclaimer": "Free preview available. From $5.99.",
       "naming": {
         "title": "Get Your Chinese Name",
         "desc": "Based on your birth info, Five Elements & classical texts. See an example above.",
@@ -571,30 +569,30 @@
     "failedTitle": "Something went wrong",
     "failedBody": "Processing failed. Your payment is safe — contact support for assistance.",
     "returnHome": "Return to Home",
-    "freeBanner": "{n} free use(s) remaining",
-    "freeLast": "That was your last free reading",
-    "freeText": "Each personalized reading requires computation based on classical texts and traditional methods. Future readings are powered by user support — from $1.",
+    "freeBanner": "Your free reading ✨",
+    "freeLast": "That was your free reading",
+    "freeText": "Each reading draws from classical Chinese texts — the I Ching, Bazi, and centuries of wisdom. Your support keeps these traditions alive and accessible to everyone.",
     "anotherName": "Get Another Name",
     "anotherDate": "Find Another Date",
     "anotherHexagram": "Cast Another Hexagram",
     "anotherPalm": "Read Another Palm",
     "anotherDream": "Interpret Another Dream",
-    "unlockTitle": "You're seeing ~30%. Unlock your complete reading:",
-    "unlockHeading": "Unlock Full Reading",
-    "unlockNaming1": "4 more name options with detailed meanings",
-    "unlockNaming2": "Full Bazi analysis of your elemental profile",
-    "unlockDivination1": "Changed & Mutual hexagrams (full picture)",
-    "unlockDivination2": "Changing line interpretation and specific advice",
-    "unlockCalendar1": "2 more auspicious dates with scores",
-    "unlockCalendar2": "Auspicious hours & gods for each date",
-    "unlockDream1": "Full Zhou Gong interpretation with all dream symbols",
-    "unlockDream2": "Complete Freudian & Jungian psychological analysis",
-    "unlockNow": "Unlock Full Result — from $1",
-    "seeFreePreview": "No thanks, close this",
-    "lockedContent": "Locked — $1 to unlock",
+    "unlockTitle": "Your preview is complete. The best part is just ahead.",
+    "unlockHeading": "Continue Your Reading",
+    "unlockNaming1": "Your 4 remaining names with their full stories",
+    "unlockNaming2": "Complete Bazi profile — what the stars say about you",
+    "unlockDivination1": "Changed & Mutual hexagrams — the full picture",
+    "unlockDivination2": "What the changing line means for your situation",
+    "unlockCalendar1": "Your 2 remaining auspicious dates with scores",
+    "unlockCalendar2": "Best hours and guardian deities for each date",
+    "unlockDream1": "Complete Zhou Gong interpretation of every symbol",
+    "unlockDream2": "Full Freudian & Jungian psychological analysis",
+    "unlockNow": "Continue Reading · from $5.99",
+    "seeFreePreview": "No thanks, I've seen enough",
+    "lockedContent": "Unlock for full reading",
     "andMore": "+ more personalized details",
-    "unlockFullCta": "Support & Unlock Full Result",
-    "paywallPersistent": "One-time payment · no subscription · pay what you think it's worth · from $1"
+    "unlockFullCta": "Continue Your Reading",
+    "paywallPersistent": "One-time payment · no subscription · yours forever"
   },
   "legal": {
     "privacy": {
@@ -668,15 +666,15 @@
     "palm": "Palm Reading"
   },
   "payment": {
-    "name": "Support Chinese Culture Studio — Name Reading",
-    "date": "Support Chinese Culture Studio — Date Selection",
-    "iching": "Support Chinese Culture Studio — I Ching Reading",
-    "palm": "Support Chinese Culture Studio — Palm Reading",
-    "dream": "Support Chinese Culture Studio — Dream Interpretation",
+    "name": "Chinese Name Reading — Chinese Culture Studio",
+    "date": "Auspicious Date Selection — Chinese Culture Studio",
+    "iching": "I Ching Reading — Chinese Culture Studio",
+    "palm": "Palm Reading — Chinese Culture Studio",
+    "dream": "Dream Interpretation — Chinese Culture Studio",
     "error": "Something went wrong",
     "failed": "Failed. Please try again.",
     "returnApp": "Return to App",
-    "thankYou": "Thank you for supporting Chinese Culture Studio!"
+    "thankYou": "Your reading is ready! Thank you."
   },
   "languageSwitcher": {
     "en": "English",
@@ -782,7 +780,7 @@
     "copied": "Copied!",
     "upsellTitle": "Want the full Zhou Gong + Freudian analysis?",
     "upsellDesc": "Get a complete dual-perspective interpretation with classical Chinese dream dictionary symbols and Western psychoanalysis.",
-    "upsellCta": "Get Full Analysis · $1",
+    "upsellCta": "Get Full Analysis",
     "tryAnother": "Try another dream"
   },
   "zodiacMatch": {
@@ -801,7 +799,7 @@
     "copied": "Copied!",
     "upsellTitle": "Want a Chinese name that matches your zodiac?",
     "upsellDesc": "Get a personalized Chinese name based on your zodiac element, Bazi, and Wu Xing.",
-    "upsellCta": "Get My Chinese Name · $1",
+    "upsellCta": "Get My Chinese Name",
     "tryAnother": "Try another pair",
     "error": "The stars are not aligned. Try again?"
   },
@@ -821,7 +819,7 @@
     "copied": "Copied!",
     "upsellTitle": "Want a full I Ching divination?",
     "upsellDesc": "Cast your own hexagram and get a complete reading with changing lines and specific guidance.",
-    "upsellCta": "Cast I Ching · $1",
+    "upsellCta": "Cast I Ching",
     "tryAnother": "Try another sign",
     "error": "The cosmos is quiet. Try again?"
   },
@@ -842,7 +840,7 @@
     "copied": "Copied!",
     "upsellTitle": "Ready for your full Bazi-powered Chinese name?",
     "upsellDesc": "Get 5 name options with complete Bazi analysis, classical sources, and pronunciation guide.",
-    "upsellCta": "Get Full Name Reading · $1",
+    "upsellCta": "Get Full Name Reading",
     "tryAnother": "Try another name",
     "error": "The name spirits are resting. Try again?"
   },
@@ -869,7 +867,7 @@
     "methodNote": "This is Xiao Liu Ren (小六壬), also called Ma Qian Ke (马前课) — a 1,000-year-old Chinese folk divination method using palm counting to get quick guidance.",
     "upsellTitle": "Want a deeper reading?",
     "upsellDesc": "The I Ching offers 4,096 possible answers with full classical commentary — cast your own hexagram for a complete reading.",
-    "upsellCta": "Cast I Ching · $1",
+    "upsellCta": "Cast I Ching",
     "copy": "Copy",
     "sharePrompt": "Share your oracle"
   }

@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import type { CalendarResult } from "@/types";
 import PaywallOverlay from "./PaywallOverlay";
 import EmailCaptureForm from "./EmailCaptureForm";
+import DownloadPDF from "./DownloadPDF";
 import { trackClick } from "@/lib/track";
 
 function DayCard({ day, isLocked }: { day: CalendarResult["auspiciousDays"][0]; isLocked?: boolean }) {
@@ -66,7 +67,7 @@ function DayCard({ day, isLocked }: { day: CalendarResult["auspiciousDays"][0]; 
       </div>
       {isLocked && (
         <div className="text-center mt-2">
-          <p className="text-xs font-medium" style={{ color: "var(--gold)" }}>🔒 Unlock full details for $1</p>
+          <p className="text-xs font-medium" style={{ color: "var(--gold)" }}>🔒 Continue reading to unlock full details</p>
         </div>
       )}
     </div>
@@ -84,6 +85,7 @@ export default function CalendarResultView({
 }) {
   const days = result.auspiciousDays;
   const bestDay = days.length > 0 ? days[0] : null;
+  const resultRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     trackClick(isFree ? "result_free_calendar" : "result_viewed_calendar");
@@ -91,6 +93,16 @@ export default function CalendarResultView({
 
   return (
     <div>
+      {!isFree && (
+        <div className="flex justify-end mb-4">
+          <DownloadPDF
+            filename={`auspicious-dates-${bestDay?.date || "reading"}`}
+            title="Your Auspicious Dates"
+            resultRef={resultRef}
+          />
+        </div>
+      )}
+      <div ref={resultRef}>
       <h1 className="text-2xl font-bold text-center mb-6 text-accent">Your Auspicious Dates</h1>
 
       {/* Summary — the answer they came for */}
@@ -127,6 +139,7 @@ export default function CalendarResultView({
         ))}
       </div>
       <EmailCaptureForm source="calendar" />
+      </div>
     </div>
   );
 }

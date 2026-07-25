@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import type { PalmReadingResult, LineAnalysis, MountAnalysis } from "@/types";
 import EmailCaptureForm from "./EmailCaptureForm";
+import DownloadPDF from "./DownloadPDF";
 import { trackClick } from "@/lib/track";
 
 const QUALITY_COLORS: Record<string, string> = {
@@ -67,6 +68,7 @@ function MountBadge({ mount }: { mount: MountAnalysis }) {
 export default function PalmReadingResultView({ result, isFree: _isFree, purchaseId: _purchaseId }: { result: PalmReadingResult; isFree?: boolean; purchaseId?: string }) {
   void _isFree; void _purchaseId;
   const h = result.handType;
+  const resultRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     trackClick("result_viewed_palm");
@@ -75,21 +77,37 @@ export default function PalmReadingResultView({ result, isFree: _isFree, purchas
 
   return (
     <div className="space-y-6">
+      {/* PDF download */}
+      <div className="flex justify-end">
+        <DownloadPDF
+          filename="palm-reading"
+          title="Your Palm Reading"
+          resultRef={resultRef}
+        />
+      </div>
+
+      <div ref={resultRef}>
       {/* 1: Hand Type Banner */}
       <div className="rounded-2xl p-5 text-center" style={{ backgroundColor: bg, border: "1px solid rgba(0,0,0,0.06)" }}>
         <p className="text-xs text-stone-500 uppercase tracking-wide mb-1">Hand Type · 五行手型</p>
         <h3 className="text-xl font-bold text-stone-800 mb-1">
           {h.elementEn} Type <span className="text-base font-normal text-stone-500">({h.element}形手)</span>
         </h3>
-        <p className="text-sm text-stone-600 mb-1">{h.description}</p>
-        <p className="text-xs text-stone-500">{h.descriptionEn}</p>
+        <p className="text-sm text-stone-600">{h.descriptionEn}</p>
       </div>
 
-      {/* 2: Overall Judgment — the conclusion, moved up */}
-      <div className="card-classic p-5 text-center" style={{ borderColor: "var(--border-strong)" }}>
-        <p className="text-xs font-medium mb-2 uppercase tracking-wide text-stone-400">What Your Palm Reveals</p>
-        <p className="text-sm font-semibold leading-relaxed mb-2" style={{ color: "var(--text-primary)" }}>{result.overallJudgment.textEn}</p>
-        <p className="text-xs text-stone-500">{result.overallJudgment.text}</p>
+      {/* 2: Your Story — the narrative synthesis */}
+      <div className="card-classic p-5" style={{ borderColor: "var(--border-strong)" }}>
+        <p className="text-xs font-semibold mb-3 uppercase tracking-wide" style={{ color: "var(--gold)" }}>
+          ✋ What Your Hands Say About You
+        </p>
+        <p className="text-sm leading-relaxed mb-3" style={{ color: "var(--text-body)" }}>
+          {result.overallJudgment.textEn}
+        </p>
+        {/* Hand type as context */}
+        <p className="text-xs leading-relaxed" style={{ color: "var(--text-muted)" }}>
+          Your {h.elementEn} hand shape {h.descriptionEn ? `— ${h.descriptionEn.toLowerCase()}` : ""}
+        </p>
         {result.overallJudgment.classicalRef && (
           <div className="mt-3 pt-3 border-t border-stone-100">
             <p className="text-xs text-accent italic">{result.overallJudgment.classicalRef}</p>
@@ -97,12 +115,12 @@ export default function PalmReadingResultView({ result, isFree: _isFree, purchas
         )}
       </div>
 
-      {/* 3: Three Lines */}
-      <div>
-        <h3 className="text-sm font-semibold text-stone-800 mb-3 text-center">
-          Three Talent Lines · 三才纹
-        </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+      {/* 3: Three Lines — collapsible */}
+      <details className="card-classic p-4 cursor-pointer group" open>
+        <summary className="text-sm font-medium text-stone-600 select-none">
+          ✋ Your Three Main Lines
+        </summary>
+        <div className="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-3">
           <LineCard
             title="Life Line · 地纹"
             titleEn="Health & Vitality"
@@ -119,72 +137,59 @@ export default function PalmReadingResultView({ result, isFree: _isFree, purchas
             line={result.threeLines.heartLine}
           />
         </div>
-      </div>
+      </details>
 
-      {/* 4: Auxiliary Lines */}
+      {/* 4: Auxiliary Lines — collapsible */}
       {Object.keys(result.auxiliaryLines).length > 0 && (
-        <div>
-          <h3 className="text-sm font-semibold text-stone-800 mb-3 text-center">
-            Auxiliary Lines · 辅助纹
-          </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <details className="card-classic p-4 cursor-pointer group">
+          <summary className="text-sm font-medium text-stone-600 select-none">
+            🔍 Deeper Markings
+          </summary>
+          <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
             {result.auxiliaryLines.fateLine && (
-              <LineCard
-                title="Fate Line · 玉柱纹"
-                titleEn="Career Path"
-                line={result.auxiliaryLines.fateLine}
-              />
+              <LineCard title="Fate Line · 玉柱纹" titleEn="Career Path" line={result.auxiliaryLines.fateLine} />
             )}
             {result.auxiliaryLines.marriageLine && (
-              <LineCard
-                title="Marriage Line · 婚姻线"
-                titleEn="Relationships"
-                line={result.auxiliaryLines.marriageLine}
-              />
+              <LineCard title="Marriage Line · 婚姻线" titleEn="Relationships" line={result.auxiliaryLines.marriageLine} />
             )}
             {result.auxiliaryLines.sunLine && (
-              <LineCard
-                title="Sun Line · 太阳线"
-                titleEn="Success & Fame"
-                line={result.auxiliaryLines.sunLine}
-              />
+              <LineCard title="Sun Line · 太阳线" titleEn="Success & Fame" line={result.auxiliaryLines.sunLine} />
             )}
             {result.auxiliaryLines.healthLine && (
-              <LineCard
-                title="Health Line · 健康线"
-                titleEn="Wellness"
-                line={result.auxiliaryLines.healthLine}
-              />
+              <LineCard title="Health Line · 健康线" titleEn="Wellness" line={result.auxiliaryLines.healthLine} />
             )}
           </div>
-        </div>
+        </details>
       )}
 
-      {/* 5: Mounts */}
-      <div>
-        <h3 className="text-sm font-semibold text-stone-800 mb-3 text-center">
-          Nine Palaces · 掌中九宫
-        </h3>
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+      {/* 5: Mounts — collapsible */}
+      <details className="card-classic p-4 cursor-pointer group">
+        <summary className="text-sm font-medium text-stone-600 select-none">
+          🏔️ Nine Palaces · 掌中九宫
+        </summary>
+        <div className="mt-3 grid grid-cols-2 sm:grid-cols-3 gap-2">
           {result.mounts.map((m, i) => (
             <MountBadge key={i} mount={m} />
           ))}
         </div>
-      </div>
+      </details>
 
       {/* 6: Advice */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-        {(["career", "love", "health"] as const).map((key) => (
-          <div key={key} className="bg-white border border-stone-200 rounded-xl p-4">
-            <h4 className="text-xs font-semibold text-stone-500 uppercase mb-2">
-              {key === "career" ? "Career · 事业" : key === "love" ? "Love · 感情" : "Health · 健康"}
-            </h4>
-            <p className="text-sm text-stone-700 mb-1">{result.advice[key]}</p>
-            <p className="text-xs text-stone-500">{result.advice[`${key}En` as keyof typeof result.advice]}</p>
-          </div>
-        ))}
+        {(["career", "love", "health"] as const).map((key) => {
+          const enKey = `${key}En` as keyof typeof result.advice;
+          return (
+            <div key={key} className="bg-white border border-stone-200 rounded-xl p-4">
+              <h4 className="text-xs font-semibold text-stone-500 uppercase mb-2">
+                {key === "career" ? "Career · 事业" : key === "love" ? "Love · 感情" : "Health · 健康"}
+              </h4>
+              <p className="text-sm text-stone-700">{result.advice[enKey]}</p>
+            </div>
+          );
+        })}
       </div>
       <EmailCaptureForm source="palm-reading" />
+      </div>
     </div>
   );
 }

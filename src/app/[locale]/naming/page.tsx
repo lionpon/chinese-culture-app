@@ -4,7 +4,7 @@ import { FormEvent, useState, useCallback, useRef } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { useCheckout } from "@/lib/useCheckout";
 import SubmitButton from "@/components/SubmitButton";
-import AmountPicker from "@/components/AmountPicker";
+import AmountPicker, { DEFAULT_AMOUNT } from "@/components/AmountPicker";
 import FreeTierBadge from "@/components/FreeTierBadge";
 import SpeakButton from "@/components/SpeakButton";
 import { hasFreeUses } from "@/lib/free-tier";
@@ -40,7 +40,7 @@ export default function NamingPage() {
   const locale = useLocale();
   const isJaKo = locale === "ja" || locale === "ko";
   const { loading, checkout } = useCheckout("naming");
-  const [amount, setAmount] = useState(1);
+  const [amount, setAmount] = useState(DEFAULT_AMOUNT);
   const [mode, setMode] = useState<"create" | "analyze">("create");
   const [preview, setPreview] = useState<PreviewData | null>(null);
   const [previewLoading, setPreviewLoading] = useState(false);

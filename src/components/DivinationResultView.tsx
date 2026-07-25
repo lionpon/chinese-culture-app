@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import type { DivinationResult } from "@/types";
 import SpeakButton from "./SpeakButton";
 import PaywallOverlay from "./PaywallOverlay";
 import EmailCaptureForm from "./EmailCaptureForm";
+import DownloadPDF from "./DownloadPDF";
 import { trackClick } from "@/lib/track";
 
 export default function DivinationResultView({
@@ -16,12 +17,24 @@ export default function DivinationResultView({
   isFree?: boolean;
   purchaseId?: string;
 }) {
+  const resultRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     trackClick(isFree ? "result_free_divination" : "result_viewed_divination");
   }, [isFree]);
 
   return (
     <div>
+      {!isFree && (
+        <div className="flex justify-end mb-4">
+          <DownloadPDF
+            filename={`iching-${result.mainHexagram.nameEn.toLowerCase().replace(/\s+/g, "-")}`}
+            title="Your I Ching Reading"
+            resultRef={resultRef}
+          />
+        </div>
+      )}
+      <div ref={resultRef}>
       <h1 className="text-2xl font-bold text-center mb-6 text-accent">Your I Ching Reading</h1>
       <div className="card-classic p-6 space-y-5">
         {/* 1st: The Answer — what the user came for, displayed prominently */}
@@ -94,6 +107,7 @@ export default function DivinationResultView({
         )}
       </div>
       <EmailCaptureForm source="divination" />
+      </div>
     </div>
   );
 }

@@ -1,18 +1,36 @@
 // Naming algorithm: combines Bazi analysis with classical text character selection
+import OpenAI from "openai";
 import { calculateBazi } from "./bazi";
 import { analyzeWuxing } from "./wuxing";
 import { characters, surnameMap, compoundSurnames } from "../data/characters";
 import type { NamingInput, NameOption, NamingResult, NameAnalysisResult, BaziResult } from "../types";
 
-export function generateNames(input: NamingInput, preview = false): NamingResult {
+const ai = new OpenAI({
+  baseURL: "https://openrouter.ai/api/v1",
+  apiKey: process.env.OPENROUTER_API_KEY || "sk-placeholder",
+  defaultHeaders: {
+    "HTTP-Referer": process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
+    "X-Title": "Chinese Culture Studio",
+  },
+});
+
+export async function generateNames(input: NamingInput, preview = false): Promise<NamingResult> {
   const full = _generateNames(input);
-  if (!preview) return full;
+  if (!preview) {
+    // Generate AI narratives for paid users
+    try {
+      full.options = await addNarratives(full.options, input, full.baziAnalysis);
+    } catch {
+      // Silent fail — base meanings are still present
+    }
+    return full;
+  }
   return {
     options: full.options.slice(0, 1),
     baziAnalysis: {
       ...full.baziAnalysis,
       analysis: "",
-      analysisEn: "Unlock full Bazi analysis with a contribution.",
+      analysisEn: "Continue reading to unlock your full Bazi analysis.",
     },
   };
 }
@@ -307,6 +325,54 @@ function toPinyin(chars: string): string {
     result += (pinyinMap[char] || char) + " ";
   }
   return result.trim();
+}
+
+async function addNarratives(
+  options: NameOption[],
+  input: NamingInput,
+  bazi: BaziResult,
+): Promise<NameOption[]> {
+  const dayMasterEl = bazi.day.element || bazi.day.wuxing;
+  const firstName = input.firstName || "";
+
+  const namesList = options.map((o, i) =>
+    `${i + 1}. ${o.characters} (${o.pinyin}) — ${o.wuxing} elements — "${o.meaning}"`
+  ).join("\n");
+
+  const prompt = `You are writing a warm, personal introduction to a set of Chinese names for a real person named "${firstName}".
+
+Their Bazi day master is ${bazi.day.heavenlyStem} (${bazi.day.wuxing}, ${dayMasterEl} element). ${bazi.analysisEn || ""}
+
+Here are the 5 Chinese names generated for them:
+${namesList}
+
+Write a SINGLE paragraph (3-5 sentences) that:
+- Speaks directly to "${firstName}" using "you" and "your"
+- Explains what these names reveal about their character and destiny
+- Weaves in the elemental story naturally (not like a textbook)
+- Sounds like a wise friend telling them something meaningful about themselves — warm, poetic but grounded, never robotic
+- Do NOT list the names again — just tell the story they collectively tell
+- End with a sentence that makes them feel seen and understood
+
+Return ONLY the paragraph, no quotes, no labels.`;
+
+  try {
+    const completion = await ai.chat.completions.create({
+      model: "openai/gpt-4o-mini",
+      max_tokens: 300,
+      temperature: 0.8,
+      messages: [{ role: "user", content: prompt }],
+    });
+
+    const narrative = completion.choices[0]?.message?.content?.trim();
+    if (narrative && narrative.length > 20) {
+      return options.map(o => ({ ...o, narrative }));
+    }
+  } catch {
+    // Silent fail
+  }
+
+  return options;
 }
 
 export { toPinyin };

@@ -18,6 +18,7 @@ export interface NameOption {
   givenName: string;     // Chinese given name
   pinyin: string;        // full pinyin with tones
   meaning: string;       // English meaning
+  narrative?: string;    // AI-generated personalized story (2-3 sentences)
   wuxing: string;        // five elements breakdown
   source: string;        // classical text source
   sourceText: string;    // original text quote

@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { useCheckout } from "@/lib/useCheckout";
 import SubmitButton from "@/components/SubmitButton";
 import { trackClick } from "@/lib/track";
-import AmountPicker from "@/components/AmountPicker";
+import AmountPicker, { DEFAULT_AMOUNT } from "@/components/AmountPicker";
 import { Link } from "@/navigation";
 
 export default function PalmReadingPage() {
@@ -14,7 +14,7 @@ export default function PalmReadingPage() {
  const tc = useTranslations("common");
  const { loading, checkout } = useCheckout("palm-reading");
  const [image, setImage] = useState<string | null>(null);
- const [amount, setAmount] = useState(1);
+ const [amount, setAmount] = useState(DEFAULT_AMOUNT);
  const [imageKey, setImageKey] = useState<string | null>(null);
  const [uploading, setUploading] = useState(false);
  const [uploadError, setUploadError] = useState("");

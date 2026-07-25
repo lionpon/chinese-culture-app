@@ -1,5 +1,6 @@
 import { useTranslations } from "next-intl";
 import PaymentTrustBadges from "./PaymentTrustBadges";
+import { DEFAULT_AMOUNT } from "./AmountPicker";
 
 export default function SubmitButton({
   loading,
@@ -15,7 +16,7 @@ export default function SubmitButton({
   amount?: number;
 }) {
   const t = useTranslations("common");
-  const amt = amount ?? 1;
+  const amt = amount ?? DEFAULT_AMOUNT;
 
   if (hasFree) {
     return (
