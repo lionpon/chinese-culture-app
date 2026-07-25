@@ -2,7 +2,7 @@ export default function TermsPage() {
   return (
     <div className="max-w-2xl mx-auto prose prose-sm prose-stone">
       <h1 className="text-2xl font-bold text-accent">Terms of Service</h1>
-      <p className="text-xs text-stone-400">Last updated: May 2026</p>
+      <p className="text-xs text-stone-400">Last updated: 25 July 2026</p>
 
       <h2>1. Nature of Service</h2>
       <p>
@@ -23,17 +23,24 @@ export default function TermsPage() {
         actions you take based on these results, and you accept all risks associated therewith.
       </p>
 
-      <h2>3. Payment</h2>
+      <h2>3. Payment & Pricing</h2>
       <p>
-        You choose your payment amount — from USD $1.00 — processed securely through PayPal
-        (which supports PayPal accounts and major credit/debit cards such as Visa, Mastercard, and Amex).
-        <strong>This payment supports the hosting, development, API costs,
-        and ongoing maintenance of this application.</strong> It is not a purchase of advice, a consultation
-        fee, or compensation for any particular outcome, and it does not create any advisory, fiduciary,
-        or client-professional relationship. You are supporting the continued availability of this
-        cultural resource, and in return you receive an AI-generated or algorithmically generated
-        interpretation as a token of appreciation. All payments are final. If you experience a technical
-        issue preventing result delivery, please contact us for resolution.
+        Each reading is priced on a pay-what-you-want basis starting from USD $5.99, with preset
+        options at $5.99, $9.99, $14.99, and $19.99. You may also enter a custom amount (minimum $1.00).
+        All payments are processed securely through PayPal, which supports PayPal accounts and major
+        credit/debit cards (Visa, Mastercard, Amex).
+      </p>
+      <p>
+        <strong>This payment purchases access to your complete reading result.</strong> It is not a
+        purchase of professional advice, a consultation fee, or compensation for any particular outcome.
+        No advisory, fiduciary, or client-professional relationship is created through this transaction.
+        You are purchasing a digital cultural interpretation generated algorithmically or via AI analysis
+        of classical Chinese texts.
+      </p>
+      <p>
+        All payments are final. If you experience a technical issue preventing result delivery,
+        please contact us for resolution. In cases of proven non-delivery due to a technical fault on
+        our side, a refund will be issued.
       </p>
 
       <h2>4. Biometric Data Consent (Palm Reading)</h2>

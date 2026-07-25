@@ -2,7 +2,7 @@ export default function PrivacyPage() {
   return (
     <div className="max-w-2xl mx-auto prose prose-sm prose-stone">
       <h1 className="text-2xl font-bold text-accent">Privacy Policy</h1>
-      <p className="text-xs text-stone-400">Last updated: 3 June 2026</p>
+      <p className="text-xs text-stone-400">Last updated: 25 July 2026</p>
 
       <h2>1. Who We Are</h2>
       <p>
@@ -16,7 +16,7 @@ export default function PrivacyPage() {
         <strong>Act on Protection of Personal Information (APPI)</strong>. For users in the Republic of Korea,
         this policy complies with the <strong>Personal Information Protection Act (PIPA)</strong>.
         Our hosting infrastructure is located in the United States
-        (Render, Oregon) with database services (Neon, US-East).
+        (Render, Oregon) with database services (Supabase, US-East).
       </p>
 
       <h2>2. Data We Collect</h2>
@@ -98,7 +98,7 @@ export default function PrivacyPage() {
 
       <h2>6. Data Retention</h2>
       <ul>
-        <li><strong>Contribution records (input + result):</strong> Stored in our database. These records are kept to provide the service and support revenue reporting. They contain only the input you provided and the algorithmically generated result — no personal identifiers.</li>
+        <li><strong>Purchase records (input + result):</strong> Stored in our database. These records are kept to provide the service and support revenue reporting. They contain only the input you provided and the algorithmically generated result — no personal identifiers.</li>
         <li><strong>Visit analytics:</strong> Stored in our database. Country-level data only. No IP addresses are retained.</li>
         <li><strong>Free-tier fingerprint:</strong> A one-way SHA-256 hash of your IP and User-Agent, stored with your free-trial record to enforce the 1-use limit. The original IP is never stored — only the hash, which is irreversible.</li>
         <li><strong>Local storage:</strong> Managed entirely in your browser. Clearing browser data removes free-tier display count and consent preference immediately (the server-side limit persists to prevent abuse).</li>
@@ -165,10 +165,10 @@ export default function PrivacyPage() {
         <li><strong>PayPal</strong> — Payment processing (supports PayPal accounts and major credit/debit cards). Receives only your payment instrument details (not your cultural input data).</li>
         <li><strong>OpenRouter (OpenRouter, Inc.)</strong> — AI API gateway routing Palm Reading requests. Receives only your palm image (transmitted over encrypted TLS). Underlying model inference is performed by <strong>Qwen (Alibaba Cloud)</strong>. Neither OpenRouter nor Alibaba Cloud store API-submitted images or use them for model training.</li>
         <li><strong>Render (Render Services, Inc.)</strong> — US-based cloud hosting. Our application code and database queries run on Render infrastructure.</li>
-        <li><strong>Neon, Inc.</strong> — US-based managed PostgreSQL database. All stored data resides in Neon&apos;s us-east-1 region.</li>
+        <li><strong>Supabase, Inc.</strong> — US-based managed PostgreSQL database. All stored data resides in Supabase&apos;s us-east-1 region.</li>
       </ul>
       <p>
-        Both Render and Neon are certified under the <strong>EU-US Data Privacy Framework (DPF)</strong>{" "}
+        Both Render and Supabase are certified under the <strong>EU-US Data Privacy Framework (DPF)</strong>{" "}
         or have Standard Contractual Clauses (SCCs) in place for lawful international data transfers.
       </p>
 
@@ -218,7 +218,7 @@ export default function PrivacyPage() {
         <strong>Response time:</strong> Within 10 days for users in Korea (PIPA), 2 weeks for users in Japan (APPI), 30 days for all other users (GDPR).
       </p>
       <p className="text-xs text-stone-400 mt-6 border-t border-stone-200 pt-4">
-        Chinese Culture Studio — Data Controller. Hosted on Render (Oregon, US) with Neon PostgreSQL (US-East).
+        Chinese Culture Studio — Data Controller. Hosted on Render (Oregon, US) with Supabase PostgreSQL (US-East).
       </p>
     </div>
   );

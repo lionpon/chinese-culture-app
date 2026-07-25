@@ -24,7 +24,7 @@
     },
     "footer": {
       "disclaimer": "For entertainment and cultural appreciation only. Not professional advice.",
-      "paymentNote": "Payments support app maintenance — not a purchase of services.",
+      "paymentNote": "One-time payment for instant access to your complete reading.",
       "guides": {
         "chineseName": "Chinese Name Guide",
         "iching": "I Ching Guide",
@@ -571,7 +571,7 @@
     "returnHome": "Return to Home",
     "freeBanner": "Your free reading ✨",
     "freeLast": "That was your free reading",
-    "freeText": "Each reading draws from classical Chinese texts — the I Ching, Bazi, and centuries of wisdom. Your support keeps these traditions alive and accessible to everyone.",
+    "freeText": "Each reading draws from classical Chinese texts — the I Ching, Bazi, and centuries of wisdom. Your purchase keeps these traditions alive and accessible to everyone.",
     "anotherName": "Get Another Name",
     "anotherDate": "Find Another Date",
     "anotherHexagram": "Cast Another Hexagram",
@@ -718,7 +718,7 @@
     },
     "technology": {
       "heading": "Technology",
-      "body": "Built with modern web technology (Next.js, TypeScript, Prisma ORM) and hosted on Render with a Neon PostgreSQL database. No personal data is sold or shared. Our privacy policy details our data handling practices."
+      "body": "Built with modern web technology (Next.js, TypeScript, Prisma ORM) and hosted on Render with a Supabase PostgreSQL database. No personal data is sold or shared. Our privacy policy details our data handling practices."
     },
     "contact": {
       "heading": "Contact",
