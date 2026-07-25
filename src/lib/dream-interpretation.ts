@@ -119,8 +119,7 @@ IMPORTANT:
 - Include jungian archertypes only when relevant
 - The jungian field may be omitted if no clear archetypes emerge
 - Do NOT include markdown formatting in JSON values
-- Return ONLY the JSON, no other text
-${LOCALE_INSTRUCTION}`;
+- Return ONLY the JSON, no other text`;
 
 const LOCALE_NAMES_AI: Record<string, string> = {
   ru: "Russian", ja: "Japanese", ko: "Korean",

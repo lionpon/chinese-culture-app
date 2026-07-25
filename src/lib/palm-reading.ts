@@ -88,8 +88,7 @@ IMPORTANT:
 - Quality must be one of: "excellent", "good", "fair", "poor"
 - Explain classical concepts in plain language that a Western audience can understand
 - Do NOT include markdown formatting in the JSON values
-- Return ONLY the JSON, no other text
-${LOCALE_INSTRUCTION}`;
+- Return ONLY the JSON, no other text`;
 
 const PALM_LOCALE_NAMES: Record<string, string> = {
   ru: "Russian", ja: "Japanese", ko: "Korean",
