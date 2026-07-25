@@ -97,11 +97,28 @@ PayPal Standard Checkout，支持信用卡支付。
 
 ## 近期状态 (2026-07-25)
 
-- **线上版本**：`f189813` Live on Render + Cloudflare
+- **线上版本**：`5329dbb` Live on Render + Cloudflare
 - **域名**：`www.culture-of-china.com` 正常运行
 - **数据库**：Supabase (`vnktcrolpcyktduldpfm`) ✅
 - **GitHub**：`git@github.com:lionpon/chinese-culture-app.git` (SSH deploy key)
-- **最新 commit**：`13d1480`（feat: hook redesign — curiosity-driven preview copy × 4 locales）
+- **最新 commit**：`5329dbb`（fix: Product Hunt banner URL /posts/ → /products/ + launch query）
+
+### 7月25日晚：Bug 修复汇总
+
+#### 🔧 FreeTierBadge 布局闪烁修复
+- **Bug**：FreeTierBadge 用 `useState(0)` + `useEffect(localStorage)` 导致 badge 初始隐藏，~1s 后突然出现 → 表单内容下跳 60px（CLS）
+- **根因**：badge 忽略了服务端 cookie (`cc_free_used`) 已读取的 `initialHasFree`
+- **修复**：新增 `initialRemaining` prop，用服务端 cookie 值初始化，useEffect 仅做跨标签页同步
+- **影响**：naming / calendar / divination 三个表单页不再闪烁 ✅
+- **Commit**：`ebcf76a`
+
+#### 🔗 Product Hunt 横幅链接 404 修复
+- **Bug**：首页 PH 横幅链接 `/posts/chinese-culture-studio` → 404
+- **修复**：改为 `/products/chinese-culture-studio?launch=chinese-culture-studio-2`
+- **Commit**：`5329dbb`
+
+#### ✅ 钩子整改复核
+- 确认 commit `13d1480` + `0fdfee2` 已上线，4 locales × 55 处文案全部生效
 
 ### 7月25日：全站大整改——定价、叙事、多语言、支付信任
 
