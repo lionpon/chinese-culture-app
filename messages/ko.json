@@ -24,7 +24,7 @@
     },
     "footer": {
       "disclaimer": "문화 체험 및 오락 목적으로만 제공됩니다. 전문적인 조언이 아닙니다.",
-      "paymentNote": "결제는 앱 유지 관리 비용을 지원하며 서비스 구매가 아닙니다.",
+      "paymentNote": "완전한 리딩에 즉시 접근하기 위한 일회성 결제.",
       "guides": {
         "chineseName": "중국식 이름 가이드",
         "iching": "주역 가이드",
@@ -51,17 +51,16 @@
     "submit": {
       "processing": "처리 중...",
       "free": "{label} — 무료",
-      "paid": "{label} · {amount}",
-      "helper": "PayPal 또는 신용카드 — PayPal 계정 불필요",
+      "paid": "결과 보기 · {amount}",
       "paidSimple": "결과 보기 · {amount}",
       "cardNote": "PayPal 또는 신용카드 — PayPal 계정 불필요",
       "paidNote": "PayPal 또는 신용카드 — 계정 불필요"
     },
     "amount": {
-      "label": "금액 (USD)",
+      "label": "가격 선택",
       "custom": "직접 입력",
       "placeholder": "금액",
-      "helper": "지속적인 개발, API 비용, 서버 유지 관리에 사용됩니다."
+      "helper": "일회성 결제. 구독 없음. 영원히 소장."
     },
     "speak": {
       "listen": "듣기",
@@ -69,9 +68,8 @@
     },
     "loading": "로딩 중...",
     "freeTier": {
-      "three": "3회 무료 미리보기가 있습니다 — 체험해 보세요!",
-      "two": "2회 무료 미리보기가 있습니다 — 체험해 보세요!",
-      "one": "1회 무료 미리보기가 남았습니다"
+      "one": "무료 리딩 1회가 있습니다 — 소중히 사용하세요 ✨",
+      "none": "무료 리딩이 기다리고 있습니다 — 아래에서 잠금 해제"
     },
     "toggleMenu": "네비게이션 메뉴 열기",
     "validation": {
@@ -79,15 +77,15 @@
       "inputRequired": "이 항목을 입력해주세요"
     },
     "pricing": {
-      "title": "Pay what you want · $1부터",
-      "compare": "개발 및 서버 비용을 지원합니다",
-      "secure": "PayPal 또는 카드 — 계정 불필요"
+      "title": "$5.99부터 — 원하는 가격으로",
+      "compare": "고전 중국 문헌에 기반한 개인 맞춤 결과",
+      "secure": "🔐 PayPal · 계정 불필요 · 즉시 접근 · 일회성 결제"
     }
   },
   "home": {
     "title": "당신만의 중국식 이름을 찾아보세요",
     "subtitle": "3000년 동양의 지혜를 바탕으로. 개인 맞춤. 30초 만에.",
-    "heroPricing": "$1부터 — 가치에 맞게 지불하세요",
+    "heroPricing": "$5.99부터 — 3000년 지혜에 기반한 개인 맞춤 결과",
     "quickStart": {
       "naming": "중국식 이름 받기",
       "divination": "주역 시도하기",
@@ -120,12 +118,12 @@
       }
     },
     "cta": {
-      "paid": "$1 →",
-      "free": "무료 체험 가능 →"
+      "paid": "시작하기 →",
+      "free": "무료 체험 →"
     },
     "dailyHexagram": {
       "heading": "무료 일일 운세",
-      "cta": "전체 주역 해석 받기 → $1",
+      "cta": "전체 주역 해석 받기 →",
       "helper": "오늘의 괘는 매일 갱신됩니다. 개인 질문에 대한 해석을 원하시면 직접 점을 쳐보세요.",
       "askOwn": "직접 점치기 →"
     },
@@ -160,7 +158,7 @@
   "naming": {
     "title": "중국식 이름 짓기",
     "subtitle": "생년월일 정보와 중국 고전 문헌을 바탕으로",
-    "badge": "$1",
+    "badge": "$5.99",
     "form": {
       "firstName": "이름 (Given Name)",
       "firstNamePlaceholder": "예: Michael, 안나",
@@ -210,22 +208,22 @@
       "elementsTitle": "오행 균형",
       "favorable": "희용신",
       "teaser": "당신의 사주에 기반한 중국식 이름이 준비되었습니다",
-      "teaserSub": "위에서 이름과 성별을 입력하고, 이름 생성 → $1"
+      "teaserSub": "위에서 이름과 성별을 입력하고, 이름 생성 →"
     },
     "meta": {
       "title": "중국식 이름 짓기 | Chinese Culture Studio",
-      "description": "생년월일, 성별, 오행(五行)에 기반한 정통 중국식 이름을 생성합니다. 중국 고전 문헌 기반 AI 작명. $1부터.",
+      "description": "생년월일, 성별, 오행(五行)에 기반한 정통 중국식 이름을 생성합니다. 중국 고전 문헌 기반 AI 작명. $5.99부터.",
       "ogTitle": "중국식 이름 짓기 | Chinese Culture Studio",
-      "ogDescription": "생년월일, 성별, 오행에 기반한 정통 중국식 이름을 생성합니다. 원하는 대로 지불하세요.",
+      "ogDescription": "생년월일, 성별, 오행에 기반한 정통 중국식 이름을 생성합니다. 원하는 가격으로.",
       "twitterTitle": "중국식 이름 짓기 | Chinese Culture Studio",
-      "twitterDescription": "오행 기반 AI 중국식 이름 생성. 원하는 대로 지불하세요.",
+      "twitterDescription": "오행 기반 AI 중국식 이름 생성. 원하는 가격으로.",
       "ogSub": "오행 + AI 작명"
     }
   },
   "calendar": {
     "title": "길일 선택",
     "subtitle": "전통 중국 역법 원리를 바탕으로",
-    "badge": "$1",
+    "badge": "$5.99",
     "form": {
       "range": "날짜 범위",
       "start": "시작",
@@ -267,22 +265,22 @@
       "bestDate": "최적의 날짜",
       "score": "점수",
       "cta": "양식을 제출하여 정확한 날짜와 시간 확인",
-      "ctaSub": "무료 미리보기는 1개 날짜만 — 전체 상세 보기 → $1"
+      "ctaSub": "무료 미리보기는 1개 날짜만 — 전체 상세 보기 →"
     },
     "meta": {
       "title": "길일 선택 | Chinese Culture Studio",
-      "description": "전통 중국 역법(통서)에 기반하여 결혼, 개업, 여행 등에 가장 좋은 날짜를 찾아드립니다. $1부터.",
+      "description": "전통 중국 역법(통서)에 기반하여 결혼, 개업, 여행 등에 가장 좋은 날짜를 찾아드립니다. $5.99부터.",
       "ogTitle": "길일 선택 | Chinese Culture Studio",
-      "ogDescription": "전통 중국 역법에 기반한 길일 선택. 원하는 대로 지불하세요.",
+      "ogDescription": "전통 중국 역법에 기반한 길일 선택. 원하는 가격으로.",
       "twitterTitle": "길일 선택 | Chinese Culture Studio",
-      "twitterDescription": "중요한 인생 이벤트를 위한 전통 중국 역법 날짜 선택. 원하는 대로 지불하세요.",
+      "twitterDescription": "중요한 인생 이벤트를 위한 전통 중국 역법 날짜 선택. 원하는 가격으로.",
       "ogSub": "전통 중국 역법"
     }
   },
   "divination": {
     "title": "주역 점술",
     "subtitle": "고대 변화의 책에 질문하세요",
-    "badge": "$1",
+    "badge": "$5.99",
     "form": {
       "question": "질문 (선택 사항)",
       "questionPlaceholder": "어떤 것에 대한 지침을 원하시나요?",
@@ -311,22 +309,22 @@
       "hint": "무료 미리보기 — 제출 전에 괘를 확인하세요",
       "judgmentLabel": "괘사",
       "cta": "위 양식을 제출하여 정식 괘를 얻으세요",
-      "ctaSub": "무료 미리보기 — 변괘와 호괘 해제 → $1"
+      "ctaSub": "무료 미리보기 — 변괘와 호괘 해제 →"
     },
     "meta": {
       "title": "주역 점술 | Chinese Culture Studio",
-      "description": "고대 변화의 책(주역)에 질문하고 지침과 통찰을 얻으세요. 시간 기반, 무작위, 수동 동전 던지기 세 가지 방법. $1부터.",
+      "description": "고대 변화의 책(주역)에 질문하고 지침과 통찰을 얻으세요. 시간 기반, 무작위, 수동 동전 던지기 세 가지 방법. $5.99부터.",
       "ogTitle": "주역 점술 | Chinese Culture Studio",
-      "ogDescription": "고대 변화의 책에 질문하세요. 세 가지 점술 방법 제공. 원하는 대로 지불하세요.",
+      "ogDescription": "고대 변화의 책에 질문하세요. 세 가지 점술 방법 제공. 원하는 가격으로.",
       "twitterTitle": "주역 점술 | Chinese Culture Studio",
-      "twitterDescription": "주역 점술 — 세 가지 방법, 즉시 결과 확인. 원하는 대로 지불하세요.",
+      "twitterDescription": "주역 점술 — 세 가지 방법, 즉시 결과 확인. 원하는 가격으로.",
       "ogSub": "변화의 책에 질문하세요"
     }
   },
   "palm": {
     "title": "수상 보기",
     "subtitle": "손바닥 사진을 업로드하여 고전 중국 수상 분석을 받아보세요",
-    "badge": "$1",
+    "badge": "$5.99",
     "form": {
       "photo": "손바닥 사진 *",
       "uploadText": "여기를 클릭하거나 사진을 드래그하세요",
@@ -361,18 +359,18 @@
     },
     "meta": {
       "title": "수상 보기 | Chinese Culture Studio",
-      "description": "손바닥 사진을 업로드하고 고전 중국 수상학에 기반한 AI 분석을 받아보세요. 이미지는 메모리에서만 처리되며 저장되지 않습니다. $1부터.",
+      "description": "손바닥 사진을 업로드하고 고전 중국 수상학에 기반한 AI 분석을 받아보세요. 이미지는 메모리에서만 처리되며 저장되지 않습니다. $5.99부터.",
       "ogTitle": "수상 보기 | Chinese Culture Studio",
-      "ogDescription": "고전 중국 수상학 기반 AI 수상 분석. 개인정보 보호 우선 — 이미지 저장 없음. 원하는 대로 지불하세요.",
+      "ogDescription": "고전 중국 수상학 기반 AI 수상 분석. 개인정보 보호 우선 — 이미지 저장 없음. 원하는 가격으로.",
       "twitterTitle": "수상 보기 | Chinese Culture Studio",
-      "twitterDescription": "중국 고전 문헌 기반 AI 수상. 제로 저장, 완전한 개인정보 보호. 원하는 대로 지불하세요.",
+      "twitterDescription": "중국 고전 문헌 기반 AI 수상. 제로 저장, 완전한 개인정보 보호. 원하는 가격으로.",
       "ogSub": "고전 중국 수상학 + AI"
     }
   },
   "dream": {
     "title": "꿈 해몽",
     "subtitle": "꿈을 설명하면 주공의 고대 중국 꿈 사전과 프로이트 정신분석을 결합한 이중 관점 해석을 받을 수 있습니다",
-    "badge": "$1",
+    "badge": "$5.99",
     "learnMore": "중국 꿈 상징에 대해 더 알아보기 →",
     "form": {
       "dreamLabel": "꿈을 설명해주세요 *",
@@ -545,28 +543,28 @@
     "returnHome": "홈으로 돌아가기",
     "freeBanner": "무료 이용 {n}회 남음",
     "freeLast": "마지막 무료 해석입니다",
-    "freeText": "각 개인화된 해석은 고전 문헌과 전통적 방법에 기반한 연산이 필요합니다. 이후 해석은 $1 지불로 이용하실 수 있습니다.",
+    "freeText": "각 리딩은 고전 중국 문헌 — 주역, 사주, 수세기의 지혜에서 비롯됩니다. 여러분의 구매가 이 전통을 살아 숨쉬게 합니다.",
     "anotherName": "다른 이름 만들기",
     "anotherDate": "다른 날짜 찾기",
     "anotherHexagram": "다른 괘 뽑기",
     "anotherPalm": "다른 손 보기",
     "anotherDream": "다른 꿈 해석하기",
-    "unlockTitle": "약 30%만 보고 있습니다. 전체 결과 보기：",
-    "unlockHeading": "전체 결과 확인하기",
-    "unlockNaming1": "상세한 의미가 담긴 4개의 추가 이름 옵션",
-    "unlockNaming2": "오행 프로필의 전체 사주 분석",
-    "unlockDivination1": "변괘 및 호괘 (전체 그림)",
-    "unlockDivination2": "동효 해석 및 구체적 조언",
-    "unlockCalendar1": "점수가 매겨진 2개의 추가 길일",
-    "unlockCalendar2": "각 날짜별 길시와 길신",
+    "unlockTitle": "미리보기가 완료되었습니다. 가장 중요한 부분이 앞에 있습니다.",
+    "unlockHeading": "리딩 계속하기",
+    "unlockNaming1": "완전한 이야기가 담긴 나머지 4개의 이름",
+    "unlockNaming2": "별이 당신에 대해 말하는 것 — 완전한 사주 프로필",
+    "unlockDivination1": "변괘・호괘 — 전체 그림",
+    "unlockDivination2": "변효가 당신의 상황에 대해 의미하는 것",
+    "unlockCalendar1": "점수가 매겨진 나머지 2개의 길일",
+    "unlockCalendar2": "각 날짜별 최적 시간과 수호신",
     "unlockDream1": "모든 꿈 상징에 대한 완전한 주공 해석",
     "unlockDream2": "완전한 프로이트・융 심리학 분석",
-    "unlockNow": "전체 결과 확인하기 — $1부터",
-    "seeFreePreview": "아니요, 닫기",
-    "lockedContent": "잠김 — $1로 해제",
+    "unlockNow": "리딩 계속하기 · $5.99부터",
+    "seeFreePreview": "충분히 봤습니다",
+    "lockedContent": "전체 리딩 잠금 해제",
     "andMore": "+ 더 많은 세부 정보",
-    "unlockFullCta": "후원하고 전체 결과 보기",
-    "paywallPersistent": "일회성 결제 · 구독 없음 · 가치에 맞게 지불 · $1부터"
+    "unlockFullCta": "리딩 계속하기",
+    "paywallPersistent": "일회성 결제 · 구독 없음 · 영원히 소장"
   },
   "legal": {
     "privacy": {
@@ -640,15 +638,15 @@
     "palm": "수상"
   },
   "payment": {
-    "name": "Chinese Culture Studio — 작명",
-    "date": "Chinese Culture Studio — 길일 선택",
-    "iching": "Chinese Culture Studio — 주역 해석",
-    "palm": "Chinese Culture Studio — 수상",
-    "dream": "Chinese Culture Studio — 꿈 해몽",
+    "name": "중국식 작명 — Chinese Culture Studio",
+    "date": "길일 선택 — Chinese Culture Studio",
+    "iching": "주역 해석 — Chinese Culture Studio",
+    "palm": "수상 분석 — Chinese Culture Studio",
+    "dream": "꿈 해몽 — Chinese Culture Studio",
     "error": "문제가 발생했습니다",
     "failed": "실패했습니다. 다시 시도해 주세요.",
     "returnApp": "앱으로 돌아가기",
-    "thankYou": "Chinese Culture Studio를 이용해 주셔서 감사합니다!"
+    "thankYou": "리딩이 준비되었습니다! 감사합니다."
   },
   "languageSwitcher": {
     "en": "English",
@@ -755,7 +753,7 @@
     "copied": "복사됨!",
     "upsellTitle": "주공과 프로이트의 전체 분석을 원하시나요?",
     "upsellDesc": "고전 중국 꿈 사전 상징과 서양 정신분석을 통한 완전한 이중 해석을 받아보세요.",
-    "upsellCta": "전체 분석 · $1",
+    "upsellCta": "전체 분석",
     "tryAnother": "다른 꿈 시도하기"
   },
   "zodiacMatch": {
@@ -774,7 +772,7 @@
     "copied": "복사됨!",
     "upsellTitle": "당신의 띠에 맞는 중국식 이름을 원하시나요?",
     "upsellDesc": "띠의 오행, 사주, 음양오행에 기반한 개인 맞춤 중국식 이름을 받아보세요.",
-    "upsellCta": "중국식 이름 만들기 · $1",
+    "upsellCta": "중국식 이름 만들기",
     "tryAnother": "다른 조합 시도하기",
     "error": "별들이 정렬되지 않았습니다. 다시 시도해주세요."
   },
@@ -794,7 +792,7 @@
     "copied": "복사됨!",
     "upsellTitle": "완전한 주역 점술을 원하시나요?",
     "upsellDesc": "직접 괘를 뽑고 변화하는 효와 구체적인 지침이 포함된 완전한 해석을 받아보세요.",
-    "upsellCta": "주역 점치기 · $1",
+    "upsellCta": "주역 점치기",
     "tryAnother": "다른 띠 시도하기",
     "error": "우주가 조용합니다. 다시 시도해주세요."
   },
@@ -815,7 +813,7 @@
     "copied": "복사됨!",
     "upsellTitle": "사주 기반 완전한 이름 감정을 원하시나요?",
     "upsellDesc": "5개의 이름 후보와 완전한 사주 분석, 고전 출처, 발음 가이드를 받아보세요.",
-    "upsellCta": "완전한 이름 감정 · $1",
+    "upsellCta": "완전한 이름 감정",
     "tryAnother": "다른 이름 시도하기",
     "error": "이름의 정령이 쉬고 있습니다. 다시 시도해주세요."
   },
@@ -842,7 +840,7 @@
     "methodNote": "소육임(小六壬), 일명 마전과(马前课) — 빠른 지침을 얻기 위한 천 년 역사의 중국 민간 점술법입니다.",
     "upsellTitle": "더 깊은 해석을 원하시나요?",
     "upsellDesc": "주역은 4,096가지의 답변과 완전한 고전 해설을 제공합니다 — 직접 괘를 뽑아 완전한 해석을 받아보세요.",
-    "upsellCta": "주역 괘 뽑기 · $1",
+    "upsellCta": "주역 괘 뽑기",
     "copy": "복사",
     "sharePrompt": "오라클 공유"
   }
