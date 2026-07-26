@@ -95,7 +95,16 @@ src/
 三层闭环：PDT (return) + 主动生成 (auto-create) + IPN (webhook)
 PayPal Standard Checkout，支持信用卡支付。
 
-## 近期状态 (2026-07-25)
+## 开发工具
+
+### 🧪 测试模式（跳过数据埋点）
+在任意 URL 后加 `?test=1` 即可进入测试模式，当前浏览器 1 年内所有访问不写入 Visit 表、不影响日报统计。
+- **开启**：访问任何页面 `?test=1`（cookie 自动设置，参数自动移除）
+- **关闭**：访问任何页面 `?test=0`
+- **实现**：middleware 设置 `cc_test_mode` cookie → AnalyticsTracker 客户端跳过 → `/api/track` 服务端跳过
+- 部署前务必确认已关闭测试模式（或关闭不影响，只是你自己的访问不被统计）
+
+## 近期状态 (2026-07-26)
 
 - **线上版本**：`5329dbb` Live on Render + Cloudflare
 - **域名**：`www.culture-of-china.com` 正常运行

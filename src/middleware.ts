@@ -11,6 +11,29 @@ const intlMiddleware = createMiddleware({
 });
 
 export default function middleware(req: NextRequest) {
+  // ── Test mode toggle — ?test=1 enables, ?test=0 disables ──
+  const testParam = req.nextUrl.searchParams.get("test");
+  if (testParam === "1" || testParam === "0") {
+    const url = req.nextUrl.clone();
+    url.searchParams.delete("test");
+    const response = NextResponse.redirect(url);
+    if (testParam === "1") {
+      response.cookies.set("cc_test_mode", "1", {
+        path: "/",
+        maxAge: 365 * 24 * 60 * 60, // 1 year
+        sameSite: "lax",
+        httpOnly: false, // allow client-side AnalyticsTracker to read
+      });
+    } else {
+      response.cookies.set("cc_test_mode", "", {
+        path: "/",
+        maxAge: 0, // expire immediately
+        sameSite: "lax",
+      });
+    }
+    return response;
+  }
+
   // ── llms.txt — AI discoverability ──
   if (req.nextUrl.pathname === "/llms.txt") {
     const txt = [

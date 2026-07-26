@@ -43,6 +43,12 @@ async function lookupGeo(ip: string): Promise<{ country: string; city: string; r
 
 export async function POST(req: NextRequest) {
   try {
+    // ── Skip tracking when test mode cookie is set ──
+    const testMode = req.cookies.get("cc_test_mode")?.value;
+    if (testMode === "1") {
+      return NextResponse.json({ ok: true, skipped: "test" });
+    }
+
     const { page, event } = await req.json();
 
     const ip =
