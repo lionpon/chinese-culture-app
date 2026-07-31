@@ -261,15 +261,15 @@ export default function HomePage() {
         <h2 className="text-lg font-semibold text-center mb-8" style={{ color: "var(--text-primary)" }}>
           {t("testimonials.heading")}
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
           {(t("testimonials.items") as unknown as Array<{ text: string; name: string; service: string }>).map((item, i) => (
-            <div key={i} className="card-classic p-5 flex flex-col">
+            <div key={i} className="card-classic p-4 sm:p-5 flex flex-col">
               <p className="text-sm leading-relaxed flex-1" style={{ color: "var(--text-body)" }}>
                 &ldquo;{item.text}&rdquo;
               </p>
-              <div className="mt-4 pt-4 flex items-center justify-between" style={{ borderTop: "1px solid var(--border-subtle)" }}>
+              <div className="mt-3 pt-3 flex items-center justify-between gap-2 flex-wrap" style={{ borderTop: "1px solid var(--border-subtle)" }}>
                 <span className="text-sm font-medium" style={{ color: "var(--text-primary)" }}>{item.name}</span>
-                <span className="text-xs px-2 py-0.5 rounded-full" style={{ backgroundColor: "rgba(201,169,110,0.12)", color: "var(--gold)" }}>
+                <span className="text-xs px-2 py-0.5 rounded-full whitespace-nowrap" style={{ backgroundColor: "rgba(201,169,110,0.12)", color: "var(--gold)" }}>
                   {item.service}
                 </span>
               </div>
