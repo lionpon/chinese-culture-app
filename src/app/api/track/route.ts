@@ -2,6 +2,21 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import { isDatacenterIp, isDatacenterCity } from "@/lib/bot-filter";
 
+// Rate limiter: block IPs making > 5 requests in 10 seconds (crawler signature)
+const rateMap = new Map<string, number[]>();
+const RATE_WINDOW_MS = 10_000;
+const RATE_MAX = 5;
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const timestamps = rateMap.get(ip) || [];
+  const recent = timestamps.filter(t => now - t < RATE_WINDOW_MS);
+  recent.push(now);
+  rateMap.set(ip, recent);
+  if (recent.length > 200) rateMap.delete(ip); // cleanup stale entries
+  return recent.length > RATE_MAX;
+}
+
 async function lookupGeo(ip: string): Promise<{ country: string; city: string; region: string }> {
   // Primary: ipapi.co (HTTPS, 1000/day free, no key required)
   try {
@@ -49,12 +64,17 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: true, skipped: "test" });
     }
 
-    const { page, event } = await req.json();
-
     const ip =
       req.headers.get("cf-connecting-ip") ||
       req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
       "";
+
+    // ── Rate limit: block crawlers making rapid-fire requests ──
+    if (ip && isRateLimited(ip)) {
+      return NextResponse.json({ ok: true, skipped: "rate_limit" });
+    }
+
+    const { page, event } = await req.json();
 
     const countryHeader =
       req.headers.get("cf-ipcountry") ||

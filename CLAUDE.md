@@ -106,11 +106,28 @@ PayPal Standard Checkout，支持信用卡支付。
 
 ## 近期状态 (2026-07-26)
 
-- **线上版本**：`5329dbb` Live on Render + Cloudflare
+- **线上版本**：`0968ef5` Live on Render + Cloudflare
 - **域名**：`www.culture-of-china.com` 正常运行
 - **数据库**：Supabase (`vnktcrolpcyktduldpfm`) ✅
 - **GitHub**：`git@github.com:lionpon/chinese-culture-app.git` (SSH deploy key)
-- **最新 commit**：`5329dbb`（fix: Product Hunt banner URL /posts/ → /products/ + launch query）
+- **最新 commit**：`0968ef5`（feat: test mode filter — ?test=1 skips tracking）
+
+### 7月26日：整改后流量复核 + 测试过滤系统
+
+#### 📊 大整改后 24h 流量复核
+- 7/25 显示 178 次访问，但其中 150 次为开发者自身测试流量（VPN HK 99 + 本地杭州 51）
+- 真实外部用户仅 **~28 人**（PH 热度自然衰减：7/23→75 → 7/24→61 → 7/25→28）
+- 28 人全部访问免费内容/SEO 页面，无人进入付费服务页 → **整改效果尚无法评估**
+- 定价变化（$1→$5.99）、钩子文案、信任信号等改动尚未被真实用户"触碰"
+
+#### 🧪 测试模式过滤系统
+- **开启**：访问 `?test=1` → cookie 自动设置，1 年内所有访问不写入 Visit 表
+- **关闭**：访问 `?test=0`
+- **三层防护**：
+  1. Middleware：拦截 `?test=1`/`?test=0`，设置/清除 `cc_test_mode` cookie
+  2. AnalyticsTracker：客户端读 cookie，直接 return 不发请求
+  3. `/api/track`：服务端读 cookie，跳过 DB insert
+- **Commit**：`0968ef5`
 
 ### 7月25日晚：Bug 修复汇总
 

@@ -22,6 +22,7 @@ const DC_CITIES = new Set([
   "boydton",       // Microsoft DC, pop ~500
   "lenoir",        // Google DC, pop ~18k
   "prineville",    // Facebook DC, pop ~10k
+  "moscow",        // Russian crawler hub — known SEO spider / content scraper origin
 ]);
 
 const DC_REGIONS = new Set([

@@ -4,15 +4,12 @@ import { useState, FormEvent } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/navigation";
 import { trackClick } from "@/lib/track";
-import { BASE_URL } from "@/lib/config";
 import EmailCaptureForm from "@/components/EmailCaptureForm";
 
 interface NameOption {
   chinese: string;
   pinyin: string;
   meaning: string;
-  elements: string;
-  style: string;
 }
 
 interface PreviewResult {
@@ -21,13 +18,7 @@ interface PreviewResult {
   headline: string;
 }
 
-const STYLE_BADGES: Record<string, string> = {
-  Elegant: "bg-purple-100 text-purple-700",
-  Bold: "bg-red-100 text-red-700",
-  Gentle: "bg-blue-100 text-blue-700",
-  Artistic: "bg-pink-100 text-pink-700",
-  Classic: "bg-amber-100 text-amber-700",
-};
+
 
 export default function NamePreviewPage() {
   const t = useTranslations("namePreview");
@@ -36,7 +27,6 @@ export default function NamePreviewPage() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<PreviewResult | null>(null);
   const [error, setError] = useState("");
-  const [copied, setCopied] = useState(false);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -55,18 +45,6 @@ export default function NamePreviewPage() {
     finally { setLoading(false); }
   }
 
-  const shareText = result
-    ? `✨ My Chinese name could be "${result.names[0]?.chinese}" — ${result.names[0]?.meaning}`
-    : "";
-  const shareUrl = `${BASE_URL}/tools/name-preview`;
-
-  async function copyToClipboard() {
-    try {
-      await navigator.clipboard.writeText(shareText + "\n\nFind yours: " + shareUrl);
-      setCopied(true); trackClick("name_preview_share_copy");
-      setTimeout(() => setCopied(false), 2000);
-    } catch {}
-  }
 
   return (
     <div className="max-w-lg mx-auto">
@@ -113,57 +91,40 @@ export default function NamePreviewPage() {
             <p className="text-xs text-stone-400 text-center mb-1">{t("for")} &ldquo;{result.originalName}&rdquo;</p>
             <h2 className="text-lg font-bold text-stone-800 text-center mb-6">{result.headline}</h2>
             <div className="space-y-4">
-              {result.names.map((n, i) => (
-                <div key={i} className="bg-white/80 rounded-xl p-4 border border-amber-100 hover:shadow-md transition-shadow">
+              {result.names.slice(0, 1).map((n, i) => (
+                <div key={i} className="bg-white/80 rounded-xl p-4 border border-amber-100">
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-3">
                       <span className="text-3xl font-bold text-accent">{n.chinese}</span>
-                      <div>
-                        <p className="text-xs text-stone-500">{n.pinyin}</p>
-                        <span className={`text-xs px-2 py-0.5 rounded-full ${STYLE_BADGES[n.style] || "bg-stone-100 text-stone-600"}`}>{n.style}</span>
-                      </div>
+                      <p className="text-sm text-stone-500">{n.pinyin}</p>
                     </div>
-                    <span className="text-xs text-stone-400">{n.elements}</span>
                   </div>
                   <p className="text-sm text-stone-700 italic">{n.meaning}</p>
                 </div>
               ))}
             </div>
-          </div>
 
-          <div className="card-classic p-4">
-            <p className="text-xs text-stone-500 text-center mb-3 font-medium uppercase tracking-wide">{t("sharePrompt")}</p>
-            <div className="flex items-center justify-center gap-3 flex-wrap">
-              <button onClick={() => {
-                trackClick("name_preview_share_twitter");
-                window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`, "_blank");
-              }} className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm border border-stone-300 text-stone-600 hover:bg-black hover:text-white transition-all">
-                <span className="font-bold">X</span><span className="hidden sm:inline">Twitter</span>
-              </button>
-              <button onClick={() => {
-                trackClick("name_preview_share_wa");
-                window.open(`https://wa.me/?text=${encodeURIComponent(shareText + " " + shareUrl)}`, "_blank");
-              }} className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm border border-stone-300 text-stone-600 hover:bg-[#25D366] hover:text-white transition-all">
-                <span className="font-bold">WA</span><span className="hidden sm:inline">WhatsApp</span>
-              </button>
-              <button onClick={copyToClipboard}
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm border border-stone-300 text-stone-600 hover:bg-stone-100 transition-all">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                </svg>
-                <span className="hidden sm:inline">{copied ? t("copied") : t("copy")}</span>
-              </button>
+            {/* Locked names placeholder */}
+            <div className="mt-4 space-y-2">
+              {[1, 2, 3, 4].map(i => (
+                <div key={i} className="bg-stone-100/80 rounded-xl p-4 border border-dashed border-stone-300 flex items-center gap-3 opacity-50">
+                  <div className="w-16 h-8 bg-stone-200 rounded animate-pulse" />
+                  <div className="w-24 h-4 bg-stone-200 rounded animate-pulse" />
+                  <span className="ml-auto text-xs text-stone-400">🔒</span>
+                </div>
+              ))}
             </div>
           </div>
 
           <div className="text-center pb-8">
-            <div className="card-classic p-5 border-2 border-amber-300 bg-amber-50/50">
-              <p className="text-sm font-semibold text-stone-800 mb-2">{t("upsellTitle")}</p>
-              <p className="text-xs text-stone-500 mb-4">{t("upsellDesc")}</p>
+            <div className="card-classic p-5 border-2 border-amber-400 bg-amber-50/80">
+              <p className="text-base font-bold text-stone-800 mb-1">{t("upsellTitle")}</p>
+              <p className="text-sm text-stone-600 mb-4">{t("upsellDesc")}</p>
               <Link href="/naming" onClick={() => trackClick("name_preview_upsell")}
-                className="inline-block px-6 py-2.5 rounded-xl text-sm font-medium btn-primary">
+                className="inline-block px-8 py-3 rounded-xl text-sm font-bold btn-primary shadow-lg">
                 {t("upsellCta")}
               </Link>
+              <p className="text-xs text-stone-400 mt-3">{t("upsellNote")}</p>
             </div>
           </div>
 

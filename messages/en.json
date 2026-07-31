@@ -840,14 +840,12 @@
     "submit": "Create My Names",
     "generating": "Crafting names...",
     "for": "Names for",
-    "sharePrompt": "Share your names",
-    "copy": "Copy",
-    "copied": "Copied!",
-    "upsellTitle": "Ready for your full Bazi-powered Chinese name?",
-    "upsellDesc": "Get 5 name options with complete Bazi analysis, classical sources, and pronunciation guide.",
+    "upsellTitle": "This is only a glimpse. Your birth chart holds 4 more names.",
+    "upsellDesc": "Each name is matched to your Bazi (八字) — your birth destiny. Without your birth date and exact hour, we can only scratch the surface. The full reading reveals all 5 names with their classical sources and your complete elemental story.",
     "upsellCta": "Get Full Name Reading",
     "tryAnother": "Try another name",
-    "error": "The name spirits are resting. Try again?"
+    "error": "The name spirits are resting. Try again?",
+    "upsellNote": "Takes 30 seconds. One-time payment."
   },
   "quickOracle": {
     "title": "Quick Oracle",

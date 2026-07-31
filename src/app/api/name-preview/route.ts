@@ -10,7 +10,7 @@ const client = new OpenAI({
   },
 });
 
-const SYSTEM_PROMPT = `You create beautiful Chinese names. Given an English name, generate 3 Chinese name options that phonetically match while carrying deep, beautiful meanings.
+const SYSTEM_PROMPT = `You create beautiful Chinese names. Given an English name, generate ONLY ONE Chinese name option that phonetically matches.
 
 Structure as valid JSON:
 {
@@ -19,19 +19,18 @@ Structure as valid JSON:
     {
       "chinese": "思然",
       "pinyin": "Sī Rán",
-      "meaning": "Thoughtful and natural — like a flowing stream of clear thoughts",
-      "elements": "Wood + Water",
-      "style": "Elegant"
+      "meaning": "A brief, poetic glimpse — just enough to spark curiosity"
     }
   ],
-  "headline": "A catchy one-line headline about these names (max 60 chars)"
+  "headline": "A teaser headline (max 60 chars) hinting that their Bazi reveals much more"
 }
 
 IMPORTANT:
+- Only ONE name (single entry in array) — never more
 - Names should be 2 characters (given name) — phonetically match the English name
-- Each meaning should be poetic, unique, and beautiful (1 sentence)
-- Elements should match the characters' actual Wu Xing associations
-- Style: one of "Elegant", "Bold", "Gentle", "Artistic", "Classic"
+- Meaning should be BRIEF and deliberately incomplete (one line) — leave the reader hungry
+- DO NOT include elements or style — these require birth chart analysis
+- Headline must create curiosity — suggest that without birth date, they're only seeing a fraction
 - Return ONLY valid JSON`;
 
 export async function POST(req: NextRequest) {
@@ -43,11 +42,11 @@ export async function POST(req: NextRequest) {
     const genderHint = gender === "male" ? "masculine" : gender === "female" ? "feminine" : "gender-neutral";
     const completion = await client.chat.completions.create({
       model: "openai/gpt-4o-mini",
-      max_tokens: 800,
+      max_tokens: 500,
       temperature: 0.9,
       messages: [
         { role: "system", content: SYSTEM_PROMPT },
-        { role: "user", content: `Create 3 Chinese name options for the name "${name.trim()}" (${genderHint} style).` },
+        { role: "user", content: `Create ONLY ONE Chinese name option for "${name.trim()}" (${genderHint} style). Remember: just one name, brief meaning, no elements or style fields.` },
       ],
     });
     const text = completion.choices[0]?.message?.content || "";
