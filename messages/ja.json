@@ -158,6 +158,26 @@
       "dreams": "夢占い",
       "snake2027": "2027年 巳年",
       "names": "中国名ガイド"
+    },
+    "testimonials": {
+      "heading": "利用者の声",
+      "items": [
+        {
+          "text": "honestly i wasn't expecting much, just wanted a chinese name for a tattoo lol. but when it gave me 林安雅 and explained the wood/earth balance thing — i was like wait, that actually fits me? showed my chinese coworker and she said her grandma would approve. that's when i knew this wasn't some random name generator",
+          "name": "Maya, Portland",
+          "service": "Chinese Name"
+        },
+        {
+          "text": "i use the i ching thing when i'm stuck on decisions. is it magic? probably not. but weirdly every time i've asked about a job thing, the answer was creepily relevant. my boyfriend thinks i'm in a cult now. whatever, got the offer",
+          "name": "Jess, Austin",
+          "service": "易経占い"
+        },
+        {
+          "text": "my fiancé and i were going back and forth on wedding dates for weeks. found this site, plugged in our window, and it gave us october 18th with a 94% score. looked it up — turns out it's the most auspicious day in the entire lunar calendar that month. we booked it. mom is thrilled because it's 'properly chosen'",
+          "name": "Rachel & David, Chicago",
+          "service": "吉日選び"
+        }
+      ]
     }
   },
   "naming": {

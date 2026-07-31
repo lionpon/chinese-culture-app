@@ -256,6 +256,28 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Testimonials */}
+      <section className="max-w-4xl mx-auto mt-12 sm:mt-16 mb-10 px-4">
+        <h2 className="text-lg font-semibold text-center mb-8" style={{ color: "var(--text-primary)" }}>
+          {t("testimonials.heading")}
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {(t("testimonials.items") as unknown as Array<{ text: string; name: string; service: string }>).map((item, i) => (
+            <div key={i} className="card-classic p-5 flex flex-col">
+              <p className="text-sm leading-relaxed flex-1" style={{ color: "var(--text-body)" }}>
+                &ldquo;{item.text}&rdquo;
+              </p>
+              <div className="mt-4 pt-4 flex items-center justify-between" style={{ borderTop: "1px solid var(--border-subtle)" }}>
+                <span className="text-sm font-medium" style={{ color: "var(--text-primary)" }}>{item.name}</span>
+                <span className="text-xs px-2 py-0.5 rounded-full" style={{ backgroundColor: "rgba(201,169,110,0.12)", color: "var(--gold)" }}>
+                  {item.service}
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <WeeklyFortuneSignup />
 
       <ContactForm />
