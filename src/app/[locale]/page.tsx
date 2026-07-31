@@ -9,6 +9,7 @@ import FeatureCard from "@/components/FeatureCard";
 import ContactForm from "@/components/ContactForm";
 import { Link } from "@/navigation";
 import { trackClick } from "@/lib/track";
+import { testimonials } from "@/data/testimonials";
 
 const WC_BANNER: Record<string, { text: string; cta: string }> = {
   en: { text: "I Ching x World Cup 2026", cta: "See today's match predictions →" },
@@ -330,7 +331,7 @@ export default function HomePage() {
       </section>
 
       {/* Testimonials */}
-      <TestimonialSection items={t("testimonials.items") as unknown as Array<{ text: string; name: string; date: string; service: string }>} heading={t("testimonials.heading")} />
+      <TestimonialSection items={testimonials} heading={t("testimonials.heading")} />
 
       <WeeklyFortuneSignup />
 
