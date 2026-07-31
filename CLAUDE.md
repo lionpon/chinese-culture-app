@@ -104,13 +104,28 @@ PayPal Standard Checkout，支持信用卡支付。
 - **实现**：middleware 设置 `cc_test_mode` cookie → AnalyticsTracker 客户端跳过 → `/api/track` 服务端跳过
 - 部署前务必确认已关闭测试模式（或关闭不影响，只是你自己的访问不被统计）
 
-## 近期状态 (2026-07-26)
+## 近期状态 (2026-07-31)
 
-- **线上版本**：`0968ef5` Live on Render + Cloudflare
-- **域名**：`www.culture-of-china.com` 正常运行
+- **线上版本**：`09591cb` Live on Render + Cloudflare
+- **域名**：`www.culture-of-china.com` 正常运行 ✅
 - **数据库**：Supabase (`vnktcrolpcyktduldpfm`) ✅
 - **GitHub**：`git@github.com:lionpon/chinese-culture-app.git` (SSH deploy key)
-- **最新 commit**：`0968ef5`（feat: test mode filter — ?test=1 skips tracking）
+- **最新 commit**：`09591cb`（refactor: replace horizontal scroll testimonials with static 2-column grid layout）
+
+### 7月31日：首页 500 修复 + 用户评价区改版
+
+#### 🐛 首页 500 错误修复
+- **症状**：`www.culture-of-china.com` 首页返回 HTTP 500，其他页面正常
+- **根因**：`TestimonialSection` 通过 `t("testimonials.items")` 从 next-intl 获取数组数据，SSR 阶段序列化客户端组件 props 时崩溃
+- **修复**：extract testimonials 数据到 `src/data/testimonials.ts` 静态文件，组件直接 import，仅 heading 保留 `t()` 翻译
+- **Commit**：`2f6ef2c`
+
+#### 🔄 用户评价区 ("What people are saying") 改版
+- **之前**：水平滚动容器（`overflow-x-auto` + snap），用户以为是轮播但实际是手动滑动，体验困惑
+- **现在**：静态 CSS Grid 2 列布局（手机 1 列 / 桌面 2 列），全部内容一览无余
+- 前 2 张卡片顶部金色边框强调 · 左上角大号引号装饰 · hover 微动效
+- 移除 "← swipe for more →" 提示和 scroll 埋点，仅保留 impression 埋点
+- **Commit**：`09591cb`
 
 ### 7月26日：整改后流量复核 + 测试过滤系统
 
