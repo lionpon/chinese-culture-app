@@ -257,25 +257,37 @@ export default function HomePage() {
       </section>
 
       {/* Testimonials */}
-      <section className="max-w-4xl mx-auto mt-12 sm:mt-16 mb-10 px-4">
-        <h2 className="text-lg font-semibold text-center mb-8" style={{ color: "var(--text-primary)" }}>
-          {t("testimonials.heading")}
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
-          {(t("testimonials.items") as unknown as Array<{ text: string; name: string; service: string }>).map((item, i) => (
-            <div key={i} className="card-classic p-4 sm:p-5 flex flex-col">
-              <p className="text-sm leading-relaxed flex-1" style={{ color: "var(--text-body)" }}>
-                &ldquo;{item.text}&rdquo;
-              </p>
-              <div className="mt-3 pt-3 flex items-center justify-between gap-2 flex-wrap" style={{ borderTop: "1px solid var(--border-subtle)" }}>
-                <span className="text-sm font-medium" style={{ color: "var(--text-primary)" }}>{item.name}</span>
-                <span className="text-xs px-2 py-0.5 rounded-full whitespace-nowrap" style={{ backgroundColor: "rgba(201,169,110,0.12)", color: "var(--gold)" }}>
-                  {item.service}
-                </span>
-              </div>
-            </div>
-          ))}
+      <section className="max-w-6xl mx-auto mt-12 sm:mt-16 mb-10">
+        <div className="px-4 mb-6">
+          <h2 className="text-lg font-semibold text-center" style={{ color: "var(--text-primary)" }}>
+            {t("testimonials.heading")}
+          </h2>
         </div>
+        <div className="relative">
+          {/* Fade edges for scroll hint */}
+          <div className="absolute left-0 top-0 bottom-0 w-8 z-10 pointer-events-none hidden sm:block" style={{ background: "linear-gradient(to right, var(--bg-deep), transparent)" }} />
+          <div className="absolute right-0 top-0 bottom-0 w-8 z-10 pointer-events-none hidden sm:block" style={{ background: "linear-gradient(to left, var(--bg-deep), transparent)" }} />
+          <div className="flex gap-4 overflow-x-auto px-4 pb-4 snap-x snap-mandatory scrollbar-hide" style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}>
+            {(t("testimonials.items") as unknown as Array<{ text: string; name: string; date: string; service: string }>).map((item, i) => (
+              <div key={i} className="card-classic p-4 flex flex-col snap-start flex-shrink-0" style={{ width: "min(340px, 85vw)" }}>
+                <p className="text-sm leading-relaxed flex-1" style={{ color: "var(--text-body)" }}>
+                  &ldquo;{item.text}&rdquo;
+                </p>
+                <div className="mt-3 pt-3 flex items-center justify-between gap-2" style={{ borderTop: "1px solid var(--border-subtle)" }}>
+                  <div>
+                    <span className="text-sm font-medium block" style={{ color: "var(--text-primary)" }}>{item.name}</span>
+                    <span className="text-xs" style={{ color: "var(--text-dim)" }}>{item.date}</span>
+                  </div>
+                  <span className="text-xs px-2 py-0.5 rounded-full whitespace-nowrap flex-shrink-0" style={{ backgroundColor: "rgba(201,169,110,0.12)", color: "var(--gold)" }}>
+                    {item.service}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        {/* Scroll hint for mobile */}
+        <p className="text-center text-xs mt-2 sm:hidden" style={{ color: "var(--text-dim)" }}>← swipe for more →</p>
       </section>
 
       <WeeklyFortuneSignup />
