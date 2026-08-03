@@ -104,13 +104,55 @@ PayPal Standard Checkout，支持信用卡支付。
 - **实现**：middleware 设置 `cc_test_mode` cookie → AnalyticsTracker 客户端跳过 → `/api/track` 服务端跳过
 - 部署前务必确认已关闭测试模式（或关闭不影响，只是你自己的访问不被统计）
 
-## 近期状态 (2026-07-31)
+## 近期状态 (2026-08-03)
 
 - **线上版本**：`09591cb` Live on Render + Cloudflare
 - **域名**：`www.culture-of-china.com` 正常运行 ✅
 - **数据库**：Supabase (`vnktcrolpcyktduldpfm`) ✅
 - **GitHub**：`git@github.com:lionpon/chinese-culture-app.git` (SSH deploy key)
-- **最新 commit**：`09591cb`（refactor: replace horizontal scroll testimonials with static 2-column grid layout）
+- **本地未推送改动**：bot-filter增强、SEO页面CTA、付费墙文案重写
+
+### 8月3日：流量诊断 + 4项优化（本地未推送）
+
+#### 📊 48h流量分析
+- 8/2-8/3：143次访问 → 真实用户仅~51人，57次为数据中心爬虫
+- 美国用户占84% · 日/韩SEO页面开始有自然流量
+- **致命问题**：所有流量停留在免费SEO内容页，付费服务页零访问
+- 48h内仅4个埋点事件 · 0次表单提交 · 0笔付费 · 0次免费试用
+
+#### 🔧 优化1：爬虫过滤增强（`bot-filter.ts` + `track/route.ts`）
+- 新增 Hetzner/OVH/俄罗斯Selectel/乌克兰 数据中心IP段
+- 新增13个DC城市（圣彼得堡、法兰克福、都柏林、硅谷等）
+- 国家级限流：RU/UA >30次/分钟自动拒绝写入
+- 三级过滤：IP限流 → 国家级限流 → DC标记
+
+#### 🔗 优化2：SEO页面转化CTA
+- **蛇年生肖详情页**（12页）：运势网格后插入上下文CTA → `/naming`
+  - 埋点事件：`snake_mid_cta_naming`
+- **起名指南页** (`chinese-name-boy`)：名字表格后插入内联CTA
+- **解梦指南页** (`dream-meaning`)：CTA前置引导文案
+
+#### 💬 优化3：付费墙文案重写（4 locales）
+- 标题 "Continue Your Reading" → **"Your Answer Is Just the Beginning"**
+- 所有解锁项从"功能列表"改为"好奇心缺口"叙事
+- CTA按钮 → **"See My Full Reading"**
+
+#### 📝 优化4：内容拦截策略评估（已记录，待后续实施）
+- 策略："给钩子，不给鱼" — 免费层制造好奇心缺口，付费层给完整答案+故事
+- 下一步需实施的具体改动见下方 TODO
+
+---
+
+### ⏳ 48小时后待办（2026-08-05）
+
+1. **数据复核**：查询 Visit 表，验证 RU 爬虫是否被有效过滤（预期：Moscow DC 标记率应显著下降）
+2. **埋点验证**：检查 `snake_mid_cta_naming` 和 `seo_cta_*` 事件是否有数据，评估新CTA的点击率
+3. **CTA扩展**：如果中段CTA有效，扩展到 `chinese-name-girl`、`chinese-new-year-2027`、`wedding-dates-2026` 等SEO页面
+4. **内容拦截进阶**：选择起名服务（流量最大的付费页）做激进测试 —
+   - 免费层：只给第1个名字的**汉字** + 一句五行钩子（隐藏拼音/含义/叙事）
+   - 观察免费→付费转化率变化
+
+---
 
 ### 7月31日：首页 500 修复 + 用户评价区改版
 

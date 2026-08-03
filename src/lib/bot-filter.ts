@@ -11,7 +11,22 @@ const DC_PREFIXES = [
   "45.33.0.0/16", "45.79.0.0/16",
   // Vultr
   "45.32.0.0/16",
+  // Hetzner (major scraper host)
+  "5.9.0.0/16", "88.198.0.0/16", "136.243.0.0/16", "148.251.0.0/16",
+  // OVH (EU scraper host)
+  "51.38.0.0/16", "54.36.0.0/16", "87.98.0.0/16",
+  // Russian hosting: Selectel / DataLine / Rostelecom DC ranges
+  "5.8.16.0/21", "5.101.0.0/16", "80.78.240.0/20", "82.146.32.0/19",
+  "91.215.152.0/22", "92.53.96.0/19", "185.71.76.0/22",
+  // Ukrainian hosting
+  "91.200.12.0/22", "193.106.172.0/22",
 ];
+
+// Countries where high-volume traffic is almost always DC scraping (not real users)
+const DC_COUNTRIES_HIGH_ALERT = new Set([
+  "RU", // Russia: known SEO scraper/content scraper hub
+  "UA", // Ukraine: secondary scraper origin
+]);
 
 // Cities dominated by data centers (negligible residential population relative to DC traffic)
 const DC_CITIES = new Set([
@@ -23,11 +38,30 @@ const DC_CITIES = new Set([
   "lenoir",        // Google DC, pop ~18k
   "prineville",    // Facebook DC, pop ~10k
   "moscow",        // Russian crawler hub — known SEO spider / content scraper origin
+  "saint petersburg", // RU scraper secondary hub
+  "frankfurt am main", // DE major DC hub (Equinix, Interxion, DE-CIX)
+  "amsterdam",     // NL major DC hub (AMS-IX)
+  "dublin",        // IE AWS/Google DC hub
+  "hemel hempstead", // UK DC cluster
+  "slough",        // UK DC corridor
+  "sterling",      // US AWS us-east-1 spillover
+  "herndon",       // US Equinix DC cluster
+  "reston",        // US AWS/Google DC
+  "santa clara",   // US Silicon Valley DC hub (Equinix SV1-SV10)
+  "san jose",      // US DC cluster
+  "newark",        // US NY metro DC
+  "secaucus",      // US NY metro DC
+  "piscataway",    // US NY metro DC
+  "kyiv",          // UA hosting/scraper hub
+  "kharkiv",       // UA secondary
 ]);
 
 const DC_REGIONS = new Set([
   "iowa",          // Council Bluffs cluster
   "oregon",        // Boardman / The Dalles / Prineville cluster
+  "north holland", // Amsterdam DC cluster
+  "hessen",        // Frankfurt DC cluster
+  "leinster",      // Dublin DC cluster
 ]);
 
 function ipToInt(ip: string): number {
@@ -59,5 +93,38 @@ export function isDatacenterCity(city: string, region: string): boolean {
   if (DC_REGIONS.has(r)) return true;
   // Ashburn in Virginia: dead giveaway (AWS us-east-1)
   if (c === "ashburn" && r === "virginia") return true;
+  // Santa Clara + California = Silicon Valley DC
+  if (c === "santa clara" && r === "california") return true;
+  // Moscow + Moscow region = almost certainly DC scraper
+  if (c === "moscow" && (r === "moscow" || r === "moscow city" || r === "moscow oblast")) return true;
   return false;
+}
+
+/**
+ * Check if a given country code is a known high-risk origin for scraping.
+ * Traffic from these countries should be scrutinized more aggressively.
+ */
+export function isHighRiskScraperCountry(country: string): boolean {
+  return DC_COUNTRIES_HIGH_ALERT.has(country?.toUpperCase() || "");
+}
+
+/**
+ * Country-scoped rate limiter: if many requests come from the same high-risk country
+ * in rapid succession, treat them as probable DC traffic.
+ */
+const countryRateMap = new Map<string, number[]>();
+const COUNTRY_RATE_WINDOW_MS = 60_000; // 1 minute
+const COUNTRY_RATE_MAX = 30; // max 30 visits/min from one high-risk country
+
+export function isCountryRateSaturated(country: string): boolean {
+  if (!isHighRiskScraperCountry(country)) return false;
+  const now = Date.now();
+  const key = country.toUpperCase();
+  const timestamps = countryRateMap.get(key) || [];
+  const recent = timestamps.filter(t => now - t < COUNTRY_RATE_WINDOW_MS);
+  recent.push(now);
+  countryRateMap.set(key, recent);
+  // Clean up stale entries every ~100 entries
+  if (recent.length > 500) countryRateMap.delete(key);
+  return recent.length > COUNTRY_RATE_MAX;
 }

@@ -195,6 +195,34 @@ export default function ChineseNameBoyGuide({ params: { locale } }: Props) {
       </div>
       <h2>{c.categoriesTitle}</h2>
       <ul>{c.categories.map((cat) => <li key={cat}>{cat}</li>)}</ul>
+      {/* Mid-content CTA: after the name table, user is primed for personalization */}
+      <div className="not-prose my-8">
+        <Link href="/naming"
+          className="block p-5 rounded-xl border border-dashed transition-all hover:shadow-md hover:border-solid group"
+          style={{ borderColor: "var(--border-strong)", backgroundColor: "rgba(201,169,110,0.04)" }}>
+          <div className="flex items-center gap-3">
+            <span className="text-2xl shrink-0 group-hover:scale-110 transition-transform">🖋</span>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-semibold group-hover:text-accent transition-colors" style={{ color: "var(--text-primary)" }}>
+                {locale === "ru" ? "Имена из таблицы — хорошее начало. Но ваше имя скрыто в дате рождения." :
+                 locale === "ja" ? "表の名前は良い出発点です。しかし、あなたの本当の名前は生年月日の中に隠れています。" :
+                 locale === "ko" ? "표의 이름은 좋은 출발점입니다. 하지만 당신의 진짜 이름은 생년월일 속에 숨어 있습니다." :
+                 "These names are a great start. But your real Chinese name is hiding in your birth date."}
+              </p>
+              <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
+                {locale === "ru" ? "Персонализированный подбор по Ба-Цзы · 30 секунд · от $5.99" :
+                 locale === "ja" ? "八字に基づいたパーソナライズ · 30秒 · $5.99から" :
+                 locale === "ko" ? "사주 기반 맞춤형 · 30초 · $5.99부터" :
+                 "Personalized to your Ba-Zi chart · 30 seconds · from $5.99"}
+              </p>
+            </div>
+            <span className="shrink-0 text-xs font-bold px-3 py-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity" style={{ backgroundColor: "var(--accent)", color: "white" }}>
+              {locale === "ru" ? "Моё имя →" : locale === "ja" ? "私の名前 →" : locale === "ko" ? "내 이름 →" : "Get My Name →"}
+            </span>
+          </div>
+        </Link>
+      </div>
+
       <h2>{c.personalizedTitle}</h2><p>{c.personalizedBody}</p>
       <GuideFaq lang={locale} faqs={c.faqs} />
       <div className="not-prose my-8 text-center">

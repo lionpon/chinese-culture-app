@@ -390,7 +390,12 @@ export default function DreamMeaningPage({ params }: Props) {
       </section>
 
       <section className="card-classic p-4 sm:p-6 mb-8 text-center">
-        <p className="text-sm text-stone-600 mb-4">Dreams and divination both speak the language of symbols.</p>
+        <p className="text-sm text-stone-600 mb-4">
+          {lang === "ru" ? "Ваш сон говорит с вами. Узнайте, что он хочет сказать." :
+           lang === "ja" ? "あなたの夢はあなたに話しかけています。それが何を伝えようとしているのか知りましょう。" :
+           lang === "ko" ? "당신의 꿈이 당신에게 말을 걸고 있습니다. 그것이 무엇을 말하려는지 알아보세요." :
+           "Your dream is speaking to you. Let's hear what it has to say."}
+        </p>
         <GuideCTA href="/dream-interpretation" service="dream-interpretation" />
       </section>
 

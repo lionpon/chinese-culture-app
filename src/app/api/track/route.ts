@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
-import { isDatacenterIp, isDatacenterCity } from "@/lib/bot-filter";
+import { isDatacenterIp, isDatacenterCity, isCountryRateSaturated, isHighRiskScraperCountry } from "@/lib/bot-filter";
 
 // Rate limiter: block IPs making > 5 requests in 10 seconds (crawler signature)
 const rateMap = new Map<string, number[]>();
@@ -82,6 +82,12 @@ export async function POST(req: NextRequest) {
       "";
 
     let country = countryHeader || "Unknown";
+
+    // ── Country-level rate limit: throttle high-risk scraper countries ──
+    if (isCountryRateSaturated(country)) {
+      return NextResponse.json({ ok: true, skipped: "country_rate_limit" });
+    }
+
     let city = "";
     let region = "";
 
@@ -98,7 +104,7 @@ export async function POST(req: NextRequest) {
     // Click events use __click__: prefix so report can separate them from page views
     const storedPage = event ? `__click__:${event}` : page;
 
-    const isDC = isDatacenterIp(ip) || isDatacenterCity(city, region);
+    const isDC = isDatacenterIp(ip) || isDatacenterCity(city, region) || (isHighRiskScraperCountry(country) && !city);
 
     await prisma.visit.create({
       data: { page: storedPage, country, city, region, referrer, isDatacenter: isDC },

@@ -48,10 +48,16 @@ export default async function Snake2027Page({ params }: Props) {
       </section>
 
       {/* Zodiac Grid */}
-      <section className="mb-12">
-        <h2 className="text-lg font-semibold text-center mb-6" style={{ color: "var(--text-primary)" }}>
+      <section className="mb-8">
+        <h2 className="text-lg font-semibold text-center mb-3" style={{ color: "var(--text-primary)" }}>
           {l === "ru" ? "Выберите ваш знак зодиака" : l === "ja" ? "あなたの干支を選んでください" : l === "ko" ? "당신의 띠를 선택하세요" : "Choose Your Zodiac Animal"}
         </h2>
+        <p className="text-center text-xs mb-5" style={{ color: "var(--text-muted)" }}>
+          {l === "ru" ? "Нажмите на знак, чтобы увидеть прогноз на год Змеи 2027" :
+           l === "ja" ? "干支をクリックして2027年巳年の運勢を見る" :
+           l === "ko" ? "띠를 클릭하여 2027년 뱀의 해 운세 보기" :
+           "Click your animal to see your 2027 Snake Year forecast"}
+        </p>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
           {zodiacAnimals.map(({ key, nameEn, nameZh }) => (
             <Link
