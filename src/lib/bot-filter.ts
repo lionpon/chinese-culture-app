@@ -111,20 +111,50 @@ export function isHighRiskScraperCountry(country: string): boolean {
 /**
  * Country-scoped rate limiter: if many requests come from the same high-risk country
  * in rapid succession, treat them as probable DC traffic.
+ *
+ * Three-tier strategy for RU/UA scraper countries:
+ *   Tier 1 (burst):  >5 visits in 1 minute  → skip (fast bot)
+ *   Tier 2 (hourly): >10 visits in 1 hour   → skip (medium crawler)
+ *   Tier 3 (daily):  >10 visits in 24 hours → skip (slow-but-steady crawler)
+ *
+ * The daily quota is intentionally low: real users from RU/UA on an
+ * English-language Chinese culture site are near-zero. Any sustained
+ * traffic pattern from these countries is virtually always scraping.
  */
 const countryRateMap = new Map<string, number[]>();
-const COUNTRY_RATE_WINDOW_MS = 60_000; // 1 minute
-const COUNTRY_RATE_MAX = 30; // max 30 visits/min from one high-risk country
+const COUNTRY_BURST_WINDOW_MS = 60_000;     // 1 minute
+const COUNTRY_BURST_MAX = 5;                 // >5/min = burst bot
+const COUNTRY_HOURLY_WINDOW_MS = 3_600_000;  // 1 hour
+const COUNTRY_HOURLY_MAX = 10;               // >10/hr = medium crawler
+const COUNTRY_DAILY_WINDOW_MS = 86_400_000;  // 24 hours
+const COUNTRY_DAILY_MAX = 10;                // >10/day = slow crawler
 
 export function isCountryRateSaturated(country: string): boolean {
   if (!isHighRiskScraperCountry(country)) return false;
   const now = Date.now();
   const key = country.toUpperCase();
   const timestamps = countryRateMap.get(key) || [];
-  const recent = timestamps.filter(t => now - t < COUNTRY_RATE_WINDOW_MS);
-  recent.push(now);
-  countryRateMap.set(key, recent);
-  // Clean up stale entries every ~100 entries
-  if (recent.length > 500) countryRateMap.delete(key);
-  return recent.length > COUNTRY_RATE_MAX;
+
+  // Tier 1: burst detection (fast bot)
+  const recentMinute = timestamps.filter(t => now - t < COUNTRY_BURST_WINDOW_MS);
+  if (recentMinute.length >= COUNTRY_BURST_MAX) return true;
+
+  // Tier 2: hourly quota (medium crawler)
+  const recentHour = timestamps.filter(t => now - t < COUNTRY_HOURLY_WINDOW_MS);
+  if (recentHour.length >= COUNTRY_HOURLY_MAX) return true;
+
+  // Tier 3: daily quota (slow-but-steady crawler — the RU problem)
+  const recentDay = timestamps.filter(t => now - t < COUNTRY_DAILY_WINDOW_MS);
+  if (recentDay.length >= COUNTRY_DAILY_MAX) return true;
+
+  countryRateMap.set(key, [...recentDay, now]);
+
+  // Prune entries older than 24 hours to prevent memory leak
+  if (timestamps.length > 500) {
+    const pruned = timestamps.filter(t => now - t < COUNTRY_DAILY_WINDOW_MS);
+    if (pruned.length === 0) countryRateMap.delete(key);
+    else countryRateMap.set(key, pruned);
+  }
+
+  return false;
 }
