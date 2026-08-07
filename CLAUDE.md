@@ -104,14 +104,46 @@ PayPal Standard Checkout，支持信用卡支付。
 - **实现**：middleware 设置 `cc_test_mode` cookie → AnalyticsTracker 客户端跳过 → `/api/track` 服务端跳过
 - 部署前务必确认已关闭测试模式（或关闭不影响，只是你自己的访问不被统计）
 
-## 近期状态 (2026-08-04)
+## 近期状态 (2026-08-07)
 
-- **线上版本**：`d73ba60` Live on Render + Cloudflare
+- **线上版本**：`fbe4864` Live on Render + Cloudflare
 - **域名**：`www.culture-of-china.com` 正常运行 ✅
 - **数据库**：Supabase (`vnktcrolpcyktduldpfm`) ✅
 - **GitHub**：`git@github.com:lionpon/chinese-culture-app.git` (SSH deploy key)
-- **8/3 改动已推送**：`d73ba60` bot-filter增强 + SEO页面CTA + 付费墙文案重写 ✅
-- **待推送改动**：bot-filter 三层限流强化（RU/UA 慢速爬虫专项打击）
+- **最新 commit**：`fbe4864` P0 转化修复 — RU配额收紧 + 4个高流量SEO页嵌入交互微工具 ✅
+
+### ⏳ 8月9日复核清单（2天后）
+
+1. **RU 爬虫限流验证**：直查 Visit 表，对比 RU 日写入量
+   - 旧基线：~9条/天 → 新预期：≤5条/天（配额已从 10→5）
+   - 若仍 >5条/天 → 降配额至 3/day
+2. **新埋点验证**：检查以下事件是否有数据
+   - `guide_tool_dream_search`（dream-meaning 页搜索）
+   - `guide_tool_zodiac`（zodiac calculator 在各 guide 页）
+   - `guide_tool_elements`（elements quiz 在 face-reading 页）
+3. **转化漏斗复核**：
+   - 付费服务页访问量是否突破 5天10次
+   - CTA 点击率是否从 ~8% 提升
+   - 免费试用/付费是否破零
+4. **若微工具有效**：扩展到其余 guide 页面（iching、feng-shui、five-elements、lucky-numbers 等）
+
+### 8月7日：P0 转化修复
+
+#### 🛡️ RU 爬虫配额 10→5（`bot-filter.ts`）
+- 5天流量分析（8/3-8/7）显示 RU 每天稳定 9 次写入，爬虫仍持续
+- `COUNTRY_DAILY_MAX`: 10 → 5
+
+#### 🎯 4个高流量 SEO 页面嵌入交互微工具
+| 页面 | 真实流量 (5天) | 新增工具 | 转化路径 |
+|------|:------:|----------|----------|
+| `/guide/dream-meaning` | 14 | 🔍 Dream Search（关键词→即时解梦预览） | → `/dream-interpretation` |
+| `/guide/chinese-new-year-2027` | 13 | 🐉 Zodiac Calculator（出生年→生肖五行） | → `/divination` |
+| `/guide/face-reading` | 13 | 🔥 Five Elements Quiz（2题自测→五行） | → `/palm-reading` |
+| `/guide/chinese-name-boy` | 7 | 🐉 Zodiac Calculator | → `/naming` |
+
+策略：被动 SEO 浏览者 → 主动工具使用者 → "下一步是什么？"好奇心 → 点击付费 CTA
+
+---
 
 ### 8月4日：流量复核 + 爬虫限流强化
 
