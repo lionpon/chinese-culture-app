@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Link } from "@/navigation";
 import GuideFaq from "@/components/GuideFaq";
+import GuideToolEmbed from "@/components/GuideToolEmbed";
 
 type Props = { params: { locale: string } };
 
@@ -195,6 +196,10 @@ export default function ChineseNameBoyGuide({ params: { locale } }: Props) {
       </div>
       <h2>{c.categoriesTitle}</h2>
       <ul>{c.categories.map((cat) => <li key={cat}>{cat}</li>)}</ul>
+
+      {/* Interactive: discover your zodiac animal — the first step in finding your Chinese name */}
+      <GuideToolEmbed tool="zodiac" />
+
       {/* Mid-content CTA: after the name table, user is primed for personalization */}
       <div className="not-prose my-8">
         <Link href="/naming"

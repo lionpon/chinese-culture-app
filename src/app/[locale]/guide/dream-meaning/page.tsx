@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import GuideFaq from "@/components/GuideFaq";
 import GuideCTA from "@/components/GuideCTA";
+import GuideToolEmbed from "@/components/GuideToolEmbed";
 import { BASE_URL } from "@/lib/config";
 
 type Props = { params: { locale: string } };
@@ -388,6 +389,9 @@ export default function DreamMeaningPage({ params }: Props) {
           ))}
         </div>
       </section>
+
+      {/* Interactive Dream Search — users search their dream keyword, get instant preview, then CTA to full AI interpretation */}
+      <GuideToolEmbed tool="dreamSearch" />
 
       <section className="card-classic p-4 sm:p-6 mb-8 text-center">
         <p className="text-sm text-stone-600 mb-4">

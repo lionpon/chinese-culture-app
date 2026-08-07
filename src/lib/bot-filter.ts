@@ -127,7 +127,7 @@ const COUNTRY_BURST_MAX = 5;                 // >5/min = burst bot
 const COUNTRY_HOURLY_WINDOW_MS = 3_600_000;  // 1 hour
 const COUNTRY_HOURLY_MAX = 10;               // >10/hr = medium crawler
 const COUNTRY_DAILY_WINDOW_MS = 86_400_000;  // 24 hours
-const COUNTRY_DAILY_MAX = 10;                // >10/day = slow crawler
+const COUNTRY_DAILY_MAX = 5;                 // >5/day = slow crawler (tightened from 10 — 8/7 analysis)
 
 export function isCountryRateSaturated(country: string): boolean {
   if (!isHighRiskScraperCountry(country)) return false;
