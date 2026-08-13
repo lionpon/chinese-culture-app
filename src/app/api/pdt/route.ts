@@ -30,10 +30,18 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    const pdt = await verifyPDT(tx);
+    let pdt;
+    try {
+      pdt = await verifyPDT(tx);
+    } catch (err) {
+      console.error("PDT verify network error:", err);
+      return NextResponse.json({ status: "pending" });
+    }
     if (!pdt.ok || pdt.paymentStatus !== "Completed") {
       return NextResponse.json({ status: "pending" });
     }
+
+    // ── Payment VERIFIED from here on — user has paid. ──
 
     // Verify amount matches — prevent tampering
     const input = JSON.parse(purchase.input);
@@ -43,27 +51,39 @@ export async function POST(req: NextRequest) {
       console.warn(`PDT amount mismatch: paid $${paidAmount}, expected $${expectedAmount}, purchase ${purchase_id}`);
     }
 
-    let result: unknown;
+    try {
+      let result: unknown;
 
-    switch (purchase.type) {
-      case "naming": result = (input.mode === "analyze") ? analyzeName(input as NamingInput) : await generateNames(input as NamingInput); break;
-      case "calendar": result = selectAuspiciousDays(input as CalendarInput); break;
-      case "divination": result = performDivination(input as DivinationInput); break;
-      case "palm-reading": result = await readPalm(input as PalmReadingInput); break;
-      case "dream-interpretation": result = await interpretDream(input as DreamInterpretationInput); break;
-      default:
-        return NextResponse.json({ error: "Unknown type" }, { status: 400 });
+      switch (purchase.type) {
+        case "naming": result = (input.mode === "analyze") ? analyzeName(input as NamingInput) : await generateNames(input as NamingInput); break;
+        case "calendar": result = selectAuspiciousDays(input as CalendarInput); break;
+        case "divination": result = performDivination(input as DivinationInput); break;
+        case "palm-reading": result = await readPalm(input as PalmReadingInput); break;
+        case "dream-interpretation": result = await interpretDream(input as DreamInterpretationInput); break;
+        default:
+          return NextResponse.json({ error: "Unknown type" }, { status: 400 });
+      }
+
+      const locale = typeof input.locale === "string" ? input.locale : "en";
+      await translateResultEnFields(result, locale);
+
+      await prisma.purchase.update({
+        where: { id: purchase_id },
+        data: { status: "completed", paid: true, result: JSON.stringify(result) },
+      });
+
+      return NextResponse.json({ status: "completed", type: purchase.type, result });
+    } catch (genError) {
+      // Payment verified but result generation failed (AI outage etc.).
+      // Mark paid + keep pending → client keeps polling /api/result which
+      // retries generation. Never lose a paid user's result.
+      console.error("PDT generation failed (payment verified):", genError);
+      await prisma.purchase.update({
+        where: { id: purchase_id },
+        data: { paid: true, status: "pending" },
+      });
+      return NextResponse.json({ status: "pending" });
     }
-
-    const locale = typeof input.locale === "string" ? input.locale : "en";
-    await translateResultEnFields(result, locale);
-
-    await prisma.purchase.update({
-      where: { id: purchase_id },
-      data: { status: "completed", paid: true, result: JSON.stringify(result) },
-    });
-
-    return NextResponse.json({ status: "completed", type: purchase.type, result });
   } catch (error) {
     console.error("PDT error:", error);
     return NextResponse.json({ error: "Verification failed" }, { status: 500 });

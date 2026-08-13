@@ -1,5 +1,28 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
+import { generateNames, analyzeName } from "@/lib/naming";
+import { selectAuspiciousDays } from "@/lib/calendar";
+import { performDivination } from "@/lib/divination";
+import { readPalm } from "@/lib/palm-reading";
+import { interpretDream } from "@/lib/dream-interpretation";
+import { translateResultEnFields } from "@/lib/translate";
+import type { NamingInput, CalendarInput, DivinationInput, PalmReadingInput, DreamInterpretationInput } from "@/types";
+
+// Throttle for retrying result generation on PayPal-verified purchases
+// (paid=true, status=pending). 1 attempt per purchase per 60s.
+const genRetryMap = new Map<string, number>();
+const GEN_RETRY_INTERVAL_MS = 60_000;
+
+async function generateResult(type: string, input: Record<string, unknown>): Promise<unknown> {
+  switch (type) {
+    case "naming": return (input.mode === "analyze") ? analyzeName(input as unknown as NamingInput) : await generateNames(input as unknown as NamingInput);
+    case "calendar": return selectAuspiciousDays(input as unknown as CalendarInput);
+    case "divination": return performDivination(input as unknown as DivinationInput);
+    case "palm-reading": return await readPalm(input as unknown as PalmReadingInput);
+    case "dream-interpretation": return await interpretDream(input as unknown as DreamInterpretationInput);
+    default: throw new Error(`Unknown type: ${type}`);
+  }
+}
 
 async function computeFingerprint(req: NextRequest): Promise<string> {
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
@@ -122,7 +145,32 @@ export async function GET(req: NextRequest) {
     // Two verified channels mark the purchase completed:
     //   1. PDT  — /api/pdt (instant, on buyer return)
     //   2. IPN  — /api/webhook/paypal (server-to-server backup)
-    // No unverified auto-generation here (was a payment-bypass hole).
+    //
+    // paid=true && pending means PayPal verified payment but result
+    // generation failed (e.g. AI outage). Retry generation here, throttled.
+    if (purchase.paid) {
+      const last = genRetryMap.get(purchaseId) || 0;
+      if (Date.now() - last < GEN_RETRY_INTERVAL_MS) {
+        return NextResponse.json({ status: "pending" });
+      }
+      genRetryMap.set(purchaseId, Date.now());
+      try {
+        const input = JSON.parse(purchase.input);
+        const result = await generateResult(purchase.type, input);
+        const locale = typeof input.locale === "string" ? input.locale : "en";
+        await translateResultEnFields(result, locale);
+        await prisma.purchase.update({
+          where: { id: purchaseId },
+          data: { status: "completed", result: JSON.stringify(result) },
+        });
+        genRetryMap.delete(purchaseId);
+        return NextResponse.json({ status: "completed", type: purchase.type, result });
+      } catch (err) {
+        console.error("Result retry failed (paid, pending):", err);
+        return NextResponse.json({ status: "pending" });
+      }
+    }
+    // Unpaid pending — waiting for PDT/IPN verification.
     return NextResponse.json({ status: "pending" });
   }
 

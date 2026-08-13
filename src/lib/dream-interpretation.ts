@@ -1,14 +1,5 @@
-import OpenAI from "openai";
 import type { DreamInterpretationInput, DreamInterpretationResult } from "@/types";
-
-const client = new OpenAI({
-  baseURL: "https://openrouter.ai/api/v1",
-  apiKey: process.env.OPENROUTER_API_KEY || "sk-placeholder",
-  defaultHeaders: {
-    "HTTP-Referer": process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
-    "X-Title": "Chinese Culture Studio",
-  },
-});
+import { chatCompletionText, parseJsonLoose, TEXT_MODEL_CHAIN } from "@/lib/ai";
 
 const SYSTEM_PROMPT = `You are a master of dream interpretation (解梦), trained on both Chinese classical texts and Western psychoanalysis.
 
@@ -188,24 +179,10 @@ ${input.focus ? `Focus preference: ${input.focus} (chinese = Zhou Gong emphasis,
 
 Analyze the dream through both Chinese classical dream interpretation and Western psychoanalysis. Identify key dream symbols, provide classical references, and offer practical advice.`;
 
-  const completion = await client.chat.completions.create({
-    model: "openai/gpt-4o-mini",
-    max_tokens: 4096,
-    messages: [
-      { role: "system", content: systemPrompt },
-      { role: "user", content: userMessage },
-    ],
-  });
+  const text = await chatCompletionText(TEXT_MODEL_CHAIN, [
+    { role: "system", content: systemPrompt },
+    { role: "user", content: userMessage },
+  ]);
 
-  const text = completion.choices[0]?.message?.content;
-  if (!text) {
-    throw new Error("No text response from model");
-  }
-
-  let json = text.trim();
-  if (json.startsWith("```")) {
-    json = json.replace(/^```(?:json)?\s*\n?/, "").replace(/\n?\s*```$/, "");
-  }
-
-  return JSON.parse(json) as DreamInterpretationResult;
+  return parseJsonLoose<DreamInterpretationResult>(text);
 }

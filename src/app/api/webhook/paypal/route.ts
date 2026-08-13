@@ -62,10 +62,13 @@ export async function POST(req: NextRequest) {
       data: { status: "completed", paid: true, result: JSON.stringify(result) },
     });
   } catch (error) {
-    console.error("IPN error:", error);
+    // Payment was verified (IPN passed PayPal's validation) but result
+    // generation failed. Mark paid + keep pending — PayPal re-delivers IPN
+    // and /api/result retries generation. Never mark a paid order failed.
+    console.error("IPN generation failed (payment verified):", error);
     await prisma.purchase.update({
       where: { id: purchaseId },
-      data: { status: "failed" },
+      data: { paid: true, status: "pending" },
     });
   }
 

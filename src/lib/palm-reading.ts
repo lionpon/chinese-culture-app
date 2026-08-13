@@ -1,15 +1,6 @@
-import OpenAI from "openai";
 import { getPalmImage, deletePalmImage } from "./palm-store";
 import type { PalmReadingInput, PalmReadingResult } from "@/types";
-
-const client = new OpenAI({
-  baseURL: "https://openrouter.ai/api/v1",
-  apiKey: process.env.OPENROUTER_API_KEY || "sk-placeholder",
-  defaultHeaders: {
-    "HTTP-Referer": process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
-    "X-Title": "Chinese Culture Studio",
-  },
-});
+import { chatCompletionText, parseJsonLoose, VISION_MODEL_CHAIN } from "@/lib/ai";
 
 const SYSTEM_PROMPT = `You are a master of Chinese palmistry (手相学), trained on classical texts including:
 - 《麻衣神相》Ma Yi Shen Xiang (the most influential Chinese physiognomy classic)
@@ -116,35 +107,21 @@ export async function readPalm(input: PalmReadingInput): Promise<PalmReadingResu
 
 Provide a complete palm reading based on classical Chinese palmistry texts.`;
 
-    const completion = await client.chat.completions.create({
-      model: "qwen/qwen2.5-vl-72b-instruct",
-      max_tokens: 4096,
-      messages: [
-        { role: "system", content: systemPrompt },
-        {
-          role: "user",
-          content: [
-            { type: "text", text: userMessage },
-            {
-              type: "image_url",
-              image_url: { url: `data:image/jpeg;base64,${imageBase64}` },
-            },
-          ],
-        },
-      ],
-    });
+    const text = await chatCompletionText(VISION_MODEL_CHAIN, [
+      { role: "system", content: systemPrompt },
+      {
+        role: "user",
+        content: [
+          { type: "text", text: userMessage },
+          {
+            type: "image_url",
+            image_url: { url: `data:image/jpeg;base64,${imageBase64}` },
+          },
+        ],
+      },
+    ]);
 
-    const text = completion.choices[0]?.message?.content;
-    if (!text) {
-      throw new Error("No text response from model");
-    }
-
-    let json = text.trim();
-    if (json.startsWith("```")) {
-      json = json.replace(/^```(?:json)?\s*\n?/, "").replace(/\n?\s*```$/, "");
-    }
-
-    return JSON.parse(json) as PalmReadingResult;
+    return parseJsonLoose<PalmReadingResult>(text);
   } finally {
     deletePalmImage(input.imageKey);
   }

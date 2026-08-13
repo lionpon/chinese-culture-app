@@ -46,6 +46,11 @@ export function buildPayPalCheckoutUrl(purchaseId: string, type: string, amount 
 }
 
 export async function verifyIPN(rawBody: string): Promise<boolean> {
+  // TEST-ONLY stub: local closed-loop harness (never active in production —
+  // requires PAYPAL_SANDBOX=true which Render has set to "false")
+  if (process.env.PAYPAL_SANDBOX === "true" && process.env.TEST_VERIFY_PAYPAL === "true") {
+    return true;
+  }
   const verifyBody = "cmd=_notify-validate&" + rawBody;
 
   const res = await fetch(PAYPAL_URL, {
@@ -59,6 +64,13 @@ export async function verifyIPN(rawBody: string): Promise<boolean> {
 }
 
 export async function verifyPDT(tx: string): Promise<{ ok: boolean; paymentStatus?: string; purchaseId?: string; amount?: string }> {
+  // TEST-ONLY stub: local closed-loop harness (never active in production)
+  if (process.env.PAYPAL_SANDBOX === "true" && process.env.TEST_VERIFY_PAYPAL === "true") {
+    if (tx === "TEST_TX_PAID") {
+      return { ok: true, paymentStatus: "Completed", amount: "0" };
+    }
+    return { ok: false };
+  }
   const token = process.env.PAYPAL_PDT_TOKEN;
   if (!token) return { ok: false };
 
