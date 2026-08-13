@@ -167,11 +167,24 @@ PayPal Standard Checkout，支持信用卡支付。
 | C | 免费试用 → unlock → 付费 → PDT（AI 降级链 403→qwen 成功）| ✅ 免费单 paid=false / 付费单 paid=true |
 | D | 构造 paid=true+pending → 轮询自愈生成 | ✅ completed |
 
-#### ⏳ 待办：真实支付最终验证（需本人操作，见下）
-- 大陆 PayPal 账户间不能互付 + 不能自付 → 用 **PayPal Sandbox** 或找海外朋友代付
-- 沙盒测试路径：开发者后台确认沙盒买家账户 → 本地 `PAYPAL_SANDBOX=true` + cpolar 隧道 → 浏览器沙盒支付 $1
-- 或海外朋友真实支付 $1 → 查 DB `paid=true` → 商户后台退款
-- 生产已部署 `c3ce440`，代码层闭环已全部验证，只差 PayPal 平台的实弹确认
+#### ✅ 8月13日晚：付款闭环实弹验证通过（PayPal 沙盒真实交易）
+
+**测试架构**（国内无隧道限制方案）：
+- 本地生产模式 `next start`（`PAYPAL_SANDBOX=true`）+ cpolar 隧道 `https://38ece176.r19.vip.cpolar.cn` + 7890 代理出站（`OUTBOUND_PROXY_ENABLED=1`，`src/lib/net.ts`）
+- 沙盒账户（developer.paypal.com 用 `22728717@qq.com` 登录）：
+  - 商户：`sb-h7ohb52047717@business.example.com`（⚠️ 旧 .env 里的 `sb-fuo7v50414504@...` 已失效，已更正）
+  - 买家：`sb-dpcgc52026819@personal.example.com`
+
+**结果**：$1 divination 真实沙盒付款 → IPN（经隧道+代理）→ PayPal 验证 VERIFIED → 结果生成 → `paid=true, completed` ✅
+- 未配置沙盒 PDT/自动返回 → 走 IPN 通道 + 手动 Return to Merchant，闭环成立
+- 生产（Render）PDT 已配置 → 真实用户体验是秒级返回
+
+**测试中修复的 bug**：CSRF 白名单漏掉 PayPal 域名（真实浏览器 rm=2 回跳会带 `Origin: paypal.com` → 403）— commit `91d475d`
+
+**经验**：dev 模式 + 浏览器缓存会导致"页面显示正常但按钮无响应"，测试前 Ctrl+F5 或直接用生产模式
+
+**本地沙盒测试一键脚本**：`sandbox-test.ps1`（cpolar + 沙盒 env 自动拉起）
+**待清理**：测试结束后停掉本地 3000 端口服务和 cpolar 进程
 
 ### ⏳ 8月9日复核清单（2天后）
 
