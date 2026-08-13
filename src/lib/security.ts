@@ -56,6 +56,13 @@ export function checkCsrf(req: NextRequest): NextResponse | null {
     "localhost:3000",
   ];
 
+  // PayPal browser redirects (rm=2 return POST) and IPN carry PayPal origins —
+  // only whitelisted for PayPal-specific routes.
+  const path = req.nextUrl.pathname;
+  if (path === "/api/paypal/return" || path.startsWith("/api/webhook/paypal")) {
+    allowedHosts.push("www.paypal.com", "www.sandbox.paypal.com");
+  }
+
   let originHost: string;
   try {
     originHost = new URL(origin).hostname;
