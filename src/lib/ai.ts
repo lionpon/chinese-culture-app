@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { proxyReady } from "@/lib/net";
 
 const client = new OpenAI({
   baseURL: "https://openrouter.ai/api/v1",
@@ -35,6 +36,7 @@ export async function chatCompletionText(
   messages: ChatMessage[],
   maxTokens = 4096
 ): Promise<string> {
+  await proxyReady;
   let lastError: unknown = null;
   for (const model of models) {
     try {

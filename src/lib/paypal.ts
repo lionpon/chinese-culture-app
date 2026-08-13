@@ -1,3 +1,5 @@
+import { proxyReady } from "@/lib/net";
+
 export const PAYPAL_EMAIL = process.env.PAYPAL_EMAIL || "22728717@qq.com";
 
 const PAYPAL_URL =
@@ -51,6 +53,7 @@ export async function verifyIPN(rawBody: string): Promise<boolean> {
   if (process.env.PAYPAL_SANDBOX === "true" && process.env.TEST_VERIFY_PAYPAL === "true") {
     return true;
   }
+  await proxyReady;
   const verifyBody = "cmd=_notify-validate&" + rawBody;
 
   const res = await fetch(PAYPAL_URL, {
@@ -71,6 +74,7 @@ export async function verifyPDT(tx: string): Promise<{ ok: boolean; paymentStatu
     }
     return { ok: false };
   }
+  await proxyReady;
   const token = process.env.PAYPAL_PDT_TOKEN;
   if (!token) return { ok: false };
 
