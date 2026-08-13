@@ -147,12 +147,31 @@ PayPal Standard Checkout，支持信用卡支付。
 - unlock 免费单 → 生成新 pending + PayPal URL ✅
 - `.env.local` PDT token 已与生产同步（jvQnzkct...）
 
-#### ⏳ 待办：真实支付测试（闭环最终验证）
-1. 生产站走一笔 **$1 真实支付**（divination 最便宜路径）
-2. 预期：支付后 ~3 秒内自动跳回 success 页并显示完整结果（PDT 生效）
-3. 查 DB：`Purchase.paid=true` 且 status=completed
-4. 如 PDT 未生效（token 问题），观察 IPN 是否在 5 分钟内补上
-5. 测试后可到 PayPal 商户后台退款 $1
+#### 🔧 追加修复：闭环弹性 — AI 降级链 + 已验证订单自愈（commit `c3ce440`）
+
+**代测中发现真实 bug**：付费 dream-interpretation 在本机触发 `403 gpt-4o-mini region blocked` → `/api/pdt` 500 → **用户已付钱拿不到结果**；IPN 路径甚至把订单标 failed。生产（Render 美国）虽无地域问题，但 AI 限流/宕机同样会触发。
+
+修复（4 处）：
+1. **`src/lib/ai.ts`**（新）：模型降级链 `gpt-4o-mini → qwen-2.5-72b → deepseek-chat`（视觉：`qwen2.5-vl → gpt-4o-mini → gemini-2.0-flash`）。qwen/deepseek 国内可直连 → 本地开发不再需要代理
+2. **`/api/pdt`**：支付已验证但生成失败 → 标 `paid=true, status=pending`（不再 500），客户端继续轮询
+3. **`/api/webhook/paypal`**：生成失败 → `paid=true, pending`（**绝不标 failed**），PayPal 会重发 IPN 形成天然重试
+4. **`/api/result`**：`paid=true && pending` → 自动重试生成（60s 节流）。安全性：只有 PayPal 验证过的订单才可能 paid=true
+
+**测试桩**：`paypal.ts` 内 `TEST_VERIFY_PAYPAL`（需同时 `PAYPAL_SANDBOX=true` 才生效，生产永远不触发）— 用于本地模拟 PayPal 全流程。
+
+**闭环四场景全过**（模拟 PayPal 角色 curl 全链路）：
+| 场景 | 路径 | 结果 |
+|------|------|------|
+| A | checkout → rm=2 POST 回调 → PDT 验证 → 完整结果 | ✅ paid=true |
+| B | checkout → IPN 推送 → 完整结果 | ✅ paid=true |
+| C | 免费试用 → unlock → 付费 → PDT（AI 降级链 403→qwen 成功）| ✅ 免费单 paid=false / 付费单 paid=true |
+| D | 构造 paid=true+pending → 轮询自愈生成 | ✅ completed |
+
+#### ⏳ 待办：真实支付最终验证（需本人操作，见下）
+- 大陆 PayPal 账户间不能互付 + 不能自付 → 用 **PayPal Sandbox** 或找海外朋友代付
+- 沙盒测试路径：开发者后台确认沙盒买家账户 → 本地 `PAYPAL_SANDBOX=true` + cpolar 隧道 → 浏览器沙盒支付 $1
+- 或海外朋友真实支付 $1 → 查 DB `paid=true` → 商户后台退款
+- 生产已部署 `c3ce440`，代码层闭环已全部验证，只差 PayPal 平台的实弹确认
 
 ### ⏳ 8月9日复核清单（2天后）
 
