@@ -84,7 +84,7 @@ function SuccessContent() {
 
     function startPolling() {
       let attempts = 0;
-      const maxAttempts = isFree ? 3 : 90;
+      const maxAttempts = isFree ? 3 : 150; // paid: 5 min — PDT resolves in seconds, IPN fallback needs slack
 
       const checkResult = async () => {
         attempts++;

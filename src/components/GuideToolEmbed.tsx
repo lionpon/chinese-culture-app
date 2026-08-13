@@ -46,29 +46,89 @@ function DateCheckTool() {
   const t = useTranslations("calendar");
   const [date, setDate] = useState("");
   const [result, setResult] = useState<string|null>(null);
+  const [limited, setLimited] = useState(false);
+  const [remaining, setRemaining] = useState(3);
+
+  const STORAGE_KEY = "cc_datecheck_usage";
+  const DAILY_MAX = 3;
+
+  function readTodayCount(): number {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      const parsed = raw ? JSON.parse(raw) : null;
+      const today = new Date().toISOString().slice(0, 10);
+      return parsed && parsed.date === today ? parsed.count : 0;
+    } catch { return 0; }
+  }
+
+  useEffect(() => {
+    const count = readTodayCount();
+    setRemaining(Math.max(0, DAILY_MAX - count));
+    setLimited(count >= DAILY_MAX);
+  }, []);
+
   function check() {
     if (!date) return;
+    let count = readTodayCount();
+    if (count >= DAILY_MAX) {
+      setLimited(true);
+      setRemaining(0);
+      trackClick("guide_tool_datecheck_limit");
+      return;
+    }
     const d = new Date(date);
     const ji = (Math.floor((d.getTime() / 86400000)) % 12 + 12) % 12;
     const labels = ["Establish","Remove","Full","Balance","Stable","Initiate","Destroy","Danger","Success","Receive","Open","Close"];
     const auspicious = ["Success","Receive","Open","Balance","Stable"].includes(labels[ji]);
     setResult((auspicious ? "✅ " : "⚠️ ") + labels[ji] + " day" + (auspicious ? " — auspicious" : " — caution advised"));
+    count++;
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ date: new Date().toISOString().slice(0, 10), count }));
+    } catch {}
+    setRemaining(Math.max(0, DAILY_MAX - count));
+    if (count >= DAILY_MAX) setLimited(true);
     trackClick("guide_tool_datecheck");
   }
   return (
     <div className="not-prose my-8 p-5 rounded-xl border" style={{ borderColor: "var(--border-medium)", backgroundColor: "var(--bg-surface)" }}>
       <p className="text-sm font-semibold mb-3" style={{ color: "var(--gold)" }}>📅 Quick Date Check</p>
-      <div className="flex gap-2 mb-3">
-        <input type="date" value={date} onChange={e => setDate(e.target.value)}
-          className="flex-1 px-3 py-2 text-sm rounded-lg border focus:outline-none"
-          style={{ borderColor: "var(--border-medium)", backgroundColor: "var(--bg-deep)", color: "var(--text-primary)" }} />
-        <button onClick={check} className="px-4 py-2 text-sm font-medium rounded-lg transition-colors"
-          style={{ backgroundColor: "var(--gold)", color: "var(--bg-deep)" }}>Check</button>
-      </div>
-      {result && <div className="rounded-lg p-3 mb-3" style={{ backgroundColor: "var(--bg-deep)" }}><p className="text-sm">{result}</p></div>}
-      <Link href="/calendar" onClick={() => trackClick("guide_tool_cta_calendar")}
-        className="block text-center text-xs font-medium py-2 rounded-lg transition-colors"
-        style={{ backgroundColor: "var(--gold-subtle)", color: "var(--gold)" }}>{t("form.submit")} →</Link>
+      {!limited && (
+        <div className="flex gap-2 mb-3">
+          <input type="date" value={date} onChange={e => setDate(e.target.value)}
+            className="flex-1 px-3 py-2 text-sm rounded-lg border focus:outline-none"
+            style={{ borderColor: "var(--border-medium)", backgroundColor: "var(--bg-deep)", color: "var(--text-primary)" }} />
+          <button onClick={check} className="px-4 py-2 text-sm font-medium rounded-lg transition-colors"
+            style={{ backgroundColor: "var(--gold)", color: "var(--bg-deep)" }}>Check</button>
+        </div>
+      )}
+      {result && !limited && <div className="rounded-lg p-3 mb-3" style={{ backgroundColor: "var(--bg-deep)" }}><p className="text-sm">{result}</p></div>}
+      {!limited && remaining > 0 && remaining < DAILY_MAX && (
+        <p className="text-[11px] mb-3" style={{ color: "var(--text-dim)" }}>
+          {remaining} free {remaining === 1 ? "check" : "checks"} left today.
+        </p>
+      )}
+      {limited && (
+        <div className="rounded-lg p-4 mb-3 text-center" style={{ backgroundColor: "var(--bg-deep)", border: "1px solid var(--border-medium)" }}>
+          <p className="text-2xl mb-1">✨</p>
+          <p className="text-sm font-medium mb-1" style={{ color: "var(--text-primary)" }}>
+            You&apos;ve used all 3 free quick checks today
+          </p>
+          <p className="text-xs mb-3" style={{ color: "var(--text-muted)" }}>
+            Get your complete date analysis — 13 event types (wedding, moving, business, travel…),
+            hour-level luck windows, and full almanac details.
+          </p>
+          <Link href="/calendar" onClick={() => trackClick("guide_tool_datecheck_cta")}
+            className="inline-block px-4 py-2.5 text-sm font-medium rounded-lg transition-colors"
+            style={{ backgroundColor: "var(--gold)", color: "var(--bg-deep)" }}>
+            Unlock Full Date Selection →
+          </Link>
+        </div>
+      )}
+      {!limited && (
+        <Link href="/calendar" onClick={() => trackClick("guide_tool_cta_calendar")}
+          className="block text-center text-xs font-medium py-2 rounded-lg transition-colors"
+          style={{ backgroundColor: "var(--gold-subtle)", color: "var(--gold)" }}>{t("form.submit")} →</Link>
+      )}
     </div>
   );
 }

@@ -32,7 +32,9 @@ export function buildPayPalCheckoutUrl(purchaseId: string, type: string, amount 
     amount: Math.max(1, amount).toFixed(2),
     currency_code: "USD",
     custom: purchaseId,
-    return: `${appUrl}/success?purchase_id=${purchaseId}`,
+    // rm=2 → PayPal POSTs all vars (tx, custom) to this server route,
+    // which converts them into a GET redirect for the success page.
+    return: `${appUrl}/api/paypal/return?purchase_id=${purchaseId}`,
     cancel_return: `${appUrl}/`,
     notify_url: `${appUrl}/api/webhook/paypal`,
     rm: "2",  // POST with tx param → enables PDT instant verification
