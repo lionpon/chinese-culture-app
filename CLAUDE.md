@@ -104,13 +104,55 @@ PayPal Standard Checkout，支持信用卡支付。
 - **实现**：middleware 设置 `cc_test_mode` cookie → AnalyticsTracker 客户端跳过 → `/api/track` 服务端跳过
 - 部署前务必确认已关闭测试模式（或关闭不影响，只是你自己的访问不被统计）
 
-## 近期状态 (2026-08-07)
+## 近期状态 (2026-08-13)
 
-- **线上版本**：`fbe4864` Live on Render + Cloudflare
+- **线上版本**：`ca9d417` Live on Render + Cloudflare
 - **域名**：`www.culture-of-china.com` 正常运行 ✅
 - **数据库**：Supabase (`vnktcrolpcyktduldpfm`) ✅
 - **GitHub**：`git@github.com:lionpon/chinese-culture-app.git` (SSH deploy key)
-- **最新 commit**：`fbe4864` P0 转化修复 — RU配额收紧 + 4个高流量SEO页嵌入交互微工具 ✅
+- **最新 commit**：`ca9d417` 付款闭环修复 + datecheck 限流
+
+### 8月13日：付款闭环修复（P0）+ datecheck 次数限制
+
+#### 📊 8/9 逾期复核结论（数据直查）
+| 项 | 结果 |
+|---|---|
+| RU 爬虫限流 | ✅ 8/8 起稳定 3-5条/天（配额 5/day 生效），无需再降 |
+| 新埋点 | `guide_tool_datecheck` 46次爆火（auspicious-dates 页）；`dream_search`/`elements` 零数据 |
+| 付费页访问 | 17次/7天（vs 整改前 10次/5天），提升 ~20% |
+| 付费转化 | **0 笔真实付费**。ZA 用户走完起名漏斗+免费试用未付费；AU 用户点了 paywall unlock 后 9 秒从 PayPal 放弃 |
+| 关键洞察 | AU 用户连查 31 个吉日却没点 CTA → 免费工具答案太完整，反噬转化 |
+
+#### 🔴 修复1：PDT 快速确认通道从未工作（致命）
+- **Bug**：`rm=2` 使 PayPal 将 `tx` POST 到回调 URL 的**请求体**，但 success 页是客户端组件只读 URL 查询串 → `tx` 永远为 null → PDT 从不触发
+- **修复**：新增 `src/app/api/paypal/return/route.ts` — 接收 PayPal POST（tx/custom/cm），303 重定向到 `/success?purchase_id=X&tx=Y`，既有 /api/pdt 流程立即生效
+- `paypal.ts` return URL 改为 `/api/paypal/return?purchase_id=X`（保留 rm=2）
+- 三层保障：POST/GET 回退 + 无 tx 时降级轮询 → IPN 兜底
+
+#### 🔴 修复2：删除支付绕过漏洞
+- **Bug**：`/api/result` 对 <10 分钟的 pending 订单**未经支付验证**自动生成结果并标记 `paid=true` → 任何人可 POST /api/checkout 后直接 GET 结果白嫖
+- **修复**：彻底移除 auto-create。现在只有 PDT（`/api/pdt`）和 IPN（`/api/webhook/paypal`）两个 PayPal 已验证通道能标记 paid
+- success 页付费轮询 90→150 次（5 分钟），给 IPN 留足时间
+
+#### 🎯 修复3：datecheck 工具 3 次/天限制
+- localStorage 计数（每日重置），3 次免费后用升级卡片替换工具：「查完整 13 类吉日 + 时辰 → /calendar」
+- 新埋点：`guide_tool_datecheck_limit`（触发限制）、`guide_tool_datecheck_cta`（升级点击）
+- 目标：把 46 次高热度查询转化为付费动机
+
+#### ✅ 已验证（本地 dev + 生产双环境）
+- checkout URL：return 指向 `/api/paypal/return?purchase_id=X` ✅
+- POST 回调 → 303 → `/success?purchase_id=X&tx=Y` ✅
+- pending 单调 /api/result 返回 pending（不自动完成）✅
+- 假 tx 打 /api/pdt 被拒 ✅
+- unlock 免费单 → 生成新 pending + PayPal URL ✅
+- `.env.local` PDT token 已与生产同步（jvQnzkct...）
+
+#### ⏳ 待办：真实支付测试（闭环最终验证）
+1. 生产站走一笔 **$1 真实支付**（divination 最便宜路径）
+2. 预期：支付后 ~3 秒内自动跳回 success 页并显示完整结果（PDT 生效）
+3. 查 DB：`Purchase.paid=true` 且 status=completed
+4. 如 PDT 未生效（token 问题），观察 IPN 是否在 5 分钟内补上
+5. 测试后可到 PayPal 商户后台退款 $1
 
 ### ⏳ 8月9日复核清单（2天后）
 
