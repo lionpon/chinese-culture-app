@@ -106,11 +106,33 @@ PayPal Standard Checkout，支持信用卡支付。
 
 ## 近期状态 (2026-08-21)
 
-- **线上版本**：`88a318f` P0 转化修复（Render 自动部署中）
+- **线上版本**：P1 批次（工具处置 + 新页 + 限流 3→5，Render 自动部署中）
 - **域名**：`www.culture-of-china.com` 正常运行 ✅
 - **数据库**：Supabase (`vnktcrolpcyktduldpfm`) ✅
 - **GitHub**：`git@github.com:lionpon/chinese-culture-app.git` (SSH deploy key)
-- **最新 commit**：`88a318f` 日历深链预填 + referrer 归因修复
+
+### 8月21日深夜：P1/P2 批次——哑火工具处置 + 新 SEO 页 + 限流回调
+
+#### 🔧 工具处置（数据：8 天 0-1 使用）
+
+- **移除**：zodiac 计算器从 chinese-new-year-2027 和 chinese-name-boy（意图不匹配）；elements quiz 从 face-reading
+- **保留**：chinese-zodiac（zodiac）、five-elements（elements）、dream-meaning（dreamSearch）、iching ×2
+- **重定位落地**：新页 `/guide/zodiac-compatibility`（生肖配对，高搜索意图）内嵌 zodiac 计算器 + 底部 CTA → `/tools/zodiac-match`（给死寂的 AI 工具导流）
+  - 4 语言自包含内容（12 生肖 × 最佳配对/相冲表 + 六合/三合科普 + 3 FAQ）
+  - sitemap + 首页 guides 区已注册（`home.guides.compatibility` × 4 locale）
+  - 已验证：4 语言 200 + 本地化标题正确
+
+#### 🔧 datecheck 限流回调 3 → 5/天
+
+- 依据：3/天 让用量腰斩（58/14d → 12/8d）而 CTA 点击率无变化、日历表单仍 0 提交
+- 限流墙升级：显示用户最后查询的日期+结果（"Your last check — 2026-09-15: ✅ Success day"）+ 指向该日期的深链 CTA
+- RU 爬虫 DB 配额保持 3/天不变（那是国家配额，与工具限流无关）
+
+#### 📋 决策记录
+
+- **ko 保留**：8 天仅 1 真实访问但维护成本≈0，作为长尾市场保留，不再投入
+- **DC 城市名单不动**：Amsterdam 真实用户被误标 DC 属实（执行 JS 证明真人），但 isDatacenter 仅影响统计标记不影响任何拦截逻辑；移除会让 NL 真实 DC 流量污染"真实用户"指标，两害相权取其轻
+- **AI 工具零流量**：代码无需再改，问题在推广渠道全停（Twitter/TG/邮件均未运营）；新页 CTA 开始给 zodiac-match 导流作为第一步
 
 ### 8月21日晚：全站流量分析（8/14-8/21）+ 两个 P0 修复
 

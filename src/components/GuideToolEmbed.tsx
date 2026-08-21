@@ -56,7 +56,7 @@ function DateCheckTool({ eventType }: { eventType?: string }) {
     : "/calendar";
 
   const STORAGE_KEY = "cc_datecheck_usage";
-  const DAILY_MAX = 3;
+  const DAILY_MAX = 5; // 3 → 5 (8/21 review: 3/day halved usage with no conversion gain)
 
   function readTodayCount(): number {
     try {
@@ -130,11 +130,18 @@ function DateCheckTool({ eventType }: { eventType?: string }) {
         <div className="rounded-lg p-4 mb-3 text-center" style={{ backgroundColor: "var(--bg-deep)", border: "1px solid var(--border-medium)" }}>
           <p className="text-2xl mb-1">✨</p>
           <p className="text-sm font-medium mb-1" style={{ color: "var(--text-primary)" }}>
-            You&apos;ve used all 3 free quick checks today
+            You&apos;ve used all {DAILY_MAX} free quick checks today
           </p>
+          {date && result && (
+            <div className="rounded-lg p-3 mb-2" style={{ backgroundColor: "var(--bg-surface)" }}>
+              <p className="text-xs" style={{ color: "var(--text-muted)" }}>
+                Your last check — <strong>{date}</strong>: {result}
+              </p>
+            </div>
+          )}
           <p className="text-xs mb-3" style={{ color: "var(--text-muted)" }}>
-            Get your complete date analysis — 13 event types (wedding, moving, business, travel…),
-            hour-level luck windows, and full almanac details.
+            Get the complete report for this date — all 13 event types (wedding, moving,
+            business, travel…), hour-level luck windows, and full almanac details.
           </p>
           <Link href={calendarHref} onClick={() => trackClick("guide_tool_datecheck_cta")}
             className="inline-block px-4 py-2.5 text-sm font-medium rounded-lg transition-colors"

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import GuideFaq from "@/components/GuideFaq";
 import { BASE_URL } from "@/lib/config";
 import GuideCTA from "@/components/GuideCTA";
-import GuideToolEmbed from "@/components/GuideToolEmbed";
 
 type Props = { params: { locale: string } };
 
@@ -183,8 +182,6 @@ export default function FaceReadingPage({ params }: Props) {
         </div>
       </section>
 
-      {/* Interactive: discover your Five Element type — complements face reading self-discovery */}
-      <GuideToolEmbed tool="elements" />
 
       <section className="card-classic p-4 sm:p-6 mb-8 text-center">
         <p className="text-sm text-stone-600 mb-4">Face reading and palm reading are complementary arts.</p>

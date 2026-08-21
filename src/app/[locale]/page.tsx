@@ -309,6 +309,7 @@ export default function HomePage() {
             { key: "fiveElements", href: "/guide/five-elements" },
             { key: "snake2027", href: "/snake-2027" },
             { key: "zodiac", href: "/guide/chinese-zodiac" },
+            { key: "compatibility", href: "/guide/zodiac-compatibility" },
             { key: "lucky", href: "/guide/lucky-numbers" },
             { key: "fengshui", href: "/guide/feng-shui" },
             { key: "dreams", href: "/guide/dream-meaning" },

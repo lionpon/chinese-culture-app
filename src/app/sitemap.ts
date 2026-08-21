@@ -19,6 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/guide/auspicious-dates", priority: 0.7, changeFreq: "monthly" as const },
     { path: "/guide/wedding-dates-2026", priority: 0.6, changeFreq: "monthly" as const },
     { path: "/guide/chinese-zodiac", priority: 0.6, changeFreq: "monthly" as const },
+    { path: "/guide/zodiac-compatibility", priority: 0.7, changeFreq: "monthly" as const },
     { path: "/guide/five-elements", priority: 0.6, changeFreq: "monthly" as const },
     { path: "/guide/chinese-new-year-2027", priority: 0.6, changeFreq: "monthly" as const },
     { path: "/guide/lucky-numbers", priority: 0.6, changeFreq: "monthly" as const },

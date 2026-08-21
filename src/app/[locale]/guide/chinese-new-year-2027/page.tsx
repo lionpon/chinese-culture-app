@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Link } from "@/navigation";
 import GuideFaq from "@/components/GuideFaq";
 import GuideCTA from "@/components/GuideCTA";
-import GuideToolEmbed from "@/components/GuideToolEmbed";
 
 type Props = { params: { locale: string } };
 
@@ -228,8 +227,6 @@ export default function ChineseNewYear2027Guide({ params: { locale } }: Props) {
 
       <GuideCTA href="/divination" service="divination" variant="inline" />
 
-      {/* Interactive Zodiac Calculator — find your sign, then read your 2027 prediction below */}
-      <GuideToolEmbed tool="zodiac" />
 
       <h2>{c.predTitle}</h2>
       <div className="not-prose grid grid-cols-1 sm:grid-cols-2 gap-3 my-4">
