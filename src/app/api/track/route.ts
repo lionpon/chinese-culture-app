@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
-import { isDatacenterIp, isDatacenterCity, isCountryRateSaturated, isHighRiskScraperCountry } from "@/lib/bot-filter";
+import { isDatacenterIp, isDatacenterCity, isCountryRateSaturated, isHighRiskScraperCountry, COUNTRY_DAILY_MAX, COUNTRY_DAILY_WINDOW_MS } from "@/lib/bot-filter";
 
 // Rate limiter: block IPs making > 5 requests in 10 seconds (crawler signature)
 const rateMap = new Map<string, number[]>();
@@ -86,6 +86,19 @@ export async function POST(req: NextRequest) {
     // ── Country-level rate limit: throttle high-risk scraper countries ──
     if (isCountryRateSaturated(country)) {
       return NextResponse.json({ ok: true, skipped: "country_rate_limit" });
+    }
+
+    // ── Country daily quota (DB-backed, restart-proof) ──
+    // In-memory Map was reset by Render deploys/restarts (8/13 deploy day = 14 RU
+    // writes vs quota 5). Counting existing rows in DB survives restarts.
+    if (isHighRiskScraperCountry(country)) {
+      const dayAgo = new Date(Date.now() - COUNTRY_DAILY_WINDOW_MS);
+      const dailyWrites = await prisma.visit.count({
+        where: { country, createdAt: { gte: dayAgo } },
+      });
+      if (dailyWrites >= COUNTRY_DAILY_MAX) {
+        return NextResponse.json({ ok: true, skipped: "country_daily_quota" });
+      }
     }
 
     let city = "";

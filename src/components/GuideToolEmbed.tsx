@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/navigation";
 import { trackClick } from "@/lib/track";
@@ -48,6 +48,7 @@ function DateCheckTool() {
   const [result, setResult] = useState<string|null>(null);
   const [limited, setLimited] = useState(false);
   const [remaining, setRemaining] = useState(3);
+  const limitTracked = useRef(false);
 
   const STORAGE_KEY = "cc_datecheck_usage";
   const DAILY_MAX = 3;
@@ -61,10 +62,20 @@ function DateCheckTool() {
     } catch { return 0; }
   }
 
+  function trackLimitOnce() {
+    // Fire when the limit wall is actually shown (was dead code: check() could
+    // never run once the input is replaced by the upsell card).
+    if (!limitTracked.current) {
+      limitTracked.current = true;
+      trackClick("guide_tool_datecheck_limit");
+    }
+  }
+
   useEffect(() => {
     const count = readTodayCount();
     setRemaining(Math.max(0, DAILY_MAX - count));
     setLimited(count >= DAILY_MAX);
+    if (count >= DAILY_MAX) trackLimitOnce();
   }, []);
 
   function check() {
@@ -73,7 +84,7 @@ function DateCheckTool() {
     if (count >= DAILY_MAX) {
       setLimited(true);
       setRemaining(0);
-      trackClick("guide_tool_datecheck_limit");
+      trackLimitOnce();
       return;
     }
     const d = new Date(date);
@@ -86,7 +97,10 @@ function DateCheckTool() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify({ date: new Date().toISOString().slice(0, 10), count }));
     } catch {}
     setRemaining(Math.max(0, DAILY_MAX - count));
-    if (count >= DAILY_MAX) setLimited(true);
+    if (count >= DAILY_MAX) {
+      setLimited(true);
+      trackLimitOnce();
+    }
     trackClick("guide_tool_datecheck");
   }
   return (

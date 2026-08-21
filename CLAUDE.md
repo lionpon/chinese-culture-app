@@ -104,13 +104,57 @@ PayPal Standard Checkout，支持信用卡支付。
 - **实现**：middleware 设置 `cc_test_mode` cookie → AnalyticsTracker 客户端跳过 → `/api/track` 服务端跳过
 - 部署前务必确认已关闭测试模式（或关闭不影响，只是你自己的访问不被统计）
 
-## 近期状态 (2026-08-13)
+## 近期状态 (2026-08-21)
 
-- **线上版本**：`ca9d417` Live on Render + Cloudflare
+- **线上版本**：`ca9d417` Live on Render + Cloudflare（本日复核修复本地已构建，待推送）
 - **域名**：`www.culture-of-china.com` 正常运行 ✅
 - **数据库**：Supabase (`vnktcrolpcyktduldpfm`) ✅
 - **GitHub**：`git@github.com:lionpon/chinese-culture-app.git` (SSH deploy key)
-- **最新 commit**：`ca9d417` 付款闭环修复 + datecheck 限流
+- **最新 commit**：`153e8b5` docs: sandbox live-fire test passed
+
+### 8月21日：8/9 复核清单执行结果
+
+#### ① RU 爬虫限流 ✅ 配额生效，但重启可打穿 → 已修复
+
+| 日期(北京) | 8/12 | 8/13 | 8/14 | 8/15 | 8/16 | 8/17 | 8/18 | 8/19 | 8/20 | 8/21 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| RU 写入 | 4 | **14** | 5 | 4 | 1 | 4 | 4 | 3 | 5 | 5 |
+
+- 基线 9/天 → 配额后多数天 ≤5 ✅
+- **8/13 = 14 条**：当天 7 个 commit 推送 → Render 多次重启 → 内存 Map 清零，配额被打穿 3 次（5×3）
+- **修复**：日配额改为 DB 支撑（`/api/track` 写入前直查 Visit 表 24h 计数，`COUNTRY_DAILY_MAX` 5→3，按清单规则触发降级），重启免疫
+- 全部 RU 流量仍为 DC（Moscow），模式不变：~2h/次 × 4-7 页
+
+#### ② 新埋点：datecheck 爆火，其余哑火
+
+- `guide_tool_datecheck` **58 次/14天**，页面仅 39 访问 → 参与率 149% 🔥（8/13 上线即爆）
+- 8/13 后每用户每天最多 3 次 → **3/day 限流实际生效** ✅（8/15 US 用户 3 次后被升级卡拦截并点击 CTA）
+- `guide_tool_datecheck_cta` 1 次 · `guide_tool_cta_calendar` 9 次 → 点击率 15.5%，**全站最高 CTA** ✅
+- `guide_tool_dream_search` **0** ❌ / `guide_tool_zodiac` 1 ❌ / `guide_tool_elements` **0** ❌（对应页面 8/47/32 访问）
+- **修复死埋点**：`guide_tool_datecheck_limit` 恒 0 根因 = 限流后输入框被升级卡替换，`check()` 内埋点永远无法执行 → 改为限流墙实际展示时触发（`trackLimitOnce` + useRef 防重）
+
+#### ③ 转化漏斗：进展有限，真实付费仍 0
+
+- 付费服务页 41 次/14天（2.9/天 vs 整改前 2/天）→ 突破"5天10次"目标 ✅
+- **但 calendar 页 12 访问 → 0 次表单提交** ❌ datecheck CTA 点击者全部流失在日历表单 → 下轮重点调查
+- 免费试用破零 ✅：8/16 RU 真实用户 Гульнара Хабибуллина（非 DC）用完起名免费试用 → 走到 PayPal 后弃单（pending，12 分钟后）
+- **真实付费 = 0** ❌ 唯一 paid=true 是 **8/13 22:07（北京时）沙盒实弹测试**（与 commit `153e8b5` 22:12 时间吻合，即最近工作记录那天）
+- **已清理**：DailyReport 8/13 `revenue=1` 测试污染 → 清零（UPDATE 已验证）
+
+#### ④ 微工具扩展判断：暂缓盲目扩展
+
+- datecheck 成功要素 = **工具与页面意图高度匹配** + 低摩擦输入（auspicious-dates 访客本来就想查日期）
+- zodiac/elements/dream-search 哑火 = 意图不匹配（CNY-2027 访客不是来算自己生肖的）
+- **下一步选项**（待定）：
+  - a) 哑火工具重定位到意图匹配页（zodiac→chinese-zodiac 页、elements→five-elements 页、dream search 保留但页面流量太少）
+  - b) 集中火力修 calendar 表单转化断点（12 访问 0 提交）
+
+### 📋 下轮复核清单（8/23 左右）
+
+1. **RU 写入**：DB 配额生效后是否稳定 ≤3/天（含 Render 重启日）
+2. **`guide_tool_datecheck_limit`** 修复后是否有数据
+3. **calendar 表单流失**：12 访问 0 提交 → 查表单摩擦点（字段数/免费试用引导/价格展示）
+4. **真实付费是否破零**（注意区分沙盒测试与真实交易）
 
 ### 8月13日：付款闭环修复（P0）+ datecheck 次数限制
 
@@ -186,7 +230,7 @@ PayPal Standard Checkout，支持信用卡支付。
 **本地沙盒测试一键脚本**：`sandbox-test.ps1`（cpolar + 沙盒 env 自动拉起）
 **待清理**：测试结束后停掉本地 3000 端口服务和 cpolar 进程
 
-### ⏳ 8月9日复核清单（2天后）
+### ✅ 8月9日复核清单（已于 8/21 执行，结果见"近期状态"）
 
 1. **RU 爬虫限流验证**：直查 Visit 表，对比 RU 日写入量
    - 旧基线：~9条/天 → 新预期：≤5条/天（配额已从 10→5）
