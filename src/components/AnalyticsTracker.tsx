@@ -26,7 +26,7 @@ export default function AnalyticsTracker() {
     fetch("/api/track", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ page: pathname }),
+      body: JSON.stringify({ page: pathname, referrer: document.referrer || "" }),
     }).catch(() => {});
   }, [pathname]);
 

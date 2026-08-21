@@ -125,7 +125,7 @@ export default function WeddingDatesGuide({ params: { locale } }: Props) {
       <hr className="my-6 border-stone-200" />
       <h2>{c.introTitle}</h2><p>{c.introBody}</p>
 
-      <GuideToolEmbed tool="dateCheck" />
+      <GuideToolEmbed tool="dateCheck" eventType="wedding" />
 
       <GuideCTA href="/calendar" service="calendar" variant="inline" />
 

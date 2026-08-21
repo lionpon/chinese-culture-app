@@ -74,7 +74,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: true, skipped: "rate_limit" });
     }
 
-    const { page, event } = await req.json();
+    const { page, event, referrer: payloadReferrer } = await req.json();
 
     const countryHeader =
       req.headers.get("cf-ipcountry") ||
@@ -112,7 +112,17 @@ export async function POST(req: NextRequest) {
       region = geo.region;
     }
 
-    const referrer = req.headers.get("referer") || "";
+    // Attribution: prefer the client-sent document.referrer (the request's own
+    // Referer header is always our own page URL, useless for acquisition).
+    // Internal navigation and direct visits are stored as "".
+    const OWN_DOMAINS = ["culture-of-china.com", "localhost", "127.0.0.1"];
+    const isOwn = (ref: string) => OWN_DOMAINS.some((d) => ref.includes(d));
+    let referrer = typeof payloadReferrer === "string" ? payloadReferrer.trim() : "";
+    if (referrer && isOwn(referrer)) referrer = "";
+    if (!referrer) {
+      const headerRef = req.headers.get("referer") || "";
+      if (headerRef && !isOwn(headerRef)) referrer = headerRef;
+    }
 
     // Click events use __click__: prefix so report can separate them from page views
     const storedPage = event ? `__click__:${event}` : page;

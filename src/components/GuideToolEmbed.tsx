@@ -42,13 +42,18 @@ function ZodiacTool() {
   );
 }
 
-function DateCheckTool() {
+function DateCheckTool({ eventType }: { eventType?: string }) {
   const t = useTranslations("calendar");
   const [date, setDate] = useState("");
   const [result, setResult] = useState<string|null>(null);
   const [limited, setLimited] = useState(false);
   const [remaining, setRemaining] = useState(3);
   const limitTracked = useRef(false);
+
+  // Deep link: carry the checked date (and page-intent event type) to /calendar
+  const calendarHref = date
+    ? `/calendar?date=${date}${eventType ? `&event=${eventType}` : ""}`
+    : "/calendar";
 
   const STORAGE_KEY = "cc_datecheck_usage";
   const DAILY_MAX = 3;
@@ -131,7 +136,7 @@ function DateCheckTool() {
             Get your complete date analysis — 13 event types (wedding, moving, business, travel…),
             hour-level luck windows, and full almanac details.
           </p>
-          <Link href="/calendar" onClick={() => trackClick("guide_tool_datecheck_cta")}
+          <Link href={calendarHref} onClick={() => trackClick("guide_tool_datecheck_cta")}
             className="inline-block px-4 py-2.5 text-sm font-medium rounded-lg transition-colors"
             style={{ backgroundColor: "var(--gold)", color: "var(--bg-deep)" }}>
             Unlock Full Date Selection →
@@ -139,7 +144,7 @@ function DateCheckTool() {
         </div>
       )}
       {!limited && (
-        <Link href="/calendar" onClick={() => trackClick("guide_tool_cta_calendar")}
+        <Link href={calendarHref} onClick={() => trackClick("guide_tool_cta_calendar")}
           className="block text-center text-xs font-medium py-2 rounded-lg transition-colors"
           style={{ backgroundColor: "var(--gold-subtle)", color: "var(--gold)" }}>{t("form.submit")} →</Link>
       )}
@@ -345,9 +350,9 @@ function DreamSearchTool() {
   );
 }
 
-export default function GuideToolEmbed({ tool }: { tool: ToolType }) {
+export default function GuideToolEmbed({ tool, eventType }: { tool: ToolType; eventType?: string }) {
   if (tool === "zodiac") return <ZodiacTool />;
-  if (tool === "dateCheck") return <DateCheckTool />;
+  if (tool === "dateCheck") return <DateCheckTool eventType={eventType} />;
   if (tool === "elements") return <ElementsTool />;
   if (tool === "iching") return <IChingTool />;
   if (tool === "dreamSearch") return <DreamSearchTool />;

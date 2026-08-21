@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState, useRef, useCallback } from "react";
+import { FormEvent, useState, useRef, useCallback, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { useCheckout } from "@/lib/useCheckout";
 import SubmitButton from "@/components/SubmitButton";
@@ -19,7 +19,15 @@ interface CalendarPreview {
   eventType: string;
 }
 
-export default function CalendarClient({ initialHasFree }: { initialHasFree: boolean }) {
+export default function CalendarClient({
+  initialHasFree,
+  initialDate,
+  initialEvent,
+}: {
+  initialHasFree: boolean;
+  initialDate?: string;
+  initialEvent?: string;
+}) {
   const t = useTranslations("calendar");
   const tc = useTranslations("common");
   const { loading, checkout } = useCheckout("calendar");
@@ -49,11 +57,18 @@ export default function CalendarClient({ initialHasFree }: { initialHasFree: boo
     }
   }, []);
 
+  // Deep link from guide date-check tool (?date=...&event=...): instant free preview
+  useEffect(() => {
+    if (!initialDate) return;
+    fetchPreview(initialDate, initialDate, initialEvent || "wedding");
+  }, [initialDate, initialEvent, fetchPreview]);
+
   function onFieldChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
     const form = e.currentTarget.form;
     if (!form) return;
     const start = (form.elements.namedItem("startDate") as HTMLInputElement)?.value;
-    const end = (form.elements.namedItem("endDate") as HTMLInputElement)?.value;
+    // Single-date friendly: empty end date = check just the start date
+    const end = (form.elements.namedItem("endDate") as HTMLInputElement)?.value || start;
     const evt = (form.elements.namedItem("eventType") as HTMLSelectElement)?.value;
 
     if (previewTimer.current) clearTimeout(previewTimer.current);
@@ -103,7 +118,7 @@ export default function CalendarClient({ initialHasFree }: { initialHasFree: boo
  function getFormData(form: HTMLFormElement) {
    return {
      startDate: form.startDate.value,
-     endDate: form.endDate.value,
+     endDate: form.endDate.value || form.startDate.value,
      eventType: form.eventType.value,
      amount,
    };
@@ -190,12 +205,12 @@ export default function CalendarClient({ initialHasFree }: { initialHasFree: boo
  <label className="block text-sm font-medium text-stone-700 mb-1">{t("form.range")}</label>
  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
  <div><span className="text-xs text-stone-400">{t("form.start")}</span>
- <input name="startDate" type="date" required onChange={onFieldChange}
+ <input name="startDate" type="date" required onChange={onFieldChange} defaultValue={initialDate}
  onInvalid={(e) => e.currentTarget.setCustomValidity(tc("validation.inputRequired"))}
  onInput={(e) => e.currentTarget.setCustomValidity("")}
  className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" /></div>
  <div><span className="text-xs text-stone-400">{t("form.end")}</span>
- <input name="endDate" type="date" required onChange={onFieldChange}
+ <input name="endDate" type="date" onChange={onFieldChange}
  onInvalid={(e) => e.currentTarget.setCustomValidity(tc("validation.inputRequired"))}
  onInput={(e) => e.currentTarget.setCustomValidity("")}
  className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" /></div>
@@ -205,6 +220,7 @@ export default function CalendarClient({ initialHasFree }: { initialHasFree: boo
  <div>
  <label className="block text-sm font-medium text-stone-700 mb-1">{t("form.eventType")}</label>
  <select name="eventType" required onChange={onFieldChange}
+ defaultValue={initialEvent || (initialDate ? "wedding" : "")}
  onInvalid={(e) => e.currentTarget.setCustomValidity(tc("validation.selectRequired"))}
  onInput={(e) => e.currentTarget.setCustomValidity("")}
  className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300">
@@ -225,7 +241,8 @@ export default function CalendarClient({ initialHasFree }: { initialHasFree: boo
  </select>
  </div>
 
- <AmountPicker value={amount} onChange={setAmount} />
+ {/* Price picker appears only after the free preview hooks the user */}
+ {preview && <AmountPicker value={amount} onChange={setAmount} />}
  {hasFree && (
  <p className="text-xs text-stone-400 text-center">{t("form.previewNote")}</p>
  )}
