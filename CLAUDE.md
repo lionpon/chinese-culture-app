@@ -106,11 +106,37 @@ PayPal Standard Checkout，支持信用卡支付。
 
 ## 近期状态 (2026-08-21)
 
-- **线上版本**：`ca9d417` Live on Render + Cloudflare（本日复核修复本地已构建，待推送）
+- **线上版本**：`88a318f` P0 转化修复（Render 自动部署中）
 - **域名**：`www.culture-of-china.com` 正常运行 ✅
 - **数据库**：Supabase (`vnktcrolpcyktduldpfm`) ✅
 - **GitHub**：`git@github.com:lionpon/chinese-culture-app.git` (SSH deploy key)
-- **最新 commit**：`153e8b5` docs: sandbox live-fire test passed
+- **最新 commit**：`88a318f` 日历深链预填 + referrer 归因修复
+
+### 8月21日晚：全站流量分析（8/14-8/21）+ 两个 P0 修复
+
+#### 📊 分析结论速览
+
+- 8 天 252 访问，真实用户 ~188（75%），日均 30-40 无增长平台期
+- 结构：指南页 78% / 付费页 10% / 首页 8% / **AI 工具 2%（≈死）**
+- ru 内容有真实侨民受众（39 real/8d：UA/AZ/EE/BY/AT/IT…）；ja 有真实日本用户（17）；ko 基本死（1）
+- 埋点 8 天仅 33 事件：datecheck 12（限流后腰斩）、日历 CTA 7（最强漏斗）
+- **头号断点：日历页 8 访问（全来自 guide CTA）→ 0 表单提交 → 100% 弹回**
+- zodiac/elements/dream-search 8 天 0 使用；4 个 AI 工具页 8 天 5 访问
+- 8/16 Гульнара（俄语用户经 US 节点）：免费试用 → 12 分钟后付费尝试 → PayPal 弃单
+- **系统性问题：Referrer 追踪自上线起就是坏的**——客户端只发 {page,event}，服务端读 /api/track 请求自身 Referer 头（永远自家域名），200/200 条记录全是本站 → 获客归因完全不可用
+
+#### 🔧 P0-1：日历表单意图匹配（commit `88a318f`）
+
+- guide date-check 两个 CTA 现在携带 `?date=X&event=wedding` 深链（wedding-dates 页 eventType=wedding）
+- CalendarClient：URL 参数预填单日期 + 默认 wedding + **落地即出免费预览**
+- 截止日期改为可选（只填开始日期 = 查单日）；价格选择器移至免费预览出现之后
+- 已验证：SSR 预填 markup ✅、预览 API 单日 ✅（无吉日时 totalDays:0 = "这日子不吉"钩子）
+
+#### 🔧 P0-2：Referrer 归因修复（commit `88a318f`）
+
+- 客户端（trackClick + AnalyticsTracker）现在发送 `document.referrer`
+- 服务端优先取 payload，过滤自家域名/站内导航 → 存空；外部来源正常入库
+- 已验证：外部来源入库 ✅ / 站内导航存空 ✅ / 测试行已清理
 
 ### 8月21日：8/9 复核清单执行结果
 
@@ -153,8 +179,9 @@ PayPal Standard Checkout，支持信用卡支付。
 
 1. **RU 写入**：DB 配额生效后是否稳定 ≤3/天（含 Render 重启日）
 2. **`guide_tool_datecheck_limit`** 修复后是否有数据
-3. **calendar 表单流失**：12 访问 0 提交 → 查表单摩擦点（字段数/免费试用引导/价格展示）
-4. **真实付费是否破零**（注意区分沙盒测试与真实交易）
+3. **日历深链验证**：guide CTA 点击 → 日历页 `preview_calendar` 事件 → `form_submit_calendar` 是否破零
+4. **Referrer 验证**：新数据是否出现 Google 等外部来源；评估真实获客渠道
+5. **真实付费是否破零**（注意区分沙盒测试与真实交易）
 
 ### 8月13日：付款闭环修复（P0）+ datecheck 次数限制
 
