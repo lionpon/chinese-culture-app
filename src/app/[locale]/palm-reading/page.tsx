@@ -72,6 +72,9 @@ export default function PalmReadingPage() {
  e.preventDefault();
  if (!imageKey) return;
  const form = e.currentTarget;
+ // Track BEFORE checkout — checkout() redirects on success, and beacons
+ // fired after navigation starts get cancelled by the browser.
+ trackClick("form_submit_palm_reading");
  await checkout({
  imageKey,
  handSide: form.handSide.value,
@@ -80,7 +83,6 @@ export default function PalmReadingPage() {
  question: form.question?.value || undefined,
  amount,
  });
- trackClick("form_submit_palm_reading");
  }
 
  return (

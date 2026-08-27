@@ -126,13 +126,15 @@ export default function CalendarClient({
 
  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
    e.preventDefault();
-   await checkout(getFormData(e.currentTarget));
+   // Track BEFORE checkout — checkout() redirects on success, and beacons
+   // fired after navigation starts get cancelled by the browser.
    trackClick("form_submit_calendar");
+   await checkout(getFormData(e.currentTarget));
  }
 
  function handlePaidClick() {
-   checkout(getFormData(document.querySelector('form') as HTMLFormElement), true);
    trackClick("form_submit_calendar_paid");
+   checkout(getFormData(document.querySelector('form') as HTMLFormElement), true);
  }
 
  return (

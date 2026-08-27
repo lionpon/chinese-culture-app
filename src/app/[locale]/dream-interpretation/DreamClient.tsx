@@ -20,24 +20,26 @@ export default function DreamClient({ initialHasFree }: { initialHasFree: boolea
  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
  e.preventDefault();
  const form = e.currentTarget;
+ // Track BEFORE checkout — checkout() redirects on success, and beacons
+ // fired after navigation starts get cancelled by the browser.
+ trackClick("form_submit_dream_interpretation");
  await checkout({
  dreamText: form.dreamText.value,
  dreamType: form.dreamType.value || undefined,
  focus: form.interpretFocus.value || undefined,
  amount,
  });
- trackClick("form_submit_dream_interpretation");
  }
 
  function handlePaidClick() {
  const form = document.querySelector("form") as HTMLFormElement;
+ trackClick("form_submit_dream_paid");
  checkout({
  dreamText: form.dreamText.value,
  dreamType: form.dreamType.value || undefined,
  focus: form.interpretFocus.value || undefined,
  amount,
  }, true);
- trackClick("form_submit_dream_paid");
  }
 
  return (

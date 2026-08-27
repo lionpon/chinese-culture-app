@@ -78,6 +78,16 @@ export async function POST(req: NextRequest) {
         maxAge: 365 * 24 * 60 * 60, // 1 year
         path: "/",
       });
+      // Per-purchase access cookie — result lookup falls back to this when the
+      // IP+UA fingerprint changes (VPN node hops / mobile IP rotation), which
+      // otherwise locks real users out of their own result (8/26 RU/UA cases).
+      response.cookies.set("cc_purchase_id", purchase.id, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "lax",
+        maxAge: 60 * 60, // 1 hour — covers the result-view window
+        path: "/",
+      });
       return response;
     }
 

@@ -87,13 +87,15 @@ export default function DivinationClient({ initialHasFree }: { initialHasFree: b
 
  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
    e.preventDefault();
+   // Track BEFORE checkout — checkout() redirects on success, and beacons
+   // fired after navigation starts get cancelled by the browser.
+   trackClick("form_submit_divination");
    await checkout(getFormData(e.currentTarget));
- trackClick("form_submit_divination");
  }
 
  function handlePaidClick() {
-   checkout(getFormData(document.querySelector('form') as HTMLFormElement), true);
    trackClick("form_submit_divination_paid");
+   checkout(getFormData(document.querySelector('form') as HTMLFormElement), true);
  }
 
  const methodLabels: Record<string, string> = {

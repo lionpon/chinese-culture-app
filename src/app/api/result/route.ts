@@ -132,10 +132,13 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
 
-  // Require fingerprint match for free purchases (prevent enumeration)
+  // Require fingerprint match for free purchases (prevent enumeration).
+  // Fallback: per-purchase cookie set by /api/checkout — real users whose IP/UA
+  // changes between checkout and result view (VPN/mobile) still get their result.
   if (purchase.fingerprint) {
     const reqFingerprint = await computeFingerprint(req);
-    if (reqFingerprint !== purchase.fingerprint) {
+    const cookieMatch = req.cookies.get("cc_purchase_id")?.value === purchaseId;
+    if (reqFingerprint !== purchase.fingerprint && !cookieMatch) {
       return NextResponse.json({ error: "Not found" }, { status: 404 });
     }
   }
