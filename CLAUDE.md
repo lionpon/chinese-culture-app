@@ -28,7 +28,7 @@ Next.js 14 · TypeScript · Prisma · Supabase PostgreSQL · Tailwind CSS · nex
 | 托管 | Render (oregon, free tier) |
 | 数据库 | Supabase PostgreSQL (vnktcrolpcyktduldpfm) — migrated from Neon 2026-07-20 |
 | 支付 | PayPal Standard Checkout (`22728717@qq.com`) |
-| 保活 | cron-job.org 每10分钟 |
+| 保活 | GitHub Actions `keepalive.yml`（4 组 cron 每 7-17 分钟 ping）— ⚠️ 实例 24/7 在线 ≈720-744h/月，紧贴免费档 750h 上限，月底会耗尽被暂停 |
 
 ## 目录结构
 
@@ -103,6 +103,66 @@ PayPal Standard Checkout，支持信用卡支付。
 - **关闭**：访问任何页面 `?test=0`
 - **实现**：middleware 设置 `cc_test_mode` cookie → AnalyticsTracker 客户端跳过 → `/api/track` 服务端跳过
 - 部署前务必确认已关闭测试模式（或关闭不影响，只是你自己的访问不被统计）
+
+## 近期状态 (2026-08-27)
+
+- **线上版本**：`63d9bc9`（埋点时序修复 + 免费结果 cookie 回退 + snake SSR 修复，已部署并验证 ✅）
+- **域名** `www.culture-of-china.com` ✅ ｜ **Supabase** ✅ ｜ **GitHub** SSH 已配好（`~/.ssh/config` → `id_ed25519_temp` deploy key）
+
+### 8月27日：8/23 逾期复核 + 全量埋点分析 + P0 修复
+
+#### 📋 8/23 复核清单执行结果（DB 直查）
+
+1. **RU 配额 ❌ 从未生效**——Render 不传 `cf-ipcountry`/`x-vercel-ip-country` 头，`/api/track` 的三级国家限流全在 geo 解析前用 `"Unknown"` 判断 → 永远跳过。之前"≤5/天"是爬虫自然节奏（Moscow DC，4-5 页/批 × 1-2 天/批）。**修复方案（未做）：检查移到 geo 解析后，且只限 DC 流量**——RU/UA 真实用户是当前唯一转化客群，不能全量限
+2. **datecheck_limit 0 事件 = 预期**——8/21 后用量 ≤3 次/天 < 阈值 5，限流墙从未展示
+3. **日历深链机制 ✅**——8/21 后 CTA 2 → 日历访问 4 → 自动预览 1（8/25 东京真人）→ 提交 0（样本太小）
+4. **Referrer 修复 ✅ 生效**——Google 46 / Bing 33 / DDG 28 / Yahoo 14…（8/21 以来）
+5. **真实付费 ❌ 仍 0**——但 8/26 是 Purchase 最活跃日（3 条，全是 RU/UA 真实用户）
+
+#### 🔴 8/26 两位真实用户转化事件零入库（已修，`63d9bc9`）
+
+- **Тетяна**（UA，Google → ru guide → naming）：免费试用完成 → 49 秒后二次提交 → PayPal 弃单（pending）
+- **Кристина**（RU）：免费试用完成，未尝试付费
+- 根因①：`trackClick` 在 `await checkout()`（内部已 redirect）**之后** → 导航竞态吞 beacon → 5 个服务页全部改为**先埋点后提交**
+- 根因②：`/api/result` 免费购买 **IP+UA 指纹锁** → Тетяна IP 漂移（Dnipro→Kharkiv，埋点可见）→ 结果 404 锁死 → 页面"Still Processing" → 流失。修复：checkout 下发 `cc_purchase_id` cookie（1h），result 允许 cookie 回退
+- 免费轮询 3→10 次
+- 本地 Playwright 全链路验证：`form_submit_naming` → `/success` PV → `free_result_viewed` → `result_free_naming` **全部入库** ✅
+
+#### 🔧 其他修复（`63d9bc9`）
+
+- `snake-2027/[animal]` 服务端组件给 client `Link` 传 onClick → SSR 每日刷 13+ 条错误、`snake_mid_cta_naming` 埋点从未触发过 → 抽成 `SnakeMidCTA` client 组件
+
+#### 🔍 支付链路审计结论（重要）
+
+- **生产 = LIVE PayPal**（探测返回 `www.paypal.com` + `22728717@qq.com`），沙盒疑云排除；8/13 `paid=true` 行 = 本地沙盒测试写入共享生产库
+- 支付方式 = PayPal 唯一；"Visa/信用卡"仅依赖 PayPal **游客信用卡**（Account Optional 开关，待商家后台确认）
+- 弃单归因：① PayPal 对俄不可用（Кристина 硬墙）② 乌普及率低 ③ 免费 1 名 + 锁定 bazi 的钩子不够 ④ 指纹锁（已修）
+- **8/27 早 checkout 曾连续 500 后自愈**：Render 免费实例月底不稳（小时数压线 + 失活/保活失败邮件），日志无 `Checkout error:` 行；实例自愈后 200 正常
+- Lemon Squeezy lib 已弃用（5/23），大陆主体无法注册；大陆主体备选：跨境收单（PingPong/连连/Asiabill，需企业主体）、HK/US 主体 + Stripe
+
+#### 📊 埋点健康度速览（8/21 后，242 行 / 198 真人）
+
+- 唯一主力 datecheck：终身 84 次，但 8/18 后熄火（8/21 后仅 4）；CTA→日历点击率 23% 全站最高
+- 终身哑火：elements 0、dream AI 0、palm 0、daily fortune 0、zodiac match 1、pdf 0、share 0
+- 已死工具：quick_oracle（7 月 9 次）、preview_bazi（20 次，全 7 月）
+- 新页 `/guide/zodiac-compatibility` 6 天 0 访问（未收录，观察）；snake-2027 季节性死亡（8/21 后仅 4 次）
+- Kyiv/Kharkiv 被误列 DC 城市黑名单（真实用户被标 DC，只影响统计）
+- 事件命名漂移（`result_free_*` / `guide_cta_*` 旧名）污染历史数据
+
+#### ⏳ 待办（用户侧，晚上继续）
+
+1. **PayPal 商家后台**：paypal.com → 卖家工具 → 网站习惯设定 → 开启「PayPal Account Optional」（游客信用卡入口）；大陆可直连，验证码刷不出再挂 VPN（用账户常用地节点防风控）
+2. **确认双币卡 → Render 升 Starter（$7/月）**：根治实例不稳定（今日 checkout 500 + 保活失败邮件）。无冷启动、无 750h/月上限。若无双币卡 → 备选：改 keep-alive 间隔 + curl 超时 90s（但月底仍会被暂停几天）
+3. dream 页 `INVALID_MESSAGE` 偶发错误观察（本地无法复现，疑似特定 Accept-Language 触发）
+4. 大陆访客付款：PayPal 不支持大陆消费者，暂不投入；如需要 → 企业主体 + PingPong/连连接支付宝/微信
+
+### 📋 下轮复核清单（8/30 左右）
+
+1. `form_submit_naming` / `pay_click` / `free_result_viewed` 是否有新数据（验证埋点修复生效）
+2. RU 用户免费结果是否成功查看（`cc_purchase_id` cookie 回退生效）
+3. snake SSR 错误是否从生产日志消失
+4. 真实付费是否破零（前提：游客结账已开 / Render 已升级）
+5. RU 配额修复方案评估：检查移到 geo 后 + 只限 DC 流量
 
 ## 近期状态 (2026-08-21)
 
