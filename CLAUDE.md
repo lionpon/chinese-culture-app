@@ -97,6 +97,10 @@ PayPal Standard Checkout，支持信用卡支付。
 
 ## 开发工具
 
+### 🛠 运维验证速查（重要，别重复探索）
+见 **`OPS_RUNBOOK.md`** —— 时区坑、生产库直连警告、支付/部署/Render 验证 2 分钟路径、环境变量审计清单。
+复用脚本：`node scripts/review-queries.cjs`（复核五件套，`SINCE=` 参数化窗口）· `node scripts/probe-checkout.cjs`（支付通道探测，自动清理）。
+
 ### 🧪 测试模式（跳过数据埋点）
 在任意 URL 后加 `?test=1` 即可进入测试模式，当前浏览器 1 年内所有访问不写入 Visit 表、不影响日报统计。
 - **开启**：访问任何页面 `?test=1`（cookie 自动设置，参数自动移除）
