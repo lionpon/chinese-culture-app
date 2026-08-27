@@ -149,10 +149,16 @@ PayPal Standard Checkout，支持信用卡支付。
 - Kyiv/Kharkiv 被误列 DC 城市黑名单（真实用户被标 DC，只影响统计）
 - 事件命名漂移（`result_free_*` / `guide_cta_*` 旧名）污染历史数据
 
+#### ✅ 支付链路验证（8/27 完成）
+
+1. **PayPal Account Optional（游客信用卡）**：后台确认开启 ✅ + 买家视角实拍：VPN（美国出口 IP）无痕打开付款链接，**「使用借记卡或信用卡付款」入口存在** ✅ → Visa/MC 直付对 PayPal 支持地区买家真实可用
+2. **PDT 付款数据传输**：开启 ✅ 且 Identity Token 与 `.env.local` 配置完全一致（`jvQnz…TKi`）→ 付费回跳秒出结果链路通（生产 Render 的 `PAYPAL_PDT_TOKEN` 需在 Environment 里顺手确认同值）
+3. 结论：支付基建无断点。剩余约束 = 客群错配（俄卡被 PayPal 硬拒 / 乌普及率低 / 大陆买家不可用），而非支付通道坏
+
 #### ⏳ 待办（用户侧，晚上继续）
 
-1. **PayPal 商家后台**：paypal.com → 卖家工具 → 网站习惯设定 → 开启「PayPal Account Optional」（游客信用卡入口）；大陆可直连，验证码刷不出再挂 VPN（用账户常用地节点防风控）
-2. **确认双币卡 → Render 升 Starter（$7/月）**：根治实例不稳定（今日 checkout 500 + 保活失败邮件）。无冷启动、无 750h/月上限。若无双币卡 → 备选：改 keep-alive 间隔 + curl 超时 90s（但月底仍会被暂停几天）
+1. **确认双币卡 → Render 升 Starter（$7/月）**：根治实例不稳定（8/27 早 checkout 500 + 保活失败邮件）。无冷启动、无 750h/月上限。若无双币卡 → 备选：改 keep-alive 间隔 + curl 超时 90s（但月底仍会被暂停几天）
+2. Render Environment 确认 `PAYPAL_PDT_TOKEN` 与 PayPal 后台令牌一致
 3. dream 页 `INVALID_MESSAGE` 偶发错误观察（本地无法复现，疑似特定 Accept-Language 触发）
 4. 大陆访客付款：PayPal 不支持大陆消费者，暂不投入；如需要 → 企业主体 + PingPong/连连接支付宝/微信
 
