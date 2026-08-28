@@ -73,14 +73,15 @@ curl -s -X POST "https://www.culture-of-china.com/api/checkout" \
 | 项 | 位置 |
 |---|---|
 | 用量（实例小时/带宽/构建分钟） | `https://dashboard.render.com/billing` |
-| 升级 Starter（$7/月） | 同一页面 → Change plan → 绑双币卡 |
+| ~~升级 Starter（$7/月）~~ | ✅ 已完成 2026-08-28；续费评估 9 月底 |
 | 服务环境变量 | dashboard → chinese-culture-app → Environment |
 | 日志 | 同服务 → Logs（导出后找 `Checkout error:` 等） |
 
 **环境变量审计清单**（8/27 已全部核过，变更才需重查）：
 `PAYPAL_PDT_TOKEN`=`jvQnz...TKi` · `PAYPAL_SANDBOX`=`false` · `PAYPAL_EMAIL`=`22728717@qq.com` · `NEXT_PUBLIC_APP_URL`=`https://www.culture-of-china.com`
 
-**免费档特性**：750h/月；15 分钟无请求休眠；冷启动 30-60s（keep-alive curl 超时 45s 会误报失败邮件）。keep-alive 4 组 cron 每 7-17min ping，实例小时 ~700h/月贴线。**失活/失败邮件 ≠ 服务挂了**，先 curl /api/health 再下结论。
+**Starter 特性（2026-08-28 起，$7/月）**：无休眠、无冷启动、无 750h 上限。`monitor.yml` 每 10 分钟 ping `/api/health`，失败退出码 → 真实故障才收告警邮件。**告警邮件 ≠ 服务挂了**，先 curl /api/health 再下结论。
+**历史（免费档，已退役）**：750h/月；15 分钟无请求休眠；冷启动 30-60s 超 keep-alive curl 45s 误报失败邮件；4 组 cron 每 7-17min ping，实例小时 ~700h/月贴线。
 
 ---
 

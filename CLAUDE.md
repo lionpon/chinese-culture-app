@@ -25,10 +25,10 @@ Next.js 14 · TypeScript · Prisma · Supabase PostgreSQL · Tailwind CSS · nex
 | 项 | 值 |
 |---|---|
 | 仓库 | `git@github.com:lionpon/chinese-culture-app.git` (master) |
-| 托管 | Render (oregon, free tier) |
+| 托管 | Render (oregon, **Starter $7/月** — 2026-08-28 升级，无休眠/无 750h 上限) |
 | 数据库 | Supabase PostgreSQL (vnktcrolpcyktduldpfm) — migrated from Neon 2026-07-20 |
 | 支付 | PayPal Standard Checkout (`22728717@qq.com`) |
-| 保活 | GitHub Actions `keepalive.yml`（4 组 cron 每 7-17 分钟 ping）— ⚠️ 实例 24/7 在线 ≈720-744h/月，紧贴免费档 750h 上限，月底会耗尽被暂停 |
+| 监控 | GitHub Actions `monitor.yml`（每 10 分钟 ping `/api/health`，失败才发告警邮件；原 `keepalive.yml` 4 组 cron 随免费档退役）|
 
 ## 目录结构
 
@@ -108,6 +108,38 @@ PayPal Standard Checkout，支持信用卡支付。
 - **实现**：middleware 设置 `cc_test_mode` cookie → AnalyticsTracker 客户端跳过 → `/api/track` 服务端跳过
 - 部署前务必确认已关闭测试模式（或关闭不影响，只是你自己的访问不被统计）
 
+## 近期状态 (2026-08-28)
+
+- **线上版本**：`0062849`（8/27 埋点修复已部署验证）+ 本次 infra 提交
+- **托管**：Render **Starter $7/月**（2026-08-28 升级 ✅，免费档退役）｜**域名** ✅ ｜ **Supabase** ✅
+
+### 8月28日：失活邮件核实 → 升级 Starter → 保活改监控
+
+#### 📧 早间失活邮件核实（DB 直查，邮件属实）
+
+- Visit 表明细：北京 **05:14:04 → 10:04:08 断档约 4 小时 50 分**，邮件时间（~09:00）落在窗口内 → 属实
+- 原因：免费档 15 分钟无请求即休眠 + GitHub cron 调度空档 → 冷启动 30-60s 超 keepalive curl 45s → 探测失败 + 失活邮件
+- 恢复：北京 10:04 起真实流量恢复（JP 真人），此后持续正常；升级前实测 health 5/5 200、0.7-3.4s
+
+#### 💳 决策：升级 Render Starter（$7/月，先试一个月）
+
+- 8/27 待办第 1 项 → **完成 ✅**：双币卡绑定成功（Stripe 扣款成功）
+- 收益：无休眠 / 无冷启动 / 无 750h 上限 / 无失活假警报；盈亏平衡 = 7 单/月
+- 退出机制：随时可降级回免费档；9 月底按转化数据评估是否续费
+
+#### ✅ 升级后验证（8/28 晚）
+
+- `/api/health` **8/8 连续 200**，首字节 0.72-2.15s（无冷启动）✅
+- 首页 200（2.5s）/ naming 200（3.6s）✅
+- `keepalive.yml` → **`monitor.yml`**：4 组 cron（~531 次/天）→ 单 cron 每 10 分钟 + 失败退出码 → **真实故障才收邮件**，平时零噪音
+
+### ⏳ 待办
+
+1. ~~确认双币卡 → Render 升 Starter~~ **✅ 已完成（2026-08-28）**
+2. dream 页 `INVALID_MESSAGE` 偶发错误观察（本地无法复现，疑似特定 Accept-Language 触发）
+3. 大陆访客付款：暂不投入；如需要 → 企业主体 + PingPong/连连/支付宝/微信
+4. **9 月底评估 Starter 是否续费**（转化是否破零；破零即续，否则降级 + 迁 Vercel 免费档备选）
+
 ## 近期状态 (2026-08-27)
 
 - **线上版本**：`63d9bc9`（埋点时序修复 + 免费结果 cookie 回退 + snake SSR 修复，已部署并验证 ✅）
@@ -161,9 +193,9 @@ PayPal Standard Checkout，支持信用卡支付。
 4. **Render Environment 审计（8/27）**：`PAYPAL_PDT_TOKEN` ✅ / `PAYPAL_SANDBOX=false` ✅ / `NEXT_PUBLIC_APP_URL` ✅ / `PAYPAL_EMAIL` 原值不对 → 已改为 `22728717@qq.com` 并探测确认生效（`business=22728717%40qq.com`）✅
 5. Render 用量（8/27）：Instance Hours **608.97/750（81%）**，月底预计 ~705h 不爆但贴上限；Keep Alive 失败邮件 = 4 组 cron 存在 >15 分钟空档 → 实例休眠 → 冷启动超 45s 超时
 
-#### ⏳ 待办（用户侧，晚上继续）
+#### ⏳ 待办（用户侧）
 
-1. **确认双币卡 → Render 升 Starter（$7/月）**：根治实例不稳定（8/27 早 checkout 500 + 保活失败邮件）。无冷启动、无 750h/月上限。若无双币卡 → 备选：改 keep-alive 间隔 + curl 超时 90s（但月底仍会被暂停几天）
+1. ~~确认双币卡 → Render 升 Starter（$7/月）~~ **✅ 已于 8/28 完成，详见上方 8/28 记录**
 2. dream 页 `INVALID_MESSAGE` 偶发错误观察（本地无法复现，疑似特定 Accept-Language 触发）
 3. 大陆访客付款：PayPal 不支持大陆消费者，暂不投入；如需要 → 企业主体 + PingPong/连连接支付宝/微信
 
