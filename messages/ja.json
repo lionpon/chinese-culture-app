@@ -279,7 +279,9 @@
       "elementsTitle": "五行バランス",
       "favorable": "喜用神",
       "teaser": "あなたの八字に基づいた中国名の準備ができました",
-      "teaserSub": "上で名前と性別を入力し、「名前を生成」→ $1"
+      "teaserSub": "上で名前と性別を入力し、「名前を生成」→ $1",
+      "limitTitle": "本日の無料八字プレビューは終了しました",
+      "limitText": "完全な八字分析は鑑定結果と一緒に届きます — 下のフォームから送信してください。"
     },
     "meta": {
       "title": "中国名を作成 | Chinese Culture Studio",
@@ -483,6 +485,8 @@
       "elements": "五行",
       "source": "出典",
       "nameRationale": "{elements}の五行を持つこの名前は、あなたの八字チャートのバランスを整えます — {source}から選ばれました。",
+      "freeTeaser": "あなたの八字のバランスを整える{elements}の要素で構成",
+      "freeLocked": "意味 · 読み方 · 古典の出典 — 完全な鑑定でご覧いただけます",
       "classicalSource": "中国古典文献",
       "recommended": "おすすめ — あなたの五行プロファイルに最適",
       "baziAnalysis": "八字分析"
@@ -635,6 +639,8 @@
     "lockedContent": "完全なリーディングを解除",
     "andMore": "+ さらに詳細",
     "unlockFullCta": "完全なリーディングを見る",
+    "priceAnchor": "$5.99から — コーヒー1杯よりお手頃 ☕",
+    "freeCalendarHook": "13種類すべてのイベント＋時間別ガイダンス — 決める前に下から解放してください。",
     "paywallPersistent": "一回限り · 永久にあなたのもの · サブスクリプションなし"
   },
   "legal": {

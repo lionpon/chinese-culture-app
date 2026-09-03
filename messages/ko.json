@@ -279,7 +279,9 @@
       "elementsTitle": "오행 균형",
       "favorable": "희용신",
       "teaser": "당신의 사주에 기반한 중국식 이름이 준비되었습니다",
-      "teaserSub": "위에서 이름과 성별을 입력하고, 이름 생성 →"
+      "teaserSub": "위에서 이름과 성별을 입력하고, 이름 생성 →",
+      "limitTitle": "오늘의 무료 사주 미리보기를 모두 사용했습니다",
+      "limitText": "완전한 사주 분석은 해석 결과와 함께 제공됩니다 — 아래 양식을 제출하세요."
     },
     "meta": {
       "title": "중국식 이름 짓기 | Chinese Culture Studio",
@@ -483,6 +485,8 @@
       "elements": "오행",
       "source": "출전",
       "nameRationale": "{elements} 오행을 가진 이 이름은 당신의 사주 차트의 균형을 맞춥니다 — {source}에서 선택되었습니다.",
+      "freeTeaser": "사주 균형을 맞추는 {elements} 요소로 구성",
+      "freeLocked": "의미 · 발음 · 고전 출처 — 전체 해석에서 확인하세요",
       "classicalSource": "중국 고전 문헌",
       "recommended": "추천 — 오행 프로필에 가장 잘 맞는 이름",
       "baziAnalysis": "사주 분석"
@@ -635,6 +639,8 @@
     "lockedContent": "전체 리딩 잠금 해제",
     "andMore": "+ 더 많은 세부 정보",
     "unlockFullCta": "전체 리딩 보기",
+    "priceAnchor": "$5.99부터 — 커피 한 잔보다 저렴 ☕",
+    "freeCalendarHook": "13가지 모든 이벤트 유형 + 시간별 가이드 — 결정하기 전에 아래에서 잠금 해제하세요.",
     "paywallPersistent": "1회 · 영원히 당신의 것 · 구독 없음"
   },
   "legal": {

@@ -33,6 +33,31 @@ const ELEMENT_EMOJI: Record<string, string> = {
   "Wood": "🌳", "Fire": "🔥", "Earth": "🏔️", "Metal": "⚜️", "Water": "💧",
 };
 
+// Bazi preview quota: 5/day per browser. Prevents free-preview exhaustion
+// (real case: 12 regenerations in one session — user consumed the hook, never paid).
+const PREVIEW_KEY = "cc-preview-bazi";
+const PREVIEW_DAILY_MAX = 5;
+
+function getPreviewUsage(): { date: string; count: number } {
+  if (typeof window === "undefined") return { date: "", count: 0 };
+  const today = new Date().toISOString().slice(0, 10);
+  try {
+    const raw = localStorage.getItem(PREVIEW_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed.date === today && typeof parsed.count === "number") return parsed;
+    }
+  } catch { /* corrupted — reset */ }
+  return { date: today, count: 0 };
+}
+
+function incrementPreviewUsage(): { date: string; count: number } {
+  const u = getPreviewUsage();
+  const next = { date: u.date, count: u.count + 1 };
+  try { localStorage.setItem(PREVIEW_KEY, JSON.stringify(next)); } catch { /* ignore */ }
+  return next;
+}
+
 export default function NamingClient({ initialHasFree }: { initialHasFree: boolean }) {
   const t = useTranslations("naming");
   const tc = useTranslations("common");
@@ -43,8 +68,10 @@ export default function NamingClient({ initialHasFree }: { initialHasFree: boole
   const [mode, setMode] = useState<"create" | "analyze">("create");
   const [preview, setPreview] = useState<PreviewData | null>(null);
   const [previewLoading, setPreviewLoading] = useState(false);
+  const [previewLimit, setPreviewLimit] = useState(false);
   const [hasFree] = useState(initialHasFree);
   const previewTimer = useRef<ReturnType<typeof setTimeout>>();
+  const limitTracked = useRef(false);
 
   function ExampleResult() {
     return (
@@ -80,6 +107,16 @@ export default function NamingClient({ initialHasFree }: { initialHasFree: boole
   }
 
   const fetchPreview = useCallback(async (year: number, month: number, day?: number, hour?: number) => {
+    // Daily quota check BEFORE fetching
+    if (getPreviewUsage().count >= PREVIEW_DAILY_MAX) {
+      setPreview(null);
+      setPreviewLimit(true);
+      if (!limitTracked.current) {
+        limitTracked.current = true;
+        trackClick("preview_bazi_limit");
+      }
+      return;
+    }
     setPreviewLoading(true);
     try {
       const res = await fetch("/api/preview/naming", {
@@ -89,8 +126,12 @@ export default function NamingClient({ initialHasFree }: { initialHasFree: boole
       });
       if (res.ok) {
         const data = await res.json();
+        incrementPreviewUsage();
         setPreview(data);
+        setPreviewLimit(false);
         trackClick("preview_bazi");
+        // When the cap is hit, the NEXT input change triggers the upgrade card
+        // (see quota check at the top of fetchPreview).
       }
     } catch {
       // silent fail — preview is optional
@@ -175,7 +216,7 @@ export default function NamingClient({ initialHasFree }: { initialHasFree: boole
       </div>
 
       {/* Free Bazi Preview — appears when birth date is filled */}
-      {preview && (
+      {preview && !previewLimit && (
         <div className="card-classic p-4 sm:p-5 mb-6 animate-fadeIn" style={{ borderColor: "var(--border-strong)" }}>
           <div className="flex items-center gap-2 mb-3">
             <span className="text-lg">{ELEMENT_EMOJI[preview.dayMaster.element] || "✨"}</span>
@@ -234,8 +275,16 @@ export default function NamingClient({ initialHasFree }: { initialHasFree: boole
         </div>
       )}
 
+      {/* Preview daily limit wall — replaces the preview once quota is used */}
+      {previewLimit && (
+        <div className="card-classic p-4 sm:p-5 mb-6 animate-fadeIn" style={{ borderColor: "var(--gold)", backgroundColor: "rgba(201, 169, 110, 0.06)" }}>
+          <p className="text-sm font-semibold text-accent text-center">🔒 {t("preview.limitTitle")}</p>
+          <p className="text-xs text-stone-500 text-center mt-1.5">{t("preview.limitText")}</p>
+        </div>
+      )}
+
       {/* Preview loading skeleton */}
-      {previewLoading && !preview && (
+      {previewLoading && !preview && !previewLimit && (
         <div className="card-classic p-4 mb-6 animate-pulse">
           <div className="h-4 bg-stone-200 rounded w-3/4 mb-3" />
           <div className="space-y-2">

@@ -9,8 +9,29 @@ import EmailCaptureForm from "./EmailCaptureForm";
 import DownloadPDF from "./DownloadPDF";
 import { trackClick } from "@/lib/track";
 
-function ResultCard({ opt, i, recommended, isFree, showNarrative }: { opt: { characters: string; pinyin: string; meaning: string; narrative?: string; wuxing?: string; source?: string; sourceText?: string }; i: number; recommended: boolean; isFree?: boolean; showNarrative?: boolean }) {
+function ResultCard({ opt, i, recommended, isFree, showNarrative, teaser }: { opt: { characters: string; pinyin: string; meaning: string; narrative?: string; wuxing?: string; source?: string; sourceText?: string }; i: number; recommended: boolean; isFree?: boolean; showNarrative?: boolean; teaser?: boolean }) {
   const t = useTranslations("result");
+  if (teaser) {
+    // Free-tier teaser: only characters + five-element hook. Pinyin/meaning/source/narrative are the paid content.
+    return (
+      <div key={i} className="card-classic p-4 sm:p-6" style={{ borderColor: "var(--border-strong)" }}>
+        <div className="text-center mb-3">
+          <p className="text-3xl font-bold text-accent">{opt.characters}</p>
+          <div className="flex items-center justify-center gap-2 mt-2">
+            <SpeakButton text={opt.characters} />
+          </div>
+          {opt.wuxing && (
+            <p className="text-sm mt-2 px-3 py-1.5 inline-block rounded-lg" style={{ color: "var(--gold)", backgroundColor: "rgba(201,169,110,0.08)", border: "1px solid rgba(201,169,110,0.25)" }}>
+              {t("naming.freeTeaser", { elements: opt.wuxing })}
+            </p>
+          )}
+        </div>
+        <p className="text-center text-xs text-stone-400">
+          🔒 {t("naming.freeLocked")}
+        </p>
+      </div>
+    );
+  }
   return (
     <div key={i} className="card-classic p-4 sm:p-6">
       {/* Narrative intro — the story behind this name */}
@@ -155,9 +176,9 @@ export default function NamingResultView({
           </div>
         )}
 
-        {/* Always show first recommended name */}
+        {/* Free tier: characters + five-element hook only (teaser). Paid: full card. */}
         {r.options.length > 0 && (
-          <ResultCard opt={r.options[0]} i={0} recommended={true} isFree={!!(isFree && purchaseId)} showNarrative={!isFree} />
+          <ResultCard opt={r.options[0]} i={0} recommended={true} isFree={!!(isFree && purchaseId)} showNarrative={!isFree} teaser={!!(isFree && purchaseId)} />
         )}
 
         {/* Gate remaining names + bazi analysis behind paywall */}

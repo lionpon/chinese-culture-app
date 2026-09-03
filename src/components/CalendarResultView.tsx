@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useTranslations } from "next-intl";
 import type { CalendarResult } from "@/types";
 import PaywallOverlay from "./PaywallOverlay";
 import EmailCaptureForm from "./EmailCaptureForm";
@@ -83,6 +84,7 @@ export default function CalendarResultView({
   isFree?: boolean;
   purchaseId?: string;
 }) {
+  const t = useTranslations("success");
   const days = result.auspiciousDays;
   const bestDay = days.length > 0 ? days[0] : null;
   const resultRef = useRef<HTMLDivElement>(null);
@@ -115,6 +117,12 @@ export default function CalendarResultView({
             The strongest is <strong>{bestDay.date}</strong> with a score of <strong>{bestDay.score}/100</strong>
             {bestDay.lunarDate ? <> · {bestDay.lunarDate}</> : null}
           </p>
+          {/* Free-tier upgrade hook — user behavior shows free users keep re-previewing dates */}
+          {isFree && purchaseId && (
+            <p className="text-xs mt-3 px-3 py-1.5 inline-block rounded-lg" style={{ color: "var(--gold)", backgroundColor: "rgba(201,169,110,0.08)", border: "1px solid rgba(201,169,110,0.25)" }}>
+              ✨ {t("freeCalendarHook")}
+            </p>
+          )}
         </div>
       )}
 

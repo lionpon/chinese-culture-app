@@ -76,10 +76,15 @@ export default function PaywallOverlay({
         <button
           onClick={unlock}
           disabled={loading}
-          className="w-full py-3 rounded-xl text-sm font-semibold btn-primary disabled:opacity-60 mb-3"
+          className="w-full py-3 rounded-xl text-sm font-semibold btn-primary disabled:opacity-60 mb-2"
         >
           {loading ? "..." : t("unlockFullCta")}
         </button>
+
+        {/* Price anchor — kills the "is it worth $5.99?" objection before it forms */}
+        <p className="text-xs text-center mb-3" style={{ color: "var(--text-muted)" }}>
+          {t("priceAnchor")}
+        </p>
 
         {/* Payment trust badges */}
         <PaymentTrustBadges />

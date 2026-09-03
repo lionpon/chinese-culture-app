@@ -279,7 +279,9 @@
       "elementsTitle": "Five Elements Balance",
       "favorable": "Lucky Elements",
       "teaser": "Your Bazi profile is ready. Tap Generate to see which name the Five Elements chose for you.",
-      "teaserSub": "Fill in your details above and press Generate — it takes 30 seconds."
+      "teaserSub": "Fill in your details above and press Generate — it takes 30 seconds.",
+      "limitTitle": "Free Bazi previews used up for today",
+      "limitText": "Your complete Bazi analysis comes with your reading — submit below to get it."
     },
     "meta": {
       "title": "Chinese Name Generator: Create Authentic Names by Five Elements & Bazi | Chinese Culture Studio",
@@ -483,6 +485,8 @@
       "elements": "Elements",
       "source": "Source",
       "nameRationale": "With {elements} elements, this name balances your Bazi chart — selected from {source}.",
+      "freeTeaser": "Built on {elements} elements to balance your Bazi",
+      "freeLocked": "Meaning · Pronunciation · Classical Source — unlock in your full reading",
       "classicalSource": "classical Chinese texts",
       "recommended": "Recommended — Best match for your elemental profile",
       "baziAnalysis": "Bazi Analysis"
@@ -663,6 +667,8 @@
     "lockedContent": "Unlock for full reading",
     "andMore": "+ more personalized details",
     "unlockFullCta": "See My Full Reading",
+    "priceAnchor": "From $5.99 — less than a coffee ☕",
+    "freeCalendarHook": "All 13 event types + hour-by-hour guidance — unlock below before you commit.",
     "paywallPersistent": "One-time · yours forever · no subscription ever"
   },
   "legal": {
