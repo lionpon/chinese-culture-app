@@ -1,4 +1,5 @@
 import { BASE_URL, BASE_HOST } from "@/lib/config";
+import { EVENTS, MONTHS_2027, YEAR } from "@/data/auspicious-events";
 
 const SITEMAP_URL = `${BASE_URL}/sitemap.xml`;
 const INDEXNOW_KEY = "b8f3a2d1c7e4569f0a1234b5678c9d0e";
@@ -71,6 +72,13 @@ function buildIndexNowUrls(): string[] {
     urls.push(`https://${HOST}/ru${path}`);
     urls.push(`https://${HOST}/ja${path}`);
     urls.push(`https://${HOST}/ko${path}`);
+  }
+
+  // Date long-tail pages — English only batch, so en URLs only
+  for (const ev of EVENTS) {
+    for (const m of MONTHS_2027) {
+      urls.push(`https://${HOST}/guide/auspicious-dates/${ev.slug}-${m.slug}-${YEAR}`);
+    }
   }
   return urls;
 }

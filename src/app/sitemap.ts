@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { BASE_URL } from "@/lib/config";
+import { EVENTS, MONTHS_2027, YEAR } from "@/data/auspicious-events";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = BASE_URL;
@@ -118,5 +119,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   }));
 
-  return [...enEntries, ...ruEntries, ...jaEntries, ...koEntries];
+  // Date long-tail pages (content factory batch 1) — English only for now.
+  // Kept out of `pages` on purpose: that array multiplies every path by 4 locales,
+  // and ru/ja/ko batches ship only after the en batch proves itself.
+  const dateEntries: MetadataRoute.Sitemap = [];
+  for (const ev of EVENTS) {
+    for (const m of MONTHS_2027) {
+      const path = `/guide/auspicious-dates/${ev.slug}-${m.slug}-${YEAR}`;
+      const url = `${baseUrl}${path}`;
+      dateEntries.push({
+        url,
+        lastModified: new Date(),
+        changeFrequency: "monthly",
+        priority: 0.6,
+        alternates: { languages: { en: url } },
+      });
+    }
+  }
+
+  return [...enEntries, ...ruEntries, ...jaEntries, ...koEntries, ...dateEntries];
 }

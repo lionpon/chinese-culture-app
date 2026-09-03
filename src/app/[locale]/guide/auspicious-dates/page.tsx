@@ -3,6 +3,7 @@ import { Link } from "@/navigation";
 import GuideFaq from "@/components/GuideFaq";
 import GuideCTA from "@/components/GuideCTA";
 import GuideToolEmbed from "@/components/GuideToolEmbed";
+import { EVENTS, MONTHS_2027, YEAR } from "@/data/auspicious-events";
 
 type Props = { params: { locale: string } };
 
@@ -206,6 +207,36 @@ export default function AuspiciousDatesGuide({ params: { locale } }: Props) {
         <li><strong>{c.mLabel}</strong> — {c.mDesc}</li>
         <li><strong>{c.tLabel}</strong> — {c.tDesc}</li>
       </ul>
+
+      {/* 2027 month-by-month date guides (content factory batch 1) — en pages only for now */}
+      {locale === "en" && (
+        <>
+          <h2>2027 Date Guides, Month by Month</h2>
+          <p className="text-sm text-stone-500">
+            Complete guides for every month of {YEAR}, computed day by day from the traditional almanac — 13 event types, from weddings to business openings.
+          </p>
+          <p className="text-xs font-medium not-prose mb-2" style={{ color: "var(--gold)" }}>💍 Wedding — every month:</p>
+          <div className="not-prose flex flex-wrap gap-1.5 mb-5">
+            {MONTHS_2027.map(m => (
+              <Link key={m.slug} href={`/guide/auspicious-dates/wedding-${m.slug}-${YEAR}`}
+                className="text-xs px-2.5 py-1.5 rounded-lg border transition-colors hover:opacity-80"
+                style={{ borderColor: "var(--border-medium)", color: "var(--text-muted)" }}>
+                {m.name}
+              </Link>
+            ))}
+          </div>
+          <p className="text-xs font-medium not-prose mb-2" style={{ color: "var(--gold)" }}>All 13 events — {MONTHS_2027[0].name} {YEAR}:</p>
+          <div className="not-prose grid grid-cols-2 sm:grid-cols-3 gap-1.5 mb-4">
+            {EVENTS.map(e => (
+              <Link key={e.slug} href={`/guide/auspicious-dates/${e.slug}-${MONTHS_2027[0].slug}-${YEAR}`}
+                className="text-xs px-2.5 py-2 rounded-lg border transition-colors hover:opacity-80"
+                style={{ borderColor: "var(--border-subtle)", color: "var(--text-muted)" }}>
+                {e.emoji} {e.shortName}
+              </Link>
+            ))}
+          </div>
+        </>
+      )}
 
       <h2>{c.findTitle}</h2>
       <p>{c.findBody}</p>
