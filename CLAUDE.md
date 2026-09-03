@@ -183,11 +183,33 @@ PayPal Standard Checkout，支持信用卡支付。
 3. **P3 付费墙价格锚点** ✅ — PaywallOverlay CTA 下新增 `priceAnchor`（"From $5.99 — less than a coffee ☕"×4 语言），针对 Мария 开了自定义金额却不付的价格异议
 4. **P4 日历免费结果升级钩子** ✅ — 免费结果摘要卡新增 `freeCalendarHook`（"13 类事件 + 时辰指南"钩子），针对婚礼用户反复免费查日期的行为
 
+### 🚀 营销第 1 步开工（9/3）：content-factory skill + 英语日期长尾页第一批
+
+#### 🏭 Content Factory Skill（`.claude/skills/content-factory/SKILL.md`）
+
+固化标准，后续批次免重复探索：
+- **语气**：第二人称、好奇心钩子、短句、主动语态；娱乐免责声明
+- **SEO 结构模板**：H1=关键词 → intro 2 段 → 工具嵌入 → inline CTA → 真实数据内容 → 禁忌 → 月份/兄弟页导航 → FAQ(JSON-LD) → 双 CTA → disclaimer
+- **多语言结构差异（重要）**：禁止逐字翻译。EN native 水准（缩略式/习语/禁中式英语清单）；JA です/ます体+体言止め标题+全角标点；KO 합니다/해요 全页统一+分写法+名词短语标题；RU Вы 尊称+月份属格小写。**en 先行验证后再做下一语言**
+- **数据真实性**：吉日/卦象一律调 `src/lib/` 引擎，节令日期用 `solarToLunar` 计算，禁手写
+- **QA 清单**：meta 唯一性/内链≥5/alternates 只含已上线语言/build 页数=sitemap 条目/生产抽样 200
+
+#### 📅 日期长尾页第一批：13 事件 × 12 月 = 156 页（en only）
+
+- 路由：`/guide/auspicious-dates/{event}-{month}-2027`（dynamicParams=false，非 en 与坏 slug 均 404）
+- 内容：**真实历法计算**（`selectAuspiciousDays` 引擎）——每月 top 3 吉日，第 1 名完整展示（农历/干支/建除/吉神/宜），第 2/3 名只露日期+评分+锁提示（转化保护，与 free 截断策略一致）；鬼月范围由 `solarToLunar` 实时计算（2027 鬼月 = 8/2–8/31）
+- 每页：intro 2 段（13 事件各自文化叙事，native 英文）+ dateCheck 工具（eventType 深链预填）+ 3 组 CTA + 12 月导航环 + 13 事件兄弟页互链（27 条内链/页）+ FAQ schema + 面包屑 schema（guide layout 自带）
+- 医疗/丧葬页含强化免责声明（非医疗建议；建议咨询专业人士）
+- hub 页 `/guide/auspicious-dates` 新增"2027 逐月指南"链接块（en only）
+- sitemap +156 条目（en only，不带 ru/ja/ko）；IndexNow URL 列表同步 +156
+- 顺手修复：ja/ko messages 残留旧价 $1 → $5.99（8 处）
+
 #### ⏳ 待办
 
 1. 9 月底评估 Starter 续费（转化是否破零）
-2. 营销第 1/2 步（content-factory + 社媒矩阵）——下次会话
-3. 下轮复核（~9/10）：① free 截断后 `paywall_unlock_click` / `pay_click` 是否破零 ② `preview_bazi_limit` 展示次数 ③ preview_bazi 用量是否收敛 ④ 付费仍 0 则考虑降 free 预览限至 3/天或整页 A/B
+2. 营销第 2 步（社媒矩阵自动化）下次会话；日期页 ru/ja/ko 批次等 en 收录数据后再开工
+3. 观察：① 日期页 Google 收录速度（IndexNow + sitemap）② datecheck 工具用量（页内嵌工具应推高 `guide_tool_datecheck`）③ 内链带来的付费页流量
+4. 下轮复核（~9/10）：① free 截断后 `paywall_unlock_click` / `pay_click` 是否破零 ② `preview_bazi_limit` 展示次数 ③ preview_bazi 用量是否收敛 ④ 付费仍 0 则考虑降 free 预览限至 3/天或整页 A/B
 
 ---
 
