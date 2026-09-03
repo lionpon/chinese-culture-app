@@ -138,6 +138,59 @@ PayPal Standard Checkout，支持信用卡支付。
 - **实现**：middleware 设置 `cc_test_mode` cookie → AnalyticsTracker 客户端跳过 → `/api/track` 服务端跳过
 - 部署前务必确认已关闭测试模式（或关闭不影响，只是你自己的访问不被统计）
 
+## 近期状态 (2026-09-03)
+
+- **线上版本**：`11814fb`（8/28 营销规划定案，代码无变更）
+- **域名** ✅ ｜ **Supabase** ✅ ｜ **Render Starter** ✅（无休眠）
+
+### 9月3日：8/29-9/3 流量与转化复核 + 按优先级执行 4 项修复
+
+#### 📊 流量（6 天 273 访问，真实 ~233/85%）
+
+- 日均 ~46（8/21 前 30-40），9/1 峰值 84，趋势缓升
+- **国家结构剧变：SG 62 跃居第一（全真实，此前从未出现）**，US 62（44 真）、DE 26（含俄语侨民）、CN 21、JP 15、RU 14（全 DC）
+- 页面：guide 53% → naming 15 → calendar 8 → divination 1 / palm 0 / dream 1（其余付费服务基本死）
+- 渠道：Google 70 / Bing 45 / DDG 20 / Ecosia 19 / Yandex 15，90% 落 guide 页
+
+#### 📊 转化（重点）
+
+- **真实付费仍 0（连续 27 天）**；窗口内 0 pay_click / 0 paywall_unlock_click / 0 pending → **无人走到 PayPal（非弃单，是没点解锁）**
+- 免费试用活跃：3 笔 completed/paid=false，全部真实用户完整走通提交→成功页→免费结果
+  1. **Мария Сиднева**（RU 侨民，DE Diez）：6×八字预览 → 开自定义金额 → 提交 → 免费结果 → 4 分钟后回表单 → 未付离开（离付费最近）
+  2. **Alverena Ho**（SG）：给 2025 年婴儿取名，12×八字预览消耗完好奇心 → 免费结果 → 走
+  3. **婚礼择日用户**（SG）：CNY guide → 4×datecheck → CTA 深链 → 预览×5 → **史上首个 form_submit_calendar** → 免费结果 → 继续免费查日期
+- ✅ **8/21 日历深链 P0 修复被真实数据验证**
+- 🔴 头号断点从"表单提交"下移到"**付费墙解锁**"：3 人见免费结果，0 人点解锁
+
+#### 📋 8/30 逾期复核清单结果
+
+| # | 项目 | 结论 |
+|---|---|---|
+| 1 | 埋点修复验证 | ✅ form_submit_naming ×2 / free_result_viewed ×3 / form_submit_calendar 破零 |
+| 2 | RU cookie 回退 | ✅ 3 免费单全部看到结果，无锁死 |
+| 3 | snake SSR 错误 | ✅ 窗口内无异常 |
+| 4 | 真实付费破零 | ❌ 仍 0，且 0 pending |
+| 5 | RU 配额 | 3-4 条/天全 DC，空转问题依旧；爬虫节奏未恶化 → 维持现状 |
+
+#### 🔧 本轮执行（按优先级，全部完成并验证）
+
+1. **P1 免费结果截断测试**（起名）✅
+   - 免费层结果卡只显示**汉字 + 一句五行钩子**（`freeTeaser`），隐藏拼音/含义/出处/叙事 + 锁提示（`freeLocked`），付费版不变
+   - **八字预览限 5 次/天**（localStorage `cc-preview-bazi`，按 UTC 日重置）：第 6 次尝试时预览卡替换为升级卡（`limitTitle`/`limitText`）引导提交；新埋点 `preview_bazi_limit`
+   - 依据：Alverena 12 次预览耗尽好奇心未付费 / Мария 6 次
+   - Playwright E2E 16/16 通过（截断 6 项 + 限流 10 项，含第 5 次后墙不出现/第 6 次墙出现/计数不变）
+2. **P2 SG 流量溯源** ✅ — 结论：SG 62 次并非新市场爆发，而是 **9/1 两个深度漏斗用户**（Alverena 14 时 + 婚礼用户 17 时，均 Google/Bing 搜索进站、全英语）的会话聚集。真正意义 = 英文 SEO 漏斗已能产出走到最深层的用户，支持营销第 1 步英语内容优先
+3. **P3 付费墙价格锚点** ✅ — PaywallOverlay CTA 下新增 `priceAnchor`（"From $5.99 — less than a coffee ☕"×4 语言），针对 Мария 开了自定义金额却不付的价格异议
+4. **P4 日历免费结果升级钩子** ✅ — 免费结果摘要卡新增 `freeCalendarHook`（"13 类事件 + 时辰指南"钩子），针对婚礼用户反复免费查日期的行为
+
+#### ⏳ 待办
+
+1. 9 月底评估 Starter 续费（转化是否破零）
+2. 营销第 1/2 步（content-factory + 社媒矩阵）——下次会话
+3. 下轮复核（~9/10）：① free 截断后 `paywall_unlock_click` / `pay_click` 是否破零 ② `preview_bazi_limit` 展示次数 ③ preview_bazi 用量是否收敛 ④ 付费仍 0 则考虑降 free 预览限至 3/天或整页 A/B
+
+---
+
 ## 近期状态 (2026-08-28)
 
 - **线上版本**：`0062849`（8/27 埋点修复已部署验证）+ 本次 infra 提交
