@@ -204,6 +204,31 @@ PayPal Standard Checkout，支持信用卡支付。
 - sitemap +156 条目（en only，不带 ru/ja/ko）；IndexNow URL 列表同步 +156
 - 顺手修复：ja/ko messages 残留旧价 $1 → $5.99（8 处）
 
+### 🔍 9/3 收尾：全项目全面检查（156 URL 路由扫描 + 4 语言键对齐 + API 边界）
+
+#### 执行清单与结果
+
+- **构建/类型/lint**：`next build` 通过（含 lint + tsc）
+- **路由扫描**：156 URL（39 路由 × 4 语言）全部 200 或预期 404（日期页 ru/ja/ko 404=en-only 批次；robots/sitemap 无语言版；/daily 裸路径本就不存在）——**0 意外失败**
+- **API**：health/daily/rss/stats 200；report 401（cron 密钥保护，预期）；checkout 非法 type 400；result 伪造 id 404
+- **i18n 键对齐**：en/ru/ja/ko 四语言逐键比对，ru 完美对齐
+- **Playwright 回归**（production 模式）：起名八字预览、免费结果截断、价格锚点、日期页 H1/评分卡/工具嵌入/FAQ schema 全过（月份环断言写严了误报，实为 12+2 链接）
+- **JSON 有效性**：4 语言文件全部合法
+
+#### 🐛 发现并修复 1 个真实 bug（自 7/25 起潜伏）
+
+**ja/ko guide 页 CTA 显示原始 i18n 键名**（如 `guide.cta.calendar.title`）——7/25 钩子改版给 en/ru 加了 `guide.cta` 节，ja/ko 漏加，`useTranslations` 缺失键时渲染键路径本身。所有 ja/ko guide 页的 inline/sticky CTA 均受影响。
+- 修复：为 ja.json/ko.json 补全 `guide.cta` 16 键（disclaimer + 5 服务 × title/desc/cta），文案按内容工厂语言标准撰写（JA です/ます体、KO 합니다체）
+- 验证：本地 ja guide 页 0 处原始键名，日文文案正常渲染
+- commit `218260d`，已推送
+
+#### 确认非 bug 项（记录备查）
+
+- 11 个 guide 页 hreflang 无 ko：**有意为之**——这些页无 ko 内容（回退 en），8/21 决策 ko 不投入；声明 ko hreflang 反而错误
+- 日期页第 2/3 名吉日只露日期+评分：转化保护设计（与 free 截断策略一致），非内容缺失
+- `/en/*` 307 重定向到无前缀 URL：localePrefix 设计
+- 八字预览限额按 UTC 日重置（北京 8:00 换日）：与 datecheck 工具一致，可接受
+
 #### ⏳ 待办
 
 1. 9 月底评估 Starter 续费（转化是否破零）
