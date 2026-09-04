@@ -59,6 +59,19 @@ H2 Dates to Avoid（文化禁忌 + 当月真实节令）
 - 标题 Title Case；美式拼写（favorable, center）；日期 "January 9, 2027"。
 - 数字场景：给读者"可行动"信息（"weekends book out 9–12 months ahead"）。
 
+#### 🔮 卦 / 易经英文内容标准（用户特别强调：native speaker 水准）
+
+适用于：`src/data/hexagrams.ts` 的 descriptionEn、社媒每日一卦文案、卦解释页解释性文字。
+
+1. **卦辞/爻辞引文 = 保留经典 Wilhelm/Baynes 译本**（Cary Baynes 母语译者的出版译本，英语读者可辨识），**禁止自行重译**经典引文；但译本中已被现代读者判为歧义/过时的个别措辞（如 9.3 "Man and wife roll their eyes"）按以下标准替换为自然表达并注释。
+2. **新写解释文字（descriptionEn/advice/社媒文案）必须是完整句子的母语英语**：
+   - ❌ 无动词名词短语电报体（"A time of great potential and strong leadership." 当独立句）
+   - ❌ 中文结构直译（"natural completion of matters"、"benefits everyone unchanged"、"Not a whole day"）
+   - ✅ 正确示例：中文「自然完成」→ "lets things come to completion naturally"；「惠及众人而不改」→ "serves the common good — the well itself never changes"。
+3. 解释文字**不沿用** "It furthers one to..." / "The superior man..."（该文体只属于引文）；新写部分用第二人称 "you"、现代句式。
+4. 交付前**逐句朗读测试**：任何一句大声读出来别扭的，必须改写。社媒文案（X 限 280 字符内、TG/Reddit 长文）同理。
+5. 卦解释页上已有 `ADVICE_MAP`（64 卦建议）与 `HEXAGRAM_GUIDE`（SEO 文章）为已达标母语水准基线，新文案不得低于此标准。
+
 ### 🇯🇵 JA
 
 - 句尾统一：**页面正文用 です/ます体**；标题/卡片标签可用体言止め（名词结尾）。

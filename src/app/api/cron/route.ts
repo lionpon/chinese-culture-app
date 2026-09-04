@@ -57,7 +57,59 @@ export async function GET(req: NextRequest) {
     results.telegram = "skipped (no auth token)";
   }
 
-  // 5. Warm all pages (home, world-cup, snake-2027, AI tools)
+  // 5. Social matrix (营销第 2 步): Twitter / Pinterest / Reddit — each gated by env config.
+  //    Twitter & Reddit default to en (Reddit target sub is r/iching, English-only).
+  //    Pinterest pins cards for all 4 languages.
+  const socialLangs = (process.env.SOCIAL_LANGS || "en,ru,ja,ko").split(",").map((s) => s.trim()).filter(Boolean);
+
+  // Twitter
+  if (process.env.TWITTER_API_KEY) {
+    const twitterResults: Record<string, string> = {};
+    for (const lang of socialLangs) {
+      try {
+        const res = await fetch(`${BASE_URL}/api/twitter-post?token=${secret || expected}&lang=${lang}`);
+        const body = await res.json().catch(() => ({}));
+        twitterResults[lang] = body.ok ? `ok (id ${body.tweetId})` : `failed: ${body.reason || body.error || res.status}`;
+      } catch (err) {
+        twitterResults[lang] = `error: ${String(err)}`;
+      }
+    }
+    results.twitter = twitterResults;
+  } else {
+    results.twitter = "skipped (no TWITTER_API_KEY)";
+  }
+
+  // Pinterest — card images served from /api/social/card
+  if (process.env.PINTEREST_ACCESS_TOKEN) {
+    const pinterestResults: Record<string, string> = {};
+    for (const lang of socialLangs) {
+      try {
+        const res = await fetch(`${BASE_URL}/api/pinterest-post?token=${secret || expected}&lang=${lang}`);
+        const body = await res.json().catch(() => ({}));
+        pinterestResults[lang] = body.ok ? `ok (id ${body.pinId})` : `failed: ${body.reason || body.error || res.status}`;
+      } catch (err) {
+        pinterestResults[lang] = `error: ${String(err)}`;
+      }
+    }
+    results.pinterest = pinterestResults;
+  } else {
+    results.pinterest = "skipped (no PINTEREST_ACCESS_TOKEN)";
+  }
+
+  // Reddit — en only (r/iching)
+  if (process.env.REDDIT_CLIENT_ID) {
+    try {
+      const res = await fetch(`${BASE_URL}/api/reddit-post?token=${secret || expected}&lang=en`);
+      const body = await res.json().catch(() => ({}));
+      results.reddit = body.ok ? `ok (id ${body.postId})` : `failed: ${body.reason || body.error || res.status}`;
+    } catch (err) {
+      results.reddit = `error: ${String(err)}`;
+    }
+  } else {
+    results.reddit = "skipped (no REDDIT_CLIENT_ID)";
+  }
+
+  // 6. Warm all pages (home, world-cup, snake-2027, AI tools)
   const warmResults: Record<string, string> = {};
   const pages = [
     "",

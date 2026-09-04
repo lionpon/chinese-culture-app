@@ -44,12 +44,19 @@ const MODULE_COLORS: Record<string, string> = {
 const ALL_MODULES = ["naming", "calendar", "divination", "palm-reading"];
 const FREE_MODULES = ["naming", "calendar", "divination"]; // palm-reading is never free
 
-function DailySocialPosts() {
+function DailySocialPosts({ token }: { token: string }) {
   const [posts, setPosts] = useState<{
     date: string;
-    posts: { en: Record<string, string>; ru: Record<string, string> };
+    posts: {
+      en: Record<string, string | { title: string; description: string }>;
+      ru: Record<string, string | { title: string; description: string }>;
+      ja: Record<string, string | { title: string; description: string }>;
+      ko: Record<string, string | { title: string; description: string }>;
+    };
   } | null>(null);
   const [copied, setCopied] = useState("");
+  const [posting, setPosting] = useState("");
+  const [postResult, setPostResult] = useState<Record<string, string>>({});
 
   useEffect(() => {
     fetch("/api/daily-social")
@@ -64,12 +71,30 @@ function DailySocialPosts() {
     setTimeout(() => setCopied(""), 2000);
   }
 
+  async function postNow(platform: string, lang: string) {
+    const label = `${platform}-${lang}`;
+    setPosting(label);
+    setPostResult((p) => ({ ...p, [label]: "" }));
+    try {
+      const r = await fetch(`/api/${platform}-post?token=${encodeURIComponent(token)}&lang=${lang}`);
+      const data = await r.json().catch(() => ({}));
+      setPostResult((p) => ({
+        ...p,
+        [label]: r.ok && data.ok ? `✓ posted (${data.tweetId || data.pinId || data.postId || "ok"})` : `✗ ${data.reason || data.error || `HTTP ${r.status}`}`,
+      }));
+    } catch (e) {
+      setPostResult((p) => ({ ...p, [label]: `✗ ${String(e)}` }));
+    }
+    setPosting("");
+  }
+
   if (!posts) return null;
 
   const platforms = [
-    { key: "twitter", label: "X / Twitter", icon: "𝕏" },
-    { key: "telegram", label: "Telegram", icon: "📣" },
-    { key: "reddit", label: "Reddit", icon: "💬" },
+    { key: "twitter", label: "X / Twitter", icon: "𝕏", action: "Post" },
+    { key: "telegram", label: "Telegram", icon: "📣", action: "Send" },
+    { key: "reddit", label: "Reddit", icon: "💬", action: "Post" },
+    { key: "pinterest", label: "Pinterest", icon: "📌", action: "Pin" },
   ];
 
   return (
@@ -77,29 +102,51 @@ function DailySocialPosts() {
       <h2 className="text-sm font-semibold text-stone-700 mb-4">
         📋 Daily Social Posts — {posts.date}
       </h2>
+      {!token && (
+        <p className="text-xs text-amber-600 mb-3">Enter the admin token at the top to enable direct posting.</p>
+      )}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {(["en", "ru"] as const).map((lang) => (
+        {(["en", "ru", "ja", "ko"] as const).map((lang) => (
           <div key={lang}>
             <h3 className="text-xs font-semibold text-stone-500 uppercase mb-3">
-              {lang === "en" ? "🇬🇧 English" : "🇷🇺 Русский"}
+              {lang === "en" ? "🇬🇧 English" : lang === "ru" ? "🇷🇺 Русский" : lang === "ja" ? "🇯🇵 日本語" : "🇰🇷 한국어"}
             </h3>
             <div className="space-y-3">
-              {platforms.map(({ key, label, icon }) => (
-                <div key={key} className="bg-stone-50 rounded-lg p-3">
-                  <div className="flex items-center justify-between mb-1.5">
-                    <span className="text-xs font-medium text-stone-600">{icon} {label}</span>
-                    <button
-                      onClick={() => copy(posts.posts[lang][key], `${lang}-${key}`)}
-                      className="text-xs px-2 py-0.5 rounded bg-stone-200 hover:bg-stone-300 text-stone-600 transition-colors"
-                    >
-                      {copied === `${lang}-${key}` ? "Copied!" : "Copy"}
-                    </button>
+              {platforms.map(({ key, label, icon, action }) => {
+                const content = posts.posts[lang][key];
+                const text = typeof content === "string" ? content : `${content.title}\n\n${content.description}`;
+                const labelKey = `${key}-${lang}`;
+                return (
+                  <div key={key} className="bg-stone-50 rounded-lg p-3">
+                    <div className="flex items-center justify-between mb-1.5 gap-2 flex-wrap">
+                      <span className="text-xs font-medium text-stone-600">{icon} {label}</span>
+                      <span className="flex items-center gap-2">
+                        {postResult[labelKey] && (
+                          <span className={`text-xs ${postResult[labelKey].startsWith("✓") ? "text-emerald-600" : "text-red-500"}`}>
+                            {postResult[labelKey]}
+                          </span>
+                        )}
+                        <button
+                          onClick={() => copy(text, labelKey)}
+                          className="text-xs px-2 py-0.5 rounded bg-stone-200 hover:bg-stone-300 text-stone-600 transition-colors"
+                        >
+                          {copied === labelKey ? "Copied!" : "Copy"}
+                        </button>
+                        <button
+                          onClick={() => postNow(key, lang)}
+                          disabled={!token || posting === labelKey}
+                          className="text-xs px-2 py-0.5 rounded bg-amber-600 hover:bg-amber-700 disabled:opacity-40 text-white transition-colors"
+                        >
+                          {posting === labelKey ? "…" : action}
+                        </button>
+                      </span>
+                    </div>
+                    <pre className="text-xs text-stone-700 whitespace-pre-wrap leading-relaxed font-sans">
+                      {text}
+                    </pre>
                   </div>
-                  <pre className="text-xs text-stone-700 whitespace-pre-wrap leading-relaxed font-sans">
-                    {posts.posts[lang][key]}
-                  </pre>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         ))}
@@ -509,7 +556,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* Daily Social Posts */}
-      <DailySocialPosts />
+      <DailySocialPosts token={token} />
 
       <p className="text-center text-xs text-stone-400 mt-8">
         Admin dashboard — protected by token. Set <code className="bg-stone-100 px-1 rounded">ADMIN_TOKEN</code> in your environment variables.

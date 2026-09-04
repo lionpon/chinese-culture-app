@@ -100,3 +100,23 @@ curl -s -X POST "https://www.culture-of-china.com/api/checkout" \
 - 无付费根因 = **客群错配**：俄卡被 PayPal 硬拒（PayPal 2020 退出俄）、乌卡不稳、大陆买家不可用；不是通道坏
 - RU 配额**从未生效**（Render 无国家头，见坑表）；修复时只限 DC 流量（RU/UA 真实用户是唯一转化客群）
 - Kyiv/Kharkiv 在 DC 城市黑名单里误伤真实用户（只影响统计标记，不影响拦截）
+
+---
+
+## 7. 社媒矩阵运维（9/4 起，营销第 2 步）
+
+**路由**：`/api/daily-social`（看当日 4 语言 × 4 平台文案）· `/api/twitter-post` · `/api/telegram-post` · `/api/pinterest-post` · `/api/reddit-post` · `/api/social/card`（卦象图/生肖图 PNG，公开无鉴权）
+
+**鉴权**：发帖路由一律 `?token=TELEGRAM_POST_SECRET` 或 `ADMIN_TOKEN`；cron 自带 token 串 4 语言。
+
+**凭证就绪检查**（curl 不出发帖，只看配置）：
+```
+curl "https://www.culture-of-china.com/api/twitter-post?token=$ADMIN&lang=en"   # 未配置返回 reason 说明
+curl "https://www.culture-of-china.com/api/social/card?date=$(date +%F)"        # 200 + image/png 即图片管线正常
+```
+
+**发帖验证（首次/换号后）**：`curl "/api/cron?token=$CRON"` 一次 → 看 JSON 各平台结果；双发风险 = cron 多触发（Render 单实例 cron 正常无此问题）。
+
+**图片管线**：字体子集 `public/fonts/cc-card.ttf`（Noto Sans SC OFL，201 字形）。新增字形需重跑：`node scripts/extract-glyphs.cjs` → pyftsubset（`scripts/find-hex-date.cjs` 可找任意卦象日期测卡）。
+
+**社媒账号被封/限流的处置**：社媒流量看 `visit.referrer` 归因（UTM 全链路已埋）；某平台连续 3 天 0 点击 → 停发该平台，宁可少发不触发 spam 判定。

@@ -110,7 +110,7 @@ PayPal Standard Checkout，支持信用卡支付。
 | 阶段 | 内容 | 时间 |
 |---|---|---|
 | **第 1 步（主攻）** | **程序化 SEO**：建 content-factory skill 固化语气/SEO 结构/4 语言标准 → 批量产出 ①日期长尾页（13 事件×12 月×4 语言，择日查询千万级需求）②生肖×主题矩阵（love/career/luck）③节日页。**先出英语单语言第一批验证** | 本周起 |
-| **第 2 步（并行）** | **社媒矩阵复活**：Twitter/TG 每日一卦自动化（`twitter-post`/`telegram-post` API 已现成）+ Pinterest 图钉流（卦象图/生肖运势图）+ Reddit 高意图社区（r/iching 等）参与导流 | 本周起 |
+| **第 2 步（并行）** | **社媒矩阵复活**：Twitter/TG 每日一卦自动化（`twitter-post`/`telegram-post` API 已现成）+ Pinterest 图钉流（卦象图/生肖运势图）+ Reddit 高意图社区（r/iching 等）参与导流 | 本周起（✅ 9/4 基建已完工，见 9/4 记录；待用户建号填凭证即自动开跑） |
 | **第 3 步** | **数字人录播短视频**：开源方案（MuseTalk/SadTalker + Edge-TTS + OBS，$0-20/月）批量 30s Shorts → YouTube Shorts/TikTok/Reels，用录播数据验证内容吸引力 | 两周后（~9/11）|
 | **第 4 步（条件触发）** | **数字人直播**：形式 = "I Ching Live：评论区提问现场起卦"（tarot 直播赛道的差异化切入）。触发条件 = 录播验证有效 + 粉丝门槛（TikTok LIVE 需 1000 粉）。商业方案 $100-500/月暂不上 | 看转化效益 |
 
@@ -137,6 +137,53 @@ PayPal Standard Checkout，支持信用卡支付。
 - **关闭**：访问任何页面 `?test=0`
 - **实现**：middleware 设置 `cc_test_mode` cookie → AnalyticsTracker 客户端跳过 → `/api/track` 服务端跳过
 - 部署前务必确认已关闭测试模式（或关闭不影响，只是你自己的访问不被统计）
+
+## 近期状态 (2026-09-04)
+
+- **线上版本**：`96b0a93`（9/3 全项目检查）
+- 本次为本地开发完成，**尚未提交/部署**（等你确认后 push）
+
+### 🚀 营销第 2 步：社媒矩阵自动化基建完工（代码全部就绪，只差账号凭证）
+
+**新增/重写的模块**（`src/lib/social/` + 4 个 API 路由）：
+
+| 平台 | 实现 | 状态 |
+|---|---|---|
+| **X/Twitter** | `twitter-api-v2` OAuth 1.0a 真实发帖；每日一卦（4 语言）+ 卦象卡片图；`/api/twitter-post` 重写（原世界杯占位内容废弃） | 代码 ✅，待凭证（免费档 500 帖/月够用） |
+| **Telegram** | 既有 `/api/telegram-post` 保留；修复促销帖过时价格 $1 → $5.99 + 加 UTM | ✅ 已可用（需 BotFather 建号） |
+| **Pinterest** | 新增 `/api/pinterest-post`（v5 API）：每日卦象图 Pin（4 语言）+ 生肖运势图 Pin（`kind=zodiac`） | 代码 ✅，待 business 账号 + OAuth token |
+| **Reddit** | 新增 `/api/reddit-post`：password-grant OAuth，r/iching 每日一卦 **self-post（内容为主，链接在文中）**，en-only | 代码 ✅，待 script app 凭证 |
+| **图片生成** | 新增 `src/lib/social/images.ts` + `/api/social/card`：1000×1500 卦象图/生肖图 PNG。**文字用 opentype.js 转 SVG path**（内置 45KB Noto Sans SC 子集字体 `public/fonts/cc-card.ttf`，服务器无需系统字体）。卦线由上下卦象推导（修掉了 17–50 卦 `lines: []` 会画不出卦线的问题） | ✅ 已验证（2026 年马年 Fire element 生肖图正确） |
+
+**统一内容库**：`src/lib/social/content.ts` = 每日一卦文案唯一来源（`/api/daily-social`、各发帖路由、cron 共用），4 语言 × 4 平台。合规升级：
+- 所有链接带 UTM（`utm_source=<platform>&utm_medium=social&utm_campaign=daily-hexagram&utm_content=<lang>`），可验证 8/21 referrer 归因修复
+- 长文帖（TG/Reddit/Pin description）带 "for entertainment purposes only" 免责声明
+- Cron 新增 gated 步骤：`TWITTER_API_KEY` / `PINTEREST_ACCESS_TOKEN` / `REDDIT_CLIENT_ID` 存在才发；`SOCIAL_LANGS` 控制语言
+- Admin 面板：Daily Social Posts 卡升级为 4 语言 × 4 平台，新增 **Post/Pin 直发按钮**（用 admin token）
+
+**需要你做的事（凭证）**：
+1. X 开发者账号（developer.x.com，Read+Write）→ 4 个 key。**发帖账号 = @Leolisgob**（用户自己的号）
+2. Pinterest business 账号 → developers.pinterest.com 建 app → OAuth token + board_id
+3. Reddit script app（reddit.com/prefs/apps）→ client id/secret + 账号密码 + 目标 sub（默认 iching）
+4. Telegram：@BotFather 建 bot → `TELEGRAM_BOT_TOKEN`/`TELEGRAM_CHAT_ID`
+   → 全部填 Render 环境变量（`render.yaml` 已加键位），cron 自动开跑，无需改代码
+
+### 🇺🇸 卦解释英文 native 化（按你要求）
+
+- 逐条审计 `src/data/hexagrams.ts` 英文，修复 12 处机翻/电报体痕迹（例：9.3 "Man and wife roll their eyes"→"Husband and wife turn against each other"；48 "benefits everyone unchanged"→"serves the common good — the well itself never changes"；16.2 "Not a whole day"→"he does not let a whole day pass"）。卦辞/爻辞引文保留 Wilhelm/Baynes 经典译本（母语译者出版译本，读者可辨识）
+- **标准固化进 content-factory SKILL.md**（§3 EN 新增"卦/易经英文内容标准"）：引文不重译；新写文字禁名词电报体/中文结构直译；交付前朗读测试
+- 现状：`ADVICE_MAP`（64 卦建议）与 `HEXAGRAM_GUIDE`（SEO 文章）本就达标，作为基线
+
+### ⏳ 待办（更新）
+
+1. **凭证填齐后**：先手动触发一次 `/api/cron?token=...` 验证各平台出帖，观察 2-3 天再放开 cron 自动
+2. 观察社媒引流 UTM 数据（约 9/10 复核时一起看 referrer 归因）
+3. Reddit 前 1-2 周以「参与回复为主、每日一帖为辅」，避免被社区判为 spam；若 sub 有每周发帖限制，改 2-3 帖/周
+4. 社媒账号简介/主页链接补上 UTM；Pin 图后续可扩生肖运势图流（代码已就绪 `kind=zodiac`）
+5. 未补齐项（不在本轮范围）：17–50 卦（除 29/30）爻辞 `lines: []` 内容空缺——影响卦解释页变爻展示，建议后续用 content-factory 标准补齐 64 卦全量爻辞
+6. 发帖幂等（防 cron 重复触发双发）当前靠 Render cron 单实例保证，若接入 GitHub Actions 双触发需加 dedupe 表
+
+---
 
 ## 近期状态 (2026-09-03)
 

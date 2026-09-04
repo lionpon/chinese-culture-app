@@ -1,46 +1,64 @@
-import { NextResponse } from "next/server";
-import { getDailyPredictions } from "@/lib/world-cup";
+// GET /api/twitter-post?token=...&lang=en — post today's daily hexagram to X/Twitter
+// (营销第 2 步 — 每日一卦自动化, replaces the old world-cup placeholder)
+// POST /api/twitter-post?token=... { text } — post an arbitrary tweet
 
-// Twitter post API — ready but gated behind TWITTER_ENABLED env var.
-// When user gets a Twitter account and API key, set TWITTER_ENABLED=true
-// and configure the Twitter API credentials.
+import { NextRequest, NextResponse } from "next/server";
+import { isAuthorizedPost } from "@/lib/social/auth";
+import { getDailySocialPosts, type SocialPostTexts } from "@/lib/social/content";
+import { postTweet, twitterConfigured } from "@/lib/social/twitter";
+import { renderHexagramCardPng } from "@/lib/social/images";
+import { allHexagrams } from "@/data/hexagrams";
 
-export async function GET() {
-  const enabled = process.env.TWITTER_ENABLED === "true";
+export const runtime = "nodejs";
 
-  if (!enabled) {
+export async function GET(req: NextRequest) {
+  if (!isAuthorizedPost(req)) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  if (!twitterConfigured()) {
     return NextResponse.json({
       ok: false,
-      reason: "Twitter integration not enabled. Set TWITTER_ENABLED=true to activate.",
+      reason: "Twitter not configured. Set TWITTER_API_KEY / TWITTER_API_SECRET / TWITTER_ACCESS_TOKEN / TWITTER_ACCESS_SECRET.",
     });
   }
 
-  const predictions = getDailyPredictions();
-  if (predictions.length === 0) {
-    return NextResponse.json({ ok: true, message: "No matches today.", predictions: [] });
+  const lang = (req.nextUrl.searchParams.get("lang") || "en") as "en" | "ru" | "ja" | "ko";
+  const withImage = req.nextUrl.searchParams.get("image") !== "0"; // default: attach card image
+
+  try {
+    const social = getDailySocialPosts();
+    const posts = social.posts;
+    const texts: SocialPostTexts = posts[lang] || posts.en;
+    const hex = allHexagrams.find((x) => x.id === social.hexagram.id);
+
+    let media: Buffer | undefined;
+    if (withImage && hex) {
+      media = await renderHexagramCardPng(hex, social.date);
+    }
+
+    const { id } = await postTweet(texts.twitter, media);
+    return NextResponse.json({ ok: true, tweetId: id, lang, withImage: Boolean(media) });
+  } catch (err) {
+    return NextResponse.json({ ok: false, error: String(err) }, { status: 500 });
   }
-
-  // Build tweet text for today's matches
-  const tweets = predictions.map((p) => {
-    const hex = p.hexagram;
-    const text = `⚽ ${p.match.home} vs ${p.match.away}
-🔮 I Ching Hexagram ${hex.id}: ${hex.nameEn} (${hex.nameZh})
-📜 "${hex.judgmentEn}"
-💭 ${p.footballInterpretation}
-
-#WorldCup2026 #IChing #${p.match.home.replace(/\s+/g, "")} #${p.match.away.replace(/\s+/g, "")}`;
-
-    return { matchId: p.match.id, text: text.slice(0, 280) };
-  });
-
-  // TODO: When Twitter API credentials are configured, post tweets here
-  // const Twitter = require("twitter-api-v2");
-  // const client = new Twitter.TwitterApi({ ... });
-  // for (const t of tweets) { await client.v2.tweet(t.text); }
-
-  return NextResponse.json({
-    ok: true,
-    message: `Generated ${tweets.length} tweets (not posted — TWITTER_ENABLED is true but API client not yet implemented).`,
-    tweets,
-  });
 }
+
+export async function POST(req: NextRequest) {
+  if (!isAuthorizedPost(req)) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+  if (!twitterConfigured()) {
+    return NextResponse.json({ ok: false, reason: "Twitter not configured." });
+  }
+  try {
+    const body = (await req.json()) as { text?: string };
+    if (!body.text || typeof body.text !== "string") {
+      return NextResponse.json({ error: "Text required" }, { status: 400 });
+    }
+    const { id } = await postTweet(body.text);
+    return NextResponse.json({ ok: true, tweetId: id });
+  } catch (err) {
+    return NextResponse.json({ ok: false, error: String(err) }, { status: 500 });
+  }
+}
+

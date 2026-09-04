@@ -44,21 +44,22 @@ export function buildDailyHexagramPost(): string {
 }
 
 export function buildSitePromoPost(): string {
+  const utm = "?utm_source=telegram&utm_medium=social&utm_campaign=site-promo&utm_content=en";
   return `<b>🏮 Chinese Culture Studio</b>
 
 Discover the wisdom of ancient Chinese classics:
 
 <b>🎋 Chinese Name</b> — Get your authentic name based on Five Elements
-${BASE_URL}/naming
+${BASE_URL}/naming${utm}
 
 <b>☯️ I Ching Divination</b> — Consult the Book of Changes
-${BASE_URL}/divination
+${BASE_URL}/divination${utm}
 
 <b>📅 Auspicious Dates</b> — Find the best dates for important events
-${BASE_URL}/calendar
+${BASE_URL}/calendar${utm}
 
 <b>✋ Palm Reading</b> — Classical palmistry analysis
-${BASE_URL}/palm-reading
+${BASE_URL}/palm-reading${utm}
 
-<i>Pay what you want (from $1). For cultural appreciation.</i>`;
+<i>Pay what you want (from $5.99). For cultural appreciation and entertainment purposes only.</i>`;
 }
