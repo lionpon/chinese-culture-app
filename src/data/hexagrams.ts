@@ -1,6 +1,8 @@
 // 64 Hexagram data with Chinese text and English translations
 // Based on 周易 (I Ching / Book of Changes)
 
+import { midHexagramLines } from "./hexagram-lines";
+
 export interface Hexagram {
   id: number;
   nameZh: string;
@@ -406,4 +408,6 @@ const midHexagrams: Hexagram[] = [
   { id: 62, nameZh: "雷山小过", nameEn: "Small Excess", pinyin: "Léi Shān Xiǎo Guò", upperTrigram: "震", lowerTrigram: "艮", judgment: "亨，利贞，可小事，不可大事。飞鸟遗之音，不宜上，宜下，大吉。", judgmentEn: "Success. Perseverance furthers. Small things may be done; great things should not. The flying bird leaves its message: it is not good to strive upward; it is good to remain below. Great good fortune.", description: "Thunder over Mountain — small excess in modest matters. Prefer humility and restraint over grand ambitions now.", descriptionEn: "Small excess in minor matters. Stay humble — this is not the time for grand ambitions.", lines: [] },
 ];
 
-export const allHexagrams = [...hexagrams, ...midHexagrams].sort((a, b) => a.id - b.id);
+export const allHexagrams = [...hexagrams, ...midHexagrams]
+  .sort((a, b) => a.id - b.id)
+  .map((h) => (h.lines.length > 0 ? h : { ...h, lines: midHexagramLines[h.id] || [] }));

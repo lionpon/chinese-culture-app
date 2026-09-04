@@ -174,14 +174,22 @@ PayPal Standard Checkout，支持信用卡支付。
 - **标准固化进 content-factory SKILL.md**（§3 EN 新增"卦/易经英文内容标准"）：引文不重译；新写文字禁名词电报体/中文结构直译；交付前朗读测试
 - 现状：`ADVICE_MAP`（64 卦建议）与 `HEXAGRAM_GUIDE`（SEO 文章）本就达标，作为基线
 
+### 📜 64 卦全量爻辞补齐（9/4 同日完成）
+
+- 缺口：44 卦 `lines: []`（17–50、53–62）——影响卦解释页变爻展示 + 变卦推导的爻辞引用
+- 新增 `src/data/hexagram-lines.ts`：264 条爻辞（44 卦 × 6 爻），中文 = 传世本周易原文，英文 = Wilhelm/Baynes 传统 + native 润色
+- `allHexagrams` 导出时自动合并缺失爻辞；校验脚本 `scripts/check-hexagram-lines.cjs` 断言：64 卦 × 6 爻齐全、无空 textEn、**isYang 与上下卦象几何全量一致**
+- 验证：14 天 daily 页变爻区块全渲染；divination 起卦流程 E2E 正常
+- commit `feat: 64卦全量爻辞补齐 (44卦缺口)`（本次）
+
 ### ⏳ 待办（更新）
 
 1. **凭证填齐后**：先手动触发一次 `/api/cron?token=...` 验证各平台出帖，观察 2-3 天再放开 cron 自动
 2. 观察社媒引流 UTM 数据（约 9/10 复核时一起看 referrer 归因）
 3. Reddit 前 1-2 周以「参与回复为主、每日一帖为辅」，避免被社区判为 spam；若 sub 有每周发帖限制，改 2-3 帖/周
 4. 社媒账号简介/主页链接补上 UTM；Pin 图后续可扩生肖运势图流（代码已就绪 `kind=zodiac`）
-5. 未补齐项（不在本轮范围）：17–50 卦（除 29/30）爻辞 `lines: []` 内容空缺——影响卦解释页变爻展示，建议后续用 content-factory 标准补齐 64 卦全量爻辞
-6. 发帖幂等（防 cron 重复触发双发）当前靠 Render cron 单实例保证，若接入 GitHub Actions 双触发需加 dedupe 表
+5. 发帖幂等（防 cron 重复触发双发）当前靠 Render cron 单实例保证，若接入 GitHub Actions 双触发需加 dedupe 表
+6. （可选）爻辞全量后可给卦解释页加「六爻逐爻详解」区块，提升页面深度（SEO 利好，量力而行）
 
 ---
 
