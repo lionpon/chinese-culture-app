@@ -23,7 +23,11 @@
 **速查脚本已入库**：`node scripts/review-queries.cjs`（标准复核五件套：RU 配额 / datecheck 埋点 / 日历漏斗 / Referrer / 付费）
 - 环境变量 `SINCE` 指定窗口起点（默认 `2026-08-21T00:00:00+08:00`）
 
-**付费链路回归 E2E**：`node scripts/e2e-purchase-flow.cjs`（24 项断言：免费流程 → 解锁 → PDT 付费 → 防重复扣费 → 僵尸清理 → paid 重试）。前置：dev server 需带 `PAYPAL_SANDBOX=true TEST_VERIFY_PAYPAL=true RESEND_API_KEY=` 启动；测试行自动清理（标记词 `E2E-UNLOCK-FIX`）。
+**付费链路回归 E2E**（46 项断言，9/17 定版）：
+- `node scripts/e2e-purchase-flow.cjs`（28 项：免费流程 → 解锁 → PDT 付费 → 防重复扣费 → 僵尸清理 → paid 重试 → email 采集/继承）
+- `node scripts/e2e-purchase-supplement.cjs`（18 项：付费墙 email 兜底、IPN/PDT 全路径、naming/divination/dream 表单 UI 采集）
+- 前置：dev server 需带 `PAYPAL_SANDBOX=true TEST_VERIFY_PAYPAL=true RESEND_API_KEY=` 启动；测试行自动清理（标记词 `E2E-UNLOCK-FIX` / `E2E-SUPPLEMENT`）
+- ⚠️ 套件用 stub 模拟 PayPal 验证通过（`TEST_TX_PAID`）；真实 PayPal 网络层自 8/27 实弹验证后未动，下一笔真实付款是终极验证
 
 **Purchase 状态机（9/17 定案）**：`pending`（等付款/IPN 验证）→ `completed`（paid=false 免费试用 / paid=true 已付款）；未付 >24h → `abandoned`（`/api/result` 返回 abandoned + unlockFrom，success 页给「返回免费结果」入口）；paid=true 但 result 为空的 pending 由 cron 每日自动重试生成（`/api/cron` 的 purchaseRecovery 步骤）。
 
