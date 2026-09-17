@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { hasFreeUses, consumeFreeUse, updateRemaining } from "./free-tier";
+import { consumeFreeUse, updateRemaining } from "./free-tier";
 import { trackClick } from "./track";
 
 export function useCheckout(type: string) {
@@ -9,7 +9,12 @@ export function useCheckout(type: string) {
 
   async function checkout(data: Record<string, unknown>, forcePaid?: boolean) {
     setLoading(true);
-    const free = forcePaid ? false : hasFreeUses();
+    // The server is the single source of truth for the free quota (cookie +
+    // DB fingerprint). Never downgrade to a paid flow based on localStorage
+    // alone — a stale/mismatched client state would either surprise the user
+    // with a PayPal redirect or dead-end them in a 403 alert with no paid
+    // button. Callers pass forcePaid when the UI is the paid-only variant.
+    const free = !forcePaid;
     // Auto-detect locale from URL path (e.g. /ru/naming → ru)
     const pathLocale = window.location.pathname.split("/")[1];
     const locale = ["ru", "ja", "ko"].includes(pathLocale) ? pathLocale : "en";
@@ -24,7 +29,10 @@ export function useCheckout(type: string) {
 
       if (result.error === "free_limit_reached") {
         updateRemaining(0);
-        alert("Free trial limit reached. Please choose a paid option to continue.");
+        // Tell the badge/listeners the free tier is gone so the UI switches
+        // to the paid variant instead of leaving a dead "free" button.
+        window.dispatchEvent(new Event("cc-free-tier-changed"));
+        alert("Your free reading was already used. Use the gold button below to unlock your full result.");
         return;
       }
 

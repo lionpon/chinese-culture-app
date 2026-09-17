@@ -13,6 +13,13 @@ export default function FreeTierBadge({ initialRemaining }: { initialRemaining?:
     // Sync with localStorage (catches cross-tab changes)
     const actual = getFreeTier().remaining;
     if (actual !== remaining) setRemaining(actual);
+
+    // Server rejected a free request (free quota exhausted server-side) —
+    // useCheckout dispatches this so the badge disappears and the UI no
+    // longer advertises a free reading the user cannot get.
+    const sync = () => setRemaining(getFreeTier().remaining);
+    window.addEventListener("cc-free-tier-changed", sync);
+    return () => window.removeEventListener("cc-free-tier-changed", sync);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

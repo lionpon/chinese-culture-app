@@ -184,7 +184,9 @@ export default function NamingClient({ initialHasFree }: { initialHasFree: boole
     // Track BEFORE checkout — checkout() redirects on success, and beacons
     // fired after navigation starts get cancelled by the browser.
     trackClick("form_submit_naming");
-    await checkout(getFormData(e.currentTarget));
+    // Paid-only UI variant (free already used) submits with paid intent;
+    // the free variant always requests free and lets the server decide.
+    await checkout(getFormData(e.currentTarget), hasFree ? undefined : true);
   }
 
   function handlePaidClick() {

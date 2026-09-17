@@ -28,7 +28,7 @@ export default function DreamClient({ initialHasFree }: { initialHasFree: boolea
  dreamType: form.dreamType.value || undefined,
  focus: form.interpretFocus.value || undefined,
  amount,
- });
+ }, hasFree ? undefined : true);
  }
 
  function handlePaidClick() {

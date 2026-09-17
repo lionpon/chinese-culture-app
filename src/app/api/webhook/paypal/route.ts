@@ -32,6 +32,17 @@ export async function POST(req: NextRequest) {
     }
 
     const input = JSON.parse(purchase.input);
+
+    // Unlock flow: result was copied from the free preview at creation time.
+    // Mark paid+completed as-is — never regenerate what the buyer previewed.
+    if (purchase.result) {
+      await prisma.purchase.update({
+        where: { id: purchaseId },
+        data: { status: "completed", paid: true },
+      });
+      return NextResponse.json({ received: true });
+    }
+
     let result: unknown;
 
     switch (purchase.type) {

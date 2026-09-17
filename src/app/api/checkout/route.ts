@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { buildPayPalCheckoutUrl } from "@/lib/paypal";
+import { buildPayPalCheckoutUrl, getAppUrl } from "@/lib/paypal";
 import { prisma } from "@/lib/db";
 import { translateResultEnFields } from "@/lib/translate";
 import { generateNames, analyzeName } from "@/lib/naming";
@@ -104,8 +104,18 @@ export async function POST(req: NextRequest) {
 
     const amount = typeof input.amount === "number" && input.amount >= 1 ? input.amount : 5.99;
 
+    // Cancelling at PayPal must return the buyer to the service form they
+    // came from (never the bare homepage) so their input context survives.
+    const locale = typeof input.locale === "string" && ["ru", "ja", "ko"].includes(input.locale) ? input.locale : "en";
+    const pagePath =
+      type === "naming" ? "/naming" :
+      type === "calendar" ? "/calendar" :
+      type === "divination" ? "/divination" :
+      type === "palm-reading" ? "/palm-reading" : "/dream-interpretation";
+    const cancelReturn = `${getAppUrl()}${locale === "en" ? "" : `/${locale}`}${pagePath}`;
+
     // PayPal Standard — supports PayPal accounts + credit/debit cards for overseas users
-    const url = buildPayPalCheckoutUrl(purchase.id, type, amount);
+    const url = buildPayPalCheckoutUrl(purchase.id, type, amount, { cancelReturn });
     return NextResponse.json({ url });
   } catch (error) {
     console.error("Checkout error:", error);

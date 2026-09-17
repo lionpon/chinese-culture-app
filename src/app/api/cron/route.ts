@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { generateReport } from "@/lib/report";
 import { pingSitemaps } from "@/lib/sitemap-ping";
 import { sendDailyHexagramEmail } from "@/lib/email";
+import { runPurchaseRecovery } from "@/lib/purchase-recovery";
 import { BASE_URL } from "@/lib/config";
 
 export const runtime = "nodejs";
@@ -16,6 +17,15 @@ export async function GET(req: NextRequest) {
     results.report = "ok";
   } catch (err) {
     results.report = { error: String(err) };
+  }
+
+  // 1b. Purchase recovery — conversion safety net:
+  //     • unpaid pending >24h → abandoned (zombie cleanup)
+  //     • paid=true pending without result → retry generation
+  try {
+    results.purchaseRecovery = await runPurchaseRecovery();
+  } catch (err) {
+    results.purchaseRecovery = { error: String(err) };
   }
 
   // 2. Ping sitemaps to all search engines

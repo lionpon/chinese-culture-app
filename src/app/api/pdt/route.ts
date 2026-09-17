@@ -51,6 +51,20 @@ export async function POST(req: NextRequest) {
       console.warn(`PDT amount mismatch: paid $${paidAmount}, expected $${expectedAmount}, purchase ${purchase_id}`);
     }
 
+    // Unlock flow: result was copied from the free preview at creation time.
+    // Never regenerate — the buyer must receive exactly what they previewed.
+    if (purchase.result) {
+      await prisma.purchase.update({
+        where: { id: purchase_id },
+        data: { status: "completed", paid: true },
+      });
+      return NextResponse.json({
+        status: "completed",
+        type: purchase.type,
+        result: JSON.parse(purchase.result),
+      });
+    }
+
     try {
       let result: unknown;
 

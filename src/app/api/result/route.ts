@@ -177,6 +177,17 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ status: "pending" });
   }
 
+  if (purchase.status === "abandoned") {
+    // Unpaid pending that expired (>24h) — tell the buyer payment was never
+    // received, and hand them the id of the free preview they came from.
+    let unlockFrom: string | null = null;
+    try {
+      const input = JSON.parse(purchase.input);
+      if (typeof input.unlockFrom === "string") unlockFrom = input.unlockFrom;
+    } catch { /* no metadata */ }
+    return NextResponse.json({ status: "abandoned", unlockFrom });
+  }
+
   if (purchase.status === "failed") {
     return NextResponse.json({ status: "failed", error: "Processing failed. Please contact support for assistance." });
   }

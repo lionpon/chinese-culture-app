@@ -14,7 +14,7 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import { Link } from "@/navigation";
 import { trackClick } from "@/lib/track";
 
-type ResultState = "loading" | "completed" | "failed" | "timeout";
+type ResultState = "loading" | "completed" | "failed" | "timeout" | "abandoned";
 
 function SuccessContent() {
   const t = useTranslations("success");
@@ -27,6 +27,7 @@ function SuccessContent() {
   const [type, setType] = useState<string>("");
   const [result, setResult] = useState<NamingResult | CalendarResult | DivinationResult | PalmReadingResult | DreamInterpretationResult | null>(null);
   const [error, setError] = useState("");
+  const [unlockFrom, setUnlockFrom] = useState<string | null>(null);
 
   const { setNamingResult, setCalendarResult, setDivinationResult, setPalmReadingResult, setDreamInterpretationResult } = useResults();
 
@@ -60,6 +61,11 @@ function SuccessContent() {
         if (!isFree) trackClick("pay_failed");
         setState("failed");
         setError(data.error || t("failedBody"));
+        return true;
+      } else if (data.status === "abandoned") {
+        trackClick("pay_abandoned");
+        setUnlockFrom((data as { unlockFrom?: string | null }).unlockFrom ?? null);
+        setState("abandoned");
         return true;
       }
       return false;
@@ -135,6 +141,10 @@ function SuccessContent() {
           setState("failed");
           setError(t("failedBody"));
           return true;
+        } else if (data.status === "abandoned") {
+          setUnlockFrom((data as { unlockFrom?: string | null }).unlockFrom ?? null);
+          setState("abandoned");
+          return true;
         }
       } catch {}
       if (attempts >= 30) {
@@ -195,6 +205,28 @@ function SuccessContent() {
           </Link>
         </div>
         <p className="text-xs text-stone-400 mt-6">{t("timeoutFooter")}</p>
+      </div>
+    );
+  }
+
+  if (state === "abandoned") {
+    return (
+      <div className="text-center py-16 max-w-md mx-auto">
+        <p className="text-amber-600 font-medium text-lg mb-2">{t("abandonedTitle")}</p>
+        <p className="text-stone-500 text-sm mb-6">{t("abandonedBody")}</p>
+        <div className="flex gap-3 justify-center">
+          {unlockFrom && (
+            <Link
+              href={`/success?purchase_id=${unlockFrom}&free=1`}
+              className="px-5 py-2.5 rounded-xl text-sm font-medium btn-primary"
+            >
+              {t("backToFreeResult")}
+            </Link>
+          )}
+          <Link href="/" className="px-5 py-2.5 rounded-xl text-sm border border-stone-300 text-stone-500 hover:bg-stone-50 transition-colors">
+            {t("backHome")}
+          </Link>
+        </div>
       </div>
     );
   }

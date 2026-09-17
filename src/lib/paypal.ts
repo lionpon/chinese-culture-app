@@ -22,7 +22,12 @@ export const PRODUCT_NAMES: Record<string, string> = {
   "dream-interpretation": "Dream Interpretation — Chinese Culture Studio",
 };
 
-export function buildPayPalCheckoutUrl(purchaseId: string, type: string, amount = 1): string {
+export function buildPayPalCheckoutUrl(
+  purchaseId: string,
+  type: string,
+  amount = 1,
+  opts?: { cancelReturn?: string }
+): string {
   const appUrl = getAppUrl();
   const itemName = PRODUCT_NAMES[type] || "Chinese Culture Reading";
 
@@ -37,7 +42,10 @@ export function buildPayPalCheckoutUrl(purchaseId: string, type: string, amount 
     // rm=2 → PayPal POSTs all vars (tx, custom) to this server route,
     // which converts them into a GET redirect for the success page.
     return: `${appUrl}/api/paypal/return?purchase_id=${purchaseId}`,
-    cancel_return: `${appUrl}/`,
+    // Cancelling must never strand the buyer on the homepage — send them back
+    // to the page that triggered the payment (unlock flow: the original free
+    // result page with the paywall CTA; form flow: the service form).
+    cancel_return: opts?.cancelReturn || `${appUrl}/`,
     notify_url: `${appUrl}/api/webhook/paypal`,
     rm: "2",  // POST with tx param → enables PDT instant verification
     no_note: "1",

@@ -138,6 +138,40 @@ PayPal Standard Checkout，支持信用卡支付。
 - **实现**：middleware 设置 `cc_test_mode` cookie → AnalyticsTracker 客户端跳过 → `/api/track` 服务端跳过
 - 部署前务必确认已关闭测试模式（或关闭不影响，只是你自己的访问不被统计）
 
+## 近期状态 (2026-09-17)
+
+- **线上版本**：`8a35997`（9/4 卦爻辞）
+- 本次：转化链路 0-bug 修复（pending 卡死 + 付费墙全路径），已 E2E 24/24 通过
+
+### 🔧 触发背景：9/5–9/17 流量复核发现 3 次史上首次 paywall_unlock_click，但全部卡在 PayPal 后流失
+
+三个真实用户（MY travel 择日 / CN 广州俄名起名 / DE 法兰克福俄名起名）点了解锁、跳了 PayPal、都没付款。审计代码后发现转化链路 6 处系统性缺陷：
+
+### ✅ 修复清单（全部已修 + 验证）
+
+| # | 缺陷 | 修复 |
+|---|---|---|
+| 1 | **cancel_return 指向首页**——用户在 PayPal 放弃/取消后被打回首页，免费结果页（含付费墙 CTA）永远丢失 | `buildPayPalCheckoutUrl` 增加 `cancelReturn` 参数；unlock 流 → 原免费结果页 `/success?purchase_id=P1&free=1`；表单付费流 → 原服务表单页（含 locale 前缀） |
+| 2 | **付费后结果重新生成**——PDT/IPN 验证付款后会重新 AI 生成，用户买到的 ≠ 他预览的 | unlock 创建的 P2 **复制原 P1 完整 result**（不重新生成）；PDT/IPN 见 `result` 已存在 → 只标记 paid+completed |
+| 3 | **paid=true 但生成失败的行无后台重试**——IPN 返回 200 后 PayPal 停止重投，用户付了钱永远拿不到结果 | 新增 `src/lib/purchase-recovery.ts`：cron 每日扫描 paid+pending+无结果行自动重试生成 |
+| 4 | **僵尸 pending 无生命周期**——12 行未付弃单永久挂起污染漏斗 | recovery 把 >24h 未付 pending 标记为 `abandoned`（IPN/PDT 迟到仍可正常完成）；`/api/result` 返回明确 abandoned 状态；success 页新增「Payment not completed + 返回免费结果」UI（4 语言） |
+| 5 | **已付费用户再点解锁会二次建单（重复扣费风险）** | unlock 先查 `"unlockFrom":"<P1>"` 的 paid+completed 行 → 直接跳转已购结果页，不建新单 |
+| 6 | **unlock 双击产生双订单** | 5 分钟窗口内复用已有 unpaid pending（幂等） |
+| 7 | **免费额度 403 死胡同**——服务端拒绝时客户端只有 alert，用户找不到付费按钮 | useCheckout 免费意图一律由服务端裁决（`free = !forcePaid`，不再信 localStorage）；403 时派发 `cc-free-tier-changed` 事件刷新 badge，alert 指向金色付费按钮；付费态 UI（`hasFree=false`）提交时显式带 paid 意图，杜绝"以为是免费结果被拉去 PayPal" |
+
+### 🧪 验证（本次全部通过）
+
+- `tsc --noEmit` / `next lint` / `next build` 全绿
+- **E2E 24/24**（`scripts/e2e-purchase-flow.cjs`，Playwright + dev server `PAYPAL_SANDBOX=true TEST_VERIFY_PAYPAL=true`）：免费流程 → 解锁 → cancel_return 指向 → P2 属性（result 复制/unlockFrom）→ 幂等 → PDT stub 付费完成（result 不被重生成）→ 防重复扣费 → 完整结果读取 → 403 免费额度 → cron 僵尸清理 → paid 重试 → abandoned API/UI → 命名页回归
+- 生产库当场治理：12 行僵尸 pending 已全部转 abandoned（pending=0），无 E2E 残留
+- ⚠️ 注意：12 行 abandoned 均为未付款弃单（paid 全 false），无真实付费丢失
+
+### 顺带清理
+
+- 删除 `src/app/[locale` 垃圾目录（某次历史会话未转义方括号产生的空目录，git 未跟踪）
+
+---
+
 ## 近期状态 (2026-09-04)
 
 - **线上版本**：`96b0a93`（9/3 全项目检查）
