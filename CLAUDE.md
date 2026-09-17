@@ -101,6 +101,32 @@ PayPal Standard Checkout，支持信用卡支付。
 > - ❌ 不加大陆收单（不针对大陆买家，见产品定位）
 > - RU 覆盖的唯一正路 = RU 本地收单 + RU 主体，对当前不现实；策略 = 接受 RU 暂付不了，先做 UA/EU/JP/US 第一单
 
+> **付款体验评估与决策（2026-09-17，用户已定案）**：
+>
+> 背景：付款体验差、多次丢生意（3 个解锁用户全流失 + 12 行弃单 $46.93）。用户持有一张**蚂蚁银行(香港)个人借记卡**（非银联、非 Visa，即 Mastercard），评估能否用它新增付费路径。
+>
+> **评估结论（勿重复探索）**：
+> - 银行卡是支出工具，**不能收商户款**；收款必须经持牌收单机构（PSP）结算到**与商户主体同名的账户**。个人卡/个人户 = 不能作为收款终点（虚拟银行 TOS 禁止个人户商业收款 + PSP 账户名校验）
+> - 新增收单通道（Stripe 等）**必须有法律主体**；香港独资（BR 登记 ~HK$250/年）要求 HKID，大陆居民办不了 → 现实路径只剩香港有限公司（~HK$5-7k 首年 + ~HK$5k 年维护）
+> - **Stripe 类目风险（上主体前必须核实）**：Stripe 受限行业清单涉占卜/算命类目，可能开户被拒或运营中封号冻结资金；需先书面确认 "digital entertainment reading, labeled for entertainment purposes" 可过审，不行则换 2Checkout/PayPro Global 逐家核实
+> - 俄卡问题**任何 PSP 都救不了**（Visa/MC 2022 停俄，制裁层面）
+>
+> **用户决策（2026-09-17）**：
+> 1. ❌ **暂不注册香港公司**——0 转化阶段主体是赌注不是放大器；触发条件 = **第一笔真实付费到账后再评估**（届时先核 Stripe 类目）
+> 2. 蚂蚁卡保留，角色 = 将来香港公司开户时的 KYC 底子；当前不动
+> 3. 红线不变：不加密币、不大陆收单（见 8/28 定案）
+> 4. 零主体方案先做：Smart Buttons 双通道（主）+ 俄语用户付款软提示 + 定价审计；9/17 修复先跑 2-4 周数据
+>
+> **🚀 今晚开工计划（按序）**：
+> | # | 任务 | 要点 |
+> |---|---|---|
+> | **A** | **PayPal Smart Buttons 双通道（主任务）** | ① 用户前置操作：developer.paypal.com → Apps & Credentials → Create App → 拿 **Live Client ID**（REST App 不改收款账户，零风险）② 前端 JS SDK 弹窗结账（funding=card 游客卡 + PayPal 余额）③ 后端 Order Create/Capture + webhook（`CHECKOUT.ORDER.APPROVED` / `PAYMENT.CAPTURE.COMPLETED`）④ 复用 Purchase 状态机与 9/17 定案（pending→completed、result 复用不重生成、payer_email 合并）⑤ **Standard 老路径保留为回退**，新按钮先灰度，46 项 E2E 框架扩展 |
+> | B | 9/17 修复跑数据 | 自动；2-4 周后复核 pay_click→paid 漏斗与 recoverySent |
+> | C | 俄语用户付款软提示 | 检测 ru 语言到付款环节给"当前卡片可能被拒"的诚实说明，替代死胡同报错 |
+> | D | 定价/信任审计 | 全站 $1 vs $5.99 呈现一致性、结账前金额确认、信任徽章 |
+
+
+
 ## 营销与增长 (2026-08-28 规划)
 
 > 方向校准：所有营销只面向**国际用户**（en/ru/ja/ko），平台用 YouTube/TikTok 国际版/Reddit/Pinterest/X——**不做国内平台**（不针对大陆买家）。
@@ -143,6 +169,7 @@ PayPal Standard Checkout，支持信用卡支付。
 - **线上版本**：`a9dfed8`（3 commits：`45318d4` 转化链路修复 → `c466e3a` email 采集 → `a9dfed8` 补充测试套件）
 - 本次两轮：① 转化链路 0-bug 修复（pending 卡死 + 付费墙全路径）E2E 24/24；② 全表单 email 采集 + 弃单挽回邮件 E2E 28/28
 - **测试资产合计 46 项断言**（`scripts/e2e-purchase-flow.cjs` 主套件 28 + `scripts/e2e-purchase-supplement.cjs` 补充套件 18），tsc/lint/build 全绿，生产部署标记已核
+- 晚间新增**付款体验评估定案**（见「支付流程」章节 2026-09-17 决策）：暂不注册香港公司、蚂蚁卡不能收款只作将来 KYC 底子、今晚开工 Smart Buttons 双通道（前置：用户提供 PayPal Live Client ID）
 
 ### ✉️ 第二轮：email 采集与弃单挽回（9/17 同日）
 
