@@ -74,7 +74,7 @@ export async function verifyIPN(rawBody: string): Promise<boolean> {
   return text.trim() === "VERIFIED";
 }
 
-export async function verifyPDT(tx: string): Promise<{ ok: boolean; paymentStatus?: string; purchaseId?: string; amount?: string }> {
+export async function verifyPDT(tx: string): Promise<{ ok: boolean; paymentStatus?: string; purchaseId?: string; amount?: string; payerEmail?: string }> {
   // TEST-ONLY stub: local closed-loop harness (never active in production)
   if (process.env.PAYPAL_SANDBOX === "true" && process.env.TEST_VERIFY_PAYPAL === "true") {
     if (tx === "TEST_TX_PAID") {
@@ -111,5 +111,6 @@ export async function verifyPDT(tx: string): Promise<{ ok: boolean; paymentStatu
     paymentStatus: data.payment_status,
     purchaseId: data.custom || data.cm,
     amount: data.mc_gross,
+    payerEmail: data.payer_email || "",
   };
 }

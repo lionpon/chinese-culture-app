@@ -85,6 +85,10 @@
       "title": "From $5.99 — or name your price",
       "compare": "Personalized results grounded in classical Chinese texts",
       "secure": "🔐 PayPal secured · No account needed · Instant delivery · One-time payment"
+    },
+    "form": {
+      "emailLabel": "Email (optional) — get your reading by email too",
+      "emailPlaceholder": "you@example.com"
     }
   },
   "home": {
@@ -672,7 +676,9 @@
     "unlockFullCta": "See My Full Reading",
     "priceAnchor": "From $5.99 — less than a coffee ☕",
     "freeCalendarHook": "All 13 event types + hour-by-hour guidance — unlock below before you commit.",
-    "paywallPersistent": "One-time · yours forever · no subscription ever"
+    "paywallPersistent": "One-time · yours forever · no subscription ever",
+    "emailLabel": "Email (optional) — where should we send your full reading?",
+    "emailPlaceholder": "you@example.com"
   },
   "legal": {
     "privacy": {

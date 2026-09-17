@@ -6,6 +6,7 @@ import { useCheckout } from "@/lib/useCheckout";
 import SubmitButton from "@/components/SubmitButton";
 import AmountPicker, { DEFAULT_AMOUNT } from "@/components/AmountPicker";
 import FreeTierBadge from "@/components/FreeTierBadge";
+import EmailField from "@/components/EmailField";
 import { trackClick } from "@/lib/track";
 
 interface CalendarPreview {
@@ -120,6 +121,7 @@ export default function CalendarClient({
      startDate: form.startDate.value,
      endDate: form.endDate.value || form.startDate.value,
      eventType: form.eventType.value,
+     email: form.email?.value || undefined,
      amount,
    };
  }
@@ -244,6 +246,8 @@ export default function CalendarClient({
  <option value="renovation">{t("events.renovation")}</option>
  </select>
  </div>
+
+ <EmailField />
 
  {/* Price picker appears only after the free preview hooks the user */}
  {preview && <AmountPicker value={amount} onChange={setAmount} />}

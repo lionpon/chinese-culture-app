@@ -140,8 +140,26 @@ PayPal Standard Checkout，支持信用卡支付。
 
 ## 近期状态 (2026-09-17)
 
-- **线上版本**：`8a35997`（9/4 卦爻辞）
-- 本次：转化链路 0-bug 修复（pending 卡死 + 付费墙全路径），已 E2E 24/24 通过
+- **线上版本**：`45318d4`（转化链路修复）+ `EMail-Collect`（email 采集，见下）
+- 本次两轮：① 转化链路 0-bug 修复（pending 卡死 + 付费墙全路径）E2E 24/24；② 全表单 email 采集 + 弃单挽回邮件 E2E 28/28
+
+### ✉️ 第二轮：email 采集与弃单挽回（9/17 同日）
+
+**动机**：12 行弃单（$46.93 意向金额）全部无法联系——表单从未采集 email，弃单用户直接人间蒸发。
+
+**实现**：
+- 新增 `components/EmailField`：4 个服务表单（naming/calendar/divination/dream）全部加可选 email 字段（`type=email` 原生校验，非必填不增摩擦），`common.form.emailLabel/emailPlaceholder` 4 语言
+- **付费墙也加 email 采集**（`PaywallOverlay`）：解锁按钮上方可选 email 框——「Where should we send your full reading?」这是弃单前最后一个挽回触点；`/api/unlock` 接收 email 并合并进订单 input（表单 email 优先，不覆盖）
+- **付费后兜底**：PDT 回调解析 `payer_email`、IPN 解析 `payer_email`，无表单 email 时自动写入 purchase input——已付费用户 100% 有联系方式
+- **弃单挽回邮件**：`sendUnlockRecoveryEmail`（email.ts）——purchaseRecovery 把 >24h 未付 pending 转 abandoned 时，对有 email 的行发一次挽回邮件（链接直达原免费结果页/付费墙），成功后 input 标记 `recoveryEmailSent` 防重发；无 RESEND_API_KEY 时静默跳过（不标记，下轮重试）
+- 验证：E2E 扩至 28 项（email 采集→继承→付费墙兜底→挽回邮件跳过安全）全过；tsc/lint/build 全绿
+- ⚠️ **待办：确认 Render 环境变量 `RESEND_API_KEY` 是否已配置**（resend.com 免费档 3k 封/月够用）。未配置则挽回邮件静默跳过，只有采集没有发送。可用 `curl /api/cron` 看返回 JSON 的 `email` 字段判断（"sent"=已配置 / "skipped (not configured)"=未配置）
+
+### 💰 损失盘点（9/5–9/17 复核 + 全库审计）
+
+- **真实损失 = $0**：全库 `paid=true` 仅 1 行（8/13 沙盒测试）；付费后卡死（paid+pending+无结果）行 = 0；无需任何退款
+- **机会损失 = $46.93**：12 行弃单金额合计（7 行 $5.99 + 5 行 $1.00），其中 3 个付费墙解锁用户 $17.97 意向最高
+- 免费试用完成 14+ 单，0 付费转化；连续 41 天真实收入 $0
 
 ### 🔧 触发背景：9/5–9/17 流量复核发现 3 次史上首次 paywall_unlock_click，但全部卡在 PayPal 后流失
 

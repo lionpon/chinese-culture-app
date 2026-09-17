@@ -6,6 +6,7 @@ import { useCheckout } from "@/lib/useCheckout";
 import SubmitButton from "@/components/SubmitButton";
 import AmountPicker, { DEFAULT_AMOUNT } from "@/components/AmountPicker";
 import FreeTierBadge from "@/components/FreeTierBadge";
+import EmailField from "@/components/EmailField";
 import SpeakButton from "@/components/SpeakButton";
 import { trackClick } from "@/lib/track";
 
@@ -82,6 +83,7 @@ export default function DivinationClient({ initialHasFree }: { initialHasFree: b
      ];
    }
    data.amount = amount;
+   data.email = form.email?.value || undefined;
    return data;
  }
 
@@ -193,6 +195,8 @@ export default function DivinationClient({ initialHasFree }: { initialHasFree: b
  </div>
  </div>
  )}
+
+ <EmailField />
 
  <AmountPicker value={amount} onChange={setAmount} />
  {hasFree && (

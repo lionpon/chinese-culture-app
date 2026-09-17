@@ -33,6 +33,17 @@ export async function POST(req: NextRequest) {
 
     const input = JSON.parse(purchase.input);
 
+    // Capture the PayPal payer email when the buyer never left one in the
+    // form — enables result delivery by email after payment.
+    const payerEmail = params.get("payer_email") || "";
+    if (payerEmail && !input.email) {
+      input.email = payerEmail;
+      await prisma.purchase.update({
+        where: { id: purchaseId },
+        data: { input: JSON.stringify(input) },
+      });
+    }
+
     // Unlock flow: result was copied from the free preview at creation time.
     // Mark paid+completed as-is — never regenerate what the buyer previewed.
     if (purchase.result) {

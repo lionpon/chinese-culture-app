@@ -27,6 +27,8 @@ async function main() {
     await page.fill('input[name="startDate"]', "2026-12-01");
     await page.fill('input[name="endDate"]', "2026-12-10");
     await page.selectOption('select[name="eventType"]', "wedding");
+    await page.fill('input[name="email"]', "buyer-e2e@example.com");
+    ok("1b.日历表单含 email 输入框", await page.locator('input[name="email"]').isVisible().catch(() => false));
     await page.click('button[type="submit"]');
     await page.waitForURL(/\/success\?purchase_id=.*&free=1/, { timeout: 60000 });
     const P1 = new URL(page.url()).searchParams.get("purchase_id");
@@ -37,10 +39,13 @@ async function main() {
     const unlockBtn = page.locator('button:has-text("See My Full Reading")').first();
     await unlockBtn.waitFor({ state: "visible", timeout: 15000 }).catch(() => {});
     ok("2.结果页显示解锁按钮", await unlockBtn.isVisible().catch(() => false));
+    // 付费墙上的 email 采集框（最后挽回触点）
+    const wallEmail = page.locator('input[type="email"]').first();
+    ok("2b.付费墙含 email 采集框", await wallEmail.isVisible().catch(() => false));
 
     // ── 2. 点解锁 → P2 (fetch 模拟，避免真跳 PayPal) ──
     const unlock1 = await page.evaluate(async (id) => {
-      const r = await fetch("/api/unlock", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ purchase_id: id }) });
+      const r = await fetch("/api/unlock", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ purchase_id: id, email: "wall-e2e@example.com" }) });
       return { status: r.status, json: await r.json() };
     }, P1);
     ok("3.unlock 返回 200 + url", unlock1.status === 200 && !!unlock1.json.url, unlock1.json.error || "");
@@ -58,6 +63,9 @@ async function main() {
     ok("7.P2 复制了 P1 的完整 result", !!p2Row.result && p2Row.result === p1Row.result);
     const p2Input = JSON.parse(p2Row.input);
     ok("8.P2 带 unlockFrom=P1", p2Input.unlockFrom === P1);
+    const p1Input = JSON.parse(p1Row.input);
+    ok("8b.P1 采集到表单 email", p1Input.email === "buyer-e2e@example.com", "email=" + p1Input.email);
+    ok("8c.P2 继承 email（付费墙 email 不覆盖表单 email）", p2Input.email === "buyer-e2e@example.com", "email=" + p2Input.email);
 
     // ── 4. 幂等：快速二次解锁复用 P2 ──
     const unlock2 = await page.evaluate(async (id) => {
@@ -103,8 +111,9 @@ async function main() {
 
     // ── 9. 僵尸清理 + 付费重试 (经由 cron 的 purchaseRecovery) ──
     const stale = await prisma.purchase.create({ data: { checkoutId: crypto.randomUUID(), type: "calendar", input: JSON.stringify({ startDate: "2027-02-01", endDate: "2027-02-03", eventType: "wedding", locale: "en", mark: MARK, unlockFrom: "E2E-MARKER" }), status: "pending", createdAt: new Date(Date.now() - 25 * 3600 * 1000) } });
+    const staleWithEmail = await prisma.purchase.create({ data: { checkoutId: crypto.randomUUID(), type: "naming", input: JSON.stringify({ firstName: "E2E", lastName: "Z", locale: "en", mark: MARK, unlockFrom: "E2E-MARKER2", email: "recover-e2e@example.com" }), status: "pending", createdAt: new Date(Date.now() - 25 * 3600 * 1000) } });
     const paidStuck = await prisma.purchase.create({ data: { checkoutId: crypto.randomUUID(), type: "calendar", input: JSON.stringify({ startDate: "2027-03-01", endDate: "2027-03-03", eventType: "wedding", locale: "en", mark: MARK }), status: "pending", paid: true, result: null } });
-    testIds.push(stale.id, paidStuck.id);
+    testIds.push(stale.id, staleWithEmail.id, paidStuck.id);
 
     const cronRes = await page.evaluate(async () => {
       const r = await fetch("/api/cron");
@@ -119,6 +128,11 @@ async function main() {
     ok("19.paid+pending 无结果 → 自动重试完成", paidAfter.status === "completed" && !!paidAfter.result, "status=" + paidAfter.status);
     const paidResult = paidAfter.result ? JSON.parse(paidAfter.result) : {};
     ok("20.重试生成的结果含 auspiciousDays", Array.isArray(paidResult.auspiciousDays) && paidResult.auspiciousDays.length > 0, "days=" + (paidResult.auspiciousDays || []).length);
+
+    // 20b. 挽回邮件逻辑：dev server 无 RESEND_API_KEY → 发送跳过且不标记已发送
+    const staleEmailAfter = await prisma.purchase.findUnique({ where: { id: staleWithEmail.id } });
+    const staleEmailInput = JSON.parse(staleEmailAfter.input);
+    ok("20b.无 Resend key 时挽回邮件安全跳过(未标记 sent)", rec.recoverySent === 0 && !staleEmailInput.recoveryEmailSent, JSON.stringify({ recoverySent: rec.recoverySent, recoverySkipped: rec.recoverySkipped, flag: staleEmailInput.recoveryEmailSent }));
 
     // ── 10. abandoned 状态 API + UI ──
     const rAb = await page.evaluate(async (id) => {

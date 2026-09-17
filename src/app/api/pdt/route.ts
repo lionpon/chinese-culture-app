@@ -51,6 +51,16 @@ export async function POST(req: NextRequest) {
       console.warn(`PDT amount mismatch: paid $${paidAmount}, expected $${expectedAmount}, purchase ${purchase_id}`);
     }
 
+    // Capture the PayPal payer email when the buyer never left one in the
+    // form — enables result delivery by email after payment.
+    if (pdt.payerEmail && !input.email) {
+      input.email = pdt.payerEmail;
+      await prisma.purchase.update({
+        where: { id: purchase_id },
+        data: { input: JSON.stringify(input) },
+      });
+    }
+
     // Unlock flow: result was copied from the free preview at creation time.
     // Never regenerate — the buyer must receive exactly what they previewed.
     if (purchase.result) {

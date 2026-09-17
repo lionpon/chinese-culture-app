@@ -5,7 +5,8 @@ import { prisma } from "@/lib/db";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { purchase_id, amount } = body as { purchase_id: string; amount?: number };
+    const { purchase_id, amount, email } = body as { purchase_id: string; amount?: number; email?: string };
+    const buyerEmail = typeof email === "string" && email.trim() ? email.trim() : null;
 
     if (!purchase_id) {
       return NextResponse.json({ error: "Missing purchase_id" }, { status: 400 });
@@ -54,6 +55,14 @@ export async function POST(req: NextRequest) {
     });
     if (existing) {
       const existingInput = JSON.parse(existing.input);
+      // Merge a newly provided email into the reused order (buyer may have
+      // skipped the form email but filled it at the paywall).
+      if (buyerEmail && !existingInput.email) {
+        await prisma.purchase.update({
+          where: { id: existing.id },
+          data: { input: JSON.stringify({ ...existingInput, email: buyerEmail }) },
+        });
+      }
       const payAmount = Math.max(
         (typeof existingInput.amount === "number" ? existingInput.amount : 0) || (amount ?? 1),
         1
@@ -83,7 +92,12 @@ export async function POST(req: NextRequest) {
       data: {
         checkoutId: crypto.randomUUID(),
         type: original.type,
-        input: JSON.stringify({ ...originalInput, unlockFrom: purchase_id }),
+        input: JSON.stringify({
+          ...originalInput,
+          unlockFrom: purchase_id,
+          // Paywall-captured email wins when the form email was skipped
+          ...(buyerEmail && !originalInput.email ? { email: buyerEmail } : {}),
+        }),
         status: "pending",
         result: original.result, // copy full result — paid unlock reveals it as-is
       },

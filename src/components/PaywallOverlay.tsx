@@ -18,6 +18,7 @@ export default function PaywallOverlay({
 }) {
   const t = useTranslations("success");
   const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
 
   async function unlock() {
     setLoading(true);
@@ -26,7 +27,7 @@ export default function PaywallOverlay({
       const res = await fetch("/api/unlock", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ purchase_id: purchaseId }),
+        body: JSON.stringify({ purchase_id: purchaseId, email: email.trim() || undefined }),
       });
       const data = await res.json();
       if (data.url) {
@@ -71,6 +72,22 @@ export default function PaywallOverlay({
             </li>
           ))}
         </ul>
+
+        {/* Email capture — last chance to reach the buyer if they abandon */}
+        <div className="mb-3">
+          <label className="block text-xs font-medium mb-1" style={{ color: "var(--text-body)" }}>
+            {t("emailLabel")}
+          </label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder={t("emailPlaceholder")}
+            autoComplete="email"
+            className="w-full rounded-lg px-3 py-2 text-sm border bg-white"
+            style={{ borderColor: "var(--border-medium)", color: "var(--text-body)" }}
+          />
+        </div>
 
         {/* CTA button */}
         <button

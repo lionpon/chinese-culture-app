@@ -167,3 +167,78 @@ export async function sendDailyHexagramEmail(): Promise<boolean> {
     return false;
   }
 }
+
+const RECOVERY_PAGES: Record<string, string> = {
+  naming: "/naming",
+  calendar: "/calendar",
+  divination: "/divination",
+  "palm-reading": "/palm-reading",
+  "dream-interpretation": "/dream-interpretation",
+};
+
+/**
+ * Abandoned-cart recovery email — sent once (caller marks
+ * `recoveryEmailSent` in the purchase input) when an unpaid pending order
+ * expires to `abandoned`. The link returns the buyer to their free preview
+ * (paywall CTA still in front of them) when the order came from an unlock.
+ */
+export async function sendUnlockRecoveryEmail(opts: {
+  to: string;
+  type: string;
+  unlockFrom?: string;
+}): Promise<boolean> {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.log("[email] Resend not configured — skipping recovery email");
+    return false;
+  }
+
+  const { to, type, unlockFrom } = opts;
+  const resumeUrl = unlockFrom
+    ? `${BASE_URL}/success?purchase_id=${unlockFrom}&free=1`
+    : `${BASE_URL}${RECOVERY_PAGES[type] || "/"}`;
+
+  const html = `<!DOCTYPE html>
+<html>
+<body style="font-family:Georgia,serif;max-width:600px;margin:0 auto;padding:20px;background:#faf7f2">
+  <h2 style="color:#3d2b1f;text-align:center">Your reading is waiting</h2>
+  <p style="color:#3d2b1f">You started a reading at Chinese Culture Studio but didn't finish unlocking it. Your preview is still saved — one click and it's yours.</p>
+  <p style="text-align:center;margin:24px 0">
+    <a href="${resumeUrl}" style="display:inline-block;padding:12px 28px;background:#c4a882;color:#fff;text-decoration:none;border-radius:8px;font-weight:bold">Continue my reading →</a>
+  </p>
+  <p style="color:#8b7355;font-size:13px">Your reading is personalized from your original input. For entertainment purposes only.</p>
+  <hr style="border:0;border-top:1px solid #e8d5b0;margin:16px 0">
+  <p style="text-align:center;color:#8b7355;font-size:12px"><a href="${BASE_URL}" style="color:#5c3a28">Chinese Culture Studio</a></p>
+</body>
+</html>`;
+
+  const text = `Your reading is waiting.\n\nYou started a reading at Chinese Culture Studio but didn't finish unlocking it. Your preview is still saved:\n\n${resumeUrl}\n\nFor entertainment purposes only.\n\n— Chinese Culture Studio`;
+
+  try {
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        from: "Chinese Culture Studio <noreply@culture-of-china.com>",
+        to: [to],
+        subject: "Your reading is waiting — continue where you left off",
+        text,
+        html,
+      }),
+      signal: AbortSignal.timeout(15_000),
+    });
+
+    if (!res.ok) {
+      console.error("[email] Recovery email API error:", await res.text());
+      return false;
+    }
+    console.log(`[email] Recovery email sent to ${to}`);
+    return true;
+  } catch (err) {
+    console.error("[email] Recovery email error:", err instanceof Error ? err.message : String(err));
+    return false;
+  }
+}

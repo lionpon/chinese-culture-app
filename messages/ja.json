@@ -85,6 +85,10 @@
       "title": "$5.99から — あなたの価格で",
       "compare": "古典中国文献に基づいたパーソナライズされた結果",
       "secure": "🔐 PayPal · アカウント不要 · 即時アクセス · 一回払い"
+    },
+    "form": {
+      "emailLabel": "メールアドレス（任意）— 結果をメールでもお届けします",
+      "emailPlaceholder": "you@example.com"
     }
   },
   "home": {
@@ -672,7 +676,9 @@
     "unlockFullCta": "完全なリーディングを見る",
     "priceAnchor": "$5.99から — コーヒー1杯よりお手頃 ☕",
     "freeCalendarHook": "13種類すべてのイベント＋時間別ガイダンス — 決める前に下から解放してください。",
-    "paywallPersistent": "一回限り · 永久にあなたのもの · サブスクリプションなし"
+    "paywallPersistent": "一回限り · 永久にあなたのもの · サブスクリプションなし",
+    "emailLabel": "メールアドレス（任意）— 完全な結果の送信先",
+    "emailPlaceholder": "you@example.com"
   },
   "legal": {
     "privacy": {

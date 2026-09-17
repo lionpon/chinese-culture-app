@@ -6,6 +6,7 @@ import { useCheckout } from "@/lib/useCheckout";
 import SubmitButton from "@/components/SubmitButton";
 import AmountPicker, { DEFAULT_AMOUNT } from "@/components/AmountPicker";
 import FreeTierBadge from "@/components/FreeTierBadge";
+import EmailField from "@/components/EmailField";
 import SpeakButton from "@/components/SpeakButton";
 import { trackClick } from "@/lib/track";
 
@@ -173,6 +174,7 @@ export default function NamingClient({ initialHasFree }: { initialHasFree: boole
       birthDay: intOrUndefined(form.birthDay.value),
       birthHour: intOrUndefined(form.birthHour.value),
       style: styleEl ? styleEl.value as "elegant" | "grand" | "fresh" : "elegant",
+      email: form.email?.value || undefined,
       mode,
       amount,
       locale,
@@ -396,6 +398,8 @@ export default function NamingClient({ initialHasFree }: { initialHasFree: boole
             </select>
           </div>
         )}
+
+        <EmailField />
 
         <AmountPicker value={amount} onChange={setAmount} />
         {hasFree && (

@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { useCheckout } from "@/lib/useCheckout";
 import SubmitButton from "@/components/SubmitButton";
 import AmountPicker, { DEFAULT_AMOUNT } from "@/components/AmountPicker";
+import EmailField from "@/components/EmailField";
 import { trackClick } from "@/lib/track";
 import { Link } from "@/navigation";
 
@@ -27,6 +28,7 @@ export default function DreamClient({ initialHasFree }: { initialHasFree: boolea
  dreamText: form.dreamText.value,
  dreamType: form.dreamType.value || undefined,
  focus: form.interpretFocus.value || undefined,
+ email: form.email?.value || undefined,
  amount,
  }, hasFree ? undefined : true);
  }
@@ -143,6 +145,8 @@ export default function DreamClient({ initialHasFree }: { initialHasFree: boolea
    <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>{tc("pricing.compare")}</p>
    <p className="text-xs mt-1" style={{ color: "var(--text-dim)" }}>{tc("pricing.secure")}</p>
  </div>
+
+ <EmailField />
 
  <AmountPicker value={amount} onChange={setAmount} />
  <SubmitButton loading={loading} label={loading ? t("form.processing") : t("form.submit")} hasFree={hasFree} onPaidClick={handlePaidClick} amount={amount} />

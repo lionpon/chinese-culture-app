@@ -5,6 +5,7 @@ import { performDivination } from "@/lib/divination";
 import { readPalm } from "@/lib/palm-reading";
 import { interpretDream } from "@/lib/dream-interpretation";
 import { translateResultEnFields } from "@/lib/translate";
+import { sendUnlockRecoveryEmail } from "@/lib/email";
 import type { NamingInput, CalendarInput, DivinationInput, PalmReadingInput, DreamInterpretationInput } from "@/types";
 
 export const ABANDON_AFTER_MS = 24 * 60 * 60 * 1000; // unpaid pending → abandoned after 24h
@@ -32,20 +33,22 @@ async function generateResult(type: string, input: Record<string, unknown>): Pro
  */
 export async function runPurchaseRecovery(): Promise<{
   abandoned: number;
+  recoverySent: number;
+  recoverySkipped: number;
   paidRetried: number;
   paidSucceeded: number;
   paidFailed: number;
 }> {
-  const out = { abandoned: 0, paidRetried: 0, paidSucceeded: 0, paidFailed: 0 };
+  const out = { abandoned: 0, recoverySent: 0, recoverySkipped: 0, paidRetried: 0, paidSucceeded: 0, paidFailed: 0 };
 
-  // ── Step 1: zombie cleanup ──
+  // ── Step 1: zombie cleanup + abandoned-cart recovery email ──
   const stale = await prisma.purchase.findMany({
     where: {
       status: "pending",
       paid: false,
       createdAt: { lt: new Date(Date.now() - ABANDON_AFTER_MS) },
     },
-    select: { id: true },
+    select: { id: true, type: true, input: true },
   });
   if (stale.length) {
     await prisma.purchase.updateMany({
@@ -53,6 +56,28 @@ export async function runPurchaseRecovery(): Promise<{
       data: { status: "abandoned" },
     });
     out.abandoned = stale.length;
+
+    // Send one recovery email per abandoned order that has a buyer email.
+    // `recoveryEmailSent` flag inside the input JSON prevents duplicates
+    // across cron runs (no schema change needed).
+    for (const row of stale) {
+      let input: Record<string, unknown> = {};
+      try { input = JSON.parse(row.input); } catch { continue; }
+      const email = typeof input.email === "string" && input.email.includes("@") ? input.email : null;
+      if (!email || input.recoveryEmailSent) { out.recoverySkipped++; continue; }
+      const unlockFrom = typeof input.unlockFrom === "string" ? input.unlockFrom : undefined;
+      const sent = await sendUnlockRecoveryEmail({ to: email, type: row.type, unlockFrom });
+      if (sent) {
+        out.recoverySent++;
+        await prisma.purchase.update({
+          where: { id: row.id },
+          data: { input: JSON.stringify({ ...input, recoveryEmailSent: true }) },
+        });
+      } else {
+        // Not configured / API error — do not mark sent, retry next run.
+        out.recoverySkipped++;
+      }
+    }
   }
 
   // ── Step 2: paid-but-no-result retry ──
