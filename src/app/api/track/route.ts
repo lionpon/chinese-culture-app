@@ -83,22 +83,10 @@ export async function POST(req: NextRequest) {
 
     let country = countryHeader || "Unknown";
 
-    // ── Country-level rate limit: throttle high-risk scraper countries ──
+    // ── Country-level burst limits: throttle high-risk scraper countries ──
+    // (in-memory; header country only — geo not resolved yet)
     if (isCountryRateSaturated(country)) {
       return NextResponse.json({ ok: true, skipped: "country_rate_limit" });
-    }
-
-    // ── Country daily quota (DB-backed, restart-proof) ──
-    // In-memory Map was reset by Render deploys/restarts (8/13 deploy day = 14 RU
-    // writes vs quota 5). Counting existing rows in DB survives restarts.
-    if (isHighRiskScraperCountry(country)) {
-      const dayAgo = new Date(Date.now() - COUNTRY_DAILY_WINDOW_MS);
-      const dailyWrites = await prisma.visit.count({
-        where: { country, createdAt: { gte: dayAgo } },
-      });
-      if (dailyWrites >= COUNTRY_DAILY_MAX) {
-        return NextResponse.json({ ok: true, skipped: "country_daily_quota" });
-      }
     }
 
     let city = "";
@@ -128,6 +116,27 @@ export async function POST(req: NextRequest) {
     const storedPage = event ? `__click__:${event}` : page;
 
     const isDC = isDatacenterIp(ip) || isDatacenterCity(city, region) || (isHighRiskScraperCountry(country) && !city);
+
+    // ── Country daily quota (DB-backed, restart-proof) — DC traffic only ──
+    // 9/22 fix: the old check counted ALL rows of the country (using the
+    // pre-geo header country) and skipped every request once exhausted.
+    // Result: real RU/UA buyers had their whole funnel — pageviews AND click
+    // events — silently dropped every day after ~09:00Z when Moscow DC
+    // crawlers burned the 3/day quota (evidence: 9/20 Элина & 9/21 Anastasiia
+    // completed free purchases with zero recorded events; DailyReport showed
+    // freeTrials=1 with form_submit=0). New rules:
+    //   1. check runs after geo resolution (works even without country header)
+    //   2. only isDatacenter rows count toward the quota
+    //   3. only isDatacenter requests are skipped — real users always pass
+    if (isHighRiskScraperCountry(country) && isDC) {
+      const dayAgo = new Date(Date.now() - COUNTRY_DAILY_WINDOW_MS);
+      const dailyDcWrites = await prisma.visit.count({
+        where: { country, isDatacenter: true, createdAt: { gte: dayAgo } },
+      });
+      if (dailyDcWrites >= COUNTRY_DAILY_MAX) {
+        return NextResponse.json({ ok: true, skipped: "country_daily_quota" });
+      }
+    }
 
     await prisma.visit.create({
       data: { page: storedPage, country, city, region, referrer, isDatacenter: isDC },

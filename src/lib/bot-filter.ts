@@ -115,7 +115,8 @@ export function isHighRiskScraperCountry(country: string): boolean {
  * Strategy for RU/UA scraper countries:
  *   Tier 1 (burst):  >5 visits in 1 minute → skip (fast bot)  [in-memory]
  *   Tier 2 (hourly): >10 visits in 1 hour → skip (medium crawler) [in-memory]
- *   Tier 3 (daily):  >COUNTRY_DAILY_MAX in 24 hours → skip (slow-but-steady crawler)
+ *   Tier 3 (daily):  >COUNTRY_DAILY_MAX datacenter rows in 24 hours → skip
+ *                     (slow-but-steady crawler; real users always pass — 9/22)
  *                    [DB-backed — see /api/track route; in-memory Map was defeated
  *                     by Render restarts: 8/13 deploy day = 14 RU writes]
  *
