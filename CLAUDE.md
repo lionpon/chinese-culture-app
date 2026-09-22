@@ -164,6 +164,44 @@ PayPal Standard Checkout，支持信用卡支付。
 - **实现**：middleware 设置 `cc_test_mode` cookie → AnalyticsTracker 客户端跳过 → `/api/track` 服务端跳过
 - 部署前务必确认已关闭测试模式（或关闭不影响，只是你自己的访问不被统计）
 
+## 近期状态 (2026-09-22)
+
+- **线上版本**：`7ab287a`（RU 配额修复）；此前 `a9dfed8`。tsc/lint 全绿，已推送，Render autoDeploy 触发
+- 今日完成两件事：① 9/17 更新后至今（9/17 17:12 → 9/22，5.3 天）全量流量与埋点复核；② 付费链路 + 事件骤降排查，修掉 RU 配额压制真实用户埋点的 bug
+
+### 📊 流量复核（窗口 9/17 17:12CST → 9/22）
+
+- 总 350 行：真实 301（86%）/ DC 49；日均真实 ~57；较前一周同窗口 410 → 301（**-27%**），峰值 9/18–19 后回落
+- 国家（真实）：US 63、SG 27、JP 20、CN 17（全真实、八字预览深度用户）、RU 4、NZ 14、DE/IT 12；来源：Google 103、DDG 43、Bing 35、Yandex 19，社媒 0
+- 页面：guide 内容页主导——face-reading 39、CNY-2027 34、ru/name-girl 43（前苏联长尾）；工具页几乎无自然流量（naming 8）
+- 事件 46：preview_bazi 13（CN5/US5/CR3）、datecheck 7、form_submit 3、free_result 3；**pay_click 0**、付费 $0（连续 41+ 天）、免费购买 4 笔（2 笔 RU 带 email）、订阅 0
+- email 采集（9/17 更新）验证生效：4 笔免费购买 2 笔留邮箱（Melanie 婚礼择日 / Элина 起名）
+
+### 🔍 排查结论
+
+- **付费链路代码健康**：useCheckout → /api/checkout → unlock 全路径验证 OK；生产 PayPal 实测 **LIVE**（`probe-checkout.cjs`，收款 22728717@qq.com，非沙盒）；0 付费尝试 = 真没人点解锁（窗口仅 3 人看到付费墙）
+- **系统病灶**：41 天 0 真实收入；历史 3 次解锁全部 PayPal 流失；9/17 定案已定性（付款体验差），**Smart Buttons 未开工**——缺 Live Client ID（用户前置操作，晚间执行）
+- **9/21–22 事件骤降（19→10→10→1→2）两个原因**：① 流量构成变化——表单/工具页访问 9/17–20 的 13 次 → 9/21–22 仅 2 次，高意向访客没来（9/21 总访问 53 正常）；② **RU 日配额 bug**（见下）
+
+### 🐛 RU 配额压制真实用户埋点（已修 `7ab287a`）
+
+- 现象：9/20 Элина、9/21 Anastasiia 两笔真实免费购买，全部漏斗事件（form_submit / free_result_viewed / result_free_naming + 表单页 PV）**一条都没进库**；DailyReport 出现 freeTrials=1 vs form_submit=0 的矛盾
+- 根因：`/api/track` 的 RU 日配额（3 条/天）统计**所有** RU 行；莫斯科 DC 爬虫每天清晨烧完配额后，真实 RU 用户被全量跳过 → RU 段漏斗分析全盲（RU 恰是历史转化意向最强客群）
+- 修复：① 配额检查移到 geo 解析 + isDC 计算之后；② 只统计 `isDatacenter=true` 的行；③ 只跳过 DC 请求，真实 RU/UA 用户始终放行
+- 注意：历史丢失事件不可恢复；配额仍有并发竞态（软限流可接受，先观察）
+
+### ⏳ 晚间待办（按序）
+
+1. **PayPal REST App → Live Client ID**（用户前置，5 分钟）→ 按 9/17 定案任务 A 开工 Smart Buttons 双通道（JS SDK 弹窗 + 游客卡 funding，Standard 老路径保留回退）
+2. 验证 `7ab287a` 部署落地 + 次日观察 RU 真实用户事件是否恢复（对比 freeTrials 与 form_submit）
+3. 定案任务 D：结账前金额确认步骤（点解锁先看 $5.99 确认页再跳 PayPal——历史 3/3 解锁流失疑与此相关）
+
+### 📋 下次复核清单
+
+- pay_click / paywall_unlock_click 是否破零；paid=true 是否有新行
+- RU 真实用户事件恢复情况（每日 freeTrials vs form_submit 对照）
+- 9/21 起流量走势（是否持续 <50/天）；preview_bazi → form_submit 比率
+
 ## 近期状态 (2026-09-17)
 
 - **线上版本**：`a9dfed8`（3 commits：`45318d4` 转化链路修复 → `c466e3a` email 采集 → `a9dfed8` 补充测试套件）
