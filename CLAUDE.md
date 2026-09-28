@@ -164,6 +164,33 @@ PayPal Standard Checkout，支持信用卡支付。
 - **实现**：middleware 设置 `cc_test_mode` cookie → AnalyticsTracker 客户端跳过 → `/api/track` 服务端跳过
 - 部署前务必确认已关闭测试模式（或关闭不影响，只是你自己的访问不被统计）
 
+## 近期状态 (2026-09-28)
+
+- **线上版本**：代码 `7ab287a` + docs `963ce72`（9/22 后无代码变更）。完整存档见 `WORK_LOG_2026-09-28.md`
+- 本次：9/22→9/28（6.3 天）流量埋点复核 + 要点 3（US/NL+Yandex 疑点）溯源。无代码改动
+
+### 📊 流量（真实 550 / 82%，日均 ~79，较前窗 ~57 **+38%**；峰值 9/27 105 真实）
+
+- 国家：US 130、**RU 89（第 2，配额修复后首次可见全貌）**、AU 38、SG 34、CN 26、GB 23、UA 16
+- 渠道：Google 185 / Yandex 106 / Bing 62 / DDG 48 / Ecosia 18，社媒 0
+- 页面：俄语起名指南页成第二大流量源（name-girl 69 / chinese-name 31；9/28 Yandex 单日送 47）
+
+### 📍 埋点（窗口 60 事件；9/21–22 骤降已恢复，9/27–28 日 19/18）
+
+- 起名漏斗：preview_bazi 14 → form_submit 3 → free_result 3 → **解锁 0 / pay_click 0**（连续 47+ 天收入 $0）
+- Purchase：5 笔免费完成（4 naming + 1 calendar），1 笔带邮箱；abandoned 0；paid=true 全库仍 1 笔（沙盒）
+
+### ✅ RU 修复验证 + 要点 3 溯源（结论反转：非爬虫）
+
+- `7ab287a` 已生效：真实 RU 行 1→17→3→13→5→13→**37**，DC 压制 2–5/天；9/23 RU 事件恢复 6 条
+- 9/24 起 RU 真实访客 0 互动事件 = Yandex 排名带来的**阅读型**访客（小城市住宅 IP、全天分散），只读俄语指南页
+- **US/NL + Yandex = 真实俄语侨民深度用户**：① 9/27 Englewood Cliffs NJ 走通全漏斗（5×预览→限流墙→提交→带邮箱购买 ✅，`preview_bazi_limit` 破零）；② 9/28 NL Eygelshoven 自定义金额+4×预览（窗口付费意图最强，未提交）；③ 仅 2 行 NL 为 DC 已被标记
+
+### ⏳ 待办（继承 9/22，均未动工）
+
+1. Smart Buttons（PayPal Live Client ID 前置）——头号断点仍是付费墙 0 解锁
+2. 下轮复核：NL Eygelshoven 是否提交/解锁；pay_click 破零；9/28 Yandex 起名页流量走势
+
 ## 近期状态 (2026-09-22)
 
 - **线上版本**：`7ab287a`（RU 配额修复）；此前 `a9dfed8`。tsc/lint 全绿，已推送，Render autoDeploy 触发
