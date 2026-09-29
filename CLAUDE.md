@@ -193,11 +193,33 @@ PayPal Standard Checkout，支持信用卡支付。
 - `supabase_admin` 的默认授权仍在（postgres 角色非 super 无法改）——Supabase dashboard 建表路径仍会授 anon/authenticated，靠"建表即开 RLS"兜底；service_role 默认授权保留不动（Supabase 标准设计）
 - 其余安全面扫描干净：无 SECURITY DEFINER 函数、无视图、无函数级授权、扩展标准集（pgcrypto/uuid-ossp/plpgsql/pg_stat_statements/supabase_vault）、登录角色为标准 Supabase 集
 
+### 📊 流量与埋点复核（9/28 00:00 → 9/29 ~14:00，即 9/28 存档后窗口）
+
+- 访问：9/28 总 89（真实 76/DC 13）、9/29 半日 94（真实 82/DC 12）——真实 ~76–82/天，与上窗日均 ~79 持平无回落
+- 国家（真实）：US 41 = **RU 41（并列第一，历史首次）**、GB 11、SG 9、PH 6、SI 6、AU 6、FR 6；渠道 Google 63 / Yandex 39 / Bing 13 / DDG 7；**Facebook + Instagram 各 1（社媒 referrer 首次破零）**
+- 页面：/ru/guide/chinese-name 23 + chinese-name-girl 17 = 40 次占真实 1/4；156 页日期批次开始出量（wedding-oct-2027 5 / contract-oct 4 / medical-oct·jul 各 2）
+- 埋点 32 条：datecheck 13（4 用户：FR Beuvry ×4 / US Tijeras ×4 / US Ontario ×3 / CA Kingston ×2，均未触限流墙）；两条完整免费漏斗 ✅（RU Podolsk 起名 4×preview→完成 9/28 16:57；en 日历 CTA→预览→自定义 $1→提交→完成 9/29 06:05）
+- 🔴 pay_click 0 / paywall_unlock_click 0 —— 连续 ~49 天收入 $0；3 笔免费单全无邮箱
+- 脚本资产：`scripts/review-traffic.cjs`（六段全景）+ `review-queries.cjs` 补 sslmode 修复（commit `c999329`）
+
+### 🇷🇺 RU 流量上升溯源 + 支付策略评估（定案）
+
+**为何上升（数据实锤）**：9/15–22 真实 0–2/天 → 9/23 跳 17 → 9/28 跳 **54** → 9/29 半日 11。两因素叠加：① **Yandex 排名跃迁（主因）**——窗口 RU 真实 41 次中 39 次来自 ya.ru/yandex.ru，落点集中 /ru/guide/chinese-name（23 次）；8–9 月俄语 SEO 批次在 Yandex 索引节奏慢，排名台阶式跳变（9/23、9/28 两个跳变日）。② `7ab287a` 测量修复后真实行首次可见（次要）。画像 = 小城市住宅 IP、全天分散、只读、零互动（Yandex 阅读型访客）。
+
+**支付策略（勿重复探索）**：
+- 硬约束重申：Visa/MC 停俄、МИР 仅国内清算、PayPal 停俄、加密币红线、俄本地收单需俄主体——俄境内用户跨境收款均不现实
+- ✅ **分层变现（任务 C 增强版，Smart Buttons 之后开工）**：RU-IP 境内读者 = 不可付款群体 → 免费体验 + **强化俄语邮箱捕获**（现状：ru 页面 40 访问 0 互动、3 免费单 0 邮箱，空白机会）；非 RU-IP 俄语侨民（US/DE/NL 等）= 真付费客群（NJ 全漏斗 / NL Eygelshoven / Мария 历史实证）→ 正常付费墙。实现 = 中间件按 IP 地理分段
+- ⏳ **银联双币卡通道 = 第一单后研究项**：俄银行 UnionPay 双币卡跨境消费仍可用；PSP/MoR 扩展（Paddle/2Checkout/PayPro Global 类，类目审核风险）按 9/17 定案挂起，与主体问题一并评估
+- ❌ 不碰：加密币、大陆收单、俄本地收单、教唆规避制裁的文案（软提示保持诚实中性）
+- 主线程判断：RU 短期是流量资产不是收入资产；头号断点仍是付费墙 0 解锁（非 RU 用户也没人付费），Smart Buttons 不变
+
 ### ⏳ 待办
 
-1. 观察 Supabase Advisor 下轮通知确认 `rls_disabled_in_public` 消失；顺手检查 Advisor 其他条目
-2. 观察生产日志/埋点无异常（RLS/默认权限均不影响 postgres 角色，预期零影响）
-3. 若未来用 Supabase dashboard 建表：建表后立即开 RLS（supabase_admin 默认授权仍会授 anon/authenticated）
+1. Smart Buttons（PayPal Live Client ID 前置）——头号任务不变
+2. 任务 C 增强版：RU 分层变现（IP 地理分段 + 俄语邮箱捕获强化），Smart Buttons 后开工
+3. 观察 Supabase Advisor 下轮通知确认 `rls_disabled_in_public` 消失；顺手检查 Advisor 其他条目
+4. 下次复核：pay_click 破零；datecheck 是否触限流墙；Yandex 起名页流量走势
+5. 若未来用 Supabase dashboard 建表：建表后立即开 RLS（supabase_admin 默认授权仍会授 anon/authenticated）
 
 ## 近期状态 (2026-09-28)
 
