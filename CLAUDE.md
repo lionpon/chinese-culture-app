@@ -166,6 +166,21 @@ PayPal Standard Checkout，支持信用卡支付。
 
 ## 近期状态 (2026-09-29)
 
+- **线上版本**：`a361674` Smart Buttons 已上线（+ 同日安全修复 a995407/d43ee72、脚本 c999329、存档 6a7aa0b）
+
+### 🚀 任务 A 完成：PayPal Smart Buttons 双通道（9/17 定案头号任务）
+
+- **凭证**：Live REST App `culture-of-china-web`（用户 9/29 创建，Client ID 以 BAA 开头的新格式）；OAuth/建单/捕获从国内直连 api-m.paypal.com 可用（**无需 VPN**）；Secret 仅在 `.env.local` + Render 环境变量，绝不入 git
+- **后端**：`src/lib/paypal-rest.ts`（OAuth 令牌缓存 / Orders v2 create+capture / webhook 签名验证）+ `/api/paypal/orders` `/api/paypal/capture` `/api/webhook/paypal-rest`；`complete-purchase.ts` 抽出三路共享状态机（result 不重生成、payer_email 合并、失败 paid+pending 重试不变式保持）；`/api/unlock` 新增 `mode=smart`（返回 purchase_id + 老 Standard 链接回退）
+- **前端**：`PayPalSmartButtons`（JS SDK，funding=card 游客卡 + PayPal 余额）内嵌 PaywallOverlay，取消/失败留在原页不丢上下文；`NEXT_PUBLIC_PAYPAL_CLIENT_ID` 存在才渲染 = **灰度开关**；老 Standard 链接保留为回退（4 语言 `success.smartFallback`）
+- **Webhook**：Live 订阅 `6HM339222S067793L`（PAYMENT.CAPTURE.COMPLETED / CHECKOUT.ORDER.APPROVED / PAYMENT.CAPTURE.DENIED，脚本 `register-paypal-webhook.cjs` 注册）
+- **验证**：tsc/lint/build 全绿；E2E 主套件 28/28 + 补充 27/27（新增 9 项 smart 用例）；本地 Live 冒烟 SDK 加载 + 真实建单 $5.99；生产部署后 `/api/paypal/orders` 真实建单返回 Live 订单号 ✅（测试订单均未付款，3h 自动过期；**生产 UI 冒烟未做——需用户授权写生产测试行**）
+- **Render**：4 个新环境变量已写入（PAYPAL_CLIENT_ID/PAYPAL_CLIENT_SECRET/NEXT_PUBLIC_PAYPAL_CLIENT_ID/PAYPAL_WEBHOOK_ID）；env 变更**不会自动触发部署**，需手动 POST /v1/services/{id}/deploys（本次 dep-datm0ltg）
+- **注意**：CAPTURE 意图订单无 void 端点，未捕获订单 3h 自动过期；Render env-vars GET/PUT 响应为分页形状 `[{envVar,cursor}]`
+- **下次复核**：pay_click/paywall_unlock_click 是否破零；付费墙智能按钮是否出现真实捕获（Purchase paid=true 新增行）；`pay_smart_fallback_click` 是否有数据
+
+## 近期状态 (2026-09-29) · 上午（安全修复）
+
 - **线上版本**：无代码变更（本次为安全修复 + 脚本资产），生产 Render 自动部署未触发
 - 事件：Supabase 2026-09-19 安全告警邮件（用户 9/29 提供截图）→ **`rls_disabled_in_public` CRITICAL**
 
