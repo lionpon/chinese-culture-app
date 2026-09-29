@@ -164,6 +164,34 @@ PayPal Standard Checkout，支持信用卡支付。
 - **实现**：middleware 设置 `cc_test_mode` cookie → AnalyticsTracker 客户端跳过 → `/api/track` 服务端跳过
 - 部署前务必确认已关闭测试模式（或关闭不影响，只是你自己的访问不被统计）
 
+## 近期状态 (2026-09-29)
+
+- **线上版本**：无代码变更（本次为安全修复 + 脚本资产），生产 Render 自动部署未触发
+- 事件：Supabase 2026-09-19 安全告警邮件（用户 9/29 提供截图）→ **`rls_disabled_in_public` CRITICAL**
+
+### 🔒 RLS 安全修复（已完成并验证）
+
+**审计结论（修复前）**：4 表 RLS 全关、0 策略；`anon`/`authenticated` 持有全部表全权限（SELECT/INSERT/UPDATE/DELETE/TRUNCATE/REFERENCES/TRIGGER）→ 任何人凭公开 anon key 经 REST API 可读写删全部数据；实测 `SET ROLE anon` 可读到 Purchase 53 行（含 payer_email/表单 input）。
+
+**修复**（用户授权后执行）：
+1. 4 表 `ENABLE ROW LEVEL SECURITY`（RLS 开启 + 0 策略 = anon/authenticated 默认全拒）
+2. 双保险：`REVOKE ALL PRIVILEGES ON TABLE` 从 anon/authenticated
+3. 验证：anon/authenticated 读表均 `permission denied` ✅；postgres（应用角色，BYPASSRLS）4 表全正常（Purchase 53 / Visit 4578 / DailyReport 75 / Subscriber 2，零数据丢失）✅；生产 health/home/naming 200 ✅；本地 dev 200 ✅
+
+**连接坑（勿重复探索）**：
+- `db.*.supabase.co` 直连域名**只有 IPv6 AAAA 记录**（无 A 记录）；CN 网络下 Prisma 需 `?sslmode=prefer` 走直连（TLS over IPv6 可用）；`sslmode=require` 反而失败
+- pooler `aws-0-us-east-1.pooler.supabase.com:6543` 是**明文 pgbouncer**（TLS 握手会 `ERR_SSL_WRONG_VERSION_NUMBER`），须 `sslmode=disable`；pooler 用户名 = `postgres.<项目ref>`（如 `postgres.vnktcrolpcyktduldpfm`）
+- 无需 VPN
+
+**新资产**：`scripts/db-security-audit.cjs`（RLS/权限/策略/角色只读审计，自动尝试多种连接配置）、`scripts/db-rls-fix.cjs`（幂等修复 + 三角色验证）
+
+**规矩（长期）**：今后任何新表（prisma db push/migrate 建表不自动开 RLS）建完**立即** ENABLE RLS + REVOKE anon/authenticated。
+
+### ⏳ 待办
+
+1. 观察 Supabase Advisor 下轮通知确认 `rls_disabled_in_public` 消失；顺手检查 Advisor 其他条目
+2. 观察生产日志/埋点无异常（RLS 不影响 postgres 角色，预期零影响）
+
 ## 近期状态 (2026-09-28)
 
 - **线上版本**：代码 `7ab287a` + docs `963ce72`（9/22 后无代码变更）。完整存档见 `WORK_LOG_2026-09-28.md`
