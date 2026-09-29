@@ -4,7 +4,10 @@
 // 注意: createdAt = naive UTC; 北京 = + interval '8 hours'
 const fs = require("fs");
 const envRaw = fs.readFileSync("D:/chinese culture/project2/.env", "utf8");
-process.env.DATABASE_URL = envRaw.match(/^DATABASE_URL=(.+)$/m)[1].trim();
+let dbUrl = envRaw.match(/^DATABASE_URL=(.+)$/m)[1].trim();
+// 连接坑 (2026-09-29): 直连域名仅 IPv6，需显式 sslmode=prefer，否则 Prisma 报 Can't reach
+if (!dbUrl.includes("sslmode=")) dbUrl += (dbUrl.includes("?") ? "&" : "?") + "sslmode=prefer&connection_limit=1";
+process.env.DATABASE_URL = dbUrl;
 const { PrismaClient } = require("D:/chinese culture/project2/node_modules/@prisma/client");
 const prisma = new PrismaClient();
 
