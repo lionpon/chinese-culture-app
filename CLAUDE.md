@@ -174,7 +174,7 @@ PayPal Standard Checkout，支持信用卡支付。
 - **后端**：`src/lib/paypal-rest.ts`（OAuth 令牌缓存 / Orders v2 create+capture / webhook 签名验证）+ `/api/paypal/orders` `/api/paypal/capture` `/api/webhook/paypal-rest`；`complete-purchase.ts` 抽出三路共享状态机（result 不重生成、payer_email 合并、失败 paid+pending 重试不变式保持）；`/api/unlock` 新增 `mode=smart`（返回 purchase_id + 老 Standard 链接回退）
 - **前端**：`PayPalSmartButtons`（JS SDK，funding=card 游客卡 + PayPal 余额）内嵌 PaywallOverlay，取消/失败留在原页不丢上下文；`NEXT_PUBLIC_PAYPAL_CLIENT_ID` 存在才渲染 = **灰度开关**；老 Standard 链接保留为回退（4 语言 `success.smartFallback`）
 - **Webhook**：Live 订阅 `6HM339222S067793L`（PAYMENT.CAPTURE.COMPLETED / CHECKOUT.ORDER.APPROVED / PAYMENT.CAPTURE.DENIED，脚本 `register-paypal-webhook.cjs` 注册）
-- **验证**：tsc/lint/build 全绿；E2E 主套件 28/28 + 补充 27/27（新增 9 项 smart 用例）；本地 Live 冒烟 SDK 加载 + 真实建单 $5.99；生产部署后 `/api/paypal/orders` 真实建单返回 Live 订单号 ✅（测试订单均未付款，3h 自动过期；**生产 UI 冒烟未做——需用户授权写生产测试行**）
+- **验证**：tsc/lint/build 全绿；E2E 主套件 28/28 + 补充 27/27（新增 9 项 smart 用例）；本地 Live 冒烟 SDK 加载 + 真实建单 $5.99；生产部署后 `/api/paypal/orders` 真实建单返回 Live 订单号 ✅；**生产 UI 冒烟（用户授权，9/29 晚）4/4 全过**：成功页加载 → 解锁点击 → SDK iframe 渲染（**card + paypal 双 funding 可见**）→ 点击弹出 PayPal 托管结账界面；测试行（种子 + P2）已全部删除，0 残留；所有测试订单未付款、3h 自动过期
 - **Render**：4 个新环境变量已写入（PAYPAL_CLIENT_ID/PAYPAL_CLIENT_SECRET/NEXT_PUBLIC_PAYPAL_CLIENT_ID/PAYPAL_WEBHOOK_ID）；env 变更**不会自动触发部署**，需手动 POST /v1/services/{id}/deploys（本次 dep-datm0ltg）
 - **注意**：CAPTURE 意图订单无 void 端点，未捕获订单 3h 自动过期；Render env-vars GET/PUT 响应为分页形状 `[{envVar,cursor}]`
 - **下次复核**：pay_click/paywall_unlock_click 是否破零；付费墙智能按钮是否出现真实捕获（Purchase paid=true 新增行）；`pay_smart_fallback_click` 是否有数据
