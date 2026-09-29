@@ -187,10 +187,17 @@ PayPal Standard Checkout，支持信用卡支付。
 
 **规矩（长期）**：今后任何新表（prisma db push/migrate 建表不自动开 RLS）建完**立即** ENABLE RLS + REVOKE anon/authenticated。
 
+**复发预防（默认权限加固，同日）**：
+- 二次审计（`db-security-audit2.cjs`）发现 `pg_default_acl`：postgres 角色在 public schema 新建表/函数会**自动授予 anon/authenticated 全权限**——4 表当初暴露的机制
+- 修复（`db-default-acl-fix.cjs`）：`ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA public REVOKE ALL ON TABLES / EXECUTE ON FUNCTIONS FROM anon, authenticated` → 探针表实测新表对 anon 零授权、anon 读取 DENIED ✅
+- `supabase_admin` 的默认授权仍在（postgres 角色非 super 无法改）——Supabase dashboard 建表路径仍会授 anon/authenticated，靠"建表即开 RLS"兜底；service_role 默认授权保留不动（Supabase 标准设计）
+- 其余安全面扫描干净：无 SECURITY DEFINER 函数、无视图、无函数级授权、扩展标准集（pgcrypto/uuid-ossp/plpgsql/pg_stat_statements/supabase_vault）、登录角色为标准 Supabase 集
+
 ### ⏳ 待办
 
 1. 观察 Supabase Advisor 下轮通知确认 `rls_disabled_in_public` 消失；顺手检查 Advisor 其他条目
-2. 观察生产日志/埋点无异常（RLS 不影响 postgres 角色，预期零影响）
+2. 观察生产日志/埋点无异常（RLS/默认权限均不影响 postgres 角色，预期零影响）
+3. 若未来用 Supabase dashboard 建表：建表后立即开 RLS（supabase_admin 默认授权仍会授 anon/authenticated）
 
 ## 近期状态 (2026-09-28)
 
