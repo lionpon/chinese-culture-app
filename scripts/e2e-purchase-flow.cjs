@@ -2,7 +2,10 @@
 // 运行前提: dev server (PAYPAL_SANDBOX=true TEST_VERIFY_PAYPAL=true RESEND_API_KEY=) 已起
 const fs = require("fs");
 const envRaw = fs.readFileSync("D:/chinese culture/project2/.env", "utf8");
-process.env.DATABASE_URL = envRaw.match(/^DATABASE_URL=(.+)$/m)[1].trim();
+let dbUrl = envRaw.match(/^DATABASE_URL=(.+)$/m)[1].trim();
+// 连接坑 (2026-09-29): 直连域名仅 IPv6，需显式 sslmode=prefer
+if (!dbUrl.includes("sslmode=")) dbUrl += (dbUrl.includes("?") ? "&" : "?") + "sslmode=prefer&connection_limit=1";
+process.env.DATABASE_URL = dbUrl;
 const { PrismaClient } = require("D:/chinese culture/project2/node_modules/@prisma/client");
 const { chromium } = require("D:/chinese culture/project2/node_modules/playwright");
 const prisma = new PrismaClient();

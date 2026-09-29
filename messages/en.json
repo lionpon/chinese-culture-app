@@ -677,6 +677,7 @@
     "priceAnchor": "From $5.99 — less than a coffee ☕",
     "freeCalendarHook": "All 13 event types + hour-by-hour guidance — unlock below before you commit.",
     "paywallPersistent": "One-time · yours forever · no subscription ever",
+    "smartFallback": "Trouble with the buttons above? Continue on the PayPal website →",
     "emailLabel": "Email (optional) — where should we send your full reading?",
     "emailPlaceholder": "you@example.com"
   },

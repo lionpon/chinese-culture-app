@@ -677,6 +677,7 @@
     "priceAnchor": "$5.99から — コーヒー1杯よりお手頃 ☕",
     "freeCalendarHook": "13種類すべてのイベント＋時間別ガイダンス — 決める前に下から解放してください。",
     "paywallPersistent": "一回限り · 永久にあなたのもの · サブスクリプションなし",
+    "smartFallback": "上のボタンが使えない場合はPayPalサイトで続行 →",
     "emailLabel": "メールアドレス（任意）— 完全な結果の送信先",
     "emailPlaceholder": "you@example.com"
   },

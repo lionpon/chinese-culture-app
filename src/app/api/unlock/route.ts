@@ -1,12 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import { buildPayPalCheckoutUrl, getAppUrl } from "@/lib/paypal";
+import { smartButtonsEnabled } from "@/lib/paypal-rest";
 import { prisma } from "@/lib/db";
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { purchase_id, amount, email } = body as { purchase_id: string; amount?: number; email?: string };
+    const { purchase_id, amount, email, mode } = body as { purchase_id: string; amount?: number; email?: string; mode?: string };
     const buyerEmail = typeof email === "string" && email.trim() ? email.trim() : null;
+    // Smart Buttons mode: client stays on-page and renders the JS SDK buttons;
+    // the returned standard_url is the legacy PayPal page as fallback.
+    const smartMode = mode === "smart" && smartButtonsEnabled();
 
     if (!purchase_id) {
       return NextResponse.json({ error: "Missing purchase_id" }, { status: 400 });
@@ -67,11 +71,11 @@ export async function POST(req: NextRequest) {
         (typeof existingInput.amount === "number" ? existingInput.amount : 0) || (amount ?? 1),
         1
       );
-      return NextResponse.json({
-        url: buildPayPalCheckoutUrl(existing.id, existing.type, payAmount, {
-          cancelReturn: `${getAppUrl()}/success?purchase_id=${purchase_id}&free=1`,
-        }),
+      const standardUrl = buildPayPalCheckoutUrl(existing.id, existing.type, payAmount, {
+        cancelReturn: `${getAppUrl()}/success?purchase_id=${purchase_id}&free=1`,
       });
+      if (smartMode) return NextResponse.json({ purchase_id: existing.id, standard_url: standardUrl });
+      return NextResponse.json({ url: standardUrl });
     }
 
     // Read user's chosen amount from original purchase (preserves AmountPicker selection)
@@ -107,6 +111,7 @@ export async function POST(req: NextRequest) {
     const url = buildPayPalCheckoutUrl(pending.id, pending.type, payAmount, {
       cancelReturn: `${getAppUrl()}/success?purchase_id=${purchase_id}&free=1`,
     });
+    if (smartMode) return NextResponse.json({ purchase_id: pending.id, standard_url: url });
     return NextResponse.json({ url });
   } catch (error) {
     console.error("Unlock error:", error);

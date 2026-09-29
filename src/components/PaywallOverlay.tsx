@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import PaymentTrustBadges from "./PaymentTrustBadges";
+import PayPalSmartButtons from "./PayPalSmartButtons";
 import { trackClick } from "@/lib/track";
 
 export default function PaywallOverlay({
@@ -19,18 +20,37 @@ export default function PaywallOverlay({
   const t = useTranslations("success");
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
+  // Smart Buttons state: after /api/unlock creates/reuses the pending order,
+  // the JS SDK buttons render inline (no redirect → no abandonment at PayPal).
+  const [pendingId, setPendingId] = useState<string | null>(null);
+  const [fallbackUrl, setFallbackUrl] = useState<string | null>(null);
+  const [smartError, setSmartError] = useState<string | null>(null);
+  const smartEnabled = !!process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID;
 
   async function unlock() {
     setLoading(true);
+    setSmartError(null);
     trackClick("paywall_unlock_click");
     try {
       const res = await fetch("/api/unlock", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ purchase_id: purchaseId, email: email.trim() || undefined }),
+        body: JSON.stringify({
+          purchase_id: purchaseId,
+          email: email.trim() || undefined,
+          mode: smartEnabled ? "smart" : "standard",
+        }),
       });
       const data = await res.json();
-      if (data.url) {
+      if (data.url && !data.purchase_id) {
+        // Already-paid sibling: straight to the owned result page.
+        window.location.href = data.url;
+      } else if (data.purchase_id) {
+        // Smart mode: pending order exists — reveal inline PayPal buttons.
+        setPendingId(data.purchase_id);
+        setFallbackUrl(data.standard_url || null);
+      } else if (data.url) {
+        // Legacy path (Smart Buttons disabled server-side).
         window.location.href = data.url;
       } else {
         alert(data.error || "Something went wrong");
@@ -89,14 +109,40 @@ export default function PaywallOverlay({
           />
         </div>
 
-        {/* CTA button */}
-        <button
-          onClick={unlock}
-          disabled={loading}
-          className="w-full py-3 rounded-xl text-sm font-semibold btn-primary disabled:opacity-60 mb-2"
-        >
-          {loading ? "..." : t("unlockFullCta")}
-        </button>
+        {pendingId ? (
+          /* Inline Smart Buttons — PayPal balance + guest debit/credit card */
+          <>
+            <PayPalSmartButtons
+              purchaseId={pendingId}
+              onCancel={() => setSmartError(null)}
+              onError={(msg) => setSmartError(msg)}
+            />
+            {smartError && (
+              <p className="text-xs text-center my-2" style={{ color: "#b3261e" }}>
+                {smartError}
+              </p>
+            )}
+            {fallbackUrl && (
+              <a
+                href={fallbackUrl}
+                onClick={() => trackClick("pay_smart_fallback_click")}
+                className="block text-center text-xs underline mt-3"
+                style={{ color: "var(--text-muted)" }}
+              >
+                {t("smartFallback")}
+              </a>
+            )}
+          </>
+        ) : (
+          /* CTA — creates the pending order, then reveals Smart Buttons */
+          <button
+            onClick={unlock}
+            disabled={loading}
+            className="w-full py-3 rounded-xl text-sm font-semibold btn-primary disabled:opacity-60 mb-2"
+          >
+            {loading ? "..." : t("unlockFullCta")}
+          </button>
+        )}
 
         {/* Price anchor — kills the "is it worth $5.99?" objection before it forms */}
         <p className="text-xs text-center mb-3" style={{ color: "var(--text-muted)" }}>

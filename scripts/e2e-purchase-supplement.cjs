@@ -2,7 +2,10 @@
 // IPN result 复用 / PDT 表单付费单结果生成 / naming·divination·dream 表单 email 采集
 const fs = require("fs");
 const envRaw = fs.readFileSync("D:/chinese culture/project2/.env", "utf8");
-process.env.DATABASE_URL = envRaw.match(/^DATABASE_URL=(.+)$/m)[1].trim();
+let dbUrl = envRaw.match(/^DATABASE_URL=(.+)$/m)[1].trim();
+// 连接坑 (2026-09-29): 直连域名仅 IPv6，需显式 sslmode=prefer
+if (!dbUrl.includes("sslmode=")) dbUrl += (dbUrl.includes("?") ? "&" : "?") + "sslmode=prefer&connection_limit=1";
+process.env.DATABASE_URL = dbUrl;
 const { PrismaClient } = require("D:/chinese culture/project2/node_modules/@prisma/client");
 const { chromium } = require("D:/chinese culture/project2/node_modules/playwright");
 const prisma = new PrismaClient();
@@ -159,6 +162,77 @@ async function main() {
     const rowM = await prisma.purchase.findUnique({ where: { id: pM } });
     ok("g2.dream 免费流程 + email 入库", rowM && JSON.parse(rowM.input).email === "dream-e2e@test.com", rowM ? JSON.parse(rowM.input).email : "no row");
     await ctxM.close();
+
+
+    // ── h. Smart Buttons (REST Orders v2): unlock smart 模式 → orders → capture → webhook ──
+    const origS = await prisma.purchase.create({
+      data: {
+        checkoutId: crypto.randomUUID(), type: "calendar",
+        input: JSON.stringify({ startDate: "2027-10-01", endDate: "2027-10-05", eventType: "wedding", locale: "en", mark: MARK }),
+        status: "completed", paid: false, result: JSON.stringify({ auspiciousDays: [{ date: "2027-10-01", score: 91, SMART: true }] }),
+      },
+    });
+    testIds.push(origS.id);
+    const uS = await pageA.evaluate(async (id) => {
+      const r = await fetch("/api/unlock", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ purchase_id: id, email: "smart-buyer@test.com", mode: "smart" }) });
+      return await r.json();
+    }, origS.id);
+    ok("h1.smart unlock 返回 purchase_id + standard_url", !!uS.purchase_id && !!uS.standard_url, uS.purchase_id);
+    testIds.push(uS.purchase_id);
+    const pS = await prisma.purchase.findUnique({ where: { id: uS.purchase_id } });
+    ok("h2.P2 result 复制自预览单(不重生成)", pS && pS.result === JSON.stringify({ auspiciousDays: [{ date: "2027-10-01", score: 91, SMART: true }] }));
+    ok("h3.P2 email 由付费墙写入", pS && JSON.parse(pS.input).email === "smart-buyer@test.com");
+
+    const oS = await pageA.evaluate(async (id) => {
+      const r = await fetch("/api/paypal/orders", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ purchase_id: id }) });
+      return { status: r.status, body: await r.json() };
+    }, uS.purchase_id);
+    ok("h4.orders 返回 TEST 订单号", oS.status === 200 && oS.body.order_id === "TEST_ORDER_" + uS.purchase_id, oS.body.order_id);
+
+    const cS = await pageA.evaluate(async (oid) => {
+      const r = await fetch("/api/paypal/capture", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ order_id: oid }) });
+      return { status: r.status, body: await r.json() };
+    }, oS.body.order_id);
+    const pS2 = await prisma.purchase.findUnique({ where: { id: uS.purchase_id } });
+    ok("h5.capture 完成订单 paid+completed", cS.status === 200 && cS.body.purchase_id === uS.purchase_id && pS2.paid === true && pS2.status === "completed", pS2.status);
+    ok("h6.capture 不重生成 result(逐字节一致)", pS2.result === JSON.stringify({ auspiciousDays: [{ date: "2027-10-01", score: 91, SMART: true }] }));
+
+    // 幂等: 重复 capture 同一订单 → 仍 200 且返回同一 purchase_id
+    const cS2 = await pageA.evaluate(async (oid) => {
+      const r = await fetch("/api/paypal/capture", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ order_id: oid }) });
+      return { status: r.status, body: await r.json() };
+    }, oS.body.order_id);
+    ok("h7.重复 capture 幂等", cS2.status === 200 && cS2.body.purchase_id === uS.purchase_id, String(cS2.status));
+
+    // 未知订单 → 4xx
+    const cBad = await pageA.evaluate(async () => {
+      const r = await fetch("/api/paypal/capture", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ order_id: "TEST_ORDER_nonexistent" }) });
+      return r.status;
+    });
+    ok("h8.未知订单 404", cBad === 404, String(cBad));
+
+    // REST webhook: PAYMENT_CAPTURE.COMPLETED 兜底完成另一笔 pending 单
+    const wRow = await prisma.purchase.create({
+      data: {
+        checkoutId: crypto.randomUUID(), type: "calendar",
+        input: JSON.stringify({ startDate: "2027-11-01", endDate: "2027-11-03", eventType: "travel", locale: "en", mark: MARK }),
+        status: "pending", result: JSON.stringify({ auspiciousDays: [{ date: "2027-11-01", WEBHOOK: true }] }),
+      },
+    });
+    testIds.push(wRow.id);
+    const wh = await pageA.evaluate(async (id) => {
+      const r = await fetch("/api/webhook/paypal-rest", {
+        method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          event_type: "PAYMENT.CAPTURE.COMPLETED",
+          resource: { purchase_units: [{ custom_id: id, payments: { captures: [{ custom_id: id }] } }] },
+          payer: { email_address: "webhook-payer@test.com" },
+        }),
+      });
+      return r.status;
+    }, wRow.id);
+    const wRow2 = await prisma.purchase.findUnique({ where: { id: wRow.id } });
+    ok("h9.REST webhook 完成 pending 单 + email 合并", wh === 200 && wRow2.paid === true && wRow2.status === "completed" && JSON.parse(wRow2.input).email === "webhook-payer@test.com", wRow2.status);
 
     await ctxA.close();
   } catch (e) {
