@@ -183,11 +183,21 @@ PayPal Standard Checkout，支持信用卡支付。
 1. `db-default-acl-fix.cjs`（9/29）只撤销了 TABLES + FUNCTIONS 的默认授权，**漏了 SEQUENCES**：`pg_default_acl` 显示 postgres 在 public schema 新建序列仍会自动授 anon/authenticated `rwU`。风险低（序列本身读不到数据，且有表级 RLS + 撤销双保险），但为彻底闭环已补上
 2. 四个 DB 脚本的 `.env.local` 解析用 `split('\n')`，文件为 CRLF 行尾时**正则全部失配、URL 为 undefined**（9/29 后 .env.local 被某编辑器转为 CRLF，脚本实际已不可直接运行）→ 全部改为 `split(/\r?\n/)`
 
-**脚本更新（4 文件，已语法校验，待执行）**：
+**脚本更新（4 文件，已语法校验并执行）**：
 - `db-default-acl-fix.cjs`：新增 `REVOKE ALL ON SEQUENCES FROM anon, authenticated` + 序列探针验证（建临时序列 → 检查 anon 零权限 → 删除）
 - `db-rls-fix.cjs` / `db-security-audit.cjs` / `db-security-audit2.cjs`：CRLF 解析修复
 
-**⏳ 待办（需要用户授权后执行）**：在生产库运行 `node scripts/db-default-acl-fix.cjs`（幂等；TABLES/FUNCTIONS 撤销为无害重放，SEQUENCES 撤销为本次新动作），执行后 `pg_default_acl` 中 postgres [public] 三类对象应全部干净
+**执行与验证（2026-09-30，用户明确授权后）**：
+- 生产库运行 `node scripts/db-default-acl-fix.cjs`：TABLES/FUNCTIONS 撤销幂等重放 ✅ + SEQUENCES 撤销生效 ✅
+- 执行后 `pg_default_acl` postgres [public] 三类全部干净：`S {postgres=rwU, service_role=rwU}`、`f {postgres=X, service_role=X}`、`r {postgres=arwdDxtm, service_role=arwdDxtm}`（anon/authenticated 全部移除）✅
+- 探针实测：新建表对 anon/authenticated 零授权、anon 读取 DENIED ✅；新建序列 anon usage/select/update 全 false ✅；探针对象已清理 ✅
+- `db-security-audit2.cjs` 全量复核：无 SECURITY DEFINER 函数、无视图、无 schema/函数级授权、扩展与登录角色为标准 Supabase 集 ✅
+
+**已知残留（低风险，维持现状，勿重复修）**：
+- `postgres` 在 `storage` schema 的默认授权仍在——postgres 角色从不建对象于该 schema，规则不会触发；storage 是 Supabase 扩展自管 schema
+- `supabase_admin` 默认授权仍在（9/29 已记录：postgres 非 super 无法改；Supabase dashboard 建表路径仍会授 anon/authenticated）——靠"建表即开 RLS"规矩兜底
+
+**⏳ 待办**：观察 Supabase Advisor 下轮通知确认 `rls_disabled_in_public` 消失（即 9/29 待办 #3，本次无新增动作）
 
 ## 近期状态 (2026-09-29)
 
