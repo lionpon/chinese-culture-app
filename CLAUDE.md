@@ -164,6 +164,31 @@ PayPal Standard Checkout，支持信用卡支付。
 - **实现**：middleware 设置 `cc_test_mode` cookie → AnalyticsTracker 客户端跳过 → `/api/track` 服务端跳过
 - 部署前务必确认已关闭测试模式（或关闭不影响，只是你自己的访问不被统计）
 
+## 近期状态 (2026-09-30)
+
+- **线上版本**：无代码变更（本次为安全复核 + 脚本资产），生产 Render 自动部署未触发
+- 事件：用户提供桌面 `123.txt` = Supabase 安全告警邮件（快照 2026-09-27，项目 `chinese-culture` ref `vnktcrolpcyktduldpfm`）→ 要求复核是否已处理
+
+### ✅ 复核结论：9/27 告警的 `rls_disabled_in_public` 已于 9/29 修复并生效
+
+**线上实测（只读复核，2026-09-30）**：
+- 4 表 RLS 全开（`relrowsecurity=true`）✅；anon/authenticated 表级授权 **0 条** ✅
+- 实弹探测：`SET ROLE anon` 读 Purchase → `permission denied` ✅（漏洞已关闭）
+- postgres 应用角色 4 表无损且数据持续增长（Purchase 54 / Visit 4741 / DailyReport 76 / Subscriber 2）✅
+- 告警邮件快照（9/27）早于修复时间（9/29），Supabase Advisor 下轮扫描后条目才会消失——与 9/29 待办一致，无需额外动作
+
+### 🔧 补漏发现与修复（sequence 默认授权 + 脚本 CRLF bug）
+
+**复核中发现两处遗漏**：
+1. `db-default-acl-fix.cjs`（9/29）只撤销了 TABLES + FUNCTIONS 的默认授权，**漏了 SEQUENCES**：`pg_default_acl` 显示 postgres 在 public schema 新建序列仍会自动授 anon/authenticated `rwU`。风险低（序列本身读不到数据，且有表级 RLS + 撤销双保险），但为彻底闭环已补上
+2. 四个 DB 脚本的 `.env.local` 解析用 `split('\n')`，文件为 CRLF 行尾时**正则全部失配、URL 为 undefined**（9/29 后 .env.local 被某编辑器转为 CRLF，脚本实际已不可直接运行）→ 全部改为 `split(/\r?\n/)`
+
+**脚本更新（4 文件，已语法校验，待执行）**：
+- `db-default-acl-fix.cjs`：新增 `REVOKE ALL ON SEQUENCES FROM anon, authenticated` + 序列探针验证（建临时序列 → 检查 anon 零权限 → 删除）
+- `db-rls-fix.cjs` / `db-security-audit.cjs` / `db-security-audit2.cjs`：CRLF 解析修复
+
+**⏳ 待办（需要用户授权后执行）**：在生产库运行 `node scripts/db-default-acl-fix.cjs`（幂等；TABLES/FUNCTIONS 撤销为无害重放，SEQUENCES 撤销为本次新动作），执行后 `pg_default_acl` 中 postgres [public] 三类对象应全部干净
+
 ## 近期状态 (2026-09-29)
 
 - **线上版本**：`a361674` Smart Buttons 已上线（+ 同日安全修复 a995407/d43ee72、脚本 c999329、存档 6a7aa0b）

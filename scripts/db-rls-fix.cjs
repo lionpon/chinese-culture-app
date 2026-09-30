@@ -6,7 +6,7 @@ const { PrismaClient } = require('@prisma/client');
 
 const envPath = path.join(__dirname, '..', '.env.local');
 const env = {};
-for (const line of fs.readFileSync(envPath, 'utf8').split('\n')) {
+for (const line of fs.readFileSync(envPath, 'utf8').split(/\r?\n/)) {
   const m = line.match(/^([A-Z0-9_]+)=(.*)$/);
   if (m) env[m[1]] = m[2].replace(/^["']|["']$/g, '');
 }

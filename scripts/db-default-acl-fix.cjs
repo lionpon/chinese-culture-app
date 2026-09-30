@@ -1,4 +1,4 @@
-// Harden default privileges: stop auto-granting anon/authenticated on future tables/functions
+// Harden default privileges: stop auto-granting anon/authenticated on future tables/functions/sequences
 // created by postgres role in public schema (recurrence prevention for rls_disabled_in_public).
 // Does NOT touch existing tables (already handled by db-rls-fix.cjs). Reversible.
 const fs = require('fs');
@@ -7,7 +7,7 @@ const { PrismaClient } = require('@prisma/client');
 
 const envPath = path.join(__dirname, '..', '.env.local');
 const env = {};
-for (const line of fs.readFileSync(envPath, 'utf8').split('\n')) {
+for (const line of fs.readFileSync(envPath, 'utf8').split(/\r?\n/)) {
   const m = line.match(/^([A-Z0-9_]+)=(.*)$/);
   if (m) env[m[1]] = m[2].replace(/^["']|["']$/g, '');
 }
@@ -31,6 +31,8 @@ async function main() {
   console.log('  default TABLES: revoked anon/authenticated OK');
   await prisma.$executeRawUnsafe(`ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA public REVOKE EXECUTE ON FUNCTIONS FROM anon, authenticated`);
   console.log('  default FUNCTIONS: revoked anon/authenticated OK');
+  await prisma.$executeRawUnsafe(`ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA public REVOKE ALL ON SEQUENCES FROM anon, authenticated`);
+  console.log('  default SEQUENCES: revoked anon/authenticated OK');
 
   console.log('=== AFTER ===');
   dacl = await prisma.$queryRawUnsafe(`
@@ -58,6 +60,18 @@ async function main() {
   }
   await prisma.$executeRawUnsafe(`DROP TABLE "cc_acl_probe"`);
   console.log('  probe table dropped');
+
+  console.log('=== VERIFY: create temp sequence as postgres, check anon has no privileges ===');
+  await prisma.$executeRawUnsafe(`DROP SEQUENCE IF EXISTS "cc_acl_probe_seq"`);
+  await prisma.$executeRawUnsafe(`CREATE SEQUENCE "cc_acl_probe_seq"`);
+  const sp = await prisma.$queryRawUnsafe(`
+    SELECT has_sequence_privilege('anon','cc_acl_probe_seq','USAGE') AS usage,
+           has_sequence_privilege('anon','cc_acl_probe_seq','SELECT') AS sel,
+           has_sequence_privilege('anon','cc_acl_probe_seq','UPDATE') AS upd`);
+  const exposed = sp[0].usage || sp[0].sel || sp[0].upd;
+  console.log('  [anon] sequence usage=' + sp[0].usage + ' select=' + sp[0].sel + ' update=' + sp[0].upd + (exposed ? ' ⚠️ EXPOSED' : ' ✅ zero privileges'));
+  await prisma.$executeRawUnsafe(`DROP SEQUENCE "cc_acl_probe_seq"`);
+  console.log('  probe sequence dropped');
 }
 
 main()
