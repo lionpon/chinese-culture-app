@@ -164,6 +164,17 @@ PayPal Standard Checkout，支持信用卡支付。
 - **实现**：middleware 设置 `cc_test_mode` cookie → AnalyticsTracker 客户端跳过 → `/api/track` 服务端跳过
 - 部署前务必确认已关闭测试模式（或关闭不影响，只是你自己的访问不被统计）
 
+## 近期状态 (2026-10-13)
+
+- **线上版本**：`4bfc8817`（9/29 Smart Buttons 版本）；本次为 9/28→10/13 流量埋点复核，无代码变更。完整存档见 `WORK_LOG_2026-10-13.md`
+- ⚠️ **Render OOM 3 次**（9/11、10/4、10/9，各宕机 ~20s），均 `oomKilled 512Mi`；API 报 `plan=free` 与「8/28 升 Starter」记录矛盾，**待 dashboard 核实档位**。free/starter 同为 512Mi，OOM 根源是内存上限
+- **流量**：真实 1834 / 日均 ~115（较前窗 +45%）；US 522 / RU 202 / SG 188 / PH 96（新进前五）；`ru/guide/chinese-name-girl` 继续第一
+- **漏斗**：✅ `paywall_unlock_click` 破零 = 3（曼谷/莫斯科州/达拉斯）；❌ `pay_click` = 0 —— 断点下移至「解锁 → PayPal 按钮」，待真人浏览器验证弹窗渲染
+- 免费漏斗通畅（17 免费完成 + 5 带邮箱 + 2 订阅）；**收入连续 ~62 天 $0**（paid=true 仍 8/13 沙盒 1 笔）
+- 监控盲区：GitHub cron `*/10` 实际运行 2.5–10h/次，两次宕机未被监控捕捉（仅 Render 邮件）
+- 国内直连 Supabase 5432 被墙；代理 7890 + Supabase Root 2021 CA 可完整 TLS 校验直查（根证书指纹 `807025AD50D4ED219D2C9C7D299C004F824EB00CF7F65AFEF607D07B72E6CAFA`）
+- 本次提交：存档 10/13 复核 + 推送 9/30 遗留 3 commit（安全会话文档/脚本）
+
 ## 近期状态 (2026-09-30)
 
 - **线上版本**：无代码变更（本次为安全复核 + 脚本资产），生产 Render 自动部署未触发
