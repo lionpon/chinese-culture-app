@@ -39,7 +39,7 @@ export async function GET(req: NextRequest) {
   // 3. Send daily email digest via Resend
   try {
     const emailOk = await sendDailyHexagramEmail();
-    results.email = emailOk ? "sent" : "skipped (not configured)";
+    results.email = emailOk ? "sent" : "skipped";
   } catch (err) {
     results.email = { error: String(err) };
   }

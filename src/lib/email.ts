@@ -36,8 +36,26 @@ function getDailyHexagram() {
 }
 
 /**
+ * 抢占式每日邮件名额 — `INSERT ... ON CONFLICT DO NOTHING` 原子去重。
+ * 两个独立发送器（AutoDailyReport 首次页面渲染 / /api/cron 定时任务）并发调用时只有一方能抢到。
+ * 表不存在或 DB 异常时返回 false（宁可不发也不重复发）。
+ */
+async function claimDailyEmailSlot(date: string): Promise<boolean> {
+  try {
+    const rows = await prisma.$queryRawUnsafe<{ date: string }[]>(
+      `INSERT INTO "DailyEmailLog" ("date") VALUES ('${date}') ON CONFLICT ("date") DO NOTHING RETURNING "date"`
+    );
+    return rows.length > 0;
+  } catch (err) {
+    console.error("[email] DailyEmailLog claim failed (skip send):", String(err));
+    return false;
+  }
+}
+
+/**
  * Sends a daily I Ching hexagram digest email via Resend to ALL subscribers.
  * Also CCs CONTACT_EMAIL as admin copy.
+ * Dedup guard: at most one email per UTC date (DailyEmailLog slot claim).
  */
 export async function sendDailyHexagramEmail(): Promise<boolean> {
   const apiKey = process.env.RESEND_API_KEY;
@@ -69,8 +87,15 @@ export async function sendDailyHexagramEmail(): Promise<boolean> {
     const recipientList = Array.from(allRecipients);
     console.log(`[email] Sending to ${recipientList.length} subscriber(s)`);
 
-    const h = getDailyHexagram();
+    // 每日仅一封：先抢占名额，抢不到说明今天已发过（另一发送器或重试）
     const dateStr = new Date().toISOString().slice(0, 10);
+    const claimed = await claimDailyEmailSlot(dateStr);
+    if (!claimed) {
+      console.log(`[email] Daily digest already sent for ${dateStr} — skipping`);
+      return false;
+    }
+
+    const h = getDailyHexagram();
 
     const langLabels: Record<string, string> = {
       en: "English", ru: "Русский", ja: "日本語", ko: "한국어",
