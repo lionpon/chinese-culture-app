@@ -174,7 +174,7 @@ PayPal Standard Checkout，支持信用卡支付。
 - 监控盲区：GitHub cron `*/10` 实际运行 2.5–10h/次，两次宕机未被监控捕捉（仅 Render 邮件）
 - 国内直连 Supabase 5432 被墙；代理 7890 + Supabase Root 2021 CA 可完整 TLS 校验直查（根证书指纹 `807025AD50D4ED219D2C9C7D299C004F824EB00CF7F65AFEF607D07B72E6CAFA`）
 - 本次提交：存档 10/13 复核 + 推送 9/30 遗留 3 commit（安全会话文档/脚本）
-- **每日邮件去重修复**（）：订阅者曾一天收两封卦象邮件——根因是两个发送器（根布局 AutoDailyReport 首次页面渲染 / ）都无条件发送且无去重。修复 =  表（date 主键 + RLS）抢占式单次发送（INSERT ON CONFLICT DO NOTHING），谁先到谁发，第二个自动跳过；daily-seo curl 超时 60→120s。建表脚本  幂等可重跑
+- **每日邮件去重修复**（`ac67790`）：订阅者曾一天收两封卦象邮件——根因是两个发送器（根布局 AutoDailyReport 首次页面渲染 / `/api/cron`）都无条件发送且无去重。修复 = `DailyEmailLog` 表（date 主键 + RLS）抢占式单次发送（INSERT ON CONFLICT DO NOTHING），谁先到谁发，第二个自动跳过；daily-seo curl 超时 60→120s。建表脚本 `scripts/email-dedup-setup.cjs` 幂等可重跑
 
 ## 近期状态 (2026-09-30)
 
