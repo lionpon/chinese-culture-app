@@ -56,7 +56,7 @@
 - [x] `/world-cup` 保持 200 不受影响
 - [x] sitemap 含 /nfl；cron 预热含 /nfl
 - [x] 赛果自动更新链路：NflResult 表 + cron ESPN 同步（实跑 30 场种子化成功，DB/静态 0 差异）
-- [ ] 提交 + 推送（Render 自动部署）
+- [x] 提交 + 推送（Render 自动部署，生产已生效）
 
 ## 团队名单（数据文件用，2026 赛季 32 队）
 
