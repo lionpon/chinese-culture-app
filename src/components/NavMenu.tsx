@@ -28,8 +28,8 @@ export default function NavMenu() {
       {open && (
         <div className="absolute top-14 left-0 right-0 border-b shadow-lg" style={{ backgroundColor: "rgba(26, 26, 46, 0.98)", backdropFilter: "blur(12px)", borderColor: "var(--border-subtle)" }}>
           <div className="flex flex-col p-4 space-y-3">
-            <Link href="/world-cup" className="text-sm font-semibold py-1" style={{ color: "var(--vermilion)" }} onClick={() => setOpen(false)}>
-              ⚽ World Cup
+            <Link href="/nfl" className="text-sm font-semibold py-1" style={{ color: "var(--vermilion)" }} onClick={() => setOpen(false)}>
+              🏈 NFL Predictions
             </Link>
             <Link href="/naming" className="text-sm py-1" style={{ color: "var(--text-muted)" }} onClick={() => setOpen(false)}>
               {t("nav.createName")}

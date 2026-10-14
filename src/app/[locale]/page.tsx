@@ -11,17 +11,17 @@ import { Link } from "@/navigation";
 import { trackClick } from "@/lib/track";
 import { testimonials } from "@/data/testimonials";
 
-const WC_BANNER: Record<string, { text: string; cta: string }> = {
-  en: { text: "I Ching x World Cup 2026", cta: "See today's match predictions →" },
-  ru: { text: "И-Цзин x ЧМ-2026", cta: "Прогнозы на сегодняшние матчи →" },
-  ja: { text: "易経 x 2026 W杯", cta: "本日の試合予想を見る →" },
-  ko: { text: "주역 x 2026 월드컵", cta: "오늘의 경기 예측 보기 →" },
+const NFL_BANNER: Record<string, { text: string; cta: string }> = {
+  en: { text: "I Ching x NFL 2026 — Super Bowl LXI", cta: "See this week's game predictions →" },
+  ru: { text: "И-Цзин x NFL 2026 — Super Bowl LXI", cta: "Прогнозы на матчи этой недели →" },
+  ja: { text: "易経 x NFL 2026 — スーパーボウルLXI", cta: "今週の試合予想を見る →" },
+  ko: { text: "주역 x NFL 2026 — 슈퍼볼 LXI", cta: "이번 주 경기 예측 보기 →" },
 };
 
-function showWorldCupBanner(): boolean {
+function showNflBanner(): boolean {
   const now = new Date();
-  const start = new Date("2026-06-11T00:00:00Z");
-  const end = new Date("2026-07-20T00:00:00Z");
+  const start = new Date("2026-09-09T00:00:00Z");
+  const end = new Date("2027-02-15T00:00:00Z");
   return now >= start && now < end;
 }
 
@@ -175,7 +175,7 @@ export default function HomePage() {
   const t = useTranslations("home");
   const params = useParams();
   const locale = (params?.locale as string) || "en";
-  const wc = WC_BANNER[locale] || WC_BANNER.en;
+  const nfl = NFL_BANNER[locale] || NFL_BANNER.en;
   const ph = PH_BANNER[locale] || PH_BANNER.en;
 
   return (
@@ -231,12 +231,12 @@ export default function HomePage() {
         </div>
       </div>
 
-      {showWorldCupBanner() && (
+      {showNflBanner() && (
         <div className="max-w-2xl mx-auto mb-6 animate-pulse">
-          <Link href="/world-cup" onClick={() => trackClick("banner_worldcup")} className="block">
+          <Link href="/nfl" onClick={() => trackClick("banner_nfl")} className="block">
             <div className="rounded-2xl p-4 sm:p-5 text-center transition-all hover:shadow-md hover:scale-[1.02] active:scale-95" style={{ background: "linear-gradient(135deg, var(--vermilion), #8b1a1a)" }}>
-              <p className="text-white/90 text-xs sm:text-sm font-medium mb-1">⚽ {wc.text}</p>
-              <p className="text-white font-bold text-sm sm:text-base">{wc.cta}</p>
+              <p className="text-white/90 text-xs sm:text-sm font-medium mb-1">🏈 {nfl.text}</p>
+              <p className="text-white font-bold text-sm sm:text-base">{nfl.cta}</p>
             </div>
           </Link>
         </div>

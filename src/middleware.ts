@@ -53,7 +53,7 @@ export default function middleware(req: NextRequest) {
       `- [Dream Interpretation](${BASE_URL}/guide/dream-meaning) · [Lucky Numbers](${BASE_URL}/guide/lucky-numbers)`,
       "",
       "## Daily",
-      `- [Daily I Ching](${BASE_URL}/daily) · [World Cup Predictions](${BASE_URL}/world-cup)`,
+      `- [Daily I Ching](${BASE_URL}/daily) · [NFL Predictions](${BASE_URL}/nfl)`,
       "",
       "## Languages",
       "English, Russian, Japanese, Korean.",

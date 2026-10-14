@@ -40,19 +40,22 @@
 - "NFL predictions 2026 I Ching" / "Super Bowl LXI prediction Feb 14 2027" / "NFL playoff predictions 2027" / "who will win Super Bowl LXI"
 - 页面标题模板："I Ching x NFL 2026 — Super Bowl LXI Predictions | Chinese Culture Studio"
 
-## 数据维护约定
+## 数据维护约定（2026-10-14 定稿，赛果全自动）
 
-- 每周焦点战由人工选定（对抗性 + 季后赛悬念），赛后填 `result` 供精度统计
+- **每周焦点战由人工选定**（对抗性 + 季后赛悬念）——仅需新增赛程到 `src/data/nfl-2026.ts`，无需填赛果
+- **赛果自动更新**：每日 cron（daily-seo.yml → `/api/cron` 第 7 步）抓 ESPN scoreboard API → upsert 到 Supabase `NflResult` 表（首次运行全量种子化，之后只扫最近 14 天 + 未入库场次）；`/nfl` 页面每次请求读 DB（DB 缺失回退 TS 静态 result）
+- 建表脚本：`node scripts/nfl-results-setup.cjs`（幂等）
 - 1/16 季后赛开始后：每轮全覆盖（6+4+2+1=13 场）
 - 全部含娱乐免责声明（沿用 WC 文案改 NFL 词）
 
 ## 验收清单
 
-- [ ] tsc + build 绿
-- [ ] `/nfl` 4 语言 HTTP 200，meta 正确
-- [ ] 主页 banner 显示（窗口 9/9→2/15）+ 桌面/移动 nav 指向 /nfl
-- [ ] `/world-cup` 保持 200 不受影响
-- [ ] sitemap 含 /nfl；cron 预热含 /nfl
+- [x] tsc + build 绿
+- [x] `/nfl` 4 语言 HTTP 200，meta 正确
+- [x] 主页 banner 显示（窗口 9/9→2/15）+ 桌面/移动 nav 指向 /nfl
+- [x] `/world-cup` 保持 200 不受影响
+- [x] sitemap 含 /nfl；cron 预热含 /nfl
+- [x] 赛果自动更新链路：NflResult 表 + cron ESPN 同步（实跑 30 场种子化成功，DB/静态 0 差异）
 - [ ] 提交 + 推送（Render 自动部署）
 
 ## 团队名单（数据文件用，2026 赛季 32 队）

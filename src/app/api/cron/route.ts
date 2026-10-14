@@ -3,6 +3,7 @@ import { generateReport } from "@/lib/report";
 import { pingSitemaps } from "@/lib/sitemap-ping";
 import { sendDailyHexagramEmail } from "@/lib/email";
 import { runPurchaseRecovery } from "@/lib/purchase-recovery";
+import { syncNflResultsFromEspn } from "@/lib/nfl-espn";
 import { BASE_URL } from "@/lib/config";
 
 export const runtime = "nodejs";
@@ -119,11 +120,12 @@ export async function GET(req: NextRequest) {
     results.reddit = "skipped (no REDDIT_CLIENT_ID)";
   }
 
-  // 6. Warm all pages (home, world-cup, snake-2027, AI tools)
+  // 6. Warm all pages (home, world-cup, nfl, snake-2027, AI tools)
   const warmResults: Record<string, string> = {};
   const pages = [
     "",
     "/world-cup",
+    "/nfl",
     "/snake-2027",
     "/tools/dream-ai",
     "/tools/zodiac-match",
@@ -146,6 +148,14 @@ export async function GET(req: NextRequest) {
     }
   }
   results.warmup = warmResults;
+
+  // 7. Sync NFL featured-game results from ESPN → Supabase "NflResult"
+  //    (每周赛果自动更新：ESPN scoreboard API，幂等 upsert；页面读 DB 展示)
+  try {
+    results.nflSync = await syncNflResultsFromEspn();
+  } catch (err) {
+    results.nflSync = { error: String(err) };
+  }
 
   return NextResponse.json(results);
 }

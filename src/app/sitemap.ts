@@ -30,6 +30,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/tools/zodiac-calculator", priority: 0.7, changeFreq: "monthly" as const },
     { path: "/tools/five-elements-test", priority: 0.7, changeFreq: "monthly" as const },
     { path: "/world-cup", priority: 0.9, changeFreq: "daily" as const },
+    { path: "/nfl", priority: 0.9, changeFreq: "daily" as const },
     { path: "/snake-2027", priority: 0.9, changeFreq: "weekly" as const },
     { path: "/snake-2027/rat", priority: 0.7, changeFreq: "weekly" as const },
     { path: "/snake-2027/ox", priority: 0.7, changeFreq: "weekly" as const },

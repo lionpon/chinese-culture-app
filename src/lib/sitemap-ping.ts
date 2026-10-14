@@ -42,7 +42,7 @@ function buildIndexNowUrls(): string[] {
     "/guide/iching", "/guide/iching-beginner", "/guide/auspicious-dates",
     "/guide/wedding-dates-2026", "/guide/chinese-zodiac", "/guide/five-elements",
     "/guide/chinese-new-year-2027", "/guide/lucky-numbers",
-    "/world-cup", "/snake-2027",
+    "/world-cup", "/nfl", "/snake-2027",
     "/guide/feng-shui", "/guide/face-reading", "/guide/dream-meaning",
     "/tools/dream-ai", "/tools/zodiac-match", "/tools/daily-fortune", "/tools/name-preview",
     "/tools/quick-oracle", "/tools/zodiac-calculator", "/tools/five-elements-test",

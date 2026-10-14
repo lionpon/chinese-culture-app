@@ -146,7 +146,7 @@ export default async function LocaleLayout({ children, params }: Props) {
                   Chinese Culture Studio
                 </a>
                 <nav className="hidden sm:flex gap-3 text-sm items-center">
-                  <a href={`${pathname}/world-cup`} className="font-semibold hover:opacity-80 transition-opacity" style={{ color: "var(--vermilion)" }}>⚽ WC</a>
+                  <a href={`${pathname}/nfl`} className="font-semibold hover:opacity-80 transition-opacity" style={{ color: "var(--vermilion)" }}>🏈 NFL</a>
                   <a href={`${pathname}/naming`} className="nav-link">{t("nav.name")}</a>
                   <a href={`${pathname}/calendar`} className="nav-link">{t("nav.dates")}</a>
                   <a href={`${pathname}/divination`} className="nav-link">{t("nav.iching")}</a>
@@ -175,8 +175,8 @@ export default async function LocaleLayout({ children, params }: Props) {
                   <LanguageSwitcher />
                 </nav>
                 <div className="flex items-center gap-2 sm:gap-4">
-                  <a href={`${pathname}/world-cup`} className="sm:hidden text-xs font-bold px-2.5 py-1 rounded-full animate-pulse" style={{ backgroundColor: "var(--vermilion)", color: "#fff" }}>
-                    ⚽ WC
+                  <a href={`${pathname}/nfl`} className="sm:hidden text-xs font-bold px-2.5 py-1 rounded-full animate-pulse" style={{ backgroundColor: "var(--vermilion)", color: "#fff" }}>
+                    🏈 NFL
                   </a>
                   <span className="sm:hidden"><LanguageSwitcher /></span>
                   <ShareButton />

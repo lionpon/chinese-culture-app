@@ -15,7 +15,7 @@
 | I Ching Divination | `/divination` | 易经占卜（时间/随机/手动起卦） |
 
 ### 免费内容
-`/palm-reading` `/dream-interpretation` `/daily` `/guide/*` `/tools/*` `/world-cup` `/snake-2027` `/tools/dream-ai`
+`/palm-reading` `/dream-interpretation` `/daily` `/guide/*` `/tools/*` `/world-cup` `/nfl` `/snake-2027` `/tools/dream-ai`
 
 ## 技术栈
 
@@ -45,7 +45,8 @@ src/
 │   │   ├── daily/         # 每日易经
 │   │   ├── guide/         # 指南(14个子页面)
 │   │   ├── tools/         # 工具
-│   │   ├── world-cup/     # 世界杯
+│   │   ├── world-cup/     # 世界杯（2026 已结束，存档）
+│   │   ├── nfl/           # 🏈 I Ching x NFL 2026（焦点战预测 + Super Bowl LXI 倒计时；赛果每日 cron 自动同步 ESPN → Supabase NflResult）
 │   │   ├── snake-2027/    # 🐍 蛇年运势 (13页: 总览+12生肖)
 │   │   ├── admin/         # 管理后台
 │   │   ├── success/       # 支付成功
@@ -1293,7 +1294,7 @@ Proxy: 127.0.0.1:7897
 
 | 事件 | 时间 | 全球搜索量 | 适合度 |
 |------|------|-----------|--------|
-| 🏈 Super Bowl LXI | 2027.2.14（SoFi, LA） | 🔥🔥🔥🔥🔥 | 美国+全球，胜负明确。**10/13 定案：主页世界杯→NFL 替换，10/14 开工，计划见 `PLAN_NFL_SUPERBOWL.md`** |
+| 🏈 Super Bowl LXI | 2027.2.14（SoFi, LA） | 🔥🔥🔥🔥🔥 | 美国+全球，胜负明确。**✅ 10/14 已上线 `/nfl`**（焦点战预测 + 倒计时；常规赛进行中，数据每周人工维护） |
 | 🎬 奥斯卡 2027 | 2027.3 | 🔥🔥🔥🔥 | 预测获奖，卦对应提名 |
 | 🗳️ 美国中期选举 | 2026.11 | 🔥🔥🔥🔥 | 国会归属预测 |
 | 🏆 欧冠决赛 | 2027.5 | 🔥🔥🔥🔥🔥 | 同世界杯模板 |
