@@ -47,6 +47,7 @@ export default function PaywallOverlay({
         window.location.href = data.url;
       } else if (data.purchase_id) {
         // Smart mode: pending order exists — reveal inline PayPal buttons.
+        trackClick("pay_smart_buttons_revealed");
         setPendingId(data.purchase_id);
         setFallbackUrl(data.standard_url || null);
       } else if (data.url) {
