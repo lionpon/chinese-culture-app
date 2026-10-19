@@ -48,22 +48,25 @@ const BOY_NAMES = [
   { ch: "启明", py: "Qǐmíng", en: "Dawn + bright — 'the morning star'" },
 ];
 
+// r/namenerds 合规要点(2026-10-19 读版规后修订):
+//   • NO dishonesty = 永封级 — 必须透明披露"这是我们做的免费工具",不得伪装纯个人整理
+//   • 列表 < 15 个(本模板 10 个 ✅)• 同 sub 3 天内不重发
 const INTRO_EN = `Chinese given names are usually two characters drawn from classical literature — the Book of Songs (诗经), Songs of Chu (楚辞) and the Analects (论语). Each character carries a meaning and a five-element property (wood, fire, earth, metal, water), and parents often balance them against the child's birth date.
 
-I've been compiling names from these sources for a while, and these are my current favorites. For each: characters, pinyin, meaning, and source where it exists.`;
+Full disclosure: I've been building a small database of names from these sources for a free naming tool, and these are my current favorites from it. For each: characters, pinyin, meaning, and source where it exists.`;
 
-const HOW_EN = `How the five-element part works: a child born in, say, a wood-heavy year benefits from fire or metal characters — the system is a balancing act, not superstition. If you want to see what comes out for your own baby's birth date, we built a free tool that generates personalized names with pinyin, meaning, and the element reasoning: {LINK} (free, no sign-up). Happy to answer questions about any of these names in the comments.`;
+const HOW_EN = `How the five-element part works: a child born in, say, a wood-heavy year benefits from fire or metal characters — the system is a balancing act, not superstition. The tool we built (free, no sign-up) generates a personalized name from this database based on birth date — pinyin, meaning and the element reasoning included: {LINK}. Happy to answer questions about any of the names above in the comments.`;
 
 const VARIANT_GIRLS: NamingPromoPost = {
   variant: "girls",
-  title: "I compiled Chinese girl names from classical poetry — 10 favorites with meanings and pinyin",
+  title: "Chinese girl names from classical poetry — 10 of my favorites (meanings & pinyin)",
   text: `${INTRO_EN}\n\n${GIRL_NAMES.map((n, i) => `${i + 1}. ${n.ch} (${n.py}) — ${n.en}`).join("\n")}\n\n${HOW_EN}`,
   link: promoLink("/naming", "en", "girls"),
 };
 
 const VARIANT_BOYS: NamingPromoPost = {
   variant: "boys",
-  title: "Chinese boy names from the Analects & Songs of Chu — 10 favorites with meanings and pinyin",
+  title: "Chinese boy names from the Analects & Songs of Chu — 10 of my favorites (meanings & pinyin)",
   text: `${INTRO_EN}\n\n${BOY_NAMES.map((n, i) => `${i + 1}. ${n.ch} (${n.py}) — ${n.en}`).join("\n")}\n\n${HOW_EN}`,
   link: promoLink("/naming", "en", "boys"),
 };
