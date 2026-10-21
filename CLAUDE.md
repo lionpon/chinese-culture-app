@@ -165,6 +165,20 @@ PayPal Standard Checkout，支持信用卡支付。
 - **实现**：middleware 设置 `cc_test_mode` cookie → AnalyticsTracker 客户端跳过 → `/api/track` 服务端跳过
 - 部署前务必确认已关闭测试模式（或关闭不影响，只是你自己的访问不被统计）
 
+## 近期状态 (2026-10-21)
+
+- **线上版本**：无代码变更（`b690d9f`，10/19）；本次为 Supabase 邮件复核 + 存档。完整存档见 `WORK_LOG_2026-10-21.md`
+- 事件：用户提供桌面 `123.txt` = Supabase 邮件（~10/20 发出）——**2026-10-30 起不再为已有项目 `public` schema 的新建表自动授予 Data API 访问权**；现有表不受影响、保持当前授权；10/30 后新建表须在创建它的 migration 内显式 GRANT，否则 supabase-js/PostgREST/GraphQL 报 "permission denied"
+
+### ✅ 复核结论（2026-10-21）：零影响，无需任何动作
+
+- **线上实测**（`db-security-audit.cjs` 只读复核）：6 表（Purchase/Visit/DailyReport/Subscriber/DailyEmailLog/NflResult）RLS 全开、anon/authenticated 表级授权 **0 条**——9/29-9/30 加固状态保持，无回退 ✅
+- **应用不走 Data API**：全部 DB 访问经 Prisma 直连 `postgres` 角色（BYPASSRLS）；`src/` 0 处 supabase-js、env 无 anon key；NflResult/DailyEmailLog 为 raw SQL 表，同样经 Prisma 访问 → 新建表即使无 Data API 授权也不影响应用
+- 邮件列出的受影响场景（新项目 / preview 分支 / 本地 `supabase db reset`）本项目均不适用——Prisma db push + 自有 SQL 脚本建表，从未用 Supabase Migrations，无 preview 分支
+- **方向一致**：新默认行为 ≈ 项目既有规矩（建表即开 RLS + REVOKE anon/authenticated），相当于 Supabase 官方默认追平了我们的加固
+- **长期规矩不变**：今后新建表继续「建表 → 立即 ENABLE RLS → REVOKE anon/authenticated」，无需补任何 GRANT
+- ⏳ 无新增待办；仅当未来决定引入 Data API（客户端 supabase-js 直读）时才需显式 GRANT——与当前零暴露姿态相悖，触发前先讨论
+
 ## 近期状态 (2026-10-13)
 
 - **线上版本**：`4bfc8817`（9/29 Smart Buttons 版本）；本次为 9/28→10/13 流量埋点复核，无代码变更。完整存档见 `WORK_LOG_2026-10-13.md`
