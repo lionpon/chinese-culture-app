@@ -164,7 +164,7 @@ PayPal Standard Checkout，支持信用卡支付。
 
 ### 🔎 SEO 数据管线（GSC 2026-10-27 接入）
 
-- GSC 资源：`https://www.culture-of-china.com/`（URL-prefix，自动验证）；数据从 10/27 起积累（无历史回溯），1-3 天延迟
+- GSC 资源：`https://www.culture-of-china.com/`（URL-prefix）——**用户此前早已部署**（sitemap 10/26 已读、320 页已发现）；数据起始日以成效页实际区间为准，1-3 天延迟
 - **消费流程**：用户在 GSC「成效」页导出 CSV（查询维度 = 看搜索词；网页维度 = 与 Visit 表 join 对比 CTR/PV）→ 放桌面 → `node scripts/ingest-gsc.cjs <csv路径>`（表头中/英/繁自适应；网页维度自动 join Visit 表并标记无记录 URL）
 - 复核节奏：与每轮流量复核同步导出（下次 = 11/3 girl 页实验复核）；**查单页真实搜索词** = GSC 成效页按「网页」过滤该 URL 再导出查询维度
 
@@ -184,7 +184,7 @@ PayPal Standard Checkout，支持信用卡支付。
 ## 近期状态 (2026-10-27)
 
 - **线上版本**：`ebc763b`（终态；含 `0339e2e` 交付，Render 自动部署已验证）——① 起名指南页（girl/boy）内嵌**免费名字预览工具**（年份→候选名+生肖五行，3 次/天限流+升级卡，复用 datecheck 模式，4 语言）② `/naming?gender=&year=` 深链预填 ③ 新埋点 `guide_tool_name_preview/_limit/_cta` ④ 顺手修全站残留旧价 $1→$5.99（8 guide 页 + JSON-LD + 布局 meta）。另：10/19→10/27 流量埋点复核存档见 `WORK_LOG_2026-10-27.md`
-- **GSC 已接入（10/27）**：所有权自动验证通过（无需代码）；数据 10/27 起积累；消费管线 `scripts/ingest-gsc.cjs` 已建（CSV 解析 + Visit join，实测通过）；用户待办 = GSC「Sitemap」页提交 `sitemap.xml`
+- **GSC 状态复核（10/27）**：资源**此前已部署**（sitemap 10/26 已读、320 页已发现，无需任何动作）；消费管线 `scripts/ingest-gsc.cjs` 已建（CSV 解析 + Visit join，实测通过）
 - **ko 降级定案（10/27 晚）**：日/韩版保留评估结论 = ja 留（JP 真实搜索 37/月 + 可付款市场）、ko 降为 URL 兼容层（KR 真实用户终身 5 次、0 互动 0 订单、11/15 guide 页本就 en 回退）——`src/i18n.ts` 已实现 ko 加载时 en 自动回退，新内容不再翻译 ko；另发现 Atlanta 10/02 一次性整站爬虫（~205 行）污染 ja/ko 统计，观察不处置
 - 热页面漏斗分析（**假设分级，勿当结论**）：事实 = 93% 单页即走 / CTA 点击 6.5% / sticky 0 点击；假设 = ①意图错配（RU 段已被 Yandex 查询串直接证实：「китайские имена женские」等 3 条真实搜索词；**Google 段仍为推断**）②68% 独联体阅读型/不可付款客群 ③缺互动钩子 ④CTA 位置。本轮工具嵌入 = **该假设的实验**，指标与判定阈值已预注册（存档 §⑧）
 - **网站健康**：生产 200 ✅ / 邮件去重 ✅ / NFL 同步 ✅ / 日报正常，revenue 连续 0
