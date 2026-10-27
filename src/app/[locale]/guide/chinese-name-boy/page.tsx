@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Link } from "@/navigation";
 import GuideFaq from "@/components/GuideFaq";
 import GuideToolEmbed from "@/components/GuideToolEmbed";
+import { BOY_NAMES_EN } from "@/data/name-lists";
 
 type Props = { params: { locale: string } };
 
@@ -13,40 +14,14 @@ const NAMES: Record<string, { title: string; desc: string; ogTitle: string; ogDe
     desc: "50+ authentic Chinese boy names with meanings & characters. Strong virtue names, nature-inspired picks, and modern choices. Free personalized Chinese name generator.",
     ogTitle: "50+ Chinese Boy Names & Meanings (2026)",
     ogDesc: "50+ authentic Chinese boy names with meanings — strong, cool & traditional picks. Virtue names, nature names & mythology names. Free name generator.",
-    heading: "Chinese Names for Boys: 25+ Meanings",
+    heading: "50+ Chinese Boy Names & Their Meanings (2026)",
     subtitle: "Curated Chinese boy names with deep meaning — virtues, nature, mythology, and modern picks.",
     howTitle: "How Chinese Names Are Chosen",
     howBody1: "Chinese names are not just sounds. Each name carries meaning, aspiration, and often connects to Ba-Zi elements. Traditionally, name selection involves:",
     howBullets: ["Character meaning: Each character has independent meaning — parents combine them to create unique significance.", "Five Element balance: If a child's Ba-Zi chart lacks Water, the name may include the water radical (氵).", "Tone and rhythm: Chinese given names are usually 1-2 characters (not counting surname) and should sound harmonious.", "Generation character: In some families, all boys of one generation share a common first character."],
     tableTitle: "Names with Meanings",
     nameH: "Name", meaningH: "Meaning", styleH: "Style",
-    names: [
-      { name: "Jiàn (健)", meaning: "Healthy, strong, vigorous", style: "Virtue" },
-      { name: "Wěi (伟)", meaning: "Great, mighty, extraordinary", style: "Virtue" },
-      { name: "Yǒng (勇)", meaning: "Brave, courageous, fearless", style: "Virtue" },
-      { name: "Hào (浩)", meaning: "Vast, grand, boundless", style: "Nature" },
-      { name: "Lóng (龙)", meaning: "Dragon — power, majesty, success", style: "Mythology" },
-      { name: "Yǔ (宇)", meaning: "Universe, cosmos, space", style: "Nature" },
-      { name: "Míng (明)", meaning: "Bright, clear, intelligent", style: "Virtue" },
-      { name: "Zé (泽)", meaning: "Grace, beneficence, marsh", style: "Nature" },
-      { name: "Jùn (俊)", meaning: "Handsome, talented, refined", style: "Modern" },
-      { name: "Fēng (峰)", meaning: "Peak, summit, pinnacle", style: "Nature" },
-      { name: "Ruì (瑞)", meaning: "Auspicious, lucky, propitious", style: "Virtue" },
-      { name: "Bó (博)", meaning: "Erudite, learned, broad-minded", style: "Virtue" },
-      { name: "Chén (晨)", meaning: "Morning, dawn, new beginning", style: "Nature" },
-      { name: "Kǎi (凯)", meaning: "Triumphant, victorious", style: "Modern" },
-      { name: "Xī (希)", meaning: "Hope, rare, aspiration", style: "Modern" },
-      { name: "Héng (恒)", meaning: "Perseverance, constant, eternal", style: "Virtue" },
-      { name: "Tāo (涛)", meaning: "Great waves, billows, power", style: "Nature" },
-      { name: "Xuān (轩)", meaning: "Lofty, dignified, refined", style: "Classical" },
-      { name: "Yáng (阳)", meaning: "Sun, positive energy, yang principle", style: "Nature" },
-      { name: "Lín (林)", meaning: "Forest, grove, strength in numbers", style: "Nature" },
-      { name: "Zhì (志)", meaning: "Ambition, will, purpose", style: "Virtue" },
-      { name: "Qí (祺)", meaning: "Blessing, good fortune, peace", style: "Virtue" },
-      { name: "Hóng (鸿)", meaning: "Swan goose, grand, vast ambition", style: "Classical" },
-      { name: "Yǔ (雨)", meaning: "Rain, nourishment, gentle strength", style: "Nature" },
-      { name: "Chéng (成)", meaning: "Success, accomplishment, completion", style: "Modern" },
-    ],
+    names: BOY_NAMES_EN,
     categoriesTitle: "Popular Name Categories",
     categories: ["Virtues (德): Jiàn (health), Yǒng (courage), Zhì (ambition) — names expressing desired qualities.", "Nature (自然): Fēng (peak), Lín (forest), Hào (vast) — connecting the child to the natural world.", "Mythology (神话): Lóng (dragon) — the single most popular mythological name for boys.", "Success (成功): Chéng (success), Kǎi (triumph), Wěi (greatness) — wishing achievement.", "Modern (现代): Xī (hope), Chén (dawn) — popular among younger parents."],
     personalizedTitle: "From Preview to Your Real Name",
@@ -55,6 +30,8 @@ const NAMES: Record<string, { title: string; desc: string; ogTitle: string; ogDe
       { q: "How many characters are in a Chinese boy's name?", a: "Usually 1 or 2 characters (plus surname). Two-character given names are more common and allow richer meaning." },
       { q: "Can a non-Chinese person use a Chinese name?", a: "Yes! Chinese people often give Chinese names to foreign friends. It's a sign of cultural respect." },
       { q: "Which name brings the most luck?", a: "Luck depends on how well the name matches your Ba-Zi chart. A name that balances your elements is considered the luckiest." },
+      { q: "How do you pronounce these names?", a: "The pinyin shown with each name is the standard Mandarin romanization — tone marks tell you the pitch. Wěi rhymes with 'way' with a falling-rising tone." },
+      { q: "Which name fits my son's birth chart?", a: "That's what Ba-Zi naming is for. Our naming service generates 5 names matched to the Five Elements balance of your child's exact birth information — free preview included." },
     ],
     cta: "Get Your Personalized Chinese Name — from $5.99",
     disclaimer: "For cultural appreciation only.",
@@ -203,6 +180,14 @@ export default function ChineseNameBoyGuide({ params: { locale } }: Props) {
 
       <h2>{c.personalizedTitle}</h2><p>{c.personalizedBody}</p>
       <GuideFaq lang={locale} faqs={c.faqs} />
+      <div className="not-prose my-8">
+        <p className="text-sm font-semibold mb-2">Related Guides</p>
+        <ul className="space-y-1 text-sm list-disc list-inside">
+          <li><Link href="/guide/chinese-name-girl">100+ Chinese Girl Names &amp; Their Meanings</Link></li>
+          <li><Link href="/guide/chinese-name">How Chinese Names Are Chosen — the Complete Guide</Link></li>
+          <li><Link href="/naming">Get 5 Personalized Chinese Names from Your Birth Chart</Link></li>
+        </ul>
+      </div>
       <div className="not-prose my-8 text-center">
         <Link href="/naming" className="inline-block px-6 py-3 rounded-xl text-white font-medium" style={{ backgroundColor: "var(--accent)" }}>{c.cta}</Link>
       </div>

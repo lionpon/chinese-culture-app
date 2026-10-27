@@ -1,54 +1,33 @@
 import type { Metadata } from "next";
 import GuideFaq from "@/components/GuideFaq";
+import { Link } from "@/navigation";
 import GuideCTA from "@/components/GuideCTA";
 import GuideToolEmbed from "@/components/GuideToolEmbed";
+import { GIRL_NAMES_EN } from "@/data/name-lists";
 
 type Props = { params: { locale: string } };
 
 type Name = { name: string; meaning: string; style: string };
 
-const CONTENT: Record<string, { title: string; desc: string; ogTitle: string; ogDesc: string; heading: string; subtitle: string; tableTitle: string; nameH: string; meaningH: string; styleH: string; names: Name[]; personalizedTitle: string; personalizedBody: string; faqs: { q: string; a: string }[]; disclaimer: string }> = {
+const CONTENT: Record<string, { title: string; desc: string; ogTitle: string; ogDesc: string; heading: string; subtitle: string; tableTitle: string; nameH: string; meaningH: string; styleH: string; groups: { title: string; names: Name[] }[]; personalizedTitle: string; personalizedBody: string; faqs: { q: string; a: string }[]; disclaimer: string }> = {
   en: {
     title: "100+ Chinese Girl Names & Meanings: Elegant, Cute & Unique (2026) | Chinese Culture Studio",
     desc: "100+ beautiful Chinese girl names with meanings — floral, elegant, modern & classical. Find the perfect Chinese name for your baby girl or character. Free naming tool included.",
     ogTitle: "100+ Chinese Girl Names & Meanings (2026)",
     ogDesc: "Discover 100+ beautiful Chinese girl names with meanings. Floral names, elegant classics, modern picks & virtue names. Free Chinese name generator.",
-    heading: "Chinese Female Names for Girls: 25+ Beautiful Meanings",
-    subtitle: "A curated collection of Chinese girl names — flowers, beauty, virtues, and classical elegance.",
+    heading: "100+ Chinese Girl Names & Their Meanings (2026)",
+    subtitle: "100+ beautiful Chinese girl names with meanings, pinyin and style — organized by flowers, nature, virtues, arts, gems, joy, classical poetry, and modern favorites.",
     tableTitle: "Names with Meanings",
     nameH: "Name", meaningH: "Meaning", styleH: "Style",
-    names: [
-      { name: "Měi (美)", meaning: "Beautiful, graceful, elegant", style: "Beauty" },
-      { name: "Lì (丽)", meaning: "Lovely, pretty, magnificent", style: "Beauty" },
-      { name: "Huā (花)", meaning: "Flower, blossom, prosperity", style: "Nature" },
-      { name: "Lán (兰)", meaning: "Orchid — refinement, elegance, purity", style: "Flower" },
-      { name: "Jú (菊)", meaning: "Chrysanthemum — autumn, longevity, nobility", style: "Flower" },
-      { name: "Xuě (雪)", meaning: "Snow — purity, clarity, gentleness", style: "Nature" },
-      { name: "Yuè (月)", meaning: "Moon — beauty, mystery, femininity", style: "Nature" },
-      { name: "Fēn (芬)", meaning: "Fragrance, sweet aroma, virtue", style: "Flower" },
-      { name: "Jìng (静)", meaning: "Quiet, calm, serene, peaceful", style: "Virtue" },
-      { name: "Huì (慧)", meaning: "Intelligent, wise, perceptive", style: "Virtue" },
-      { name: "Xīn (欣)", meaning: "Joyful, happy, delighted", style: "Emotion" },
-      { name: "Yún (云)", meaning: "Cloud — graceful, free-spirited, dreamy", style: "Nature" },
-      { name: "Yīng (英)", meaning: "Heroine, flower, outstanding", style: "Virtue" },
-      { name: "Lù (露)", meaning: "Dew — freshness, purity, morning", style: "Nature" },
-      { name: "Shī (诗)", meaning: "Poetry, verse, literary grace", style: "Arts" },
-      { name: "Qín (琴)", meaning: "Zither, musical instrument, harmony", style: "Arts" },
-      { name: "Yǎ (雅)", meaning: "Refined, elegant, graceful, cultured", style: "Classical" },
-      { name: "Zhēn (珍)", meaning: "Precious, treasured, valuable", style: "Virtue" },
-      { name: "Qīng (清)", meaning: "Clear, pure, clean, honest", style: "Virtue" },
-      { name: "Xiāng (香)", meaning: "Fragrant, aromatic, sweet", style: "Flower" },
-      { name: "Chūn (春)", meaning: "Spring — renewal, youth, vitality", style: "Season" },
-      { name: "Ruò (若)", meaning: "Like, as if — philosophical and poetic", style: "Classical" },
-      { name: "Lè (乐)", meaning: "Joy, music, happiness, delight", style: "Emotion" },
-      { name: "Wǎn (婉)", meaning: "Gentle, graceful, tactful, charming", style: "Classical" },
-      { name: "Yáo (瑶)", meaning: "Jade, precious gem, supreme beauty", style: "Gem" },
-    ],
+    groups: GIRL_NAMES_EN,
     personalizedTitle: "From Preview to Your Real Name",
     personalizedBody: "The preview above uses only a birth year. A truly authentic Chinese name is crafted from your full birth information and Ba-Zi chart — our naming service generates 5 personalized options with pinyin, meanings, and the elemental reasoning behind each.",
     faqs: [
       { q: "How is a Chinese girl's name different from a boy's?", a: "Girl names often feature beauty, flower, and virtue characters, while boy names emphasize strength and ambition. But many modern names are gender-neutral." },
       { q: "What are the most popular Chinese girl names?", a: "Classical names like Lán (orchid), Xuě (snow), and modern names like Shī (poetry) and Lè (joy) are currently popular among Chinese parents." },
+      { q: "How do you pronounce these names?", a: "Each name above shows pinyin with tone marks — the standard romanization of Mandarin. The tone mark tells you the pitch: e.g. Měi is pronounced 'may' with a falling-rising tone." },
+      { q: "Can these names work as middle names?", a: "Yes. Chinese given names are usually one or two characters, so a single-character name like Lán or Yuè slots naturally into Western name formats as a middle name." },
+      { q: "Which name fits my baby's birth chart?", a: "That's what Ba-Zi naming is for. A name list can't see your child's birth date — our naming service matches 5 names to the Five Elements balance of the exact birth information. Try the free preview above." },
     ],
     disclaimer: "For cultural appreciation only.",
   },
@@ -61,7 +40,7 @@ const CONTENT: Record<string, { title: string; desc: string; ogTitle: string; og
     subtitle: "Коллекция китайских имён для девочек — цветы, красота, добродетели и классическая элегантность.",
     tableTitle: "Имена со Значением",
     nameH: "Имя", meaningH: "Значение", styleH: "Стиль",
-    names: [
+    groups: [{ title: "", names: [
       { name: "Мэй (美)", meaning: "Красивая, изящная, элегантная", style: "Красота" },
       { name: "Ли (丽)", meaning: "Прелестная, великолепная", style: "Красота" },
       { name: "Хуа (花)", meaning: "Цветок, расцвет, процветание", style: "Природа" },
@@ -87,7 +66,7 @@ const CONTENT: Record<string, { title: string; desc: string; ogTitle: string; og
       { name: "Лэ (乐)", meaning: "Радость, музыка, счастье", style: "Эмоция" },
       { name: "Вань (婉)", meaning: "Нежная, тактичная, очаровательная", style: "Классика" },
       { name: "Яо (瑶)", meaning: "Нефрит, драгоценный камень", style: "Драгоценности" },
-    ],
+  ] }],
     personalizedTitle: "От предпросмотра к вашему настоящему имени",
     personalizedBody: "Предпросмотр выше использует только год рождения. Подлинное китайское имя создаётся из вашей полной информации о рождении и карты Ба-Цзы — наш сервис генерирует 5 персонализированных вариантов с пиньинем, значениями и объяснением каждого.",
     faqs: [
@@ -105,7 +84,7 @@ const CONTENT: Record<string, { title: string; desc: string; ogTitle: string; og
     subtitle: "厳選された女の子の中国名 — 花、美しさ、美徳、そして古典的な優雅さ。",
     tableTitle: "意味付きの名前",
     nameH: "名前", meaningH: "意味", styleH: "スタイル",
-    names: [
+    groups: [{ title: "", names: [
       { name: "美（メイ）", meaning: "美しく優雅で上品", style: "美" },
       { name: "麗（リー）", meaning: "愛らしく華麗", style: "美" },
       { name: "花（ホア）", meaning: "花、開花、繁栄", style: "自然" },
@@ -131,7 +110,7 @@ const CONTENT: Record<string, { title: string; desc: string; ogTitle: string; og
       { name: "楽（ラー）", meaning: "喜び、音楽、幸福", style: "感情" },
       { name: "婉（ワン）", meaning: "優しく上品で魅力的", style: "古典" },
       { name: "瑶（ヤオ）", meaning: "翡翠、貴石、最高の美", style: "宝石" },
-    ],
+  ] }],
     personalizedTitle: "プレビューから本当の名前へ",
     personalizedBody: "上のプレビューは生まれた年だけを使ったものです。本当に本格的な中国名はあなたの誕生情報と八字から作られます。当サービスの命名ツールはピンイン・意味・それぞれの理由付きで5つの名前を生成します。",
     faqs: [
@@ -164,18 +143,31 @@ export default function ChineseNameGirlGuide({ params: { locale } }: Props) {
       <p className="text-stone-500 text-sm">{c.subtitle}</p>
       <hr className="my-6 border-stone-200" />
       <h2>{c.tableTitle}</h2>
-      <div className="not-prose overflow-x-auto">
-        <table className="w-full text-sm border-collapse">
-          <thead><tr className="bg-stone-100"><th className="p-2 text-left">{c.nameH}</th><th className="p-2 text-left">{c.meaningH}</th><th className="p-2 text-left">{c.styleH}</th></tr></thead>
-          <tbody>{c.names.map((n) => <tr key={n.name} className="border-t border-stone-200"><td className="p-2 font-medium">{n.name}</td><td className="p-2 text-xs">{n.meaning}</td><td className="p-2 text-xs text-stone-500">{n.style}</td></tr>)}</tbody>
-        </table>
-      </div>
-      <GuideToolEmbed tool="namePreview" gender="female" names={c.names} />
+      {c.groups.map((g, gi) => (
+        <div key={gi}>
+          {g.title && <h3 className="text-base font-semibold mt-6 mb-2">{g.title}</h3>}
+          <div className="not-prose overflow-x-auto">
+            <table className="w-full text-sm border-collapse">
+              <thead><tr className="bg-stone-100"><th className="p-2 text-left">{c.nameH}</th><th className="p-2 text-left">{c.meaningH}</th><th className="p-2 text-left">{c.styleH}</th></tr></thead>
+              <tbody>{g.names.map((n) => <tr key={n.name} className="border-t border-stone-200"><td className="p-2 font-medium">{n.name}</td><td className="p-2 text-xs">{n.meaning}</td><td className="p-2 text-xs text-stone-500">{n.style}</td></tr>)}</tbody>
+            </table>
+          </div>
+        </div>
+      ))}
+      <GuideToolEmbed tool="namePreview" gender="female" names={c.groups.flatMap(g => g.names)} />
 
       <h2>{c.personalizedTitle}</h2><p>{c.personalizedBody}</p>
       <GuideFaq lang={locale} faqs={c.faqs} />
       <div className="not-prose my-8 text-center">
         <GuideCTA href="/naming" service="naming" />
+      </div>
+      <div className="not-prose my-8">
+        <p className="text-sm font-semibold mb-2">Related Guides</p>
+        <ul className="space-y-1 text-sm list-disc list-inside">
+          <li><Link href="/guide/chinese-name-boy">50+ Chinese Boy Names &amp; Their Meanings</Link></li>
+          <li><Link href="/guide/chinese-name">How Chinese Names Are Chosen — the Complete Guide</Link></li>
+          <li><Link href="/naming">Get 5 Personalized Chinese Names from Your Birth Chart</Link></li>
+        </ul>
       </div>
       <hr className="my-6 border-stone-200" /><p className="text-xs text-stone-400">{c.disclaimer}</p>
 
