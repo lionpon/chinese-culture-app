@@ -32,7 +32,7 @@ const pageCol = findCol("網頁", "网页", "pages");
 const clickCol = findCol("點擊", "点击", "clicks");
 const imprCol = findCol("曝光", "展示", "impressions");
 const ctrCol = findCol("點閱率", "点击率", "ctr");
-const posCol = findCol("排名", "position");
+const posCol = header.findIndex(h => h === "排名" || h.toLowerCase() === "position"); // 精确匹配——"排名靠前的网页" 表头含"排名"子串，勿用模糊匹配
 
 if (clickCol === -1 || imprCol === -1) {
   console.error("未识别 GSC CSV 表头。当前表头:", header.join(","));
