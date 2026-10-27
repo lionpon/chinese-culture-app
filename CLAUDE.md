@@ -167,7 +167,8 @@ PayPal Standard Checkout，支持信用卡支付。
 
 ## 近期状态 (2026-10-27)
 
-- **线上版本**：无代码变更（`b690d9f`，10/19）；本次为 10/19→10/27 流量埋点复核 + 热页面漏斗分析。完整存档见 `WORK_LOG_2026-10-27.md`
+- **线上版本**：`0339e2e`（本次交付，Render 自动部署）——① 起名指南页（girl/boy）内嵌**免费名字预览工具**（年份→候选名+生肖五行，3 次/天限流+升级卡，复用 datecheck 模式，4 语言）② `/naming?gender=&year=` 深链预填 ③ 新埋点 `guide_tool_name_preview/_limit/_cta` ④ 顺手修全站残留旧价 $1→$5.99（8 guide 页 + JSON-LD + 布局 meta）。另：10/19→10/27 流量埋点复核存档见 `WORK_LOG_2026-10-27.md`
+- 热页面漏斗分析结论：girl 页 93% 单页即走，根因 = 页面内容已满足查询意图 + 68% 独联体不可付款客群 + 缺互动钩子 → 本轮工具嵌入对症下药，观察指标 = 工具参与率 / CTA 深链落地 / form_submit_naming
 - **网站健康**：生产 200 ✅ / 邮件去重 ✅ / NFL 同步 ✅ / 日报正常，revenue 连续 0
 - **流量**：真实 ~106/天（-8% 持平）；US 151 / RU 90 / CN 64 / SG 64 / **ID 53 新晋前五**；`/ru/guide/chinese-name-girl` 112 继续第一；社媒引荐 0；**AI 搜索引荐首现（ChatGPT 3 + Copilot 3）**
 - 🎯 **Smart Buttons 新埋点首次捕获**：10/20 双解锁（LT 俄侨 + GB）→ `pay_smart_buttons_revealed/render_ok` ×2 全成功，**`pay_smart_click` = 0** —— 测量盲区关闭，断点定性为「按钮渲染正常、用户不点击」（行为层，非 bug）
