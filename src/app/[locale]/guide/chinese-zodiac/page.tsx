@@ -73,7 +73,7 @@ const CONTENT: Record<string, { title: string; desc: string; ogTitle: string; og
       { q: "What is the Chinese zodiac for 2026?", a: "2026 is the Year of the Horse (Fire Horse). The Horse represents energy, independence, and warmth. People born in 2026 will be Fire Horses — known for being passionate, adventurous, and charismatic with strong leadership qualities." },
       { q: "How do I find my Chinese element?", a: "Your Chinese element is determined by the last digit of your birth year: 0-1 = Metal, 2-3 = Water, 4-5 = Wood, 6-7 = Fire, 8-9 = Earth. But this is simplified — the full calculation includes heavenly stems and earthly branches for a complete Bazi (Eight Characters) reading." },
     ],
-    cta: "Get a Personal I Ching Reading — from $1",
+    cta: "Get a Personal I Ching Reading — from $5.99",
     disclaimer: "For cultural appreciation only.",
   },
   ru: {

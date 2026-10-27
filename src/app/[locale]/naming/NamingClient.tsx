@@ -59,7 +59,11 @@ function incrementPreviewUsage(): { date: string; count: number } {
   return next;
 }
 
-export default function NamingClient({ initialHasFree }: { initialHasFree: boolean }) {
+export default function NamingClient({ initialHasFree, initialGender, initialBirthYear }: {
+  initialHasFree: boolean;
+  initialGender?: "male" | "female";
+  initialBirthYear?: string;
+}) {
   const t = useTranslations("naming");
   const tc = useTranslations("common");
   const locale = useLocale();
@@ -355,7 +359,7 @@ export default function NamingClient({ initialHasFree }: { initialHasFree: boole
         </div>
         <div>
           <label className="block text-sm font-medium text-stone-700 mb-1">{t("form.gender")}</label>
-          <select name="gender" required
+          <select name="gender" required defaultValue={initialGender || ""}
             onInvalid={(e) => e.currentTarget.setCustomValidity(tc("validation.selectRequired"))}
             onInput={(e) => e.currentTarget.setCustomValidity("")}
             className="w-full border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300">
@@ -370,7 +374,7 @@ export default function NamingClient({ initialHasFree }: { initialHasFree: boole
             <span className="text-stone-400 font-normal text-xs ml-1">({t("form.optional")})</span>
           </label>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-            <input name="birthYear" type="number" placeholder={t("form.year")} min={1900} max={2100} onChange={onBirthInput} className="border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
+            <input name="birthYear" type="number" defaultValue={initialBirthYear || undefined} placeholder={t("form.year")} min={1900} max={2100} onChange={onBirthInput} className="border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
             <input name="birthMonth" type="number" placeholder={t("form.month")} min={1} max={12} onChange={onBirthInput} className="border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
             <input name="birthDay" type="number" placeholder={t("form.day")} min={1} max={31} onChange={onBirthInput} className="border border-stone-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-stone-300" />
           </div>

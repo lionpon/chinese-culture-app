@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Link } from "@/navigation";
 import GuideFaq from "@/components/GuideFaq";
+import GuideToolEmbed from "@/components/GuideToolEmbed";
 
 type Props = { params: { locale: string } };
 
@@ -48,14 +49,14 @@ const NAMES: Record<string, { title: string; desc: string; ogTitle: string; ogDe
     ],
     categoriesTitle: "Popular Name Categories",
     categories: ["Virtues (德): Jiàn (health), Yǒng (courage), Zhì (ambition) — names expressing desired qualities.", "Nature (自然): Fēng (peak), Lín (forest), Hào (vast) — connecting the child to the natural world.", "Mythology (神话): Lóng (dragon) — the single most popular mythological name for boys.", "Success (成功): Chéng (success), Kǎi (triumph), Wěi (greatness) — wishing achievement.", "Modern (现代): Xī (hope), Chén (dawn) — popular among younger parents."],
-    personalizedTitle: "A Personalized Name",
-    personalizedBody: "Name tables are a good start, but a real Chinese name considers your birth date, Ba-Zi chart, and Five Element balance. Our naming service analyzes these factors and generates 5 personalized options with full explanation.",
+    personalizedTitle: "From Preview to Your Real Name",
+    personalizedBody: "The preview above uses only a birth year. A truly authentic Chinese name is crafted from your full birth information and Ba-Zi chart — our naming service generates 5 personalized options with pinyin, meanings, and the elemental reasoning behind each.",
     faqs: [
       { q: "How many characters are in a Chinese boy's name?", a: "Usually 1 or 2 characters (plus surname). Two-character given names are more common and allow richer meaning." },
       { q: "Can a non-Chinese person use a Chinese name?", a: "Yes! Chinese people often give Chinese names to foreign friends. It's a sign of cultural respect." },
       { q: "Which name brings the most luck?", a: "Luck depends on how well the name matches your Ba-Zi chart. A name that balances your elements is considered the luckiest." },
     ],
-    cta: "Get Your Personalized Chinese Name — from $1",
+    cta: "Get Your Personalized Chinese Name — from $5.99",
     disclaimer: "For cultural appreciation only.",
   },
   ru: {
@@ -99,8 +100,8 @@ const NAMES: Record<string, { title: string; desc: string; ogTitle: string; ogDe
     ],
     categoriesTitle: "Популярные Категории Имён",
     categories: ["Добродетели (德): Цзянь (здоровье), Юн (храбрость), Чжи (амбиция) — имена, выражающие желаемые качества.", "Природа (自然): Фэн (вершина), Линь (лес), Хао (безбрежный) — связь ребёнка с миром природы.", "Мифология (神话): Лун (дракон) — самое популярное мифологическое имя для мальчиков.", "Успех (成功): Чэн (успех), Кай (триумф), Вэй (величие) — пожелание достижений.", "Современные (现代): Си (надежда), Чэнь (рассвет) — популярны среди молодых родителей."],
-    personalizedTitle: "Персонализированное Имя",
-    personalizedBody: "Таблицы имён — это хорошее начало, но настоящее китайское имя учитывает вашу дату рождения, карту Ба-Цзы и баланс Пяти Элементов. Наш сервис имён анализирует эти факторы и генерирует 5 персонализированных вариантов с полным объяснением.",
+    personalizedTitle: "От предпросмотра к вашему настоящему имени",
+    personalizedBody: "Предпросмотр выше использует только год рождения. Подлинное китайское имя создаётся из вашей полной информации о рождении и карты Ба-Цзы — наш сервис генерирует 5 персонализированных вариантов с пиньинем, значениями и объяснением каждого.",
     faqs: [
       { q: "Сколько иероглифов в китайском имени мальчика?", a: "Обычно 1 или 2 иероглифа (плюс фамилия). Двухсложные имена более распространены и позволяют создать более богатый смысл." },
       { q: "Может ли не-китаец использовать китайское имя?", a: "Да! Китайцы часто дарят китайские имена иностранным друзьям. Это знак уважения к культуре." },
@@ -150,8 +151,8 @@ const NAMES: Record<string, { title: string; desc: string; ogTitle: string; ogDe
     ],
     categoriesTitle: "人気の名前カテゴリー",
     categories: ["美徳（德）：健（健康）、勇（勇気）、志（志）— 望ましい資質を表す名前。", "自然（自然）：峰（頂点）、林（森）、浩（広大）— 自然とのつながり。", "神話（神話）：龍（ドラゴン）— 男の子に最も人気のある神話的名前。", "成功（成功）：成（成功）、凱（勝利）、偉（偉大）— 達成を願って。", "現代（現代）：希（希望）、晨（夜明け）— 若い親に人気。"],
-    personalizedTitle: "パーソナライズされた名前",
-    personalizedBody: "名前表は良い出発点ですが、本当の中国名は生年月日、八字、五行のバランスを考慮します。当サービスの命名ツールはこれらの要素を分析し、完全な説明付きで5つのパーソナライズされた名前を生成します。",
+    personalizedTitle: "プレビューから本当の名前へ",
+    personalizedBody: "上のプレビューは生まれた年だけを使ったものです。本当に本格的な中国名はあなたの誕生情報と八字から作られます。当サービスの命名ツールはピンイン・意味・それぞれの理由付きで5つの名前を生成します。",
     faqs: [
       { q: "男の子の中国名は何文字ですか？", a: "通常1〜2文字（姓を除く）です。2文字の名前がより一般的で、より豊かな意味を持たせることができます。" },
       { q: "中国人以外でも中国名を使えますか？", a: "はい！中国人はよく外国人の友人に中国名を贈ります。それは文化への敬意の表れです。" },
@@ -197,33 +198,8 @@ export default function ChineseNameBoyGuide({ params: { locale } }: Props) {
       <ul>{c.categories.map((cat) => <li key={cat}>{cat}</li>)}</ul>
 
 
-      {/* Mid-content CTA: after the name table, user is primed for personalization */}
-      <div className="not-prose my-8">
-        <Link href="/naming"
-          className="block p-5 rounded-xl border border-dashed transition-all hover:shadow-md hover:border-solid group"
-          style={{ borderColor: "var(--border-strong)", backgroundColor: "rgba(201,169,110,0.04)" }}>
-          <div className="flex items-center gap-3">
-            <span className="text-2xl shrink-0 group-hover:scale-110 transition-transform">🖋</span>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-semibold group-hover:text-accent transition-colors" style={{ color: "var(--text-primary)" }}>
-                {locale === "ru" ? "Имена из таблицы — хорошее начало. Но ваше имя скрыто в дате рождения." :
-                 locale === "ja" ? "表の名前は良い出発点です。しかし、あなたの本当の名前は生年月日の中に隠れています。" :
-                 locale === "ko" ? "표의 이름은 좋은 출발점입니다. 하지만 당신의 진짜 이름은 생년월일 속에 숨어 있습니다." :
-                 "These names are a great start. But your real Chinese name is hiding in your birth date."}
-              </p>
-              <p className="text-xs mt-0.5" style={{ color: "var(--text-muted)" }}>
-                {locale === "ru" ? "Персонализированный подбор по Ба-Цзы · 30 секунд · от $5.99" :
-                 locale === "ja" ? "八字に基づいたパーソナライズ · 30秒 · $5.99から" :
-                 locale === "ko" ? "사주 기반 맞춤형 · 30초 · $5.99부터" :
-                 "Personalized to your Ba-Zi chart · 30 seconds · from $5.99"}
-              </p>
-            </div>
-            <span className="shrink-0 text-xs font-bold px-3 py-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity" style={{ backgroundColor: "var(--accent)", color: "white" }}>
-              {locale === "ru" ? "Моё имя →" : locale === "ja" ? "私の名前 →" : locale === "ko" ? "내 이름 →" : "Get My Name →"}
-            </span>
-          </div>
-        </Link>
-      </div>
+      {/* Interactive preview: after the name table, user is primed for personalization */}
+      <GuideToolEmbed tool="namePreview" gender="male" names={c.names} />
 
       <h2>{c.personalizedTitle}</h2><p>{c.personalizedBody}</p>
       <GuideFaq lang={locale} faqs={c.faqs} />

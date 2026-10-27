@@ -55,9 +55,9 @@ const CONTENT: Record<string, {
     faqs: [
       { q: "How are Chinese names created?", a: "Chinese names are created based on the Five Elements (Wu Xing), Bazi analysis, and classical texts. Each name is unique and reflects the person's elemental balance." },
       { q: "What is Bazi?", a: "Bazi (Eight Characters) is a destiny system based on the year, month, day, and hour of birth. It reveals a person's elemental composition and helps select a harmonious name." },
-      { q: "How much does it cost?", a: "Pay what you want — from $1. Your payment supports ongoing development and server costs, not a purchase of a service." },
+      { q: "How much does it cost?", a: "Pay what you want — from $5.99. Your payment supports ongoing development and server costs, not a purchase of a service." },
     ],
-    cta: "Create Your Chinese Name — from $1",
+    cta: "Create Your Chinese Name — from $5.99",
     disclaimer: "For cultural appreciation only. Not professional advice.",
   },
   ru: {

@@ -100,7 +100,7 @@ const CONTENT: Record<string, {
       { q: "What to wear for Chinese New Year?", a: "Red! Red wards off evil spirits and brings luck. Avoid black and white (mourning colors). In your zodiac year (if you're a Goat), wear red underwear for protection." },
       { q: "Can I wash my hair on New Year's Day?", a: "Traditionally no — washing hair or cleaning on Day 1 may wash away good luck. Clean beforehand." },
     ],
-    cta: "Get Your 2027 I Ching Forecast — from $1",
+    cta: "Get Your 2027 I Ching Forecast — from $5.99",
     disclaimer: "For cultural appreciation only.",
   },
   ru: {

@@ -78,7 +78,7 @@ const CONTENT: Record<string, {
       { q: "Can I have more than one element?", a: "Yes! Everyone has all five elements in varying degrees. The goal is balance among them, not dominance of one." },
       { q: "How do elements relate to Chinese zodiac?", a: "Each zodiac sign has a fixed element (e.g., Rat = Water), but the year also has a heavenly stem element, creating a 60-year cycle." },
     ],
-    cta: "Discover Your Element & Ba-Zi — from $1",
+    cta: "Discover Your Element & Ba-Zi — from $5.99",
     disclaimer: "For cultural appreciation only.",
   },
   ru: {

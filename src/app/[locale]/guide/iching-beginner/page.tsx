@@ -47,7 +47,7 @@ const CONTENT: Record<string, { title: string; desc: string; ogTitle: string; og
       { q: "How many times can I consult it per day?", a: "One question per session is recommended. Tradition advises no more than three consultations per day — the I Ching works best with moderate use." },
       { q: "What if I don't have coins?", a: "You can use our free online tool — it uses the same mathematical principle as the coin method." },
     ],
-    cta: "Try the I Ching Now — from $1",
+    cta: "Try the I Ching Now — from $5.99",
     disclaimer: "For cultural appreciation only.",
   },
   ru: {

@@ -46,9 +46,9 @@ const CONTENT: Record<string, { title: string; desc: string; ogTitle: string; og
       { q: "Can the I Ching predict the future?", a: "The I Ching does not predict the future like a fortune-telling tool. Instead, it analyzes the present dynamics of your situation and suggests how events may unfold based on current patterns — giving you wisdom to make better choices." },
       { q: "How do I interpret a changing line?", a: "Changing lines (old yang or old yin) indicate a transformation point. The line's text provides specific advice for your situation, and the resulting hexagram shows where the situation is heading. Pay special attention to changing lines — they reveal the pivot point." },
       { q: "What's the difference between I Ching and Tao Te Ching?", a: "Both are foundational Chinese classics, but they serve different purposes. The I Ching (Yijing) is a divination text and philosophical work about change. The Tao Te Ching (Daodejing) is a philosophical poem about the Tao (Way) and virtue. They complement each other in Chinese thought." },
-      { q: "Is it paid?", a: "Pay what you want — from $1. First 2 readings are free (preview mode). Your payment supports ongoing development, not a purchase." },
+      { q: "Is it paid?", a: "Pay what you want — from $5.99. First 2 readings are free (preview mode). Your payment supports ongoing development, not a purchase." },
     ],
-    cta: "Consult the I Ching — from $1",
+    cta: "Consult the I Ching — from $5.99",
     disclaimer: "For cultural appreciation only. Not professional advice.",
   },
   ru: {

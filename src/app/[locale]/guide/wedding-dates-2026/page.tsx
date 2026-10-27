@@ -57,7 +57,7 @@ const CONTENT: Record<string, { title: string; desc: string; ogTitle: string; og
       { q: "What is the best month to get married in 2026?", a: "Spring (March–May) and autumn (September–November) are traditionally the best seasons. Avoid Ghost Month (7th lunar month)." },
       { q: "How do I know if a date clashes with my zodiac?", a: "The most common clash is Rat-Horse, Ox-Goat, Tiger-Monkey, Rabbit-Rooster, Dragon-Dog, Snake-Pig." },
     ],
-    cta: "Find Your Auspicious Date — from $1",
+    cta: "Find Your Auspicious Date — from $5.99",
     disclaimer: "For cultural appreciation only. Not professional advice.",
   },
   ru: {

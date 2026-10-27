@@ -852,6 +852,19 @@
       "restart": "Take the Quiz Again",
       "ctaDivination": "Discover your I Ching destiny",
       "ctaCalendar": "Find your lucky dates this month"
+    },
+    "namePreview": {
+      "title": "Free Name Preview",
+      "subtitle": "Enter a birth year — see the classic Chinese name matched to it.",
+      "yearPlaceholder": "Birth year",
+      "submit": "Preview",
+      "resultIntro": "For a {year} birth year",
+      "elementLabel": "Year element:",
+      "hook": "This preview uses only the birth year. A real Chinese name is matched to your full Ba-Zi chart — 5 names with pinyin, meanings, and the reasoning behind each.",
+      "freeLeft": "{n} free previews left today.",
+      "limitTitle": "You've used all 3 free previews today",
+      "limitBody": "Get 5 personalized names matched to your exact birth information — free preview included.",
+      "limitCta": "Get My 5 Names →"
     }
   },
   "dreamAi": {

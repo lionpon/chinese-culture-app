@@ -64,9 +64,9 @@ const CONTENT: Record<string, {
     faqs: [
       { q: "What makes a date auspicious?", a: "A date's auspiciousness is determined by the Chinese almanac (Tong Shu), considering zodiac compatibility, moon phases, the 12 Day Officers, and Five Elements harmony." },
       { q: "What events can I find dates for?", a: "Weddings, engagements, business openings, travel, moving house, signing contracts, construction, medical treatment, and many more." },
-      { q: "Is it paid?", a: "Pay what you want — from $1. First 2 date selections are free (preview mode). Your payment supports ongoing development." },
+      { q: "Is it paid?", a: "Pay what you want — from $5.99. First 2 date selections are free (preview mode). Your payment supports ongoing development." },
     ],
-    cta: "Find Your Auspicious Date — from $1",
+    cta: "Find Your Auspicious Date — from $5.99",
     disclaimer: "For cultural appreciation only. Not professional advice.",
   },
   ru: {

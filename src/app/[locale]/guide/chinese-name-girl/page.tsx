@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import GuideFaq from "@/components/GuideFaq";
 import GuideCTA from "@/components/GuideCTA";
+import GuideToolEmbed from "@/components/GuideToolEmbed";
 
 type Props = { params: { locale: string } };
 
 type Name = { name: string; meaning: string; style: string };
 
-const CONTENT: Record<string, { title: string; desc: string; ogTitle: string; ogDesc: string; heading: string; subtitle: string; tableTitle: string; nameH: string; meaningH: string; styleH: string; names: Name[]; personalizedTitle: string; personalizedBody: string; faqs: { q: string; a: string }[]; cta: string; disclaimer: string }> = {
+const CONTENT: Record<string, { title: string; desc: string; ogTitle: string; ogDesc: string; heading: string; subtitle: string; tableTitle: string; nameH: string; meaningH: string; styleH: string; names: Name[]; personalizedTitle: string; personalizedBody: string; faqs: { q: string; a: string }[]; disclaimer: string }> = {
   en: {
     title: "100+ Chinese Girl Names & Meanings: Elegant, Cute & Unique (2026) | Chinese Culture Studio",
     desc: "100+ beautiful Chinese girl names with meanings — floral, elegant, modern & classical. Find the perfect Chinese name for your baby girl or character. Free naming tool included.",
@@ -43,13 +44,12 @@ const CONTENT: Record<string, { title: string; desc: string; ogTitle: string; og
       { name: "Wǎn (婉)", meaning: "Gentle, graceful, tactful, charming", style: "Classical" },
       { name: "Yáo (瑶)", meaning: "Jade, precious gem, supreme beauty", style: "Gem" },
     ],
-    personalizedTitle: "A Personalized Name",
-    personalizedBody: "Name lists are a starting point, but a truly authentic Chinese name is crafted from your birth information and Ba-Zi chart. Our naming service generates 5 personalized options with comprehensive analysis — including pinyin, meaning, and why each name suits your elemental balance.",
+    personalizedTitle: "From Preview to Your Real Name",
+    personalizedBody: "The preview above uses only a birth year. A truly authentic Chinese name is crafted from your full birth information and Ba-Zi chart — our naming service generates 5 personalized options with pinyin, meanings, and the elemental reasoning behind each.",
     faqs: [
       { q: "How is a Chinese girl's name different from a boy's?", a: "Girl names often feature beauty, flower, and virtue characters, while boy names emphasize strength and ambition. But many modern names are gender-neutral." },
       { q: "What are the most popular Chinese girl names?", a: "Classical names like Lán (orchid), Xuě (snow), and modern names like Shī (poetry) and Lè (joy) are currently popular among Chinese parents." },
     ],
-    cta: "Get Your Personalized Chinese Name — from $1",
     disclaimer: "For cultural appreciation only.",
   },
   ru: {
@@ -88,13 +88,12 @@ const CONTENT: Record<string, { title: string; desc: string; ogTitle: string; og
       { name: "Вань (婉)", meaning: "Нежная, тактичная, очаровательная", style: "Классика" },
       { name: "Яо (瑶)", meaning: "Нефрит, драгоценный камень", style: "Драгоценности" },
     ],
-    personalizedTitle: "Персонализированное Имя",
-    personalizedBody: "Списки имён — это начало, но подлинное китайское имя создаётся из вашей информации о рождении и карты Ба-Цзы. Наш сервис генерирует 5 персонализированных вариантов с полным анализом.",
+    personalizedTitle: "От предпросмотра к вашему настоящему имени",
+    personalizedBody: "Предпросмотр выше использует только год рождения. Подлинное китайское имя создаётся из вашей полной информации о рождении и карты Ба-Цзы — наш сервис генерирует 5 персонализированных вариантов с пиньинем, значениями и объяснением каждого.",
     faqs: [
       { q: "Чем отличается китайское имя девочки от мальчика?", a: "Женские имена часто содержат иероглифы красоты, цветов и добродетелей, в то время как мужские подчёркивают силу и амбиции. Но многие современные имена универсальны." },
       { q: "Какие китайские имена для девочек самые популярные?", a: "Классические имена как Лань (орхидея), Сюэ (снег) и современные как Ши (поэзия) и Лэ (радость) популярны среди китайских родителей." },
     ],
-    cta: "Получить Персональное Китайское Имя — от $5.99",
     disclaimer: "Для культурного ознакомления.",
   },
   ja: {
@@ -133,13 +132,12 @@ const CONTENT: Record<string, { title: string; desc: string; ogTitle: string; og
       { name: "婉（ワン）", meaning: "優しく上品で魅力的", style: "古典" },
       { name: "瑶（ヤオ）", meaning: "翡翠、貴石、最高の美", style: "宝石" },
     ],
-    personalizedTitle: "パーソナライズされた名前",
-    personalizedBody: "名前リストは出発点ですが、本当に本格的な中国名はあなたの誕生情報と八字から作られます。当サービスの命名ツールは包括的な分析付きで5つの名前を生成します。",
+    personalizedTitle: "プレビューから本当の名前へ",
+    personalizedBody: "上のプレビューは生まれた年だけを使ったものです。本当に本格的な中国名はあなたの誕生情報と八字から作られます。当サービスの命名ツールはピンイン・意味・それぞれの理由付きで5つの名前を生成します。",
     faqs: [
       { q: "女の子と男の子の中国名の違いは？", a: "女の子の名前は美しさ、花、美徳の漢字が多く使われ、男の子は力強さと志が重視されます。しかし現代では多くの名前が性別を問いません。" },
       { q: "最も人気のある女の子の中国名は？", a: "蘭（ラン、蘭の花）、雪（シュエ、雪）などの古典的な名前や、詩（シー、詩）や楽（ラー、喜び）などの現代的な名前が人気です。" },
     ],
-    cta: "あなただけの中国名を取得 — $5.99から",
     disclaimer: "文化理解のためのものです。",
   },
 };
@@ -172,6 +170,8 @@ export default function ChineseNameGirlGuide({ params: { locale } }: Props) {
           <tbody>{c.names.map((n) => <tr key={n.name} className="border-t border-stone-200"><td className="p-2 font-medium">{n.name}</td><td className="p-2 text-xs">{n.meaning}</td><td className="p-2 text-xs text-stone-500">{n.style}</td></tr>)}</tbody>
         </table>
       </div>
+      <GuideToolEmbed tool="namePreview" gender="female" names={c.names} />
+
       <h2>{c.personalizedTitle}</h2><p>{c.personalizedBody}</p>
       <GuideFaq lang={locale} faqs={c.faqs} />
       <div className="not-prose my-8 text-center">

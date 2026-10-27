@@ -1,11 +1,14 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/navigation";
 import { trackClick } from "@/lib/track";
+import { getZodiacInfo } from "@/data/zodiac-data";
 
-type ToolType = "zodiac" | "dateCheck" | "elements" | "iching" | "dreamSearch";
+type ToolType = "zodiac" | "dateCheck" | "elements" | "iching" | "dreamSearch" | "namePreview";
+
+interface PreviewName { name: string; meaning: string; style?: string; }
 
 function ZodiacTool() {
   const t = useTranslations("tools");
@@ -357,11 +360,145 @@ function DreamSearchTool() {
   );
 }
 
-export default function GuideToolEmbed({ tool, eventType }: { tool: ToolType; eventType?: string }) {
+/**
+ * NamePreviewTool — 起名指南页内嵌免费预览工具 (2026-10-27)
+ * 模式复用 DateCheckTool：免费 3 次/天 → 升级卡 → /naming 深链 (gender/year 预填)。
+ * 名字候选从所在页面的名字表确定性地挑选（同一年份永远得到同一个名字，
+ * 与页面内容强关联），生肖/五行用站点既有本地化数据 zodiac-data。
+ */
+function NamePreviewTool({ gender, names }: { gender: "female" | "male"; names: PreviewName[] }) {
+  const t = useTranslations("tools");
+  const locale = useLocale();
+  const [year, setYear] = useState("");
+  const [result, setResult] = useState<{ name: PreviewName; zodiac: string; element: string; year: number } | null>(null);
+  const [limited, setLimited] = useState(false);
+  const [remaining, setRemaining] = useState(3);
+  const limitTracked = useRef(false);
+
+  const STORAGE_KEY = "cc_name_preview_usage";
+  const DAILY_MAX = 3;
+
+  const namingHref = year ? `/naming?gender=${gender}&year=${year}` : `/naming?gender=${gender}`;
+
+  function readTodayCount(): number {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      const parsed = raw ? JSON.parse(raw) : null;
+      const today = new Date().toISOString().slice(0, 10);
+      return parsed && parsed.date === today ? parsed.count : 0;
+    } catch { return 0; }
+  }
+
+  function trackLimitOnce() {
+    // Fire when the limit wall is actually shown (mirrors DateCheckTool fix 8/21).
+    if (!limitTracked.current) {
+      limitTracked.current = true;
+      trackClick("guide_tool_name_preview_limit");
+    }
+  }
+
+  useEffect(() => {
+    const count = readTodayCount();
+    setRemaining(Math.max(0, DAILY_MAX - count));
+    setLimited(count >= DAILY_MAX);
+    if (count >= DAILY_MAX) trackLimitOnce();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  function check() {
+    if (!year) return;
+    let count = readTodayCount();
+    if (count >= DAILY_MAX) {
+      setLimited(true);
+      setRemaining(0);
+      trackLimitOnce();
+      return;
+    }
+    const y = parseInt(year);
+    const info = getZodiacInfo(y, locale);
+    const idx = Math.abs(y * 7 + 3) % names.length;
+    setResult({ name: names[idx], zodiac: info.animal, element: info.element, year: y });
+    count++;
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ date: new Date().toISOString().slice(0, 10), count }));
+    } catch { /* ignore */ }
+    setRemaining(Math.max(0, DAILY_MAX - count));
+    if (count >= DAILY_MAX) {
+      setLimited(true);
+      trackLimitOnce();
+    }
+    trackClick("guide_tool_name_preview");
+  }
+
+  const currentYear = new Date().getFullYear();
+  const years: number[] = [];
+  for (let y = currentYear; y >= 1940; y--) years.push(y);
+
+  return (
+    <div className="not-prose my-8 p-5 rounded-xl border" style={{ borderColor: "var(--border-medium)", backgroundColor: "var(--bg-surface)" }}>
+      <p className="text-sm font-semibold mb-1" style={{ color: "var(--gold)" }}>💮 {t("namePreview.title")}</p>
+      <p className="text-xs mb-3" style={{ color: "var(--text-muted)" }}>{t("namePreview.subtitle")}</p>
+      {!limited && (
+        <div className="flex gap-2 mb-3">
+          <select value={year} onChange={e => setYear(e.target.value)}
+            className="flex-1 px-3 py-2 text-sm rounded-lg border focus:outline-none"
+            style={{ borderColor: "var(--border-medium)", backgroundColor: "var(--bg-deep)", color: "var(--text-primary)" }}>
+            <option value="">{t("namePreview.yearPlaceholder")}</option>
+            {years.map(y => <option key={y} value={y}>{y}</option>)}
+          </select>
+          <button onClick={check} className="px-4 py-2 text-sm font-medium rounded-lg transition-colors"
+            style={{ backgroundColor: "var(--gold)", color: "var(--bg-deep)" }}>{t("namePreview.submit")}</button>
+        </div>
+      )}
+      {result && !limited && (
+        <div className="rounded-lg p-4 mb-3 text-center" style={{ backgroundColor: "var(--bg-deep)" }}>
+          <p className="text-3xl font-bold mb-1" style={{ color: "var(--gold)" }}>{result.name.name}</p>
+          <p className="text-sm" style={{ color: "var(--text-body)" }}>{result.name.meaning}</p>
+          <p className="text-xs mt-2" style={{ color: "var(--text-muted)" }}>
+            {t("namePreview.resultIntro", { year: result.year })}: {result.zodiac} · {t("namePreview.elementLabel")} {result.element}
+          </p>
+          <p className="text-xs mt-2 leading-relaxed" style={{ color: "var(--text-muted)" }}>{t("namePreview.hook")}</p>
+        </div>
+      )}
+      {!limited && remaining > 0 && remaining < DAILY_MAX && (
+        <p className="text-[11px] mb-3" style={{ color: "var(--text-dim)" }}>
+          {t("namePreview.freeLeft", { n: remaining })}
+        </p>
+      )}
+      {limited && (
+        <div className="rounded-lg p-4 mb-3 text-center" style={{ backgroundColor: "var(--bg-deep)", border: "1px solid var(--border-medium)" }}>
+          <p className="text-2xl mb-1">✨</p>
+          <p className="text-sm font-medium mb-1" style={{ color: "var(--text-primary)" }}>{t("namePreview.limitTitle")}</p>
+          {result && (
+            <div className="rounded-lg p-3 mb-2" style={{ backgroundColor: "var(--bg-surface)" }}>
+              <p className="text-xs" style={{ color: "var(--text-muted)" }}>
+                {t("namePreview.resultIntro", { year: result.year })} — <strong>{result.name.name}</strong>
+              </p>
+            </div>
+          )}
+          <p className="text-xs mb-3" style={{ color: "var(--text-muted)" }}>{t("namePreview.limitBody")}</p>
+          <Link href={namingHref} onClick={() => trackClick("guide_tool_name_preview_cta")}
+            className="inline-block px-4 py-2.5 text-sm font-medium rounded-lg transition-colors"
+            style={{ backgroundColor: "var(--gold)", color: "var(--bg-deep)" }}>
+            {t("namePreview.limitCta")}
+          </Link>
+        </div>
+      )}
+      {!limited && (
+        <Link href={namingHref} onClick={() => trackClick("guide_tool_name_preview_cta")}
+          className="block text-center text-xs font-medium py-2 rounded-lg transition-colors"
+          style={{ backgroundColor: "var(--gold-subtle)", color: "var(--gold)" }}>{t("namePreview.limitCta")}</Link>
+      )}
+    </div>
+  );
+}
+
+export default function GuideToolEmbed({ tool, eventType, gender, names }: { tool: ToolType; eventType?: string; gender?: "female" | "male"; names?: PreviewName[] }) {
   if (tool === "zodiac") return <ZodiacTool />;
   if (tool === "dateCheck") return <DateCheckTool eventType={eventType} />;
   if (tool === "elements") return <ElementsTool />;
   if (tool === "iching") return <IChingTool />;
   if (tool === "dreamSearch") return <DreamSearchTool />;
+  if (tool === "namePreview" && gender && names?.length) return <NamePreviewTool gender={gender} names={names} />;
   return null;
 }
