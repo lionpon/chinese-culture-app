@@ -177,14 +177,14 @@ PayPal Standard Checkout，支持信用卡支付。
 
 ## 近期状态 (2026-10-27)
 
-- **线上版本**：`0339e2e`（本次交付，Render 自动部署）——① 起名指南页（girl/boy）内嵌**免费名字预览工具**（年份→候选名+生肖五行，3 次/天限流+升级卡，复用 datecheck 模式，4 语言）② `/naming?gender=&year=` 深链预填 ③ 新埋点 `guide_tool_name_preview/_limit/_cta` ④ 顺手修全站残留旧价 $1→$5.99（8 guide 页 + JSON-LD + 布局 meta）。另：10/19→10/27 流量埋点复核存档见 `WORK_LOG_2026-10-27.md`
+- **线上版本**：`ebc763b`（终态；含 `0339e2e` 交付，Render 自动部署已验证）——① 起名指南页（girl/boy）内嵌**免费名字预览工具**（年份→候选名+生肖五行，3 次/天限流+升级卡，复用 datecheck 模式，4 语言）② `/naming?gender=&year=` 深链预填 ③ 新埋点 `guide_tool_name_preview/_limit/_cta` ④ 顺手修全站残留旧价 $1→$5.99（8 guide 页 + JSON-LD + 布局 meta）。另：10/19→10/27 流量埋点复核存档见 `WORK_LOG_2026-10-27.md`
 - **ko 降级定案（10/27 晚）**：日/韩版保留评估结论 = ja 留（JP 真实搜索 37/月 + 可付款市场）、ko 降为 URL 兼容层（KR 真实用户终身 5 次、0 互动 0 订单、11/15 guide 页本就 en 回退）——`src/i18n.ts` 已实现 ko 加载时 en 自动回退，新内容不再翻译 ko；另发现 Atlanta 10/02 一次性整站爬虫（~205 行）污染 ja/ko 统计，观察不处置
 - 热页面漏斗分析（**假设分级，勿当结论**）：事实 = 93% 单页即走 / CTA 点击 6.5% / sticky 0 点击；假设 = ①意图错配（RU 段已被 Yandex 查询串直接证实：「китайские имена женские」等 3 条真实搜索词；**Google 段仍为推断**）②68% 独联体阅读型/不可付款客群 ③缺互动钩子 ④CTA 位置。本轮工具嵌入 = **该假设的实验**，指标与判定阈值已预注册（存档 §⑧）
 - **网站健康**：生产 200 ✅ / 邮件去重 ✅ / NFL 同步 ✅ / 日报正常，revenue 连续 0
 - **流量**：真实 ~106/天（-8% 持平）；US 151 / RU 90 / CN 64 / SG 64 / **ID 53 新晋前五**；`/ru/guide/chinese-name-girl` 112 继续第一；社媒引荐 0；**AI 搜索引荐首现（ChatGPT 3 + Copilot 3）**
 - 🎯 **Smart Buttons 新埋点首次捕获**：10/20 双解锁（LT 俄侨 + GB）→ `pay_smart_buttons_revealed/render_ok` ×2 全成功，**`pay_smart_click` = 0** —— 测量盲区关闭，断点定性为「按钮渲染正常、用户不点击」（行为层，非 bug）
 - **订单**：窗口 12 笔全免费/弃单，paid=true 仍 1（8/13 沙盒），收入连续 ~74 天 $0；两解锁者均未留邮箱 → 挽回邮件未触发
-- **待办**：Reddit/TG 凭证（用户侧）；W4 决策点（~11/2）准备 offer 实验；付费墙 email 采集强化评估；**girl 页实验观察（~11/3 按预注册指标复核，脚本 `scripts/review-name-preview.cjs`）**；ko 降级待验证生产部署（`src/i18n.ts` 改动）
+- **待办**：Reddit/TG 凭证（用户侧）；W4 决策点（~11/2）准备 offer 实验；付费墙 email 采集强化评估；**girl 页实验观察（~11/3 按预注册指标复核，脚本 `scripts/review-name-preview.cjs`）**；ko 降级生产已验证 ✅（/ko 页面 200 + en 回退生效）
 
 ## 近期状态 (2026-10-21)
 
