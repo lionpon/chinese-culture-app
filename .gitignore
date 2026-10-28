@@ -41,3 +41,4 @@ next-env.d.ts
 paypal-creds.txt
 *.docx
 _render_events.txt
+scripts/offer-recipients.local.json
