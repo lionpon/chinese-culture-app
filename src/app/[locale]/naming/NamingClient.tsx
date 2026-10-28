@@ -9,6 +9,7 @@ import FreeTierBadge from "@/components/FreeTierBadge";
 import EmailField from "@/components/EmailField";
 import SpeakButton from "@/components/SpeakButton";
 import { trackClick } from "@/lib/track";
+import BaziChartCard, { type BaziPillar } from "@/components/BaziChartCard";
 
 interface PreviewData {
   dayMaster: { wuxing: string; element: string; heavenlyStem: string };
@@ -20,6 +21,7 @@ interface PreviewData {
   balanced: boolean;
   strongest: { element: string; elementEn: string };
   weakest: { element: string; elementEn: string };
+  pillars?: BaziPillar[];
 }
 
 const ELEMENT_COLORS: Record<string, string> = {
@@ -274,6 +276,13 @@ export default function NamingClient({ initialHasFree, initialGender, initialBir
               </span>
             ))}
           </div>
+
+          {/* Five Elements chart — 命盘可视化 + 分享卡片 (2026-10-28) */}
+          {preview.pillars && preview.pillars.length === 4 && (
+            <div className="border-t pt-3 mb-3" style={{ borderColor: "var(--border-subtle)" }}>
+              <BaziChartCard data={preview} />
+            </div>
+          )}
 
           {/* Teaser CTA */}
           <div className="bg-stone-50 rounded-lg p-3 text-center">

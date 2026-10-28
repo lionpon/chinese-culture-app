@@ -249,11 +249,17 @@ const EVENT_DATA: Record<string, {
   },
 };
 
-// Lunar month names
-const LUNAR_MONTHS = ["正月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "冬月", "腊月"];
-const LUNAR_DAYS = ["初一", "初二", "初三", "初四", "初五", "初六", "初七", "初八", "初九", "初十",
+// Lunar month names (exported for the public lunar converter tool)
+export const LUNAR_MONTHS = ["正月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "冬月", "腊月"];
+export const LUNAR_DAYS = ["初一", "初二", "初三", "初四", "初五", "初六", "初七", "初八", "初九", "初十",
   "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "二十",
   "廿一", "廿二", "廿三", "廿四", "廿五", "廿六", "廿七", "廿八", "廿九", "三十"];
+
+// 农历新年日期表（2024-2030，供农历转换器工具计算天数用）
+export const CNY_DATES: Record<number, [number, number]> = {
+  2024: [2, 10], 2025: [1, 29], 2026: [2, 17], 2027: [2, 6],
+  2028: [1, 26], 2029: [2, 13], 2030: [2, 3],
+};
 
 // Simple lunar calendar approximation
 export function solarToLunar(year: number, month: number, day: number): { lunarYear: number; lunarMonth: number; lunarDay: number; isLeapMonth: boolean } {
@@ -261,13 +267,10 @@ export function solarToLunar(year: number, month: number, day: number): { lunarY
   // This is an approximation - a full lunar calendar requires detailed ephemeris data
   // For production, consider using a library like lunar-javascript or lunar-typescript
 
-  // Lunar New Year dates (approx) for 2024-2030
-  const LUNAR_NEW_YEAR: Record<number, [number, number]> = {
-    2024: [2, 10], 2025: [1, 29], 2026: [2, 17], 2027: [2, 6],
-    2028: [1, 26], 2029: [2, 13], 2030: [2, 3],
-  };
+  const LUNAR_NEW_YEAR: Record<number, [number, number]> = CNY_DATES;
 
   const [lnyMonth, lnyDay] = LUNAR_NEW_YEAR[year] || [2, 10];
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
   // Calculate day offset from Lunar New Year
   const targetDate = new Date(year, month - 1, day);

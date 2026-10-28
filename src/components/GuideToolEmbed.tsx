@@ -5,8 +5,9 @@ import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/navigation";
 import { trackClick } from "@/lib/track";
 import { getZodiacInfo } from "@/data/zodiac-data";
+import LunarConverterTool from "./LunarConverterTool";
 
-type ToolType = "zodiac" | "dateCheck" | "elements" | "iching" | "dreamSearch" | "namePreview";
+type ToolType = "zodiac" | "dateCheck" | "elements" | "iching" | "dreamSearch" | "namePreview" | "lunarConverter";
 
 interface PreviewName { name: string; meaning: string; style?: string; }
 
@@ -500,5 +501,6 @@ export default function GuideToolEmbed({ tool, eventType, gender, names }: { too
   if (tool === "iching") return <IChingTool />;
   if (tool === "dreamSearch") return <DreamSearchTool />;
   if (tool === "namePreview" && gender && names?.length) return <NamePreviewTool gender={gender} names={names} />;
+  if (tool === "lunarConverter") return <LunarConverterTool />;
   return null;
 }

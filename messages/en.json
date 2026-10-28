@@ -20,7 +20,8 @@
       "zodiacMatch": "Love Match",
       "dailyFortune": "Daily Fortune",
       "namePreview": "Name Preview",
-      "quickOracle": "Quick Oracle"
+      "quickOracle": "Quick Oracle",
+      "lunarCalendar": "Lunar Calendar Converter"
     },
     "footer": {
       "disclaimer": "For entertainment and cultural appreciation only. Not professional advice.",
@@ -295,6 +296,18 @@
       "twitterTitle": "Create Your Chinese Name | Chinese Culture Studio",
       "twitterDescription": "AI-powered Chinese name generation based on Five Elements. Pay what you want.",
       "ogSub": "Five Elements Chinese Name Generator"
+    },
+    "chart": {
+      "title": "Your Five Elements Chart",
+      "year": "Year Pillar",
+      "month": "Month Pillar",
+      "day": "Day Pillar",
+      "hour": "Hour Pillar",
+      "dayMaster": "Day master",
+      "download": "Save chart",
+      "share": "Share",
+      "shareText": "My Five Elements chart — day master {element}",
+      "disclaimer": "For entertainment purposes only"
     }
   },
   "calendar": {
@@ -875,6 +888,25 @@
       "limitTitle": "You've used all 3 free previews today",
       "limitBody": "Get 5 personalized names matched to your exact birth information — free preview included.",
       "limitCta": "Get My 5 Names →"
+    },
+    "lunarConverter": {
+      "title": "Lunar Calendar Converter",
+      "subtitle": "Turn any Gregorian date into a Chinese lunar date — with zodiac animal, stem-branch year, and a countdown to Chinese New Year.",
+      "dateLabel": "Pick a date",
+      "convert": "Convert",
+      "lunarDate": "Your lunar date",
+      "stemBranchYear": "Stem-branch year",
+      "zodiacYear": "Zodiac animal",
+      "leapNote": "(leap month)",
+      "lunarMonthDay": "Month {month}, day {day}",
+      "daysToCny": "{n} days to go until Chinese New Year {year}",
+      "isCny": "It's Chinese New Year — Gong Xi Fa Cai!",
+      "cta": "Is this day a lucky one? Check its auspicious rating →",
+      "pageIntro": "Chinese New Year falls on a different day every year. See any date as it lands on the lunar calendar — month and day names, the year's zodiac animal and stem-branch, and exactly how many days are left until the next Spring Festival.",
+      "relatedTitle": "Keep exploring",
+      "relatedCny": "Chinese New Year 2027 — dates, zodiac and traditions",
+      "relatedDates": "Auspicious dates — pick a lucky day for any event",
+      "relatedCalendar": "Full date selection with hour-level luck windows"
     }
   },
   "dreamAi": {

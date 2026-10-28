@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Link } from "@/navigation";
 import GuideFaq from "@/components/GuideFaq";
+import GuideToolEmbed from "@/components/GuideToolEmbed";
 import GuideCTA from "@/components/GuideCTA";
 
 type Props = { params: { locale: string } };
@@ -237,6 +238,8 @@ export default function ChineseNewYear2027Guide({ params: { locale } }: Props) {
           </div>
         ))}
       </div>
+
+      <GuideToolEmbed tool="lunarConverter" />
 
       <h2>{c.prepTitle}</h2>
       <ul>

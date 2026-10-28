@@ -30,6 +30,13 @@ export async function POST(req: NextRequest) {
         element: bazi.day.element,
         heavenlyStem: bazi.day.heavenlyStem,
       },
+      // 四柱（命盘图表/分享卡片用, 2026-10-28）
+      pillars: [
+        { label: "year", stem: bazi.year.heavenlyStem, branch: bazi.year.earthlyBranch, wuxing: bazi.year.wuxing, element: bazi.year.element },
+        { label: "month", stem: bazi.month.heavenlyStem, branch: bazi.month.earthlyBranch, wuxing: bazi.month.wuxing, element: bazi.month.element },
+        { label: "day", stem: bazi.day.heavenlyStem, branch: bazi.day.earthlyBranch, wuxing: bazi.day.wuxing, element: bazi.day.element },
+        { label: "hour", stem: bazi.hour.heavenlyStem, branch: bazi.hour.earthlyBranch, wuxing: bazi.hour.wuxing, element: bazi.hour.element },
+      ],
       elements: elementsList,
       maxCount,
       analysis: bazi.analysis,

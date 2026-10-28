@@ -245,6 +245,8 @@ export default function AuspiciousDatesGuide({ params: { locale } }: Props) {
 
       <GuideToolEmbed tool="dateCheck" />
 
+      <GuideToolEmbed tool="lunarConverter" />
+
       <div className="not-prose my-8">
         <Link href="/calendar" className="inline-block px-6 py-3 rounded-xl text-white font-medium" style={{ backgroundColor: "var(--accent)" }}>{c.cta}</Link>
       </div>

@@ -20,7 +20,8 @@
       "zodiacMatch": "相性診断",
       "dailyFortune": "今日の運勢",
       "namePreview": "名前プレビュー",
-      "quickOracle": "クイックオラクル"
+      "quickOracle": "クイックオラクル",
+      "lunarCalendar": "旧暦カレンダー変換"
     },
     "footer": {
       "disclaimer": "娯楽と文化理解のためのものです。専門的なアドバイスではありません。",
@@ -295,6 +296,18 @@
       "twitterTitle": "中国名を作成 | Chinese Culture Studio",
       "twitterDescription": "五行に基づくAI中国名生成。お好きな金額で。",
       "ogSub": "五行 + AI命名"
+    },
+    "chart": {
+      "title": "五行チャート",
+      "year": "年柱",
+      "month": "月柱",
+      "day": "日柱",
+      "hour": "時柱",
+      "dayMaster": "日主",
+      "download": "チャートを保存",
+      "share": "シェア",
+      "shareText": "私の五行チャート — 日主{element}",
+      "disclaimer": "娯楽目的のコンテンツです"
     }
   },
   "calendar": {
@@ -875,6 +888,25 @@
       "limitTitle": "今日の無料プレビュー3回分を使い切りました",
       "limitBody": "あなたの正確な生年月日・時刻に合わせた5つの名前をお届けします（無料プレビュー付き）。",
       "limitCta": "5つの名前を受け取る →"
+    },
+    "lunarConverter": {
+      "title": "旧暦カレンダー変換",
+      "subtitle": "西暦の日付を中国の旧暦に変換します。月名・日名、干支年、十二支、旧正月までの日数がすぐにわかります。",
+      "dateLabel": "日付を選ぶ",
+      "convert": "変換する",
+      "lunarDate": "旧暦の日付",
+      "stemBranchYear": "干支年",
+      "zodiacYear": "十二支",
+      "leapNote": "（閏月）",
+      "lunarMonthDay": "{month}月{day}日",
+      "daysToCny": "旧正月{year}まであと{n}日",
+      "isCny": "今日は旧正月です。恭喜発財！",
+      "cta": "この日は吉日？運勢をチェック →",
+      "pageIntro": "旧正月は毎年日付が変わります。このツールで任意の日付が旧暦のどこにあたるのか、月名・日名・干支年・十二支、そして次の春節までの残り日数まで確認できます。",
+      "relatedTitle": "こちらもどうぞ",
+      "relatedCny": "2027年の旧正月 — 日付・干支・伝統行事",
+      "relatedDates": "吉日カレンダー — イベントごとの縁起の良い日",
+      "relatedCalendar": "時間単位の運気までわかる完全版の吉日診断"
     }
   },
   "dreamAi": {

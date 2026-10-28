@@ -57,6 +57,9 @@ export default function NavMenu() {
               <Link href="/tools/zodiac-calculator" className="text-sm py-1 block" style={{ color: "var(--text-muted)" }} onClick={() => setOpen(false)}>
                 {t("nav.zodiacCalc")}
               </Link>
+              <Link href="/tools/lunar-calendar" className="text-sm py-1 block" style={{ color: "var(--text-muted)" }} onClick={() => setOpen(false)}>
+                🌙 {t("nav.lunarCalendar")}
+              </Link>
               <Link href="/tools/five-elements-test" className="text-sm py-1 block" style={{ color: "var(--text-muted)" }} onClick={() => setOpen(false)}>
                 {t("nav.fiveElementsTest")}
               </Link>
