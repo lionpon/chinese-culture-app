@@ -194,7 +194,7 @@ PayPal Standard Checkout，支持信用卡支付。
 - **流量**：真实 ~106/天（-8% 持平）；US 151 / RU 90 / CN 64 / SG 64 / **ID 53 新晋前五**；`/ru/guide/chinese-name-girl` 112 继续第一；社媒引荐 0；**AI 搜索引荐首现（ChatGPT 3 + Copilot 3）**
 - 🎯 **Smart Buttons 新埋点首次捕获**：10/20 双解锁（LT 俄侨 + GB）→ `pay_smart_buttons_revealed/render_ok` ×2 全成功，**`pay_smart_click` = 0** —— 测量盲区关闭，断点定性为「按钮渲染正常、用户不点击」（行为层，非 bug）
 - **订单**：窗口 12 笔全免费/弃单，paid=true 仍 1（8/13 沙盒），收入连续 ~74 天 $0；两解锁者均未留邮箱 → 挽回邮件未触发
-- **待办**：Reddit/TG 凭证（用户侧）；W4 决策点（~11/2）准备 offer 实验；付费墙 email 采集强化评估；**girl 页实验观察（~11/3 按预注册指标复核，脚本 `scripts/review-name-preview.cjs`，**顺带 GSC 导出查询维度按 girl 页过滤 + 网页维度两份 CSV 放桌面**）；**en SEO 实验 4 周复核（~11/24，GSC 位次/CTR vs 基线）**；**破0实验观察：pay_smart_click/付费是否破零（offer 组 vs 对照）、email 留资率 a/b、confirm→pay 流失**；**召回邮件执行（用户双击 `send-offer-tonight.bat`，最速今晚北京时间；时区顺延说明见 `WORK_LOG_2026-10-28.md` §⑤）****；ko 降级生产已验证 ✅（/ko 页面 200 + en 回退生效）
+- **待办**：Reddit/TG 凭证（用户侧）；W4 决策点（~11/2）准备 offer 实验；付费墙 email 采集强化评估；**girl 页实验观察（~11/3 按预注册指标复核，脚本 `scripts/review-name-preview.cjs`，**顺带 GSC 导出查询维度按 girl 页过滤 + 网页维度两份 CSV 放桌面**）；**en SEO 实验 4 周复核（~11/24，GSC 位次/CTR vs 基线）**；**破0实验观察：pay_smart_click/付费是否破零（offer 组 vs 对照）、email 留资率 a/b、confirm→pay 流失**；**召回邮件**已执行 ✅**（10/28 双击 bat，Resend 实测 13 封全部 scheduled：RU 组 16:00Z/NL 18:00Z/NY 23:00Z/NZ 次日 06:00Z）****；ko 降级生产已验证 ✅（/ko 页面 200 + en 回退生效）
 
 ## 近期状态 (2026-10-21)
 
