@@ -183,7 +183,8 @@ PayPal Standard Checkout，支持信用卡支付。
 
 ## 近期状态 (2026-10-27)
 
-- **线上版本**：`104772f`（终态；含 `0339e2e` 工具交付 + `ebc763b` ko 降级 + 本批 SEO 优化，Render 已部署生产验证）
+- **线上版本**：`8133988`（终态；含 `0339e2e` 工具 + `ebc763b` ko 降级 + `104772f` en SEO + 本批破0冲刺，Render 已部署生产验证）
+- **破 0 冲刺（10/28，预注册 `WORK_LOG_2026-10-28.md` §③）**：付费墙结账确认层（价格+清单+信任徽章→Continue→按钮）+ 首单 offer A/B（指纹分桶 $1.99）+ email 采集 A/B；新埋点 paywall_confirm_shown/offer_shown/confirm_continue/email_variant_a|b/email_filled_a|b；召回邮件脚本已备，**实发待用户确认收件人**
 - **en 起名页 SEO 实验（§⑭ 预注册）**：girl 25→100 名分组 + boy 25→50 名（兑现 title 承诺）+ H1 对齐 + FAQ 扩充 + 内链 + sitemap 提权；**ru/ja 零改动 = 对照组**。基线 en girl 位次 24.47/CTR 0.65%、en boy 20.94/0.67%；4 周后 GSC 复核：位次 ≥5 位提升或 CTR ≥0.3pp = 支持，位次降 >3 位 = 证伪——① 起名指南页（girl/boy）内嵌**免费名字预览工具**（年份→候选名+生肖五行，3 次/天限流+升级卡，复用 datecheck 模式，4 语言）② `/naming?gender=&year=` 深链预填 ③ 新埋点 `guide_tool_name_preview/_limit/_cta` ④ 顺手修全站残留旧价 $1→$5.99（8 guide 页 + JSON-LD + 布局 meta）。另：10/19→10/27 流量埋点复核存档见 `WORK_LOG_2026-10-27.md`
 - **GSC 状态复核（10/27）**：资源**此前已部署**（sitemap 10/26 已读、320 页已发现，无需任何动作）；消费管线 `scripts/ingest-gsc.cjs` 已建（CSV 解析 + Visit join，实测通过）
 - **GSC 首析（10/27 晚，3 个月数据）**：① **意图假设证实**——top1000 查询 0 交易词，全是名单类信息型查询 ② girl 页=流量心脏（ru 395 点击/位次 7.35 首页，+en+ja 占全站 39%）③ **新发现 en 版排名结构性落后**（en girl 位次 24.47 第 3 页 vs ru 7.35，CTR 0.65% vs 1.74%）④ 低 CTR 优化候选 23 行 ⑤ ja 73 点击/ko 仅 2 点击（ko 降级再获实锤）⑥ 点击逐月增长 34→215→439→533。详见存档 §⑬
@@ -193,7 +194,7 @@ PayPal Standard Checkout，支持信用卡支付。
 - **流量**：真实 ~106/天（-8% 持平）；US 151 / RU 90 / CN 64 / SG 64 / **ID 53 新晋前五**；`/ru/guide/chinese-name-girl` 112 继续第一；社媒引荐 0；**AI 搜索引荐首现（ChatGPT 3 + Copilot 3）**
 - 🎯 **Smart Buttons 新埋点首次捕获**：10/20 双解锁（LT 俄侨 + GB）→ `pay_smart_buttons_revealed/render_ok` ×2 全成功，**`pay_smart_click` = 0** —— 测量盲区关闭，断点定性为「按钮渲染正常、用户不点击」（行为层，非 bug）
 - **订单**：窗口 12 笔全免费/弃单，paid=true 仍 1（8/13 沙盒），收入连续 ~74 天 $0；两解锁者均未留邮箱 → 挽回邮件未触发
-- **待办**：Reddit/TG 凭证（用户侧）；W4 决策点（~11/2）准备 offer 实验；付费墙 email 采集强化评估；**girl 页实验观察（~11/3 按预注册指标复核，脚本 `scripts/review-name-preview.cjs`，**顺带 GSC 导出查询维度按 girl 页过滤 + 网页维度两份 CSV 放桌面**）；**en SEO 实验 4 周复核（~11/24，GSC 位次/CTR vs 基线）****；ko 降级生产已验证 ✅（/ko 页面 200 + en 回退生效）
+- **待办**：Reddit/TG 凭证（用户侧）；W4 决策点（~11/2）准备 offer 实验；付费墙 email 采集强化评估；**girl 页实验观察（~11/3 按预注册指标复核，脚本 `scripts/review-name-preview.cjs`，**顺带 GSC 导出查询维度按 girl 页过滤 + 网页维度两份 CSV 放桌面**）；**en SEO 实验 4 周复核（~11/24，GSC 位次/CTR vs 基线）**；**破0实验观察：pay_smart_click/付费是否破零（offer 组 vs 对照）、email 留资率 a/b、confirm→pay 流失****；ko 降级生产已验证 ✅（/ko 页面 200 + en 回退生效）
 
 ## 近期状态 (2026-10-21)
 
