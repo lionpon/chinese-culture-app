@@ -679,7 +679,17 @@
     "paywallPersistent": "一回限り · 永久にあなたのもの · サブスクリプションなし",
     "smartFallback": "上のボタンが使えない場合はPayPalサイトで続行 →",
     "emailLabel": "メールアドレス（任意）— 完全な結果の送信先",
-    "emailPlaceholder": "you@example.com"
+    "emailPlaceholder": "you@example.com",
+    "confirmTitle": "準備ができたら",
+    "confirmPrice": "一回限りのお支払い — {amount}",
+    "confirmOfferBadge": "初回限定オファー",
+    "confirmOfferPrice": "本日 {amount}（通常 $5.99）",
+    "confirmYouGet": "受け取れるもの",
+    "confirmInstant": "お支払い後すぐにお届け — 登録不要",
+    "confirmBack": "← 戻る",
+    "continueCta": "お支払いへ進む",
+    "emailStrongLabel": "読み取り結果をどこにお送りしますか？",
+    "emailStrongHelper": "任意 — お支払いを完了できない場合、このアドレスに結果をお送りします。"
   },
   "legal": {
     "privacy": {

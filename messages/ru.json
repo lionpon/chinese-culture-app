@@ -679,7 +679,17 @@
     "paywallPersistent": "Один раз · навсегда · без подписки",
     "smartFallback": "Кнопки не работают? Продолжить на сайте PayPal →",
     "emailLabel": "Эл. почта (необязательно) — куда отправить полный результат?",
-    "emailPlaceholder": "you@example.com"
+    "emailPlaceholder": "you@example.com",
+    "confirmTitle": "Когда будете готовы",
+    "confirmPrice": "Разовая оплата — {amount}",
+    "confirmOfferBadge": "Скидка первого заказа",
+    "confirmOfferPrice": "{amount} сегодня (обычная цена $5.99)",
+    "confirmYouGet": "Вы получите",
+    "confirmInstant": "Мгновенная доставка после оплаты — без регистрации",
+    "confirmBack": "← Назад",
+    "continueCta": "Перейти к оплате",
+    "emailStrongLabel": "Куда отправить полное прочтение?",
+    "emailStrongHelper": "Необязательно — если не получится завершить оплату, отправим прочтение на этот адрес."
   },
   "legal": {
     "privacy": {

@@ -74,17 +74,36 @@ export async function POST(req: NextRequest) {
       const standardUrl = buildPayPalCheckoutUrl(existing.id, existing.type, payAmount, {
         cancelReturn: `${getAppUrl()}/success?purchase_id=${purchase_id}&free=1`,
       });
-      if (smartMode) return NextResponse.json({ purchase_id: existing.id, standard_url: standardUrl });
+      if (smartMode) {
+        const existingOffer = existingInput.offer === "first-order-1.99";
+        return NextResponse.json({
+          purchase_id: existing.id,
+          standard_url: standardUrl,
+          amount: payAmount,
+          offer: existingOffer,
+        });
+      }
       return NextResponse.json({ url: standardUrl });
     }
 
     // Read user's chosen amount from original purchase (preserves AmountPicker selection)
     let originalInput: Record<string, unknown> = {};
     try { originalInput = JSON.parse(original.input); } catch { /* use default */ }
-    const payAmount = Math.max(
+    const baseAmount = Math.max(
       (typeof originalInput.amount === "number" ? originalInput.amount : 0) || (amount ?? 1),
       1
     );
+
+    // 首单 offer 实验 (2026-10-28 预注册 §⑰): 按指纹哈希确定性分桶 50/50,
+    // offer 组首单 $1.99 (原价保留在 originalAmount)。同指纹已付费过则不再给 offer。
+    const fp = typeof original.fingerprint === "string" && original.fingerprint ? original.fingerprint : null;
+    let offerApplied = false;
+    if (fp) {
+      const bucket = parseInt(fp.slice(0, 8), 16) % 2;
+      const paidBefore = await prisma.purchase.count({ where: { fingerprint: fp, paid: true } });
+      offerApplied = bucket === 1 && paidBefore === 0;
+    }
+    const payAmount = offerApplied ? 1.99 : baseAmount;
 
     // Create new pending purchase from original input. Two key properties:
     //  1. result is COPIED from the original — the buyer pays to unlock the
@@ -101,6 +120,8 @@ export async function POST(req: NextRequest) {
           unlockFrom: purchase_id,
           // Paywall-captured email wins when the form email was skipped
           ...(buyerEmail && !originalInput.email ? { email: buyerEmail } : {}),
+          amount: payAmount,
+          ...(offerApplied ? { offer: "first-order-1.99", originalAmount: baseAmount } : {}),
         }),
         status: "pending",
         result: original.result, // copy full result — paid unlock reveals it as-is
@@ -111,7 +132,14 @@ export async function POST(req: NextRequest) {
     const url = buildPayPalCheckoutUrl(pending.id, pending.type, payAmount, {
       cancelReturn: `${getAppUrl()}/success?purchase_id=${purchase_id}&free=1`,
     });
-    if (smartMode) return NextResponse.json({ purchase_id: pending.id, standard_url: url });
+    if (smartMode) {
+      return NextResponse.json({
+        purchase_id: pending.id,
+        standard_url: url,
+        amount: payAmount,
+        offer: offerApplied,
+      });
+    }
     return NextResponse.json({ url });
   } catch (error) {
     console.error("Unlock error:", error);

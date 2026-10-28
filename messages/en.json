@@ -679,7 +679,17 @@
     "paywallPersistent": "One-time · yours forever · no subscription ever",
     "smartFallback": "Trouble with the buttons above? Continue on the PayPal website →",
     "emailLabel": "Email (optional) — where should we send your full reading?",
-    "emailPlaceholder": "you@example.com"
+    "emailPlaceholder": "you@example.com",
+    "confirmTitle": "Ready When You Are",
+    "confirmPrice": "One-time payment — {amount}",
+    "confirmOfferBadge": "First-reading offer",
+    "confirmOfferPrice": "{amount} today (regular $5.99)",
+    "confirmYouGet": "You'll unlock",
+    "confirmInstant": "Instant delivery after payment — no account needed",
+    "confirmBack": "← Back",
+    "continueCta": "Continue to Checkout",
+    "emailStrongLabel": "Where should we send your full reading?",
+    "emailStrongHelper": "Optional — if you can't finish checkout, we'll email the reading to this address."
   },
   "legal": {
     "privacy": {
