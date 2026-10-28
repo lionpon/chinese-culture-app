@@ -8,7 +8,8 @@ const envRaw = fs.readFileSync("D:/chinese culture/project2/.env", "utf8");
 let dbUrl = envRaw.match(/^DATABASE_URL=(.+)$/m)[1].trim();
 if (!dbUrl.includes("sslmode=")) dbUrl += (dbUrl.includes("?") ? "&" : "?") + "sslmode=prefer&connection_limit=1";
 process.env.DATABASE_URL = dbUrl;
-let API_KEY = envRaw.match(/^RESEND_API_KEY=(.+)$/m)?.[1]?.trim() || "";
+// 密钥来源优先级: 进程环境变量 > .env > .env.local（都不落仓库）
+let API_KEY = process.env.RESEND_API_KEY || envRaw.match(/^RESEND_API_KEY=(.+)$/m)?.[1]?.trim() || "";
 // 备用: .env.local（git 忽略, 本地存放密钥的安全位置）
 if (!API_KEY) {
   try {
