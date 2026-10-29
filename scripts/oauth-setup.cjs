@@ -7,8 +7,10 @@
 const http = require("http");
 const fs = require("fs");
 
-let clientId = process.argv[2];
-let clientSecret = process.argv[3];
+// 位置参数与 --proxy 分离解析
+const posArgs = process.argv.slice(2).filter((a, i, arr) => a !== "--proxy" && !(i > 0 && arr[i - 1] === "--proxy"));
+let clientId = posArgs[0];
+let clientSecret = posArgs[1];
 const proxyIdx = process.argv.indexOf("--proxy");
 const proxyUrl = proxyIdx > -1 ? process.argv[proxyIdx + 1] : null;
 
@@ -31,7 +33,8 @@ const AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth?client_id=" + enc
   "&access_type=offline&prompt=consent";
 
 async function exchange(code) {
-  const { ProxyAgent } = require("undici");
+  // 用同实例 undici request + ProxyAgent（全局 fetch 与项目 ProxyAgent 跨实例不兼容）
+  const { ProxyAgent, request } = require("undici");
   const opts = {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -41,13 +44,23 @@ async function exchange(code) {
       client_secret: clientSecret,
       redirect_uri: REDIRECT,
       code,
-    }),
+    }).toString(),
   };
   if (proxyUrl) opts.dispatcher = new ProxyAgent(proxyUrl);
-  const res = await fetch("https://oauth2.googleapis.com/token", opts);
-  const data = await res.json();
-  if (!res.ok) throw new Error(JSON.stringify(data).slice(0, 300));
-  return data;
+  let lastErr = "";
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      const res = await request("https://oauth2.googleapis.com/token", opts);
+      const text = await res.body.text();
+      const data = JSON.parse(text);
+      if (res.statusCode !== 200) throw new Error(text.slice(0, 300));
+      return data;
+    } catch (e) {
+      lastErr = e.message;
+      if (attempt < 3) await new Promise(r => setTimeout(r, 2000 * attempt));
+    }
+  }
+  throw new Error(lastErr || "exchange failed");
 }
 
 const server = http.createServer(async (req, res) => {
@@ -66,9 +79,9 @@ const server = http.createServer(async (req, res) => {
     res.end("Authorization OK. You can close this tab.");
     setTimeout(() => { server.close(); process.exit(0); }, 500);
   } catch (e) {
-    res.end("Exchange failed: " + e.message);
-    server.close();
-    process.exit(1);
+    // 保持服务存活，用户可重新打开授权链接重试（新 code 会再次回调）
+    console.log("Exchange 失败: " + e.message + "（可重新打开授权链接重试）");
+    res.end("Exchange failed (retry allowed): " + e.message + " — you can reopen the auth link to try again.");
   }
 });
 
