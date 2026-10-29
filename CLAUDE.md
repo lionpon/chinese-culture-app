@@ -183,7 +183,8 @@ PayPal Standard Checkout，支持信用卡支付。
 
 ## 近期状态 (2026-10-27)
 
-- **线上版本**：`12ac5db`（终态；Render 已部署生产验证）
+- **线上版本**：`2ae5cab`（终态；Render 已部署生产验证）
+- **程序化内容管线 A 线（10/28 晚）**：竞品 sitemap 热词 → 引擎模板生成（dates/zodiac/lunar 三型，事实零编造）→ `/insights/[slug]`（GEO 结构）→ cron 每日 ≤2 篇 → IndexNow/sitemap。首跑 4 篇生肖 2027。**B 线 AI 草稿 + 人工闸门后置**（status=draft 字段已预留）；预注册：4 周后 /insights/* GSC 曝光 ≥50 且 CTR ≥1%
 - **竞品互动功能交付①+②（10/28 下午）**：① 农历转换器 `/tools/lunar-calendar`（内嵌 CNY-2027/auspicious-dates，引擎零成本复用，4 语言 native 文案）② 命盘图表+分享卡片（免费八字预览新增四柱+五行环+PNG 下载+原生分享，Astro-Charts「图表即营销」模式，手机端优先）；实验预注册 §⑦：转换器参与率 ≥30% 支持、分享事件 ≥5 次/4 周支持
 - **破 0 冲刺（10/28，预注册 `WORK_LOG_2026-10-28.md` §③）**：付费墙结账确认层（价格+清单+信任徽章→Continue→按钮）+ 首单 offer A/B（指纹分桶 $1.99）+ email 采集 A/B；新埋点 paywall_confirm_shown/offer_shown/confirm_continue/email_variant_a|b/email_filled_a|b；召回邮件脚本已备，**实发待用户确认收件人**
 - **en 起名页 SEO 实验（§⑭ 预注册）**：girl 25→100 名分组 + boy 25→50 名（兑现 title 承诺）+ H1 对齐 + FAQ 扩充 + 内链 + sitemap 提权；**ru/ja 零改动 = 对照组**。基线 en girl 位次 24.47/CTR 0.65%、en boy 20.94/0.67%；4 周后 GSC 复核：位次 ≥5 位提升或 CTR ≥0.3pp = 支持，位次降 >3 位 = 证伪——① 起名指南页（girl/boy）内嵌**免费名字预览工具**（年份→候选名+生肖五行，3 次/天限流+升级卡，复用 datecheck 模式，4 语言）② `/naming?gender=&year=` 深链预填 ③ 新埋点 `guide_tool_name_preview/_limit/_cta` ④ 顺手修全站残留旧价 $1→$5.99（8 guide 页 + JSON-LD + 布局 meta）。另：10/19→10/27 流量埋点复核存档见 `WORK_LOG_2026-10-27.md`
