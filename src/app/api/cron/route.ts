@@ -8,6 +8,10 @@ import { BASE_URL } from "@/lib/config";
 
 export const runtime = "nodejs";
 
+// 禁止 Next 构建期静态探测: 构建时探测会真实执行 cron（竞品 sitemap 拉取+DB+GSC 调用）
+// 超过 60s 静态生成超时 → 构建失败（2026-10-29 连续 6 次 build_failed 的根因）
+export const dynamic = "force-dynamic";
+
 export async function GET(req: NextRequest) {
   const today = new Date().toISOString().slice(0, 10);
   const results: Record<string, unknown> = { date: today };
