@@ -7,6 +7,7 @@ import { EVENTS, getEvent, fill, MONTHS_2027 } from "@/data/auspicious-events";
 import { selectAuspiciousDays, solarToLunar, CNY_DATES } from "@/lib/calendar";
 import { getZodiacInfo } from "@/data/zodiac-data";
 import { BASE_URL, BASE_HOST } from "@/lib/config";
+import { discoverGscQueryCandidates } from "@/lib/gsc";
 import type { EventType } from "@/types";
 
 const COMPETITOR_SITEMAPS = [
@@ -267,6 +268,28 @@ async function pingIndexNow(slugs: string[]): Promise<boolean> {
 /** A 线主流程：发现 → 分类 → 引擎生成 → 入库（ON CONFLICT 幂等）→ IndexNow */
 export async function runDailyContentPipeline() {
   const candidates = await discoverCandidates();
+  // GSC 自家查询词并入候选（去重靠 Map 同 slug 覆盖; 优先级低于竞品源）
+  try {
+    const gscTokens = await discoverGscQueryCandidates();
+    const seen = new Set(candidates.map(c => c.slug));
+    for (const tokens of gscTokens) {
+      const ev = tokens.find(x => EVENT_SLUGS.includes(x));
+      const mo = tokens.find(x => MONTH_SLUGS.includes(x));
+      const yr = tokens.find(x => YEARS.includes(Number(x)));
+      if (ev && mo && yr) {
+        const slug = `${ev}-${mo}-${yr}`;
+        if (!seen.has(slug)) {
+          seen.add(slug);
+          candidates.push({ type: "dates", slug, source: "gsc-query", params: { event: ev, month: mo, year: Number(yr) } });
+        }
+      }
+      const an = tokens.find(x => ANIMALS.includes(x));
+      if (an && !seen.has(`${an}-2027-fortune`)) {
+        seen.add(`${an}-2027-fortune`);
+        candidates.push({ type: "zodiac", slug: `${an}-2027-fortune`, source: "gsc-query", params: { animal: an } });
+      }
+    }
+  } catch { /* GSC 表为空/不可达时静默 */ }
   const existingRows = await prisma.$queryRawUnsafe<{ slug: string }[]>(
     `SELECT slug FROM "ProgrammaticArticle"`
   );

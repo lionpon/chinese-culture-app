@@ -20,6 +20,14 @@ export async function GET(req: NextRequest) {
     results.report = { error: String(err) };
   }
 
+  // 1e. GSC 全链路自动化: 每日取数入库（Render 直连 Google; 无凭证静默跳过）
+  try {
+    const { fetchGscDaily } = await import("@/lib/gsc");
+    results.gsc = await fetchGscDaily();
+  } catch (err) {
+    results.gsc = { error: String(err) };
+  }
+
   // 1d. 续费 watchdog（RENEWAL_LEDGER.md）: 域名到期 ≤14 天自动邮件提醒
   try {
     const DOMAIN_EXPIRY = new Date("2027-06-11T13:04:21Z");
