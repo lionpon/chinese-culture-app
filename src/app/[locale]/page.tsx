@@ -195,6 +195,9 @@ export default function HomePage() {
         <p className="text-sm sm:text-base font-medium mt-3 relative" style={{ color: "var(--gold)" }}>
           {t("heroPricing")}
         </p>
+        <p className="text-xs sm:text-sm max-w-2xl mx-auto leading-relaxed mt-4 relative" style={{ color: "var(--text-dim)" }}>
+          {t("purposeStatement")}
+        </p>
 
         {/* Quick links */}
         <div className="flex justify-center gap-3 mt-8 flex-wrap relative">
