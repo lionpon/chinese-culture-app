@@ -20,6 +20,33 @@ export async function GET(req: NextRequest) {
     results.report = { error: String(err) };
   }
 
+  // 1d. 续费 watchdog（RENEWAL_LEDGER.md）: 域名到期 ≤14 天自动邮件提醒
+  try {
+    const DOMAIN_EXPIRY = new Date("2027-06-11T13:04:21Z");
+    const daysLeft = Math.ceil((DOMAIN_EXPIRY.getTime() - Date.now()) / 86400000);
+    results.renewalWatchdog = daysLeft > 0 ? `${daysLeft} days until domain expiry` : "DOMAIN EXPIRED";
+    if (daysLeft >= 0 && daysLeft <= 14) {
+      const apiKey = process.env.RESEND_API_KEY;
+      if (apiKey) {
+        const mailRes = await fetch("https://api.resend.com/emails", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Authorization: `Bearer ${apiKey}` },
+          body: JSON.stringify({
+            from: "Chinese Culture Studio <noreply@culture-of-china.com>",
+            to: ["22728717@qq.com"],
+            subject: `[续费提醒] culture-of-china.com 域名 ${daysLeft} 天后到期`,
+            text: `域名 culture-of-china.com 将于 2027-06-11 到期（注册商 Dynadot），剩余 ${daysLeft} 天。请及时续费，避免整站不可访问。详情见 RENEWAL_LEDGER.md。`,
+          }),
+        });
+        results.renewalWatchdog = { daysLeft, emailSent: mailRes.ok };
+      } else {
+        results.renewalWatchdog = { daysLeft, emailSent: false, note: "RESEND_API_KEY missing" };
+      }
+    }
+  } catch (err) {
+    results.renewalWatchdog = { error: String(err) };
+  }
+
   // 1c. 程序化内容管线（A线, 2026-10-28）: 竞品热词 → 引擎生成 → 入库 → IndexNow
   try {
     const { runDailyContentPipeline } = await import("@/lib/programmatic-content");
