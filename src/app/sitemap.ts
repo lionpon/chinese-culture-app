@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 import { BASE_URL } from "@/lib/config";
 import { EVENTS, MONTHS_2027, YEAR } from "@/data/auspicious-events";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = BASE_URL;
 
   const pages = [
@@ -57,6 +57,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Pages remain accessible but Google discovers them via internal links instead.
 
   const allPages = pages;
+
+  // 程序化文章（insights, A线自动生成）
+  try {
+    const { prisma } = await import("@/lib/db");
+    const articles = await prisma.$queryRawUnsafe<{ slug: string }[]>(
+      `SELECT slug FROM "ProgrammaticArticle" WHERE status='published'`
+    );
+    for (const a of articles) {
+      allPages.push({ path: `/insights/${a.slug}`, priority: 0.6, changeFreq: "weekly" as const });
+    }
+  } catch { /* 表未建或 DB 不可达时静默跳过 */ }
 
   // English URLs
   const enEntries = allPages.map(({ path, priority, changeFreq }) => ({

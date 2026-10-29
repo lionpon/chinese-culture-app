@@ -20,6 +20,14 @@ export async function GET(req: NextRequest) {
     results.report = { error: String(err) };
   }
 
+  // 1c. 程序化内容管线（A线, 2026-10-28）: 竞品热词 → 引擎生成 → 入库 → IndexNow
+  try {
+    const { runDailyContentPipeline } = await import("@/lib/programmatic-content");
+    results.contentPipeline = await runDailyContentPipeline();
+  } catch (err) {
+    results.contentPipeline = { error: String(err) };
+  }
+
   // 1b. Purchase recovery — conversion safety net:
   //     • unpaid pending >24h → abandoned (zombie cleanup)
   //     • paid=true pending without result → retry generation
