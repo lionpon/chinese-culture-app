@@ -66,6 +66,8 @@ async function getSaAccessToken(): Promise<string> {
   return data.access_token;
 }
 
+let gscDebug: Record<string, unknown> = {};
+
 async function getOAuthAccessToken(): Promise<string> {
   const res = await fetch("https://oauth2.googleapis.com/token", {
     method: "POST",
@@ -77,8 +79,13 @@ async function getOAuthAccessToken(): Promise<string> {
       refresh_token: process.env.GOOGLE_REFRESH_TOKEN || "",
     }),
   });
-  if (!res.ok) throw new Error("GSC token refresh failed: " + res.status);
-  const data = await res.json();
+  const text = await res.text();
+  gscDebug.refreshStatus = res.status;
+  gscDebug.refreshBodyHead = text.slice(0, 80);
+  if (!res.ok) throw new Error("GSC token refresh failed: " + res.status + " " + text.slice(0, 200));
+  const data = JSON.parse(text);
+  gscDebug.tokenLen = String(data.access_token || "").length;
+  gscDebug.tokenHead = String(data.access_token || "").slice(0, 6);
   return data.access_token;
 }
 
@@ -119,6 +126,7 @@ export async function fetchGscDaily() {
   const results: Record<string, unknown> = {
     day,
     mode: gscMode(),
+    debug: { ...gscDebug },
     envLens: {
       cid: String(process.env.GOOGLE_CLIENT_ID || "").length,
       sec: String(process.env.GOOGLE_CLIENT_SECRET || "").length,
