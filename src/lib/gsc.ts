@@ -107,9 +107,24 @@ function isoDaysAgo(n: number): string {
 
 /** 每日取数（数据滞后 ~3 天）：拉取 t-3 的 page + query 两维度并 upsert 入库 */
 export async function fetchGscDaily() {
-  if (!gscEnabled()) return { skipped: "no GSC credentials" };
+  if (!gscEnabled()) {
+    // 诊断: 报告每个凭证的存在性与长度（不泄露值）
+    const diag: Record<string, unknown> = {};
+    for (const k of ["GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_SECRET", "GOOGLE_REFRESH_TOKEN", "GOOGLE_SERVICE_ACCOUNT_JSON"]) {
+      diag[k] = process.env[k] ? "len=" + String(process.env[k]).length : "missing";
+    }
+    return { skipped: "no GSC credentials", diag };
+  }
   const day = isoDaysAgo(3);
-  const results: Record<string, unknown> = { day };
+  const results: Record<string, unknown> = {
+    day,
+    mode: gscMode(),
+    envLens: {
+      cid: String(process.env.GOOGLE_CLIENT_ID || "").length,
+      sec: String(process.env.GOOGLE_CLIENT_SECRET || "").length,
+      rtk: String(process.env.GOOGLE_REFRESH_TOKEN || "").length,
+    },
+  };
   for (const dimType of ["page", "query"] as const) {
     try {
       const rows = await queryGsc(dimType, day, day);
