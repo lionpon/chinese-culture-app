@@ -195,6 +195,7 @@ PayPal Standard Checkout，支持信用卡支付。
 
 - **线上版本**：`bce90ed`（终态；Render 已部署生产验证）
 - **GSC 全链路自动化已激活（10/29）**：OAuth 桌面客户端 + refresh token（Render 环境变量）→ cron 每日取数 GscPerformance 表（实测 page 104/query 99）→ `gsc-report.cjs` 报表 + A 线词源。**教训归档**：Next 构建期会静态探测 API 路由并真实执行——重路由必须 `force-dynamic`（cron 曾因此连败 6 次构建）
+- **GSC 修复终局（11/3）**：OAuth 路线因「本地/Render 双环境共用 refresh token 导致 Render 铸 token 即失效 + 授权页 400」被弃；**改回服务账号路线并验证成功**（生产 cron 实测 page 100/query 97）。教训修正：SA JSON 从未导致构建失败——真凶一直是静态探测；OAuth 凭证保留作备胎
 - **程序化内容管线 A 线（10/28 晚）**：竞品 sitemap 热词 → 引擎模板生成（dates/zodiac/lunar 三型，事实零编造）→ `/insights/[slug]`（GEO 结构）→ cron 每日 ≤2 篇 → IndexNow/sitemap。首跑 4 篇生肖 2027。**B 线 AI 草稿 + 人工闸门后置**（status=draft 字段已预留）；预注册：4 周后 /insights/* GSC 曝光 ≥50 且 CTR ≥1%
 - **竞品互动功能交付①+②（10/28 下午）**：① 农历转换器 `/tools/lunar-calendar`（内嵌 CNY-2027/auspicious-dates，引擎零成本复用，4 语言 native 文案）② 命盘图表+分享卡片（免费八字预览新增四柱+五行环+PNG 下载+原生分享，Astro-Charts「图表即营销」模式，手机端优先）；实验预注册 §⑦：转换器参与率 ≥30% 支持、分享事件 ≥5 次/4 周支持
 - **破 0 冲刺（10/28，预注册 `WORK_LOG_2026-10-28.md` §③）**：付费墙结账确认层（价格+清单+信任徽章→Continue→按钮）+ 首单 offer A/B（指纹分桶 $1.99）+ email 采集 A/B；新埋点 paywall_confirm_shown/offer_shown/confirm_continue/email_variant_a|b/email_filled_a|b；召回邮件脚本已备，**实发待用户确认收件人**

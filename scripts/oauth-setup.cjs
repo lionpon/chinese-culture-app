@@ -7,8 +7,17 @@
 const http = require("http");
 const fs = require("fs");
 
-// 位置参数与 --proxy 分离解析
-const posArgs = process.argv.slice(2).filter((a, i, arr) => a !== "--proxy" && !(i > 0 && arr[i - 1] === "--proxy"));
+// 位置参数与 --flags 分离解析（排除所有 -- 开头参数及其值）
+const rawArgs = process.argv.slice(2);
+const posArgs = [];
+for (let i = 0; i < rawArgs.length; i++) {
+  if (rawArgs[i].startsWith("--")) {
+    // 仅当下一项是值（不以 -- 开头）时才跳过
+    if (i + 1 < rawArgs.length && !rawArgs[i + 1].startsWith("--")) i++;
+    continue;
+  }
+  posArgs.push(rawArgs[i]);
+}
 let clientId = posArgs[0];
 let clientSecret = posArgs[1];
 const proxyIdx = process.argv.indexOf("--proxy");
@@ -67,6 +76,12 @@ const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, REDIRECT);
   const code = url.searchParams.get("code");
   if (!code) { res.end("No code in callback. Close this tab."); return; }
+  if (process.argv.includes("--code-only")) {
+    console.log("AUTHCODE:" + code);
+    res.end("Code captured. Close this tab.");
+    setTimeout(() => { server.close(); process.exit(0); }, 500);
+    return;
+  }
   try {
     const data = await exchange(code);
     console.log(""); console.log("===== 授权成功，请复制以下 refresh_token =====");
