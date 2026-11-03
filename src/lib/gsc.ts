@@ -66,7 +66,7 @@ async function getSaAccessToken(): Promise<string> {
   return data.access_token;
 }
 
-let gscDebug: Record<string, unknown> = {};
+const gscDebug: Record<string, unknown> = {};
 
 async function getOAuthAccessToken(): Promise<string> {
   const res = await fetch("https://oauth2.googleapis.com/token", {
