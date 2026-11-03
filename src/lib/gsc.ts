@@ -103,7 +103,15 @@ async function queryGsc(dimension: "page" | "query", startDate: string, endDate:
     headers: { Authorization: "Bearer " + token, "Content-Type": "application/json" },
     body: JSON.stringify({ startDate, endDate, dimensions: [dimension], rowLimit: 5000 }),
   });
-  if (!res.ok) throw new Error("GSC query failed: " + res.status + " " + (await res.text().catch(() => "")).slice(0, 250));
+  if (!res.ok) {
+    throw new Error(
+      "GSC query failed: " + res.status +
+      " body=" + (await res.text().catch(() => "")).slice(0, 150) +
+      " tokenLen=" + String((token || "").length) +
+      " tokenHead=" + String(token || "").slice(0, 6) +
+      " debug=" + JSON.stringify(gscDebug).slice(0, 150)
+    );
+  }
   const data = await res.json();
   return (data.rows || []) as GscRow[];
 }
