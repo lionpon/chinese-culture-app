@@ -7,7 +7,7 @@ type Props = { params: { locale: string } };
 
 const CONTENT: Record<string, {
   title: string; desc: string; ogTitle: string; ogDesc: string;
-  heading: string; subtitle: string;
+  heading: string; subtitle: string; directAnswer: string;
   whatTitle: string; whatBody: string;
   featuresTitle: string;
   faqs: { q: string; a: string }[];
@@ -20,6 +20,7 @@ const CONTENT: Record<string, {
     ogDesc: "Mian Xiang face reading guide — 7 features: forehead, eyes, nose, mouth, ears, chin. What do yours reveal about your destiny?",
     heading: "Face Reading (Mian Xiang): Read Faces Like the Ancients",
     subtitle: "Mian Xiang (面相) is the 3,000-year-old Chinese practice of understanding a person's character, fortune, and destiny through their facial features. Alongside palm reading and I Ching, it forms one of the three pillars of Chinese metaphysical arts. Emperors used it to select officials; today, it's used for self-understanding and relationship insight.",
+    directAnswer: "Face reading (mian xiang) maps fortune onto the face — the forehead for youth, the nose for wealth, the mouth for later years. This guide explains the twelve facial features, what each reveals, and how to read your own face.",
     whatTitle: "What Is Mian Xiang?",
     whatBody: "Mian Xiang divides the face into three zones (三停): the upper zone (forehead) governs youth and intellect, the middle zone (eyes to nose) governs career and relationships in midlife, and the lower zone (mouth to chin) governs later years and security. Each facial feature corresponds to an aspect of life: the nose represents wealth, the eyes represent wisdom, the mouth represents communication, and the ears represent longevity. The art is based on Taoist observation that internal character shapes external appearance over time.",
     featuresTitle: "Key Facial Features & Their Meanings",
@@ -40,6 +41,7 @@ const CONTENT: Record<string, {
     ogDesc: "Древнее китайское чтение лица — что черты лица говорят о характере, карьере и удаче.",
     heading: "Мянь Сян: читайте лица как древние",
     subtitle: "Мянь Сян (面相) — 3000-летняя китайская практика понимания характера, удачи и судьбы через черты лица. Вместе с хиромантией и И-Цзин составляет три столпа китайской метафизики. Императоры использовали её для отбора чиновников; сегодня — для самопознания.",
+    directAnswer: "Чтение лица (мянь сян) — древняя практика: лоб отвечает за молодость, нос — за богатство, рот — за зрелые годы. Здесь вы узнаете о двенадцати чертах лица, о том, что означает каждая из них, и как прочитать собственное лицо.",
     whatTitle: "Что такое Мянь Сян?",
     whatBody: "Мянь Сян делит лицо на три зоны (三停): верхняя (лоб) — молодость и интеллект, средняя (глаза до носа) — карьера и отношения в зрелости, нижняя (рот до подбородка) — поздние годы и безопасность. Каждая черта соответствует аспекту жизни: нос — богатство, глаза — мудрость, рот — общение, уши — долголетие. Искусство основано на даосском наблюдении, что внутренний характер формирует внешность.",
     featuresTitle: "Ключевые черты лица и их значение",
@@ -59,6 +61,7 @@ const CONTENT: Record<string, {
     ogDesc: "古代中国の人相学 — 顔の特徴が性格、キャリア、運勢について語ること。",
     heading: "面相（ミェンシャン）：古代のように顔を読む",
     subtitle: "面相は、顔の特徴を通じて人の性格、運勢、運命を理解する3,000年の歴史を持つ中国の実践です。手相、易経と並んで中国形而上学の三本柱を形成します。皇帝は官僚の選抜に使用し、今日では自己理解や人間関係の洞察に使われています。",
+    directAnswer: "面相（ミェンシャン）は顔を運命の地図として読みます。額は若年期、鼻は財運、口は晩年。このガイドでは、12の顔の特徴とそれぞれが示すもの、そして自分の顔の読み方を解説します。",
     whatTitle: "面相とは？",
     whatBody: "面相は顔を三つのゾーン（三停）に分けます：上部（額）は若年期と知性、中部（目から鼻）は中年期のキャリアと人間関係、下部（口からあご）は晩年と安定を司ります。各部位は人生の側面に対応：鼻は富、目は知恵、口はコミュニケーション、耳は長寿を表します。この技術は、内面の性格が時間とともに外見を形成するという道教の観察に基づいています。",
     featuresTitle: "主要な顔の特徴とその意味",
@@ -78,6 +81,7 @@ const CONTENT: Record<string, {
     ogDesc: "고대 중국의 관상학 — 얼굴 특징이 성격, 경력, 운세에 대해 말해주는 것.",
     heading: "면상(미엔샹): 고대인처럼 얼굴을 읽다",
     subtitle: "면상(面相)은 얼굴 특징을 통해 사람의 성격, 운세, 운명을 이해하는 3,000년 된 중국의 실천법입니다. 수상, 주역과 함께 중국 형이상학의 세 기둥을 이룹니다. 황제는 관리를 선발하는 데 사용했고, 오늘날에는 자기 이해와 관계 통찰에 사용됩니다.",
+    directAnswer: "Face reading (mian xiang) maps fortune onto the face — the forehead for youth, the nose for wealth, the mouth for later years. This guide explains the twelve facial features, what each reveals, and how to read your own face.",
     whatTitle: "면상이란?",
     whatBody: "면상은 얼굴을 세 구역(삼정)으로 나눕니다: 상부(이마)는 청년기와 지성, 중부(눈에서 코까지)는 중년의 경력과 관계, 하부(입에서 턱까지)는 노년과 안정을 관장합니다. 각 부위는 삶의 측면에 대응: 코는 부, 눈은 지혜, 입은 소통, 귀는 장수를 나타냅니다. 이 기술은 내면의 성격이 시간이 지남에 따라 외모를 형성한다는 도교의 관찰에 기초합니다.",
     featuresTitle: "주요 얼굴 특징과 그 의미",
@@ -159,6 +163,9 @@ export default function FaceReadingPage({ params }: Props) {
         {c.heading}
       </h1>
       <p className="text-sm text-stone-500 text-center mb-8">{c.subtitle}</p>
+      <div className="not-prose max-w-2xl mx-auto mb-6 p-3 rounded-lg" style={{ backgroundColor: "var(--gold-subtle)", borderLeft: "3px solid var(--gold)" }}>
+        <p className="text-sm leading-relaxed text-left" style={{ color: "var(--text-body)" }}>{c.directAnswer}</p>
+      </div>
 
       <section className="card-classic p-4 sm:p-6 mb-6">
         <h2 className="text-lg font-semibold text-stone-700 mb-3">{c.whatTitle}</h2>

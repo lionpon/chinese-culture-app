@@ -9,7 +9,7 @@ type Props = { params: { locale: string } };
 
 type Name = { name: string; meaning: string; style: string };
 
-const CONTENT: Record<string, { title: string; desc: string; ogTitle: string; ogDesc: string; heading: string; subtitle: string; tableTitle: string; nameH: string; meaningH: string; styleH: string; groups: { title: string; names: Name[] }[]; personalizedTitle: string; personalizedBody: string; faqs: { q: string; a: string }[]; disclaimer: string }> = {
+const CONTENT: Record<string, { title: string; desc: string; ogTitle: string; ogDesc: string; heading: string; subtitle: string; directAnswer: string; tableTitle: string; nameH: string; meaningH: string; styleH: string; groups: { title: string; names: Name[] }[]; personalizedTitle: string; personalizedBody: string; faqs: { q: string; a: string }[]; disclaimer: string }> = {
   en: {
     title: "100+ Chinese Girl Names & Meanings: Elegant, Cute & Unique (2026) | Chinese Culture Studio",
     desc: "100+ beautiful Chinese girl names with meanings — floral, elegant, modern & classical. Find the perfect Chinese name for your baby girl or character. Free naming tool included.",
@@ -17,6 +17,7 @@ const CONTENT: Record<string, { title: string; desc: string; ogTitle: string; og
     ogDesc: "Discover 100+ beautiful Chinese girl names with meanings. Floral names, elegant classics, modern picks & virtue names. Free Chinese name generator.",
     heading: "100+ Chinese Girl Names & Their Meanings (2026)",
     subtitle: "100+ beautiful Chinese girl names with meanings, pinyin and style — organized by flowers, nature, virtues, arts, gems, joy, classical poetry, and modern favorites.",
+    directAnswer: "Chinese girl names are one or two characters chosen for meaning, sound, and five-element balance. Below: 100+ beautiful names with their meanings — plus a free tool that shows which name matches a birth year.",
     tableTitle: "Names with Meanings",
     nameH: "Name", meaningH: "Meaning", styleH: "Style",
     groups: GIRL_NAMES_EN,
@@ -38,6 +39,7 @@ const CONTENT: Record<string, { title: string; desc: string; ogTitle: string; og
     ogDesc: "50+ красивых имён: цветы, красота, добродетели.",
     heading: "Китайские Имена для Девочек: 25+ Красивых Значений",
     subtitle: "Коллекция китайских имён для девочек — цветы, красота, добродетели и классическая элегантность.",
+    directAnswer: "Китайские женские имена — это один-два иероглифа, выбранные ради смысла, звучания и баланса Пяти Элементов. Ниже — более 100 красивых имён со значениями и бесплатный инструмент подбора по году рождения.",
     tableTitle: "Имена со Значением",
     nameH: "Имя", meaningH: "Значение", styleH: "Стиль",
     groups: [{ title: "", names: [
@@ -82,6 +84,7 @@ const CONTENT: Record<string, { title: string; desc: string; ogTitle: string; og
     ogDesc: "花、美、美徳を含む50以上の美しい名前。",
     heading: "女の子の中国名：25以上の美しい意味",
     subtitle: "厳選された女の子の中国名 — 花、美しさ、美徳、そして古典的な優雅さ。",
+    directAnswer: "中国の女の子の名前は、意味・響き・五行のバランスから選ばれる一〜二文字です。以下に、意味付きの100以上の美しい名前と、生まれ年に合う名前がわかる無料ツールをまとめました。",
     tableTitle: "意味付きの名前",
     nameH: "名前", meaningH: "意味", styleH: "スタイル",
     groups: [{ title: "", names: [
@@ -141,6 +144,9 @@ export default function ChineseNameGirlGuide({ params: { locale } }: Props) {
     <article className="max-w-3xl mx-auto px-3 sm:px-4 py-6 sm:py-10 prose prose-stone">
       <h1 className="text-2xl sm:text-3xl font-bold">{c.heading}</h1>
       <p className="text-stone-500 text-sm">{c.subtitle}</p>
+      <div className="not-prose my-4 p-3 rounded-lg" style={{ backgroundColor: "var(--gold-subtle)", borderLeft: "3px solid var(--gold)" }}>
+        <p className="text-sm leading-relaxed" style={{ color: "var(--text-body)" }}>{c.directAnswer}</p>
+      </div>
       <hr className="my-6 border-stone-200" />
       <h2>{c.tableTitle}</h2>
       {c.groups.map((g, gi) => (

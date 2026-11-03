@@ -8,7 +8,7 @@ type Props = { params: { locale: string } };
 
 type Name = { name: string; meaning: string; style: string };
 
-const NAMES: Record<string, { title: string; desc: string; ogTitle: string; ogDesc: string; heading: string; subtitle: string; howTitle: string; howBody1: string; howBullets: string[]; tableTitle: string; nameH: string; meaningH: string; styleH: string; names: Name[]; categoriesTitle: string; categories: string[]; personalizedTitle: string; personalizedBody: string; faqs: { q: string; a: string }[]; cta: string; disclaimer: string }> = {
+const NAMES: Record<string, { title: string; desc: string; ogTitle: string; ogDesc: string; heading: string; subtitle: string; directAnswer: string; howTitle: string; howBody1: string; howBullets: string[]; tableTitle: string; nameH: string; meaningH: string; styleH: string; names: Name[]; categoriesTitle: string; categories: string[]; personalizedTitle: string; personalizedBody: string; faqs: { q: string; a: string }[]; cta: string; disclaimer: string }> = {
   en: {
     title: "50+ Chinese Boy Names & Meanings: Strong, Cool & Traditional (2026) | Chinese Culture Studio",
     desc: "50+ authentic Chinese boy names with meanings & characters. Strong virtue names, nature-inspired picks, and modern choices. Free personalized Chinese name generator.",
@@ -16,6 +16,7 @@ const NAMES: Record<string, { title: string; desc: string; ogTitle: string; ogDe
     ogDesc: "50+ authentic Chinese boy names with meanings — strong, cool & traditional picks. Virtue names, nature names & mythology names. Free name generator.",
     heading: "50+ Chinese Boy Names & Their Meanings (2026)",
     subtitle: "Curated Chinese boy names with deep meaning — virtues, nature, mythology, and modern picks.",
+    directAnswer: "Chinese boy names — one or two characters like Wěi (great) or Hào (vast) — are chosen for meaning and five-element balance. Below: 50+ strong names with their meanings, plus a free preview tool.",
     howTitle: "How Chinese Names Are Chosen",
     howBody1: "Chinese names are not just sounds. Each name carries meaning, aspiration, and often connects to Ba-Zi elements. Traditionally, name selection involves:",
     howBullets: ["Character meaning: Each character has independent meaning — parents combine them to create unique significance.", "Five Element balance: If a child's Ba-Zi chart lacks Water, the name may include the water radical (氵).", "Tone and rhythm: Chinese given names are usually 1-2 characters (not counting surname) and should sound harmonious.", "Generation character: In some families, all boys of one generation share a common first character."],
@@ -43,6 +44,7 @@ const NAMES: Record<string, { title: string; desc: string; ogTitle: string; ogDe
     ogDesc: "50+ имён с переводом, включая добродетели, природу и современные варианты.",
     heading: "Китайские Имена для Мальчиков: 25+ Значений",
     subtitle: "Отобранные китайские имена для мальчиков с глубоким смыслом — добродетели, природа, мифология и современные варианты.",
+    directAnswer: "Китайские мужские имена — один-два иероглифа, такие как Вэй (великий) или Хао (необъятный), — выбираются ради смысла и баланса Пяти Элементов. Ниже — более 50 сильных имён со значениями и бесплатный предпросмотр.",
     howTitle: "Как Выбирают Китайские Имена",
     howBody1: "Китайские имена — это не просто набор звуков. Каждое имя несёт смысл, aspiration (пожелание) и часто связано с элементами Ба-Цзы. Традиционно выбор имени включает:",
     howBullets: ["Значение иероглифов: Каждый иероглиф имеет самостоятельное значение — родители комбинируют их для создания уникального смысла.", "Баланс Пяти Элементов: Если в карте Ба-Цзы ребёнка не хватает Воды, имя может включать радикал «вода» (氵).", "Тон и ритм: Китайские имена обычно состоят из 1-2 иероглифов (не считая фамилии) и должны звучать гармонично.", "Поколенческий иероглиф: В некоторых семьях все мальчики одного поколения разделяют общий первый иероглиф."],
@@ -94,6 +96,7 @@ const NAMES: Record<string, { title: string; desc: string; ogTitle: string; ogDe
     ogDesc: "美徳、自然、現代的なものを含む50以上の名前と意味。",
     heading: "男の子の中国名：25以上の意味",
     subtitle: "深い意味を持つ男の子の中国名 — 美徳、自然、神話、現代的な選択。",
+    directAnswer: "中国の男の子の名前は、偉（偉大）や浩（広大）のような一〜二文字で、意味と五行のバランスから選ばれます。以下に、意味付きの50以上の名前と無料プレビューをまとめました。",
     howTitle: "中国名の選び方",
     howBody1: "中国名は単なる音ではありません。それぞれの名前に意味と願いが込められ、多くの場合八字の要素と結びついています。伝統的に名前選びには以下が含まれます：",
     howBullets: ["漢字の意味：各漢字は独立した意味を持ち、親はそれらを組み合わせて独自の意味を作り出します。", "五行のバランス：子供の八字に水が不足している場合、名前に水部（氵）を含めることがあります。", "音とリズム：中国の名前は通常1〜2文字（姓を除く）で、調和よく響くべきです。", "世代の字：一部の家族では、同世代の男子全員が共通の最初の文字を共有します。"],
@@ -160,6 +163,9 @@ export default function ChineseNameBoyGuide({ params: { locale } }: Props) {
     <article className="max-w-3xl mx-auto px-3 sm:px-4 py-6 sm:py-10 prose prose-stone">
       <h1 className="text-2xl sm:text-3xl font-bold">{c.heading}</h1>
       <p className="text-stone-500 text-sm">{c.subtitle}</p>
+      <div className="not-prose my-4 p-3 rounded-lg" style={{ backgroundColor: "var(--gold-subtle)", borderLeft: "3px solid var(--gold)" }}>
+        <p className="text-sm leading-relaxed" style={{ color: "var(--text-body)" }}>{c.directAnswer}</p>
+      </div>
       <hr className="my-6 border-stone-200" />
       <h2>{c.howTitle}</h2>
       <p>{c.howBody1}</p>

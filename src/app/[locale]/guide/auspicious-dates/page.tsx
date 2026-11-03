@@ -9,7 +9,7 @@ type Props = { params: { locale: string } };
 
 const CONTENT: Record<string, {
   title: string; desc: string; ogTitle: string; ogDesc: string;
-  heading: string; subtitle: string;
+  heading: string; subtitle: string; directAnswer: string;
   whyTitle: string; whyBody1: string; whyBody2: string;
   whatTitle: string; whatIntro: string;
   zTitle: string; zBody: string;
@@ -33,6 +33,7 @@ const CONTENT: Record<string, {
     ogDesc: "Pick lucky dates using the Chinese almanac for weddings and business.",
     heading: "How to Select Auspicious Dates: A Chinese Calendar Guide",
     subtitle: "Master the art of choosing lucky dates — from wedding planning to business openings.",
+    directAnswer: "An auspicious date is a day the Chinese almanac marks as favorable for a specific event — a wedding, an opening, a move. Below, the highest-scoring days for all 13 event types, computed month by month from the almanac.",
     whyTitle: "Why Dates Matter in Chinese Culture",
     whyBody1: "In Chinese tradition, the timing of important events can influence their outcome. Starting a business on an auspicious day invites prosperity. Getting married on a carefully chosen day ensures harmony. This isn't mere superstition — it's a 2,000-year-old system rooted in Chinese astronomy, the lunar calendar, and the same philosophical framework as feng shui.",
     whyBody2: "The Chinese almanac, known as the Tong Shu (通书) or Huang Li (黄历), has been the go-to reference for date selection since the Han dynasty. Even today, many Chinese families consult the almanac before scheduling weddings, moving houses, or launching a business.",
@@ -76,6 +77,7 @@ const CONTENT: Record<string, {
     ogDesc: "Выбирайте удачные даты по китайскому альманаху для свадеб и бизнеса.",
     heading: "Как Выбрать Благоприятные Даты: Гид по Китайскому Календарю",
     subtitle: "Искусство выбора удачных дат — от планирования свадьбы до открытия бизнеса.",
+    directAnswer: "Благоприятная дата — это день, который китайский альманах отмечает как удачный для конкретного события: свадьбы, открытия дела, переезда. Ниже — лучшие дни для всех 13 типов событий, рассчитанные по альманаху месяц за месяцем.",
     whyTitle: "Почему Даты Важны в Китайской Культуре",
     whyBody1: "В китайской традиции время важных событий может влиять на их исход. Начало бизнеса в благоприятный день приглашает процветание. Свадьба в тщательно выбранный день обеспечивает гармонию. Это не просто суеверие — это 2000-летняя система, укоренённая в китайской астрономии, лунном календаре и той же философской основе, что и фэн-шуй.",
     whyBody2: "Китайский альманах, известный как Тун Шу (通书) или Хуан Ли (黄历), был основным справочником для выбора дат со времён династии Хань. Даже сегодня многие китайские семьи сверяются с альманахом перед свадьбой, переездом или запуском бизнеса.",
@@ -119,6 +121,7 @@ const CONTENT: Record<string, {
     ogDesc: "結婚やビジネスのための中国暦による吉日選び。",
     heading: "吉日の選び方：中国暦ガイド",
     subtitle: "結婚準備から開業まで — 縁起の良い日を選ぶ技術をマスターしましょう。",
+    directAnswer: "吉日とは、中国の暦が結婚・開業・引っ越しなどの特定の行事に良いと定めた日のことです。以下に、暦から月ごとに算出した、13種類すべての行事の最高評価の日をまとめました。",
     whyTitle: "中国文化において日取りが重要な理由",
     whyBody1: "中国の伝統では、重要なイベントのタイミングがその結果に影響を与えます。吉日にビジネスを始めることは繁栄を招き、慎重に選んだ日に結婚することは調和を確かなものにします。これは単なる迷信ではなく、中国天文学、太陰暦、風水と同じ哲学的枠組みに根ざした2000年の歴史を持つ体系です。",
     whyBody2: "通書（Tong Shu）または黄暦（Huang Li）として知られる中国暦は、漢王朝以来日取り選びの基本参考書でした。今日でも多くの中国の家族が結婚式や引越し、開業の前に暦を確認します。",
@@ -178,6 +181,9 @@ export default function AuspiciousDatesGuide({ params: { locale } }: Props) {
     <article className="max-w-3xl mx-auto px-3 sm:px-4 py-6 sm:py-10 prose prose-stone">
       <h1 className="text-2xl sm:text-3xl font-bold">{c.heading}</h1>
       <p className="text-stone-500 text-sm">{c.subtitle}</p>
+      <div className="not-prose my-4 p-3 rounded-lg" style={{ backgroundColor: "var(--gold-subtle)", borderLeft: "3px solid var(--gold)" }}>
+        <p className="text-sm leading-relaxed" style={{ color: "var(--text-body)" }}>{c.directAnswer}</p>
+      </div>
       <hr className="my-6 border-stone-200" />
 
       <h2>{c.whyTitle}</h2>

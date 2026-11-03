@@ -105,7 +105,7 @@ async function getAccessToken(): Promise<string> {
   return value;
 }
 
-async function queryGsc(dimension: "page" | "query", startDate: string, endDate: string): Promise<GscRow[]> {
+async function queryGsc(dimension: "page" | "query" | "searchAppearance", startDate: string, endDate: string): Promise<GscRow[]> {
   const token = await getAccessToken();
   const res = await fetch(`${GSC_API}/${encodeURIComponent(SITE_URL)}/searchAnalytics/query`, {
     method: "POST",
@@ -150,7 +150,7 @@ export async function fetchGscDaily() {
       rtk: String(process.env.GOOGLE_REFRESH_TOKEN || "").length,
     },
   };
-  for (const dimType of ["page", "query"] as const) {
+  for (const dimType of ["page", "query", "searchAppearance"] as const) {
     try {
       const rows = await queryGsc(dimType, day, day);
       for (const r of rows) {
