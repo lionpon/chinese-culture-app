@@ -86,6 +86,15 @@ async function getOAuthAccessToken(): Promise<string> {
   const data = JSON.parse(text);
   gscDebug.tokenLen = String(data.access_token || "").length;
   gscDebug.tokenHead = String(data.access_token || "").slice(0, 6);
+  gscDebug.refreshBodyKeys = Object.keys(data).join(",");
+  // Google 官方校验该 token（同一实例内, 直接证明 token 有效性）
+  try {
+    const ti = await fetch("https://oauth2.googleapis.com/tokeninfo?access_token=" + encodeURIComponent(data.access_token));
+    const tj = await ti.json();
+    gscDebug.tokeninfo = { status: ti.status, keys: Object.keys(tj).join(","), scope: tj.scope || "-", azp: String(tj.azp || "").slice(0, 30), error: tj.error_description || tj.error || "" };
+  } catch (e) {
+    gscDebug.tokeninfo = { error: String(e) };
+  }
   return data.access_token;
 }
 
