@@ -703,7 +703,9 @@
     "confirmBack": "← Back",
     "continueCta": "Continue to Checkout",
     "emailStrongLabel": "Where should we send your full reading?",
-    "emailStrongHelper": "Optional — if you can't finish checkout, we'll email the reading to this address."
+    "emailStrongHelper": "Optional — if you can't finish checkout, we'll email the reading to this address.",
+    "cardNote": "Pay by Visa or Mastercard — no PayPal account needed",
+    "refundNote": "Technical problem? Reply to your receipt — refunded if your reading doesn't arrive"
   },
   "legal": {
     "privacy": {

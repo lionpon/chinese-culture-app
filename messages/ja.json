@@ -703,7 +703,9 @@
     "confirmBack": "← 戻る",
     "continueCta": "お支払いへ進む",
     "emailStrongLabel": "読み取り結果をどこにお送りしますか？",
-    "emailStrongHelper": "任意 — お支払いを完了できない場合、このアドレスに結果をお送りします。"
+    "emailStrongHelper": "任意 — お支払いを完了できない場合、このアドレスに結果をお送りします。",
+    "cardNote": "Visa・Mastercardでお支払いいただけます — PayPalアカウントは不要です",
+    "refundNote": "技術的な問題が発生した場合は、レシートに返信してください — 結果が届かない場合は返金します"
   },
   "legal": {
     "privacy": {

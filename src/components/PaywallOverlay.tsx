@@ -156,6 +156,9 @@ export default function PaywallOverlay({
               </li>
             </ul>
             <PaymentTrustBadges />
+            <p className="text-[11px] text-center mt-2" style={{ color: "var(--text-dim)" }}>
+              🔄 {t("refundNote")}
+            </p>
             <button
               onClick={continueToPay}
               className="w-full py-3 rounded-xl text-sm font-semibold btn-primary mt-3"
@@ -214,6 +217,9 @@ export default function PaywallOverlay({
             {stage === "pay" && pendingId ? (
               /* Inline Smart Buttons — PayPal balance + guest debit/credit card */
               <>
+                <p className="text-[11px] text-center mb-2" style={{ color: "var(--text-dim)" }}>
+                  💳 {t("cardNote")}
+                </p>
                 <PayPalSmartButtons
                   purchaseId={pendingId}
                   onCancel={() => setSmartError(null)}
