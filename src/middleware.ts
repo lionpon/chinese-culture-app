@@ -5,7 +5,7 @@ import { isBadBot, checkRateLimit, checkCsrf } from "@/lib/security";
 import { BASE_URL } from "@/lib/config";
 
 const intlMiddleware = createMiddleware({
-  locales: ["en", "ru", "ja", "ko"],
+  locales: ["en", "ru", "ja", "ko", "uk"],
   defaultLocale,
   localePrefix: "as-needed",
 });

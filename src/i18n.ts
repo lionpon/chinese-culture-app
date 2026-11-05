@@ -26,7 +26,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
     locale = defaultLocale;
   }
   let messages = (await import(`../messages/${locale}.json`)).default;
-  if (locale === "ko") {
+  if (locale === "ko" || locale === "uk") {
     const en = (await import(`../messages/en.json`)).default;
     messages = deepMerge(en, messages);
   }

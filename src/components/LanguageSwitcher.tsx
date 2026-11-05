@@ -50,6 +50,14 @@ export default function LanguageSwitcher() {
       >
         KO
       </button>
+      <span className="text-stone-400">|</span>
+      <button
+        onClick={() => switchTo("uk")}
+        className={`hover:text-stone-800 transition-colors ${locale === "uk" ? "text-stone-800 font-bold" : "text-stone-400"}`}
+        aria-label="Перемкнути на українську"
+      >
+        UA
+      </button>
     </span>
   );
 }

@@ -132,6 +132,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   }));
 
+  // Ukrainian URLs — 2026-11-05 实验：仅 girl 页入 sitemap（uk 唯一全量翻译页；
+  // 其余 /uk/* 路由按 en 回退可访问，但不主动推入 sitemap，控制实验面）
+  const ukEntries = [{ path: "/guide/chinese-name-girl", priority: 0.8, changeFreq: "weekly" as const }].map(({ path, priority, changeFreq }) => ({
+    url: `${baseUrl}/uk${path}`,
+    lastModified: new Date(),
+    changeFrequency: changeFreq,
+    priority: priority - 0.1,
+    alternates: {
+      languages: {
+        en: `${baseUrl}${path}`,
+        ru: `${baseUrl}/ru${path}`,
+        ja: `${baseUrl}/ja${path}`,
+        ko: `${baseUrl}/ko${path}`,
+        uk: `${baseUrl}/uk${path}`,
+      },
+    },
+  }));
+
   // Date long-tail pages (content factory batch 1) — English only for now.
   // Kept out of `pages` on purpose: that array multiplies every path by 4 locales,
   // and ru/ja/ko batches ship only after the en batch proves itself.
@@ -150,5 +168,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
-  return [...enEntries, ...ruEntries, ...jaEntries, ...koEntries, ...dateEntries];
+  return [...enEntries, ...ruEntries, ...jaEntries, ...koEntries, ...ukEntries, ...dateEntries];
 }

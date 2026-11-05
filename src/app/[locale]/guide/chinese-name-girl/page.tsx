@@ -9,7 +9,7 @@ type Props = { params: { locale: string } };
 
 type Name = { name: string; meaning: string; style: string };
 
-const CONTENT: Record<string, { title: string; desc: string; ogTitle: string; ogDesc: string; heading: string; subtitle: string; directAnswer: string; tableTitle: string; nameH: string; meaningH: string; styleH: string; groups: { title: string; names: Name[] }[]; personalizedTitle: string; personalizedBody: string; faqs: { q: string; a: string }[]; disclaimer: string }> = {
+const CONTENT: Record<string, { title: string; desc: string; ogTitle: string; ogDesc: string; heading: string; subtitle: string; directAnswer: string; tableTitle: string; nameH: string; meaningH: string; styleH: string; groups: { title: string; names: Name[] }[]; personalizedTitle: string; personalizedBody: string; faqs: { q: string; a: string }[]; disclaimer: string; relatedTitle?: string; relatedItems?: { label: string; href: string }[] }> = {
   en: {
     title: "100+ Chinese Girl Names & Meanings: Elegant, Cute & Unique (2026) | Chinese Culture Studio",
     desc: "100+ beautiful Chinese girl names with meanings — floral, elegant, modern & classical. Find the perfect Chinese name for your baby girl or character. Free naming tool included.",
@@ -122,6 +122,58 @@ const CONTENT: Record<string, { title: string; desc: string; ogTitle: string; og
     ],
     disclaimer: "文化理解のためのものです。",
   },
+  uk: {
+    title: "Китайські жіночі імена: 25+ красивих варіантів зі значеннями | Chinese Culture Studio",
+    desc: "Китайські жіночі імена з перекладом і значенням — квіткові, елегантні, сучасні та класичні. Безкоштовний інструмент добору імені за роком народження.",
+    ogTitle: "Китайські жіночі імена: 25+ красивих варіантів",
+    ogDesc: "Китайські жіночі імена зі значеннями: квіти, природа, чесноти, мистецтво та класика. Безкоштовний попередній перегляд імені.",
+    heading: "Китайські жіночі імена та їх значення",
+    subtitle: "25+ китайських жіночих імен зі значеннями та стилями — квіти, природа, чесноти, мистецтво, класика, емоції та коштовності.",
+    directAnswer: "Китайські жіночі імена складаються з одного-двох ієрогліфів, обраних за значенням, звучанням і балансом П'яти стихій. Нижче — 25+ красивих імен зі значеннями та безкоштовний інструмент, який показує, яке ім'я пасує до року народження.",
+    tableTitle: "Імена зі значеннями",
+    nameH: "Ім'я", meaningH: "Значення", styleH: "Стиль",
+    groups: [{ title: "", names: [
+      { name: "Мей (美)", meaning: "Красива, витончена, елегантна", style: "Краса" },
+      { name: "Лі (丽)", meaning: "Чарівна, прекрасна", style: "Краса" },
+      { name: "Хуа (花)", meaning: "Квітка, цвітіння, процвітання", style: "Природа" },
+      { name: "Лань (兰)", meaning: "Орхідея — вишуканість, чистота", style: "Квіти" },
+      { name: "Цзюй (菊)", meaning: "Хризантема — довголіття, шляхетність", style: "Квіти" },
+      { name: "Сюе (雪)", meaning: "Сніг — чистота, ясність, ніжність", style: "Природа" },
+      { name: "Юе (月)", meaning: "Місяць — краса, таємничість, жіночність", style: "Природа" },
+      { name: "Фень (芬)", meaning: "Аромат, пахощі", style: "Квіти" },
+      { name: "Цзін (静)", meaning: "Тиха, спокійна, безтурботна", style: "Чесноти" },
+      { name: "Хуей (慧)", meaning: "Розумна, мудра, прониклива", style: "Чесноти" },
+      { name: "Сінь (欣)", meaning: "Радісна, щаслива", style: "Емоції" },
+      { name: "Юнь (云)", meaning: "Хмара — мрійлива, вільна", style: "Природа" },
+      { name: "Ін (英)", meaning: "Героїня, квітка, видатна", style: "Чесноти" },
+      { name: "Лу (露)", meaning: "Роса — свіжість, чистота", style: "Природа" },
+      { name: "Ши (诗)", meaning: "Поезія, вірш, літературна витонченість", style: "Мистецтво" },
+      { name: "Цинь (琴)", meaning: "Цитра, гармонія, музичність", style: "Мистецтво" },
+      { name: "Я (雅)", meaning: "Витончена, елегантна, культурна", style: "Класика" },
+      { name: "Чжень (珍)", meaning: "Коштовна, дорогоцінна", style: "Чесноти" },
+      { name: "Цін (清)", meaning: "Чиста, ясна, чесна", style: "Чесноти" },
+      { name: "Сян (香)", meaning: "Ароматна, запашна", style: "Квіти" },
+      { name: "Чунь (春)", meaning: "Весна — оновлення, молодість", style: "Пора року" },
+      { name: "Жо (若)", meaning: "Немов — філософське, поетичне", style: "Класика" },
+      { name: "Ле (乐)", meaning: "Радість, музика, щастя", style: "Емоції" },
+      { name: "Вань (婉)", meaning: "Ніжна, тактовна, чарівна", style: "Класика" },
+      { name: "Яо (瑶)", meaning: "Нефрит, коштовний камінь", style: "Коштовності" },
+    ] }],
+    personalizedTitle: "Від попереднього перегляду до справжнього імені",
+    personalizedBody: "Попередній перегляд вище використовує лише рік народження. Справжнє китайське ім'я створюється з повної інформації про народження та карти Ба-Цзи — наш сервіс генерує 5 персоналізованих варіантів зі значеннями та поясненням вибору кожного.",
+    faqs: [
+      { q: "Чим китайське жіноче ім'я відрізняється від чоловічого?", a: "Жіночі імена часто містять ієрогліфи краси, квітів і чеснот, тоді як чоловічі підкреслюють силу та амбіції. Але багато сучасних імен універсальні." },
+      { q: "Які китайські жіночі імена найпопулярніші?", a: "Класичні імена, як Лань (орхідея) та Сюе (сніг), і сучасні, як Ши (поезія) та Ле (радість), зараз популярні серед китайських батьків." },
+      { q: "Як вимовляти ці імена?", a: "Поруч із кожним іменем подано українську транслітерацію. Точну вимову китайських тонів найкраще перевірити з носієм мови або скористатися нашим інструментом попереднього перегляду вище." },
+    ],
+    disclaimer: "Лише для культурного ознайомлення.",
+    relatedTitle: "Пов'язані посібники",
+    relatedItems: [
+      { label: "Китайські чоловічі імена: 50+ варіантів зі значеннями", href: "/guide/chinese-name-boy" },
+      { label: "Як обирають китайські імена — повний посібник", href: "/guide/chinese-name" },
+      { label: "Отримайте 5 персоналізованих китайських імен за картою народження", href: "/naming" },
+    ],
+  },
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -131,7 +183,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       languages: {
         en: "https://www.culture-of-china.com/guide/chinese-name-girl",
         ru: "https://www.culture-of-china.com/ru/guide/chinese-name-girl",
-        ja: "https://www.culture-of-china.com/ja/guide/chinese-name-girl"
+        ja: "https://www.culture-of-china.com/ja/guide/chinese-name-girl",
+        uk: "https://www.culture-of-china.com/uk/guide/chinese-name-girl"
       },
     },
     robots: "index, follow"
@@ -168,11 +221,15 @@ export default function ChineseNameGirlGuide({ params: { locale } }: Props) {
         <GuideCTA href="/naming" service="naming" />
       </div>
       <div className="not-prose my-8">
-        <p className="text-sm font-semibold mb-2">Related Guides</p>
+        <p className="text-sm font-semibold mb-2">{c.relatedTitle || "Related Guides"}</p>
         <ul className="space-y-1 text-sm list-disc list-inside">
-          <li><Link href="/guide/chinese-name-boy">50+ Chinese Boy Names &amp; Their Meanings</Link></li>
-          <li><Link href="/guide/chinese-name">How Chinese Names Are Chosen — the Complete Guide</Link></li>
-          <li><Link href="/naming">Get 5 Personalized Chinese Names from Your Birth Chart</Link></li>
+          {(c.relatedItems || [
+            { label: "50+ Chinese Boy Names & Their Meanings", href: "/guide/chinese-name-boy" },
+            { label: "How Chinese Names Are Chosen — the Complete Guide", href: "/guide/chinese-name" },
+            { label: "Get 5 Personalized Chinese Names from Your Birth Chart", href: "/naming" },
+          ]).map((it) => (
+            <li key={it.href}><Link href={it.href}>{it.label}</Link></li>
+          ))}
         </ul>
       </div>
       <hr className="my-6 border-stone-200" /><p className="text-xs text-stone-400">{c.disclaimer}</p>

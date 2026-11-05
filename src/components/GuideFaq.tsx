@@ -13,11 +13,12 @@ export default function GuideFaq({ faqs, lang }: { faqs: { q: string; a: string 
     })),
   };
 
-  const inLanguage = lang === "ru" ? "ru" : lang === "ja" ? "ja" : lang === "ko" ? "ko" : "en";
+  const inLanguage = lang === "ru" ? "ru" : lang === "ja" ? "ja" : lang === "ko" ? "ko" : lang === "uk" ? "uk" : "en";
 
   const heading = lang === "ru" ? "Часто Задаваемые Вопросы" :
     lang === "ja" ? "よくある質問" :
     lang === "ko" ? "자주 묻는 질문" :
+    lang === "uk" ? "Часті запитання" :
     "Frequently Asked Questions";
 
   return (
