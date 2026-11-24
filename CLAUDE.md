@@ -152,6 +152,15 @@ PayPal Standard Checkout，支持信用卡支付。
 - 国内平台数字人直播 = 方向性错误（客群不匹配），永久排除
 - 支付/加密币/大陆收单已另行定案（见「支付流程」章节）
 
+### 🌐 社媒平台白名单（2026-11-24 用户定案：肉身在中国境内约束）
+
+> 排除标准：平台不对境内或境内 IP 开放注册/访问的（GFW 封锁），一律排除，不讨论翻墙前提。
+> **排除清单**：Twitter/X、Telegram、Pinterest、Reddit、YouTube、TikTok 国际版、Instagram、Facebook、WhatsApp、Discord、Twitch、Medium、Quora、Substack、Patreon（原 8/28 规划的 X/TG/Pinterest/Reddit 四平台全部作废）。
+> **幸存白名单**：① **VK (vk.com)**——俄语区主力，站点最强流量（ru girl 页）客群对口 ② **Yandex Dzen**——俄语内容分发 ③ OK.ru（备用）④ LinkedIn（低意图备用）。
+> 待验证项：VK +86 手机注册可行性、Dzen 创作者条款。
+> 国内平台（微信/知乎/抖音/小红书/B站）继续永久排除（项目定位红线）。
+> 原 `/api/twitter-post` `/api/telegram-post` `/api/pinterest-post` `/api/reddit-post` 路由保留但不启用（或后续换 VK/Dzen 路由）。
+
 ## 论证与实验规范（2026-10-27 起，用户定案）
 
 > 教训：10/27 会话曾把推断写成「根因」并按推断改产品，被用户纠正。此后所有产品改动遵守：
