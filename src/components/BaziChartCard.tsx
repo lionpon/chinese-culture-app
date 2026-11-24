@@ -1,8 +1,6 @@
 "use client";
 
-import { useRef } from "react";
 import { useTranslations } from "next-intl";
-import { trackClick } from "@/lib/track";
 
 export interface BaziPillar {
   label: string; stem: string; branch: string; wuxing: string; element: string;
@@ -60,113 +58,18 @@ export function ElementWheel({ elements, dayMaster, size = 200 }: {
 
 
 /**
- * 命盘图表 + 分享卡片 — 2026-10-28 竞品调研交付②（预注册 WORK_LOG_2026-10-28 §⑦）
- * Astro-Charts 模式：免费预览给"看得见的命盘"（四柱 + 五行环），可下载/分享。
- * 事件: bazi_chart_download / bazi_chart_share
+ * 命盘图表卡 — 2026-10-28 竞品调研交付②（预注册 WORK_LOG_2026-10-28 §⑦）
+ * Astro-Charts 模式：免费预览给"看得见的命盘"（四柱 + 五行环）。
+ * 2026-11-24 处置：download/share 按钮 4 周 0 次使用 → 预注册阈值（≥5/4 周）未达成证伪 → 移除按钮，
+ * 保留图表展示（preview_bazi 仍在使用中）。事件 bazi_chart_download/share 退役。
  */
 export default function BaziChartCard({ data }: { data: BaziChartData }) {
   const t = useTranslations("naming");
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   const pillars = data.pillars || [];
   const pillarLabels: Record<string, string> = {
     year: t("chart.year"), month: t("chart.month"), day: t("chart.day"), hour: t("chart.hour"),
   };
-
-  function drawCard(): HTMLCanvasElement {
-    const W = 720, H = 900;
-    let canvas = canvasRef.current;
-    if (!canvas) {
-      canvas = document.createElement("canvas");
-      canvas.width = W; canvas.height = H;
-      canvasRef.current = canvas;
-    }
-    const ctx = canvas.getContext("2d")!;
-    ctx.fillStyle = "#1a1a2e";
-    ctx.fillRect(0, 0, W, H);
-    ctx.textAlign = "center";
-    ctx.fillStyle = "#C9A96E";
-    ctx.font = "bold 40px sans-serif";
-    ctx.fillText(t("chart.title"), W / 2, 80);
-    ctx.fillStyle = "#9b9bb0";
-    ctx.font = "22px sans-serif";
-    ctx.fillText("culture-of-china.com", W / 2, 120);
-    const total = data.elements.reduce((a, e) => a + e.count, 0) || 1;
-    const r = 130, cx = W / 2, cy = 300, stroke = 56;
-    let offset = 0;
-    for (const el of data.elements) {
-      const frac = el.count / total;
-      ctx.beginPath();
-      ctx.strokeStyle = ELEMENT_COLORS[el.elementEn] || "#999";
-      ctx.lineWidth = stroke;
-      ctx.arc(cx, cy, r, -Math.PI / 2 + offset * 2 * Math.PI, -Math.PI / 2 + (offset + frac) * 2 * Math.PI);
-      ctx.stroke();
-      offset += frac;
-    }
-    ctx.fillStyle = "#ffffff";
-    ctx.font = "40px sans-serif";
-    ctx.fillText(ELEMENT_EMOJI[data.dayMaster.element] || "✨", cx, cy - 8);
-    ctx.fillStyle = "#C9A96E";
-    ctx.font = "bold 24px sans-serif";
-    ctx.fillText(t("chart.dayMaster") + " · " + data.dayMaster.element, cx, cy + 46);
-    let ly = 470;
-    for (const el of data.elements) {
-      ctx.fillStyle = ELEMENT_COLORS[el.elementEn] || "#999";
-      ctx.beginPath(); ctx.arc(cx - 240, ly, 10, 0, 2 * Math.PI); ctx.fill();
-      ctx.fillStyle = "#e8e8f0";
-      ctx.textAlign = "left";
-      ctx.font = "24px sans-serif";
-      ctx.fillText(el.elementEn + " " + el.element + " · " + el.count, cx - 210, ly + 8);
-      ly += 42;
-    }
-    if (pillars.length === 4) {
-      const boxW = 150, gap = 20, x0 = (W - (boxW * 2 + gap)) / 2;
-      const py = ly + 20;
-      pillars.forEach((p, i) => {
-        const bx = x0 + (i % 2) * (boxW + gap);
-        const by = py + Math.floor(i / 2) * 110;
-        ctx.strokeStyle = ELEMENT_COLORS[p.element] || "#999";
-        ctx.lineWidth = 3;
-        ctx.strokeRect(bx, by, boxW, 92);
-        ctx.fillStyle = "#ffffff";
-        ctx.font = "34px sans-serif";
-        ctx.fillText(p.stem + p.branch, bx + boxW / 2, by + 42);
-        ctx.fillStyle = "#9b9bb0";
-        ctx.font = "18px sans-serif";
-        ctx.fillText((pillarLabels[p.label] || p.label) + " · " + p.element, bx + boxW / 2, by + 72);
-      });
-    }
-    ctx.fillStyle = "#9b9bb0";
-    ctx.textAlign = "center";
-    ctx.font = "18px sans-serif";
-    ctx.fillText(t("chart.disclaimer"), W / 2, H - 40);
-    return canvas;
-  }
-
-  function download() {
-    const canvas = drawCard();
-    trackClick("bazi_chart_download");
-    const a = document.createElement("a");
-    a.href = canvas.toDataURL("image/png");
-    a.download = "five-elements-chart.png";
-    a.click();
-  }
-
-  async function share() {
-    trackClick("bazi_chart_share");
-    const canvas = drawCard();
-    const blob: Blob | null = await new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
-    const file = blob ? new File([blob], "five-elements-chart.png", { type: "image/png" }) : null;
-    if (navigator.share && file) {
-      try {
-        await navigator.share({ title: t("chart.title"), text: t("chart.shareText", { element: data.dayMaster.element }), files: [file] });
-        return;
-      } catch { /* cancelled — fall through to copy */ }
-    }
-    try {
-      await navigator.clipboard.writeText(t("chart.shareText", { element: data.dayMaster.element }));
-    } catch { /* clipboard unavailable */ }
-  }
 
   return (
     <div className="mb-3">
@@ -200,17 +103,6 @@ export default function BaziChartCard({ data }: { data: BaziChartData }) {
             {t("chart.dayMaster")}: {data.dayMaster.heavenlyStem} · {data.dayMaster.element}
           </p>
         </div>
-      </div>
-
-      <div className="flex gap-2">
-        <button onClick={download} className="flex-1 py-2.5 rounded-lg text-xs font-medium transition-colors"
-          style={{ backgroundColor: "var(--gold-subtle)", color: "var(--gold)", minHeight: "2.5rem" }}>
-          ⬇ {t("chart.download")}
-        </button>
-        <button onClick={share} className="flex-1 py-2.5 rounded-lg text-xs font-medium transition-colors"
-          style={{ backgroundColor: "var(--gold-subtle)", color: "var(--gold)", minHeight: "2.5rem" }}>
-          ↗ {t("chart.share")}
-        </button>
       </div>
     </div>
   );
