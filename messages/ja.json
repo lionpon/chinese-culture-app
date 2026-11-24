@@ -910,6 +910,13 @@
       "relatedCny": "2027年の旧正月 — 日付・干支・伝統行事",
       "relatedDates": "吉日カレンダー — イベントごとの縁起の良い日",
       "relatedCalendar": "時間単位の運気までわかる完全版の吉日診断"
+    },
+    "intentSelector": {
+      "title": "何のための中国名ですか？",
+      "subtitle": "目的を選ぶと、最適な場所へご案内します。",
+      "character": "キャラクターに名前をつける",
+      "naming": "自分・赤ちゃんの名前",
+      "browse": "名前を見ているだけ"
     }
   },
   "dreamAi": {

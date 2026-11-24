@@ -3,6 +3,7 @@ import GuideFaq from "@/components/GuideFaq";
 import { Link } from "@/navigation";
 import GuideCTA from "@/components/GuideCTA";
 import GuideToolEmbed from "@/components/GuideToolEmbed";
+import IntentSelector from "@/components/IntentSelector";
 import { GIRL_NAMES_EN } from "@/data/name-lists";
 
 type Props = { params: { locale: string } };
@@ -200,12 +201,13 @@ export default function ChineseNameGirlGuide({ params: { locale } }: Props) {
       <div className="not-prose my-4 p-3 rounded-lg" style={{ backgroundColor: "var(--gold-subtle)", borderLeft: "3px solid var(--gold)" }}>
         <p className="text-sm leading-relaxed" style={{ color: "var(--text-body)" }}>{c.directAnswer}</p>
       </div>
+      <IntentSelector />
       <hr className="my-6 border-stone-200" />
       <h2>{c.tableTitle}</h2>
       {c.groups.map((g, gi) => (
         <div key={gi}>
           {g.title && <h3 className="text-base font-semibold mt-6 mb-2">{g.title}</h3>}
-          <div className="not-prose overflow-x-auto">
+          <div id="name-table" className="not-prose overflow-x-auto">
             <table className="w-full text-sm border-collapse">
               <thead><tr className="bg-stone-100"><th className="p-2 text-left">{c.nameH}</th><th className="p-2 text-left">{c.meaningH}</th><th className="p-2 text-left">{c.styleH}</th></tr></thead>
               <tbody>{g.names.map((n) => <tr key={n.name} className="border-t border-stone-200"><td className="p-2 font-medium">{n.name}</td><td className="p-2 text-xs">{n.meaning}</td><td className="p-2 text-xs text-stone-500">{n.style}</td></tr>)}</tbody>
@@ -213,7 +215,9 @@ export default function ChineseNameGirlGuide({ params: { locale } }: Props) {
           </div>
         </div>
       ))}
-      <GuideToolEmbed tool="namePreview" gender="female" names={c.groups.flatMap(g => g.names)} />
+      <div id="name-preview-tool">
+        <GuideToolEmbed tool="namePreview" gender="female" names={c.groups.flatMap(g => g.names)} />
+      </div>
 
       <h2>{c.personalizedTitle}</h2><p>{c.personalizedBody}</p>
       <GuideFaq lang={locale} faqs={c.faqs} />

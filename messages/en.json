@@ -910,6 +910,13 @@
       "relatedCny": "Chinese New Year 2027 — dates, zodiac and traditions",
       "relatedDates": "Auspicious dates — pick a lucky day for any event",
       "relatedCalendar": "Full date selection with hour-level luck windows"
+    },
+    "intentSelector": {
+      "title": "What brings you here?",
+      "subtitle": "Pick your goal — we will point you to the right place.",
+      "character": "Name a character",
+      "naming": "Name myself or my baby",
+      "browse": "Just browsing names"
     }
   },
   "dreamAi": {

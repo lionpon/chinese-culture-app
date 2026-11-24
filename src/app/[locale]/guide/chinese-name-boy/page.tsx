@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Link } from "@/navigation";
 import GuideFaq from "@/components/GuideFaq";
 import GuideToolEmbed from "@/components/GuideToolEmbed";
+import IntentSelector from "@/components/IntentSelector";
 import { BOY_NAMES_EN } from "@/data/name-lists";
 
 type Props = { params: { locale: string } };
@@ -166,12 +167,13 @@ export default function ChineseNameBoyGuide({ params: { locale } }: Props) {
       <div className="not-prose my-4 p-3 rounded-lg" style={{ backgroundColor: "var(--gold-subtle)", borderLeft: "3px solid var(--gold)" }}>
         <p className="text-sm leading-relaxed" style={{ color: "var(--text-body)" }}>{c.directAnswer}</p>
       </div>
+      <IntentSelector />
       <hr className="my-6 border-stone-200" />
       <h2>{c.howTitle}</h2>
       <p>{c.howBody1}</p>
       <ul>{c.howBullets.map((b) => <li key={b}>{b}</li>)}</ul>
       <h2>{c.tableTitle}</h2>
-      <div className="not-prose overflow-x-auto">
+      <div id="name-table" className="not-prose overflow-x-auto">
         <table className="w-full text-sm border-collapse">
           <thead><tr className="bg-stone-100"><th className="p-2 text-left">{c.nameH}</th><th className="p-2 text-left">{c.meaningH}</th><th className="p-2 text-left">{c.styleH}</th></tr></thead>
           <tbody>{c.names.map((n) => <tr key={n.name} className="border-t border-stone-200"><td className="p-2 font-medium">{n.name}</td><td className="p-2 text-xs">{n.meaning}</td><td className="p-2 text-xs text-stone-500">{n.style}</td></tr>)}</tbody>
@@ -182,7 +184,9 @@ export default function ChineseNameBoyGuide({ params: { locale } }: Props) {
 
 
       {/* Interactive preview: after the name table, user is primed for personalization */}
-      <GuideToolEmbed tool="namePreview" gender="male" names={c.names} />
+      <div id="name-preview-tool">
+        <GuideToolEmbed tool="namePreview" gender="male" names={c.names} />
+      </div>
 
       <h2>{c.personalizedTitle}</h2><p>{c.personalizedBody}</p>
       <GuideFaq lang={locale} faqs={c.faqs} />
